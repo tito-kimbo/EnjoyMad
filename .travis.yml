@@ -1,3 +1,4 @@
 language: java
 sudo: false
+before_script: cd ingsoft
 script: mvn test -B
