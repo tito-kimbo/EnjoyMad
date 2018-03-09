@@ -1,4 +1,4 @@
-package es.ucm.fdi.TicketManagment;
+package es.ucm.fdi.TicketManagement;
 
 
 abstract class TicketManager {
