@@ -1,5 +1,6 @@
 package es.ucm.fdi.TicketManagement;
 
+
 /*Uses JavaMail API and Java Activation Framework (JAF) 
 * Download in:
 * http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-eeplat-419426.html#javamail-1.4.4-oth-JPR
@@ -54,4 +55,4 @@ public class EmailSender {
             throw new RuntimeException(e);
         }
     }
-}
+}}
