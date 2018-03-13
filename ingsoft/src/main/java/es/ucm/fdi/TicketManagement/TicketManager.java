@@ -1,6 +1,9 @@
 package es.ucm.fdi.TicketManagement;
 
-
+import es.ucm.fdi.datos.ClubDAOImp;
+import es.ucm.fdi.datos.ClubPOJO;
+import es.ucm.fdi.datos.UserDAOImp;
+import es.ucm.fdi.datos.UserPOJO;
 
 abstract class TicketManager {
 	public void buyTicket(String club_name, String user_name) {

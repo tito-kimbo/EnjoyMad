@@ -2,12 +2,13 @@ package es.ucm.fdi.datos;
 
 import java.util.List;
 
-public class ClubPOJO extends Data {
+public class ClubPOJO extends DataPOJO {
 	String location;
 	float price;
 	List<String> tags;
 	
-	public ClubPOJO(String location, float price, List<String> tags){
+	public ClubPOJO(String id, String location, float price, List<String> tags){
+		super(id);
 		this.location = location;
 		this.price = price;
 		this.tags = tags;

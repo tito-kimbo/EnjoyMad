@@ -1,4 +1,4 @@
-package SearchEngine;
+package es.ucm.fdi.SearchEngine;
 
 import java.util.List;
 

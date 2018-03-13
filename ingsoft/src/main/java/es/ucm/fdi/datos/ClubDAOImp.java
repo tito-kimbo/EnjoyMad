@@ -10,20 +10,23 @@ public class ClubDAOImp implements ClubDAO {
 		if(ini == last)
 			return ini;
 		int mid = (last + ini)/2;
-		return (clubs.get(mid) < id) ? getclub(id,mid+1,last) : getclub(id,ini,mid);
+		return (clubs.get(mid).getId().compareTo(id) < 0) ? getclub(id,mid+1,last) : getclub(id,ini,mid);
 	}
 	public ClubDAOImp() {
 		clubs = new ArrayList<ClubPOJO>();
 	}
-	public ClubPOJO getclub(String id) {
+	public ClubPOJO getClub(String id) {
 		return clubs.get(getclub(id,0,clubs.size()-1));
 	}
 	public void insert(ClubPOJO club) {
-		clubs.add(club,getclub(club.getID(),0,clubs.size()-1));
+		//clubs.add(club,getclub(club.getId(),0,clubs.size()-1));
+		clubs.add(club);
 	}
-	public List<ClubPOJO> getUsers() {return clubs;}
+	public List<ClubPOJO> getClubs() {return clubs;}
+	public ClubPOJO getUser(String id){return null;}
+	
 	public List<ClubPOJO> getMatchingClubs(List<String> tags){
-		
+		return null;
 	}
 	public List<ClubPOJO> getMatchingClubs(int minPrice, int maxPrice){
 		List<ClubPOJO> list = new ArrayList<ClubPOJO>();
@@ -40,5 +43,6 @@ public class ClubDAOImp implements ClubDAO {
 		 * 		if distance is less or equal than maxRange add to list
 		 * return list
 		 */
+		return null;
 	}
 }

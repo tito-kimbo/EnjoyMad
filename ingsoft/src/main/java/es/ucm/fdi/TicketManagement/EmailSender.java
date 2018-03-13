@@ -19,7 +19,6 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-
 public class EmailSender {
 
     public static void send(String email, String text, String subject) {
@@ -55,4 +54,4 @@ public class EmailSender {
             throw new RuntimeException(e);
         }
     }
-}}
+}
