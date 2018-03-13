@@ -4,9 +4,9 @@ package es.ucm.fdi.TicketManagement;
 
 abstract class TicketManager {
 	public void buyTicket(String club_name, String user_name) {
-		ClubDAO clubs = new ClubDAO();
+		ClubDAOImp clubs = new ClubDAOImp();
 		ClubPOJO club = clubs.getClub(club_name);
-		UserDAO users = new UserDAO();
+		UserDAOImp users = new UserDAOImp();
 		UserPOJO user = users.getUser(user_name);
 		
 		float price = club.getPrice();
