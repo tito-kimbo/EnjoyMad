@@ -3,7 +3,7 @@ package es.ucm.fdi.integration;
 import java.util.List;
 import java.util.ArrayList;
 
-import es.ucm.fdi.data.ClubPOJO;
+import es.ucm.fdi.integration.data.ClubPOJO;
 
 public class ClubDAOImp implements ClubDAO {
 	List<ClubPOJO> clubs;

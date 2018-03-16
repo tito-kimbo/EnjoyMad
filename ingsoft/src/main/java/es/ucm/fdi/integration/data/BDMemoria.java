@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     	
 */
-package es.ucm.fdi.data;
+package es.ucm.fdi.integration.data;
 
 import java.io.OutputStream;
 import java.io.PrintStream;

@@ -1,6 +1,8 @@
-package es.ucm.fdi.data;
+package es.ucm.fdi.integration.data;
 
 import java.util.List;
+
+import es.ucm.fdi.util.DataPOJO;
 
 public class ClubPOJO extends DataPOJO {
 	String location;

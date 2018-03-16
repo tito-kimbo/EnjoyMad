@@ -3,7 +3,7 @@ package es.ucm.fdi.integration;
 import java.util.List;
 import java.util.ArrayList;
 
-import es.ucm.fdi.data.UserPOJO;
+import es.ucm.fdi.integration.data.UserPOJO;
 
 public class UserDAOImp implements UserDAO {
 	List<UserPOJO> users;
