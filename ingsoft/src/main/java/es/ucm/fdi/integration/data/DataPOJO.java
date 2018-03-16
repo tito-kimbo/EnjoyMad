@@ -1,4 +1,4 @@
-package es.ucm.fdi.util;
+package es.ucm.fdi.integration.data;
 
 /**
  * Basic data container.

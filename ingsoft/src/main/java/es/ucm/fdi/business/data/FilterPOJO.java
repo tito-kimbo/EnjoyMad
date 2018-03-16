@@ -1,15 +1,22 @@
 package es.ucm.fdi.business.data;
 
-import es.ucm.fdi.util.DataPOJO;
+import java.util.List;
+
+import es.ucm.fdi.integration.data.DataPOJO;
 
 /**
  * This class contains the information needed 
  *
  */
 public class FilterPOJO extends DataPOJO {
+	private List<String> params;
 	
-	
-	public FilterPOJO(String id){
+	public FilterPOJO(String id, List<String> p){
 		super(id);
+		params = p;
+	}
+	
+	public List<String> getParams(){
+		return params;
 	}
 }
