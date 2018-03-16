@@ -1,4 +1,4 @@
-package es.ucm.fdi.TicketManagement;
+package es.ucm.fdi.business.TicketManagement;
 
 
 /*Uses JavaMail API and Java Activation Framework (JAF) 

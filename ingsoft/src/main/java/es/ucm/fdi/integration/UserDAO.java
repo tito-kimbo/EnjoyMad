@@ -1,6 +1,8 @@
-package es.ucm.fdi.datos;
+package es.ucm.fdi.integration;
 
 import java.util.List;
+
+import es.ucm.fdi.data.UserPOJO;
 
 public interface UserDAO {
 	public UserPOJO getUser(String id);

@@ -19,7 +19,7 @@
 
 package es.ucm.fdi;
 
-import es.ucm.fdi.datos.BDMemoria;
+import es.ucm.fdi.data.BDMemoria;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

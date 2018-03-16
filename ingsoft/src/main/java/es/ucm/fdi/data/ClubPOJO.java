@@ -1,4 +1,4 @@
-package es.ucm.fdi.datos;
+package es.ucm.fdi.data;
 
 import java.util.List;
 
