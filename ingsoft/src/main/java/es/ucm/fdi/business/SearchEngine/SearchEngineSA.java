@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface SearchEngineSA {
 	
-	void search(List <String> words);
+	void search(List<Filter> l, );
 }

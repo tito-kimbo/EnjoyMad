@@ -4,7 +4,5 @@ import es.ucm.fdi.data.ClubPOJO;
 
 public abstract class Filter {
 
-	boolean filter(ClubPOJO c){
-		return false;
-	}
+	public abstract boolean filter(ClubPOJO c);
 }
