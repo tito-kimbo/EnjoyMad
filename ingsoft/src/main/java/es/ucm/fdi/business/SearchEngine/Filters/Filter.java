@@ -6,9 +6,7 @@ import es.ucm.fdi.integration.data.ClubPOJO;
  * 
  *
  */
-public abstract class Filter {
+public interface Filter {
 
-	boolean filter(ClubPOJO c){
-		return false;
-	}
+	abstract boolean filter(ClubPOJO c);
 }
