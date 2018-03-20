@@ -17,6 +17,6 @@ public class FilterMapper {
 	}
 	
 	public Filter mapFilter(FilterPOJO fp){
-		return map.get(fp.getId()).build(fp.getParams());
+		return map.get(fp.getID()).build(fp.getParams());
 	}
 }

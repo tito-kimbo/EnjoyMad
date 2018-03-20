@@ -12,7 +12,7 @@ public class ClubDAOImp implements ClubDAO {
 		if(ini == last)
 			return ini;
 		int mid = (last + ini)/2;
-		return (clubs.get(mid).getId().compareTo(id) < 0) ? getclub(id,mid+1,last) : getclub(id,ini,mid);
+		return (clubs.get(mid).getID().compareTo(id) < 0) ? getclub(id,mid+1,last) : getclub(id,ini,mid);
 	}
 	public ClubDAOImp() {
 		clubs = new ArrayList<ClubPOJO>();

@@ -6,7 +6,7 @@ package es.ucm.fdi.integration.data;
  * @version 09.03.2018
  */
 public abstract class DataPOJO {
-	String id;
+	private String id;
 	
 	/**
 	 * Creates a <code>DataPOJO</code> with the given ID.
@@ -22,7 +22,7 @@ public abstract class DataPOJO {
 	 * 
 	 * @return ID
 	 */
-	public String getId() {
+	public String getID() {
 		return id;
 	}
 
@@ -31,7 +31,7 @@ public abstract class DataPOJO {
 	 * 
 	 * @param id new ID
 	 */
-	public void setId(String id) {
+	public void setID(String id) {
 		this.id = id;
 	}
 }

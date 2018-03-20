@@ -2,7 +2,7 @@ package es.ucm.fdi.integration.data;
 
 
 public class UserPOJO extends DataPOJO{
-	
+	//Requires refactor -> Use java libs
 	class Date{
 		int day, month, year;
 		

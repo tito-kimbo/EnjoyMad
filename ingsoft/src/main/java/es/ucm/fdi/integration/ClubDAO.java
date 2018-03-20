@@ -9,5 +9,5 @@ public interface ClubDAO {
 	public List<ClubPOJO> getMatchingClubs(int minPrice, int maxPrice);
 	public List<ClubPOJO> getMatchingClubs(String location, int maxRange);
 	public List<ClubPOJO> getClubs();
-	public ClubPOJO getUser(String id);
+	public ClubPOJO getClub(String id);
 }

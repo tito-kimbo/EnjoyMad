@@ -12,7 +12,7 @@ public class UserDAOImp implements UserDAO {
 		if(ini == last)
 			return ini;
 		int mid = (last + ini)/2;
-		return (users.get(mid).getId().compareTo(id) < 0) ? getUser(id,mid+1,last) : getUser(id,ini,mid);
+		return (users.get(mid).getID().compareTo(id) < 0) ? getUser(id,mid+1,last) : getUser(id,ini,mid);
 	}
 	public UserDAOImp() {
 		users = new ArrayList<UserPOJO>();
