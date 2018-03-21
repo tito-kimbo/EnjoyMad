@@ -9,14 +9,11 @@ import es.ucm.fdi.business.SearchEngine.Filters.*;
  * The function of this class is to create the 
  */
 public class FilterMapper {
-	private HashMap<String, FilterBuilder> map;
+	static private HashMap<String, FilterBuilder> map;
 	
-	public FilterMapper(){
-		map = new HashMap<String, FilterBuilder>();
-		
-	}
+	//No need for constructor (will be static)
 	
-	public Filter mapFilter(FilterPOJO fp){
+	public static Filter mapFilter(FilterPOJO fp){
 		return map.get(fp.getID()).build(fp.getParams());
 	}
 }
