@@ -1,4 +1,5 @@
-package es.ucm.fdi.data;
+package es.ucm.fdi.integration.data;
+
 
 public class UserPOJO extends DataPOJO{
 	

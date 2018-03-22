@@ -2,7 +2,7 @@ package es.ucm.fdi.integration;
 
 import java.util.List;
 
-import es.ucm.fdi.data.ClubPOJO;
+import es.ucm.fdi.integration.data.ClubPOJO;
 
 public interface ClubDAO {
 	public List<ClubPOJO> getMatchingClubs(List<String> tags);
