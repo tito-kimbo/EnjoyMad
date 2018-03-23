@@ -38,7 +38,7 @@ public interface SearchEngineSA {
 	 * @param words
 	 * @param filters
 	 */
-	public void search(List<String> words, List<FilterPOJO> filters);
+	public void search(String words, List<FilterPOJO> filters);
 
 
 }
