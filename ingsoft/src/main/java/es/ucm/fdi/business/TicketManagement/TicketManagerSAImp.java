@@ -5,7 +5,7 @@ import es.ucm.fdi.integration.UserDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 
-abstract class TicketManager {
+abstract class TicketManagerSAImp implements TicketManagerSA {
 	public void buyTicket(String club_name, String user_name) {
 		ClubDAOImp clubs = new ClubDAOImp();
 		ClubPOJO club = clubs.getClub(club_name);
