@@ -5,8 +5,7 @@ import java.util.List;
 import es.ucm.fdi.integration.data.DataPOJO;
 
 /**
- * This class contains the information needed 
- *
+ * This class contains the information needed to build a certain <code>Filter</code>
  */
 public class FilterPOJO extends DataPOJO {
 	private List<String> params;

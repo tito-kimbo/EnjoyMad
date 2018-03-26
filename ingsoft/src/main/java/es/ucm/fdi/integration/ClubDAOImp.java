@@ -26,25 +26,4 @@ public class ClubDAOImp implements ClubDAO {
 	}
 	public List<ClubPOJO> getClubs() {return clubs;}
 	public ClubPOJO getUser(String id){return null;}
-	
-	public List<ClubPOJO> getMatchingClubs(List<String> tags){
-		return null;
-	}
-	public List<ClubPOJO> getMatchingClubs(int minPrice, int maxPrice){
-		List<ClubPOJO> list = new ArrayList<ClubPOJO>();
-		for(ClubPOJO c : clubs)
-			if(c.getPrice() <= maxPrice && c.getPrice() >= maxPrice)
-				list.add(c);
-		return list;
-	}
-	public List<ClubPOJO> getMatchingClubs(String location, int maxRange){
-		/*
-		 * list := {}
-		 * for each club in clubs
-		 * 		Using Google Map's API get the distance from club to the location
-		 * 		if distance is less or equal than maxRange add to list
-		 * return list
-		 */
-		return null;
-	}
 }
