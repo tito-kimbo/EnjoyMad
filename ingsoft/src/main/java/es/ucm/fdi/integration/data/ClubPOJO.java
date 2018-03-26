@@ -1,10 +1,11 @@
-package es.ucm.fdi.data;
+package es.ucm.fdi.integration.data;
 
 import java.util.List;
 
 public class ClubPOJO extends DataPOJO {
 	String location;
-	float price;
+	float price, rating;
+
 	List<String> tags;
 	
 	public ClubPOJO(String id, String location, float price, List<String> tags){
@@ -12,6 +13,10 @@ public class ClubPOJO extends DataPOJO {
 		this.location = location;
 		this.price = price;
 		this.tags = tags;
+	}
+	
+	public float getRating() {
+		return rating;
 	}
 
 	public String getLocation() {

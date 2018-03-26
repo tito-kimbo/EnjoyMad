@@ -21,7 +21,7 @@ package es.ucm.fdi;
 
 import java.io.Serializable;
 
-import es.ucm.fdi.data.BDMemoria;
+import es.ucm.fdi.integration.data.BDMemoria;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -32,6 +32,10 @@ import junit.framework.TestSuite;
  *
  */
 class EjemploTO implements Serializable{
+	/**
+	 * Generated UID.
+	 */
+	private static final long serialVersionUID = 6013509682957806544L;
 	private String campo1="";
 	private String campo2="";
 	

@@ -3,7 +3,7 @@ package es.ucm.fdi.integration;
 import java.util.List;
 import java.util.ArrayList;
 
-import es.ucm.fdi.data.UserPOJO;
+import es.ucm.fdi.integration.data.UserPOJO;
 
 public class UserDAOImp implements UserDAO {
 	List<UserPOJO> users;
@@ -12,7 +12,7 @@ public class UserDAOImp implements UserDAO {
 		if(ini == last)
 			return ini;
 		int mid = (last + ini)/2;
-		return (users.get(mid).getId().compareTo(id) < 0) ? getUser(id,mid+1,last) : getUser(id,ini,mid);
+		return (users.get(mid).getID().compareTo(id) < 0) ? getUser(id,mid+1,last) : getUser(id,ini,mid);
 	}
 	public UserDAOImp() {
 		users = new ArrayList<UserPOJO>();

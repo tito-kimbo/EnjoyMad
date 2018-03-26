@@ -3,7 +3,7 @@ package es.ucm.fdi.integration;
 import java.util.List;
 import java.util.ArrayList;
 
-import es.ucm.fdi.data.ClubPOJO;
+import es.ucm.fdi.integration.data.ClubPOJO;
 
 public class ClubDAOImp implements ClubDAO {
 	List<ClubPOJO> clubs;
@@ -12,7 +12,7 @@ public class ClubDAOImp implements ClubDAO {
 		if(ini == last)
 			return ini;
 		int mid = (last + ini)/2;
-		return (clubs.get(mid).getId().compareTo(id) < 0) ? getclub(id,mid+1,last) : getclub(id,ini,mid);
+		return (clubs.get(mid).getID().compareTo(id) < 0) ? getclub(id,mid+1,last) : getclub(id,ini,mid);
 	}
 	public ClubDAOImp() {
 		clubs = new ArrayList<ClubPOJO>();
