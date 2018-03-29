@@ -1,5 +1,8 @@
 package es.ucm.fdi.business.ProfileManagement;
 
+import java.util.List;
+import java.time.LocalDate;
+
 /**
  * Interface defining the functionalities to be used in 
  * profile management.
@@ -26,7 +29,7 @@ public interface ProfileManagerSA {
 	 * @param name user's name
 	 * @param birthday user's birthday
 	 */
-	public void addNewUser(String id, String password, String email, String name, Date birthday);
+	public void addNewUser(String id, String password, String email, String name, LocalDate birthday);
 
 	
 	// Profile Modification //
@@ -34,6 +37,7 @@ public interface ProfileManagerSA {
 	/**
 	 * Given a club and a valid type of club data, overwrites the existing data;
 	 * provided the given data is correct/suitable.
+	 * 
 	 * @param id id of club to be modified
 	 * @param dataType type of data to be modified
 	 * @param newData new data
@@ -43,6 +47,7 @@ public interface ProfileManagerSA {
 	/**
 	 * Given a user and a valid type of user data, overwrites the existing data;
 	 * provided the given data is correct/suitable.
+	 * 
 	 * @param id id of user to be modified
 	 * @param dataType type of data to be modified
 	 * @param newData new data

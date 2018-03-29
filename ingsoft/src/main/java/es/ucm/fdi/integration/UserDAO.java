@@ -29,5 +29,5 @@ public interface UserDAO {
 	 * Removes an existing user from the user map.
 	 * @param id user's id to be removed
 	 */
-	public void removeuser(String id);
+	public void removeUser(String id);
 }

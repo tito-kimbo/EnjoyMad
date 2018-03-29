@@ -1,51 +1,19 @@
 package es.ucm.fdi.integration.data;
 
+import java.time.LocalDate;
 
 public class UserPOJO extends DataPOJO{
 	//Requires refactor -> Use java libs
-	class Date{
-		int day, month, year;
-		
-		public Date(int day, int month, int year) {
-			this.day = day;
-			this.month = month;
-			this.year = year;
-		}
-		
-		public int getDay() {
-			return day;
-		}
-
-		public void setDay(int day) {
-			this.day = day;
-		}
-
-		public int getMonth() {
-			return month;
-		}
-
-		public void setMonth(int month) {
-			this.month = month;
-		}
-
-		public int getYear() {
-			return year;
-		}
-
-		public void setYear(int year) {
-			this.year = year;
-		}
-	}
 	
 	String password, email, name;
-	Date birthday;
+	LocalDate birthday;
 
-	public UserPOJO(String id, String pass, String email, String name){
+	public UserPOJO(String id, String pass, String email, String name, LocalDate bday){
 		super(id);
 		password = pass;
 		this.email = email;
 		this.name = name; //MIGHT NEED CHECK
-		//WHAT ABOUT BIRTHDAY?
+		birthday = bday;
 	}
 	
 	public String getPassword() {
@@ -72,15 +40,15 @@ public class UserPOJO extends DataPOJO{
 		this.name = name;
 	}
 
-	public Date getBirthday() {
+	public LocalDate getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
 	}
 	
 	public void setBirthday(int day, int month, int year) {
-		this.birthday = new Date(day,month,year);
+		this.birthday = LocalDate.of(day,month,year); //MONTH IS AN ENUM IN THE FUNCTIOn
 	}
 }

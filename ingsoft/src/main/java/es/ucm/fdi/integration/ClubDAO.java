@@ -6,47 +6,40 @@ import es.ucm.fdi.integration.data.ClubPOJO;
 
 public interface ClubDAO {
 	/**
-	 * Returns a club given an id, null if it's not found.
-	 * @param id club's id
-	 * @return the searched club; null otherwise
+	 * Returns a <code>Club</code> given an id, null if it's not found.
+	 * 
+	 * @param id <code>Club</code>'s id.
+	 * @return the searched club; null otherwise.
 	 */
-	public clubPOJO getClub(String id);
+	public ClubPOJO getClub(String id);
+	
+	/**
+	 * Returns the full map of <code>Clubs</code>.
+	 * 
+	 * @return List of <code>Clubs</code>.
+	 */
+	public List<ClubPOJO> getClubs();
 
 	/**
-	 * Looks for a club (id) to see if it is registered or not.
-	 * @param id the club's id
-	 * @return if the club is registered
+	 * Looks for a <code>Club</code> (id) to see if it is registered or not.
+	 * 
+	 * @param id the <code>Club</code>'s id.
+	 * @return if the <code>Club</code> is registered.
 	 */
 	public boolean exist(String id);
 
 	/**
-	 * Adds a new club to the club map.
-	 * @param club club to be added
+	 * Adds a new <code>Club</code> to the <code>Club</code> map.
+	 * 
+	 * @param club <code>Club</code> to be added.
 	 */
 	public void addClub(ClubPOJO club);
 
 	/**
-	 * Removes an existing club from the club map.
-	 * @param id club's id to be removed
+	 * Removes an existing <code>Club</code> from the <code>Club</code> map.
+	 * 
+	 * @param id <code>Club</code>'s id to be removed.
 	 */
 	public void removeClub(String id);
-	
-	/**
-	 * TO BE IMPLEMENTED
-	 */
-	public List<clubPOJO> getMatchingClubs(List<String> tags);
-
-	/**
-	 * Returns a list of valid clubs within a range of ticket price.
-	 * @param minPrice minimum price admitted
-	 * @param maxPrice maximum price admitted
-	 * @return list of valid clubs 
-	 */
-	public List<clubPOJO> getMatchingClubs(int minPrice, int maxPrice);
-
-	/**
-	 * TO BE IMPLEMENTED
-	 */
-	public List<clubPOJO> getMatchingClubs(String location, int maxRange);
 	
 }
