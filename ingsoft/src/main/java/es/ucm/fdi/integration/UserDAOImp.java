@@ -6,23 +6,24 @@ import java.util.ArrayList;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 public class UserDAOImp implements UserDAO {
-	List<UserPOJO> users;
-	
-	private int getUser(String id, int ini, int last) {
-		if(ini == last)
-			return ini;
-		int mid = (last + ini)/2;
-		return (users.get(mid).getID().compareTo(id) < 0) ? getUser(id,mid+1,last) : getUser(id,ini,mid);
-	}
+	Map<UserPOJO> userMap;
+
 	public UserDAOImp() {
-		users = new ArrayList<UserPOJO>();
+		userMap = new HashMap<String, UserPOJO>();
 	}
+
+	@Override
 	public UserPOJO getUser(String id) {
-		return users.get(getUser(id,0,users.size()-1));
+		return userMap.get(id);
 	}
-	public void insert(UserPOJO user) {
-		//users.add(user,getUser(user.getId(),0,users.size()-1));
-		users.add(user);
+	
+	@Override
+	public void addUser(UserPOJO user) {
+		userMap.put(user.getID(), user);
 	}
-	public List<UserPOJO> getUsers() {return users;}
+
+	@Override
+	public boolean exist(String id) {
+		return containsKey(id);
+	}
 }

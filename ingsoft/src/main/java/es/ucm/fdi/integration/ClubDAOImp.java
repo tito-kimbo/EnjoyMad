@@ -1,42 +1,65 @@
 package es.ucm.fdi.integration;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
 
 public class ClubDAOImp implements ClubDAO {
-	List<ClubPOJO> clubs;
-	
-	private int getclub(String id, int ini, int last) {
-		if(ini == last)
-			return ini;
-		int mid = (last + ini)/2;
-		return (clubs.get(mid).getID().compareTo(id) < 0) ? getclub(id,mid+1,last) : getclub(id,ini,mid);
-	}
+	Map<String, ClubPOJO> clubMap;
+
 	public ClubDAOImp() {
-		clubs = new ArrayList<ClubPOJO>();
+		clubMap = new HashMap<String, ClubPOJO>();
 	}
+
+	@Override
 	public ClubPOJO getClub(String id) {
-		return clubs.get(getclub(id,0,clubs.size()-1));
+		return clubMap.get(id);
 	}
-	public void insert(ClubPOJO club) {
-		//clubs.add(club,getclub(club.getId(),0,clubs.size()-1));
-		clubs.add(club);
+
+	@Override
+	public boolean exist(String id) {
+		return containsKey(id);
 	}
-	public List<ClubPOJO> getClubs() {return clubs;}
-	public ClubPOJO getUser(String id){return null;}
-	
-	public List<ClubPOJO> getMatchingClubs(List<String> tags){
+
+	@Override
+	public void addClub(ClubPOJO club) {
+		clubMap.put(club.getID(), club);
+	}
+
+	@Override
+	public void removeClub(String id) {
+		clubMap.remove(id);
+	}
+
+	@Override
+	public List<ClubPOJO> getMatchingClubs(int minPrice, int maxPrice) {
+		// List of all registered clubs
+		ArrayList<ClubPOJO> clubs = clubMap.values();
+		// List of valid clubs (to be returned)
+		List<ClubPOJO> validClubs = new ArrayList<ClubPOJO>();
+		// Search
+		for(ClubPOJO c : clubs) {
+			if(c.getPrice() <= maxPrice && c.getPrice() >= minPrice) {
+				list.add(c);
+			}
+		}			
+				
+		return validClubs;
+	}
+
+	/**
+	 * TO BE IMPLEMENTED
+	 */
+	@Override
+	public List<ClubPOJO> getMatchingClubs(List<String> tags) {
 		return null;
 	}
-	public List<ClubPOJO> getMatchingClubs(int minPrice, int maxPrice){
-		List<ClubPOJO> list = new ArrayList<ClubPOJO>();
-		for(ClubPOJO c : clubs)
-			if(c.getPrice() <= maxPrice && c.getPrice() >= maxPrice)
-				list.add(c);
-		return list;
-	}
+
+	/**
+	 * TO BE IMPLEMENTED
+	 */
+	@Override
 	public List<ClubPOJO> getMatchingClubs(String location, int maxRange){
 		/*
 		 * list := {}
