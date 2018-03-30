@@ -3,10 +3,14 @@ package es.ucm.fdi.business.SearchEngine;
 import java.util.List;
 import java.util.ArrayList;
 
+
 import es.ucm.fdi.integration.ClubDAO;
 import es.ucm.fdi.integration.ClubDAOImp;
-import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
+
+import es.ucm.fdi.business.util.Element;
+import es.ucm.fdi.business.data.FilterPOJO;
+
 import es.ucm.fdi.business.SearchEngine.FilterMapper;
 import es.ucm.fdi.business.SearchEngine.Filters.Filter;
 
@@ -38,5 +42,9 @@ public class SearchEngineSAImp implements SearchEngineSA {
 	
 	public List<Element<ClubPOJO>> getSearchResults(){
 		return searchResults;
+	}
+	
+	public void select(){
+		
 	}
 }

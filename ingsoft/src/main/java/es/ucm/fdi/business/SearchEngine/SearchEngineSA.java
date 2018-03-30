@@ -5,40 +5,22 @@ import java.util.List;
 import es.ucm.fdi.business.data.FilterPOJO;
 
 /**
- * 
- *
+ *	This interface indicates the main functionality of the search engine. It also declares
+ *	useful utility classes such as the generic <code>Element</code>
  */
 public interface SearchEngineSA {
-
-	public class Element<T>{
-		private boolean visible;
-		private T element;
-		
-		public Element(T e){
-			visible = false;
-			element = e;
-		}
-		
-		public boolean isVisible(){
-			return visible;
-		}
-		
-		public T getElement(){
-			return element;
-		}
-		
-		protected void setVisible(boolean b){
-			visible = b;
-		}
-	}
-	
 	
 	/**
+	 * Searches for clubs applying the given filters.
 	 * 
-	 * @param words
-	 * @param filters
+	 * @param words		words of the search in progress.
+	 * @param filters	list of filters to apply.
 	 */
 	public void search(String words, List<FilterPOJO> filters);
-
+	
+	/**
+	 * Selects a club from a given list.
+	 */
+	public void select();
 
 }
