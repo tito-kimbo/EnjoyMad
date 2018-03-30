@@ -2,49 +2,54 @@ package es.ucm.fdi.integration;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
-
+/**
+ * This class is a Club data access object that implements {@link ClubDAO}.
+ * @author Fco Borja 
+ * @author Carlijn
+ */
 public class ClubDAOImp implements ClubDAO {
 	List<ClubPOJO> clubs;
 	
-	private int getclub(String id, int ini, int last) {
-		if(ini == last)
-			return ini;
-		int mid = (last + ini)/2;
-		return (clubs.get(mid).getID().compareTo(id) < 0) ? getclub(id,mid+1,last) : getclub(id,ini,mid);
-	}
+	/**
+	 * Constructor of the ClubDAO. Sets the list of clubs empty.
+	 */
 	public ClubDAOImp() {
 		clubs = new ArrayList<ClubPOJO>();
 	}
-	public ClubPOJO getClub(String id) {
+	/**
+	 * Returns the club that matches the identification in the positions of the list between the 'ini' position and the 'last' position.
+	 * @param id identification
+	 * @param ini initial position of the search
+	 * @param last last position of the search
+	 * @return club that matches the identification in the range
+	 * @throws NoSuchElementException if there is no element matching the identification
+	 */
+	private int getclub(String id, int ini, int last) throws NoSuchElementException {
+		if(ini == last)
+			if(clubs.get(ini).getID() == id)
+				return ini;
+			else 
+				throw new NoSuchElementException();
+		int mid = (last + ini)/2;
+		return (clubs.get(mid).getID().compareTo(id) < 0) ? getclub(id,mid+1,last) : getclub(id,ini,mid);
+	}
+	/**
+	 * @inheritDoc
+	 */
+	public ClubPOJO getClub(String id) throws NoSuchElementException {
 		return clubs.get(getclub(id,0,clubs.size()-1));
 	}
+	/**
+	 * @inheritDoc
+	 */
 	public void insert(ClubPOJO club) {
-		//clubs.add(club,getclub(club.getId(),0,clubs.size()-1));
 		clubs.add(club);
 	}
+	/**
+	 * @inheritDoc
+	 */
 	public List<ClubPOJO> getClubs() {return clubs;}
-	public ClubPOJO getUser(String id){return null;}
-	
-	public List<ClubPOJO> getMatchingClubs(List<String> tags){
-		return null;
-	}
-	public List<ClubPOJO> getMatchingClubs(int minPrice, int maxPrice){
-		List<ClubPOJO> list = new ArrayList<ClubPOJO>();
-		for(ClubPOJO c : clubs)
-			if(c.getPrice() <= maxPrice && c.getPrice() >= maxPrice)
-				list.add(c);
-		return list;
-	}
-	public List<ClubPOJO> getMatchingClubs(String location, int maxRange){
-		/*
-		 * list := {}
-		 * for each club in clubs
-		 * 		Using Google Map's API get the distance from club to the location
-		 * 		if distance is less or equal than maxRange add to list
-		 * return list
-		 */
-		return null;
-	}
 }
