@@ -10,22 +10,30 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * @author Fco Borja 
  * @author Carlijn
  */
-public interface UserDAO { 
+public interface UserDAO {
 	/**
-	 * Returns the list of Users it contains.
-	 * @return list of users
+	 * Returns a user given an id, null if it's not found.
+	 * @param id user's id
+	 * @return the searched user; null otherwise
 	 */
-	public List<UserPOJO> getUsers();
+	public UserPOJO getUser(String id);
+	
 	/**
-	 * Returns the user instance which matches the identification.
-	 * @param id identification of the user
-	 * @return user that matches the id
-	 * @throws NoSuchElementException if no element matches the identification
+	 * Looks for a user (id) to see if it is registered or not.
+	 * @param id the user's id
+	 * @return if the user is registered
 	 */
-	public UserPOJO getUser(String id) throws NoSuchElementException;
+	public boolean exist(String id);
+
 	/**
-	 * Inserts a user in the list.
-	 * @param user User
+	 * Adds a new user to the user map.
+	 * @param user user to be added
 	 */
-	public void insert(UserPOJO user);
+	public void addUser(UserPOJO user);
+
+	/**
+	 * Removes an existing user from the user map.
+	 * @param id user's id to be removed
+	 */
+	public void removeUser(String id);
 }

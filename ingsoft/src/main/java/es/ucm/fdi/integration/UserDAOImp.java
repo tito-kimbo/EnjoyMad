@@ -1,51 +1,60 @@
 package es.ucm.fdi.integration;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import java.util.List;
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 import es.ucm.fdi.integration.data.UserPOJO;
 
 public class UserDAOImp implements UserDAO {
-	List<UserPOJO> users;
+	Map<String, UserPOJO> userMap;
 	
 	/**
 	 * Constructor of the UserDAO. Sets the list of clubs empty.
 	 */
 	public UserDAOImp() {
-		users = new ArrayList<UserPOJO>();
+		userMap = new HashMap<String, UserPOJO>();
 	}
-	/**
-	 * Returns the club that matches the identification in the positions of the list between the 'ini' position and the 'last' position.
-	 * @param id identification
-	 * @param ini initial position of the search
-	 * @param last last position of the search
-	 * @return user that matches the identification in the range
-	 * @throws NoSuchElementException if there is no element matching the identification
-	 */
-	private int getUser(String id, int ini, int last) throws NoSuchElementException {
-		if(ini == last)
-			if(users.get(ini).getID() == id)
-				return ini;
-			else 
-				throw new NoSuchElementException();
-		int mid = (last+ini)/2;
-		return (users.get(mid).getID().compareTo(id) < 0) ? getUser(id,mid+1,last) : getUser(id,ini,mid);
-	}
+  
 	/**
 	 * @inheritDoc
 	 */
 	public UserPOJO getUser(String id) {
-		return users.get(getUser(id,0,users.size()-1));
+		return userMap.get(id);
 	}
+	
+  /**
+	 * @inheritDoc
+	 */
+	public void addUser(UserPOJO user) {
+		userMap.put(user.getID(), user);
+	}
+	
+  /**
+	 * @inheritDoc
+	 */
+	public boolean exist(String id) {
+		return userMap.containsKey(id);
+	}
+	
+  /**
+	 * @inheritDoc
+	 */
+	public void removeUser(String id){
+		if(exist(id)){
+			userMap.remove(id);
+		}else{
+			//throw exception
+		}
+	}
+
 	/**
 	 * @inheritDoc
 	 */
-	public void insert(UserPOJO user) {
-		users.add(user);
-	}
-	/**
-	 * @inheritDoc
-	 */
-	public List<UserPOJO> getUsers() {return users;}
+	public List<UserPOJO> getUsers() {
+    List<UserPOJO> aux = new ArrayList<UserPOJO>(userMap.values());
+    return aux;
+  }
 }

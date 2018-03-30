@@ -1,27 +1,21 @@
 package es.ucm.fdi.integration.data;
 
-/**
- * This class represents a user.
- * @author Fco Borja
- */
+import java.time.LocalDate;
+
 public class UserPOJO extends DataPOJO{
 	//Requires refactor -> Use java libs
+	
 	String password, email, name;
-	Date birthday;
-	/**
-	 * Class constructor.
-	 * @param id identification
-	 * @param pass password
-	 * @param email email
-	 * @param name name
-	 */
-	public UserPOJO(String id, String pass, String email, String name, int day, int month, int year){
+	LocalDate birthday;
+
+	public UserPOJO(String id, String pass, String email, String name, LocalDate bday){
 		super(id);
 		password = pass;
 		this.email = email;
-		this.name = name; 
-		this.birthday = new Date(day,month,year);
+		this.name = name; //MIGHT NEED CHECK
+		birthday = bday;
 	}
+  
 	/**
 	 * Returns the password.
 	 * @return password
@@ -64,20 +58,16 @@ public class UserPOJO extends DataPOJO{
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	/**
-	 * Sets the birthday
-	 * @param birthday birthday
-	 */
-	public void setBirthday(Date birthday) {
+
+	public LocalDate getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
 	}
-	/**
-	 * Returns the birthday.
-	 * @return 
-	 * @return birthday
-	 */
-	public Date getBirthday() {
-		return this.birthday;
+	
+	public void setBirthday(int day, int month, int year) {
+		this.birthday = LocalDate.of(day,month,year); //MONTH IS AN ENUM IN THE FUNCTIOn
 	}
 }
