@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import es.ucm.fdi.integration.ClubDAO;
-import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
 import es.ucm.fdi.business.util.Element;
@@ -20,8 +19,6 @@ public class SearchEngineSAImp implements SearchEngineSA {
 	public SearchEngineSAImp(ClubDAO clubs){
 		clubAccess = clubs;
 	}
-	
-	
 	
 	public void search(String words, List<FilterPOJO> filters){
 		Element<ClubPOJO> aux;
