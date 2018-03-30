@@ -13,7 +13,7 @@ public class RatingFilter implements Filter{
 	}
 
 	public Object clone(FilterPOJO fp){
-		return new RatingFilter(Integer.parseInt(fp.getParams().get(0)));
+		return new RatingFilter(Float.parseFloat(fp.getParams().get(0)));
 	}
 	
 	public boolean filter(ClubPOJO c) {

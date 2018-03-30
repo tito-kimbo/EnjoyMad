@@ -8,11 +8,12 @@ public class ClubPOJO extends DataPOJO {
 
 	List<String> tags;
 	
-	public ClubPOJO(String id, String location, float price, List<String> tags){
+	public ClubPOJO(String id, String location, float price, List<String> tags, float rating){
 		super(id);
 		this.location = location;
 		this.price = price;
 		this.tags = tags;
+		this.rating = rating;
 	}
 	
 	public float getRating() {
