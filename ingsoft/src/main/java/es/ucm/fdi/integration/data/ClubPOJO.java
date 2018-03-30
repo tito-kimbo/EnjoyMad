@@ -1,16 +1,17 @@
 package es.ucm.fdi.integration.data;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+
 /**
  * Class that represents a club.
  * @author Fco Borja
  */
 public class ClubPOJO extends DataPOJO {
 	String location;
-	Location coordinates;
+	//Location coordinates;
 	float price, rating;
-	ArrayList<String> tags;
+	List<String> tags;
 	/**
 	 * Club class constructor.
 	 * @param id identification
@@ -20,12 +21,12 @@ public class ClubPOJO extends DataPOJO {
 	 * @param price price
 	 * @param tags tags
 	 */
-	public ClubPOJO(String id, String location, double latitude, double longitude, float price, ArrayList<String> tags){
+	public ClubPOJO(String id, String location, float price, List<String> tags){
 		super(id);
 		this.location = location;
 		this.price = price;
 		this.tags = tags;
-		this.coordinates = new Location(latitude,longitude);
+		//this.coordinates = new Location(latitude,longitude);
 	}
 	/**
 	 * Returns the rating.
@@ -78,14 +79,14 @@ public class ClubPOJO extends DataPOJO {
 	 * Returns the latitude.
 	 * @return the latitude.
 	 */
-	public double getLatitude() {
+	/*public double getLatitude() {
 		return this.coordinates.getLat();
-	}
+	}*/
 	/**
 	 * Returns the longitude.
 	 * @return the longitude.
 	 */
-	public double getLongitude() {
+	/*public double getLongitude() {
 		return this.coordinates.getLng();
-	}
+	}*/
 }
