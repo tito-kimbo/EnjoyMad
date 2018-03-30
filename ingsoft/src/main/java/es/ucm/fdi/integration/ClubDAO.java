@@ -1,18 +1,15 @@
 package es.ucm.fdi.integration;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
-
-public interface ClubDAO {
-	/**
-	 * Returns a <code>Club</code> given an id, null if it's not found.
-	 * 
-	 * @param id <code>Club</code>'s id.
-	 * @return the searched club; null otherwise.
-	 */
-	public ClubPOJO getClub(String id);
-	
+/**
+ * This interface declares the methods a Club data access object needs to implement.
+ * @author Fco Borja 
+ * @author Carlijn
+ */
+public interface ClubDAO {	
 	/**
 	 * Returns the full map of <code>Clubs</code>.
 	 * 
@@ -42,4 +39,11 @@ public interface ClubDAO {
 	 */
 	public void removeClub(String id);
 	
+	/**
+	 * Returns the club instance which matches the identification.
+	 * @param id identification of the club
+	 * @return club that matches the id
+	 * @throws NoSuchElementException if no element matches the identification
+	 */
+	public ClubPOJO getClub(String id);
 }

@@ -15,27 +15,46 @@ public class UserPOJO extends DataPOJO{
 		this.name = name; //MIGHT NEED CHECK
 		birthday = bday;
 	}
-	
+  
+	/**
+	 * Returns the password.
+	 * @return password
+	 */
 	public String getPassword() {
 		return password;
 	}
-
+	/**
+	 * Sets the password.
+	 * @param password password
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	/**
+	 * Returns the email.
+	 * @return email
+	 */
 	public String getEmail() {
 		return email;
 	}
-
+	/**
+	 * Sets the email.
+	 * @param email email
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	/**
+	 * Returns the name.
+	 * @return name
+	 */
 	public String getName() {
 		return name;
 	}
-
+	/**
+	 * Sets the name
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
