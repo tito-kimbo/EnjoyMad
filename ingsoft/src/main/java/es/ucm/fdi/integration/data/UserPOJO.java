@@ -1,83 +1,119 @@
 package es.ucm.fdi.integration.data;
 
-/**
- * This class represents a user.
- * @author Fco Borja
- */
+import java.time.LocalDate;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 public class UserPOJO extends DataPOJO{
 	//Requires refactor -> Use java libs
+	
 	String password, email, name;
-	Date birthday;
-	/**
-	 * Class constructor.
-	 * @param id identification
-	 * @param pass password
-	 * @param email email
-	 * @param name name
-	 */
-	public UserPOJO(String id, String pass, String email, String name, int day, int month, int year){
+	LocalDate birthday;
+
+	public UserPOJO(String id, String pass, String email, String name, LocalDate bday){
 		super(id);
-		password = pass;
-		this.email = email;
-		this.name = name; 
-		this.birthday = new Date(day,month,year);
+		setPassword(pass);
+		setEmail(email);
+		setName(name);
+		birthday = bday;
 	}
+  
+	/**
+	 * Returns whether the; email address is valid.
+	 * @return valid
+	 */
+	
+	public static boolean isValidEmailAddress(String email) {
+		   boolean result = true;
+		   try {
+		      InternetAddress emailAddr = new InternetAddress(email);
+		      emailAddr.validate();
+		   } catch (AddressException ex) {
+		      result = false;
+		   }
+		   return result;
+		}
+	
 	/**
 	 * Returns the password.
 	 * @return password
 	 */
+	
 	public String getPassword() {
 		return password;
 	}
+	
 	/**
 	 * Sets the password.
 	 * @param password password
 	 */
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 	/**
 	 * Returns the email.
 	 * @return email
 	 */
+	
 	public String getEmail() {
 		return email;
 	}
+	
 	/**
 	 * Sets the email.
 	 * @param email email
 	 */
-	public void setEmail(String email) {
-		this.email = email;
+	
+	public void setEmail(String email){
+		if(isValidEmailAddress(email)){
+			this.email = email;
+		}
 	}
+	
 	/**
 	 * Returns the name.
 	 * @return name
 	 */
+	
 	public String getName() {
 		return name;
 	}
+	
 	/**
 	 * Sets the name
 	 * @param name
 	 */
+	
 	public void setName(String name) {
 		this.name = name;
 	}
 	
 	/**
-	 * Sets the birthday
-	 * @param birthday birthday
-	 */
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-	/**
-	 * Returns the birthday.
-	 * @return 
+	 * Returns the birthday
 	 * @return birthday
 	 */
-	public Date getBirthday() {
-		return this.birthday;
+	public LocalDate getBirthday() {
+		return birthday;
+	}
+	
+	/**
+	 * Sets the birthday
+	 * @param birthday
+	 */
+	
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
+	}
+	
+	/**
+	 * Sets the birthday
+	 * @param day
+	 * @param month
+	 * @param year
+	 */
+	public void setBirthday(int day, int month, int year) {
+		this.birthday = LocalDate.of(day,month,year); //MONTH IS AN ENUM IN THE FUNCTION
 	}
 }
