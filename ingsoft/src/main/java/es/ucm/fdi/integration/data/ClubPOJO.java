@@ -8,22 +8,22 @@ import java.util.ArrayList;
  * @author Fco Borja
  */
 public class ClubPOJO extends DataPOJO {
-	String location;
+	String address;
 	//Location coordinates;
 	float price, rating;
 	List<String> tags;
 	/**
 	 * Club class constructor.
 	 * @param id identification
-	 * @param location location string
+	 * @param address address string
 	 * @param latitude latitude
 	 * @param longitud longitude
 	 * @param price price
 	 * @param tags tags
 	 */
-	public ClubPOJO(String id, String location, float price, List<String> tags){
+	public ClubPOJO(String id, String address, float price, List<String> tags){
 		super(id);
-		this.location = location;
+		this.address = address;
 		this.price = price;
 		this.tags = tags;
 		//this.coordinates = new Location(latitude,longitude);
@@ -36,17 +36,17 @@ public class ClubPOJO extends DataPOJO {
 		return rating;
 	}
 	/**
-	 * Returns the location string.
-	 * @return location
+	 * Returns the address string.
+	 * @return address
 	 */
-	public String getLocation() {
-		return location;
+	public String getAddress() {
+		return address;
 	}
 	/**
 	 * Sets the string of the location.
 	 */
-	public void setLocation(String location) {
-		this.location = location;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	/**
 	 * Returns the price.
