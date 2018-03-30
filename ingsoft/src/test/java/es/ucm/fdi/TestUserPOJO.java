@@ -17,7 +17,7 @@ public class TestUserPOJO {
 	 * Tests a normal case of user info.
 	 * @result account will be created without issues.
 	 */
-	
+	//
 	@Test
 	public final void testCorrectAnswers() {
 		UserPOJO user = new UserPOJO("IDNumber1","MyPsw","myname@domain.com","myname",1,1,1980);
