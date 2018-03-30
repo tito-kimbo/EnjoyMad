@@ -1,13 +1,6 @@
 package es.ucm.fdi.business.TicketManagement;
 
 
-/*Uses JavaMail API and Java Activation Framework (JAF) 
-* Download in:
-* http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-eeplat-419426.html#javamail-1.4.4-oth-JPR
-* http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-java-plat-419418.html#jaf-1.1.1-fcs-oth-JPR
-* After downloading go to Project->Properties->Java Build Path->Libraries->Add External Jar->Select the jar files (mail.jar and activation.jar) you have downloaded, then hit apply
-*/
-import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -15,17 +8,25 @@ import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * This class is capable of sending an email.
+ * @author Fco Borja
+ *
+ */
 public class EmailSender {
-
-    public static void send(String email, String text, String subject) {
-
-        final String username = "enjoymad@gmail.com";
-        final String password = "yourpassword";
-
+	/**
+	 * Sends and email from 'from' to 'to' containing the provided text.
+	 * @param from origin email
+	 * @param to destination email
+	 * @param password password
+	 * @param text text
+	 * @param subject subject
+	 * @throws RuntimeException if there is an error
+	 */
+    public static void send(final String from, String to, final String password,  String text, String subject) throws RuntimeException {
         Properties props = new Properties();
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");
@@ -35,16 +36,16 @@ public class EmailSender {
         Session session = Session.getInstance(props,
           new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
+                return new PasswordAuthentication(from, password);
             }
           });
 
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("enjoymad@gmail.com"));
+            message.setFrom(new InternetAddress(to));
             message.setRecipients(Message.RecipientType.TO,
-                InternetAddress.parse(email));
+                InternetAddress.parse(to));
             message.setSubject(subject);
             message.setText(text);
 

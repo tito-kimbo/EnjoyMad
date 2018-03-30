@@ -18,16 +18,16 @@ public class PriceFilterTest {
 		l1.add("tecno");
 		l1.add("reggaeton");
 		l1.add("electronica");
-		ClubPOJO c = new ClubPOJO("Pacha", "C/Falsa 123", 20.30F, l1, 4.1F);
+		ClubPOJO c = new ClubPOJO("Pacha", "C/Falsa 123", 20.30F, l1);
 		FilterMapper fm = new FilterMapper();
 		List <String> l2 = new ArrayList<String>();
 		l2.add("30.50");
 		FilterPOJO fp = new FilterPOJO("PriceFilter", l2);
 		Filter f = FilterMapper.mapFilter(fp);
 		assertTrue("Expected true",f.filter(c));
-		c  = new ClubPOJO("Pacha", "C/Falsa 123", 30.50F, l1, 4.1F);
+		c  = new ClubPOJO("Pacha", "C/Falsa 123", 30.50F, l1);
 		assertTrue("Expected true",f.filter(c));
-		c  = new ClubPOJO("Pacha", "C/Falsa 123", 30.60F, l1, 4.1F);
+		c  = new ClubPOJO("Pacha", "C/Falsa 123", 30.60F, l1);
 		assertFalse("Expected false",f.filter(c));
 		
 	}

@@ -1,28 +1,60 @@
 package es.ucm.fdi.integration;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import java.util.List;
 import java.util.ArrayList;
 
 import es.ucm.fdi.integration.data.UserPOJO;
 
 public class UserDAOImp implements UserDAO {
-	List<UserPOJO> users;
+	Map<String, UserPOJO> userMap;
 	
-	private int getUser(String id, int ini, int last) {
-		if(ini == last)
-			return ini;
-		int mid = (last + ini)/2;
-		return (users.get(mid).getID().compareTo(id) < 0) ? getUser(id,mid+1,last) : getUser(id,ini,mid);
-	}
+	/**
+	 * Constructor of the UserDAO. Sets the list of clubs empty.
+	 */
 	public UserDAOImp() {
-		users = new ArrayList<UserPOJO>();
+		userMap = new HashMap<String, UserPOJO>();
 	}
+  
+	/**
+	 * @inheritDoc
+	 */
 	public UserPOJO getUser(String id) {
-		return users.get(getUser(id,0,users.size()-1));
+		return userMap.get(id);
 	}
-	public void insert(UserPOJO user) {
-		//users.add(user,getUser(user.getId(),0,users.size()-1));
-		users.add(user);
+	
+  /**
+	 * @inheritDoc
+	 */
+	public void addUser(UserPOJO user) {
+		userMap.put(user.getID(), user);
 	}
-	public List<UserPOJO> getUsers() {return users;}
+	
+  /**
+	 * @inheritDoc
+	 */
+	public boolean exist(String id) {
+		return userMap.containsKey(id);
+	}
+	
+  /**
+	 * @inheritDoc
+	 */
+	public void removeUser(String id){
+		if(exist(id)){
+			userMap.remove(id);
+		}else{
+			//throw exception
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public List<UserPOJO> getUsers() {
+    List<UserPOJO> aux = new ArrayList<UserPOJO>(userMap.values());
+    return aux;
+  }
 }
