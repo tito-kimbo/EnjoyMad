@@ -1,8 +1,5 @@
 package es.ucm.fdi.integration;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-
 import es.ucm.fdi.integration.data.UserPOJO;
 
 /**

@@ -1,7 +1,6 @@
 package es.ucm.fdi.business.ProfileManagement;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.time.LocalDate;
 
 import java.util.Arrays;
