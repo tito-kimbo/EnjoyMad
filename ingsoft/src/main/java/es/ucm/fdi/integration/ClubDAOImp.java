@@ -21,7 +21,7 @@ public class ClubDAOImp implements ClubDAO {
 		clubMap = new HashMap<String, ClubPOJO>();
 	}
 
-  /**
+	/**
 	 * @inheritDoc
 	 */
 	public ClubPOJO getClub(String id) {
