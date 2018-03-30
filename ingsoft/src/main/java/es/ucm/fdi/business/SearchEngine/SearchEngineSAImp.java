@@ -3,7 +3,6 @@ package es.ucm.fdi.business.SearchEngine;
 import java.util.List;
 import java.util.ArrayList;
 
-
 import es.ucm.fdi.integration.ClubDAO;
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
@@ -15,10 +14,16 @@ import es.ucm.fdi.business.SearchEngine.FilterMapper;
 import es.ucm.fdi.business.SearchEngine.Filters.Filter;
 
 public class SearchEngineSAImp implements SearchEngineSA {
-	private static List<Element<ClubPOJO>> searchResults;
+	private List<Element<ClubPOJO>> searchResults;
+	private ClubDAO clubAccess;
+	
+	public SearchEngineSAImp(ClubDAO clubs){
+		clubAccess = clubs;
+	}
+	
+	
 	
 	public void search(String words, List<FilterPOJO> filters){
-		ClubDAO clubAccess = new ClubDAOImp();
 		Element<ClubPOJO> aux;
 		List<ClubPOJO> clubs;
 		
