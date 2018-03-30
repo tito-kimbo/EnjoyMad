@@ -1,7 +1,6 @@
 package es.ucm.fdi.integration.data;
 
 import java.util.List;
-import java.util.ArrayList;
 
 /**
  * Class that represents a club.
@@ -21,7 +20,7 @@ public class ClubPOJO extends DataPOJO {
 	 * @param price price
 	 * @param tags tags
 	 */
-	public ClubPOJO(String id, String address, float price, ArrayList<String> tags){
+	public ClubPOJO(String id, String address, float price, List<String> tags){
 		super(id);
 		setAddress(address);
 		setPrice(price);
@@ -73,7 +72,7 @@ public class ClubPOJO extends DataPOJO {
 	/**
 	 * Sets the tags
 	 */
-	public void setTags(ArrayList<String> tags) {
+	public void setTags(List<String> tags) {
 		this.tags = tags;
 	}
 	/**
