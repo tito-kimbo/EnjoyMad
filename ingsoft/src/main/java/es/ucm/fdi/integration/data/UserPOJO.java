@@ -4,18 +4,16 @@ import java.time.LocalDate;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
-public class UserPOJO extends DataPOJO{
-	//Requires refactor -> Use java libs
-	
+public class UserPOJO extends DataPOJO {
 	String password, email, name;
-	Date birthday;
+	LocalDate birthday;
 
-	public UserPOJO(String id, String pass, String email, String name, int day, int month, int year){
+	public UserPOJO(String id, String pass, String email, String name, 
+			LocalDate bday){
 		super(id);
 		setPassword(pass);
 		setEmail(email);
 		setName(name);
-		Date bday = new Date(day, month, year);
 		setBirthday(bday);
 	}
   
@@ -95,7 +93,7 @@ public class UserPOJO extends DataPOJO{
 	 * Returns the birthday
 	 * @return birthday
 	 */
-	public Date getBirthday() {
+	public LocalDate getBirthday() {
 		return birthday;
 	}
 	
@@ -104,7 +102,7 @@ public class UserPOJO extends DataPOJO{
 	 * @param birthday
 	 */
 	
-	public void setBirthday(Date birthday) {
+	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
 	}
 }
