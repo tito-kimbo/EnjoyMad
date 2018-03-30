@@ -1,9 +1,7 @@
+/bin/
 /target/
-<<<<<<< HEAD
 .prefs
 .classpath
-=======
 *.prefs
 .classpath
 .project
->>>>>>> branch 'master' of https://github.com/tito-kimbo/EnjoyMad.git
