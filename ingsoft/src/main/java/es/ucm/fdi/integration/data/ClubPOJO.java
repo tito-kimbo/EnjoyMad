@@ -1,31 +1,32 @@
 package es.ucm.fdi.integration.data;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+
 /**
  * Class that represents a club.
  * @author Fco Borja
  */
 public class ClubPOJO extends DataPOJO {
-	String location;
-	Location coordinates;
+	String address;
+	//Location coordinates;
 	float price, rating;
-	ArrayList<String> tags;
+	List<String> tags;
 	/**
 	 * Club class constructor.
 	 * @param id identification
-	 * @param location location string
+	 * @param address address string
 	 * @param latitude latitude
 	 * @param longitud longitude
 	 * @param price price
 	 * @param tags tags
 	 */
-	public ClubPOJO(String id, String location, double latitude, double longitude, float price, ArrayList<String> tags){
+	public ClubPOJO(String id, String address, float price, List<String> tags){
 		super(id);
-		this.location = location;
+		this.address = address;
 		this.price = price;
 		this.tags = tags;
-		this.coordinates = new Location(latitude,longitude);
+		//this.coordinates = new Location(latitude,longitude);
 	}
 	/**
 	 * Returns the rating.
@@ -35,17 +36,17 @@ public class ClubPOJO extends DataPOJO {
 		return rating;
 	}
 	/**
-	 * Returns the location string.
-	 * @return location
+	 * Returns the address string.
+	 * @return address
 	 */
-	public String getLocation() {
-		return location;
+	public String getAddress() {
+		return address;
 	}
 	/**
 	 * Sets the string of the location.
 	 */
-	public void setLocation(String location) {
-		this.location = location;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	/**
 	 * Returns the price.
@@ -78,14 +79,14 @@ public class ClubPOJO extends DataPOJO {
 	 * Returns the latitude.
 	 * @return the latitude.
 	 */
-	public double getLatitude() {
+	/*public double getLatitude() {
 		return this.coordinates.getLat();
-	}
+	}*/
 	/**
 	 * Returns the longitude.
 	 * @return the longitude.
 	 */
-	public double getLongitude() {
+	/*public double getLongitude() {
 		return this.coordinates.getLng();
-	}
+	}*/
 }

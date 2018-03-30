@@ -8,14 +8,15 @@ public class UserPOJO extends DataPOJO{
 	//Requires refactor -> Use java libs
 	
 	String password, email, name;
-	LocalDate birthday;
+	Date birthday;
 
-	public UserPOJO(String id, String pass, String email, String name, LocalDate bday){
+	public UserPOJO(String id, String pass, String email, String name, int day, int month, int year){
 		super(id);
 		setPassword(pass);
 		setEmail(email);
 		setName(name);
-		birthday = bday;
+		Date bday = new Date(day, month, year);
+		setBirthday(bday);
 	}
   
 	/**
@@ -94,7 +95,7 @@ public class UserPOJO extends DataPOJO{
 	 * Returns the birthday
 	 * @return birthday
 	 */
-	public LocalDate getBirthday() {
+	public Date getBirthday() {
 		return birthday;
 	}
 	
@@ -103,17 +104,7 @@ public class UserPOJO extends DataPOJO{
 	 * @param birthday
 	 */
 	
-	public void setBirthday(LocalDate birthday) {
+	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
-	}
-	
-	/**
-	 * Sets the birthday
-	 * @param day
-	 * @param month
-	 * @param year
-	 */
-	public void setBirthday(int day, int month, int year) {
-		this.birthday = LocalDate.of(day,month,year); //MONTH IS AN ENUM IN THE FUNCTION
 	}
 }
