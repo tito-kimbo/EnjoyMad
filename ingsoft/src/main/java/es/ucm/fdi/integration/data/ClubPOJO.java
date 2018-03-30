@@ -11,6 +11,7 @@ public class ClubPOJO extends DataPOJO {
 	//Location coordinates;
 	float price, rating;
 	List<String> tags;
+	
 	/**
 	 * Club class constructor.
 	 * @param id identification
@@ -27,6 +28,7 @@ public class ClubPOJO extends DataPOJO {
 		setTags(tags);
 		//this.coordinates = new Location(latitude,longitude);
 	}
+	
 	/**
 	 * Returns the rating.
 	 * @return rating
@@ -34,6 +36,7 @@ public class ClubPOJO extends DataPOJO {
 	public float getRating() {
 		return rating;
 	}
+	
 	/**
 	 * Returns the address string.
 	 * @return address
@@ -41,12 +44,14 @@ public class ClubPOJO extends DataPOJO {
 	public String getAddress() {
 		return address;
 	}
+	
 	/**
 	 * Sets the string of the location.
 	 */
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
 	/**
 	 * Returns the price.
 	 * @return price
@@ -54,6 +59,7 @@ public class ClubPOJO extends DataPOJO {
 	public float getPrice() {
 		return price;
 	}
+	
 	/**
 	 * Sets the price of a ticket.
 	 * @return price of a ticket
@@ -62,6 +68,7 @@ public class ClubPOJO extends DataPOJO {
 		if(price > 0)
 			this.price = price;
 	}
+	
 	/**
 	 * Returns the tags.
 	 * @return tags
@@ -69,12 +76,14 @@ public class ClubPOJO extends DataPOJO {
 	public List<String> getTags() {
 		return tags;
 	}
+	
 	/**
 	 * Sets the tags
 	 */
 	public void setTags(List<String> tags) {
 		this.tags = tags;
 	}
+	
 	/**
 	 * Returns the latitude.
 	 * @return the latitude.
