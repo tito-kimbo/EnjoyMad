@@ -1,15 +1,17 @@
 package es.ucm.fdi.business.ProfileManagement;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
 import java.time.LocalDate;
 
-import java.util.Arrays;
 
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.business.ProfileManagement.ManagementTools.ClubDataID;
+import es.ucm.fdi.business.ProfileManagement.ManagementTools.ClubManageTool;
 import es.ucm.fdi.integration.UserDAOImp;
 import es.ucm.fdi.integration.data.UserPOJO;
+import es.ucm.fdi.business.ProfileManagement.ManagementTools.UserDataID;
+import es.ucm.fdi.business.ProfileManagement.ManagementTools.UserManageTool;
 
 /**
  * Class to be used as the Profile Manager of the application.
@@ -18,35 +20,12 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
     private static ClubDAOImp clubDAO = new ClubDAOImp(); //¿Singleton?
     private static UserDAOImp userDAO = new UserDAOImp();
 
-    /**
-     * List representing the attributes of a ClubPOJO.
-     * Used to modify a particular attribute.
-     */
-    private static List<String> clubData = Arrays.asList(
-            "ID",
-            "LOCATION",
-            "PRICE",
-            "RATING"
-    );
-
-    /**
-     * List representing the attributes of a UserPOJO.
-     * Used to modify a particular attribute.
-     */
-    private static List<String> userData = Arrays.asList(
-            "ID",
-            "PASSWORD",
-            "EMAIL",
-            "NAME",
-            "BIRTHDAY"
-    );
-
     public ProfileManagerSAImp(ClubDAOImp clubs, UserDAOImp users) {
         clubDAO = clubs;
         userDAO = users;
     }
 
-    public void addNewClub(String id, String location, float price, List<String> tags) {
+    public void addNewClub(String id, String location, float price, Set<String> tags) {
         // Is already registered?
         if (clubDAO.exist(id)) {
             // throw AlreadyExistingClub exception
@@ -80,7 +59,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         userDAO.addUser(newUser);
     }
 
-    public void modifyClubData(String id, String dataType, Object newData) {
+	public void modifyClubData(String id, ClubDataID dataID, Object newData) {
         ClubPOJO club = clubDAO.getClub(id);
 
         if (club == null) {
@@ -88,10 +67,11 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         }
 
         // try...catch (for wrong newData)
-        // clubManager.modify(dataType, newData); ?????????
+        ClubManageTool clubManager = new ClubManageTool(club, clubDAO);
+        clubManager.modify(dataID, newData);
     }
     
-    public void modifyUserData(String id, String dataType, Object newData) {
+    public void modifyUserData(String id, UserDataID dataID, Object newData) {
         UserPOJO user = userDAO.getUser(id);
 
         if (user == null) {
@@ -99,7 +79,8 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         }
 
         // try...catch (for wrong newData)
-        // userManager.modify(dataType, newData); ??????
+        UserManageTool userManager = new UserManageTool(user, userDAO);
+        userManager.modify(dataID, newData);
     }
 
 	public void removeClub(String id) {
@@ -116,5 +97,29 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         }
 
         userDAO.removeUser(id);
+    }
+
+    public void addNewRate(String clubID, int rate, String userID) {
+        ClubPOJO ratedClub = clubDAO.getClub(clubID);
+
+        if (ratedClub == null) {
+            // throw NonExistingClub excepction
+        }
+
+        // Parse? [De 0 a 10]
+
+        ratedClub.addUserRate(userID, rate);
+    }
+
+    public void addNewOpinion(String clubID, String opinion, String userID) {
+        ClubPOJO evaluatedClub = clubDAO.getClub(clubID);
+
+        if (evaluatedClub == null) {
+            // throw NonExistingClub exception
+        }
+
+        // Parse? [Número máximo de caracteres]
+
+        evaluatedClub.addUserOpinion(userID, opinion);
     }
 }

@@ -8,6 +8,8 @@ public class UserPOJO extends DataPOJO{
 	String password, email, name;
 	LocalDate birthday;
 
+	
+
 	public UserPOJO(String id, String pass, String email, String name, LocalDate bday){
 		super(id);
 		password = pass;
