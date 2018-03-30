@@ -12,6 +12,7 @@ public class ClubPOJO extends DataPOJO {
 	float price, rating;
 	List<String> tags;
 	
+	
 	/**
 	 * Club class constructor.
 	 * @param id identification
@@ -21,14 +22,24 @@ public class ClubPOJO extends DataPOJO {
 	 * @param price price
 	 * @param tags tags
 	 */
-	public ClubPOJO(String id, String address, float price, List<String> tags){
+
+	public ClubPOJO(String id, String location, float price, List<String> tags){
 		super(id);
+		//this.location = location;
+		this.price = price;
+		this.tags = tags;
+		rating = 0;
 		setAddress(address);
 		setPrice(price);
 		setTags(tags);
 		//this.coordinates = new Location(latitude,longitude);
 	}
 	
+
+	public void setRating(float rating) {
+		this.rating = rating;
+	}
+
 	/**
 	 * Returns the rating.
 	 * @return rating

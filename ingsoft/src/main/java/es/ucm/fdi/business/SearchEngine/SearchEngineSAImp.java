@@ -31,7 +31,6 @@ public class SearchEngineSAImp implements SearchEngineSA {
 			aux = new Element<ClubPOJO>(c);
 			aux.setVisible( c.getID().toLowerCase().contains(words.toLowerCase()) );
 			searchResults.add(aux);
-
 		}
 		
 		for(FilterPOJO f : filters){

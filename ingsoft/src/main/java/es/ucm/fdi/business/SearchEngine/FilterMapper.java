@@ -19,7 +19,7 @@ public class FilterMapper {
 		map = new HashMap<String, Filter>();
 		map.put("PriceFilter", new PriceFilter());
 		map.put("TagFilter", new TagFilter());
-		map.put("ValorationFilter", new RatingFilter());
+		map.put("RatingFilter", new RatingFilter());
 		map.put("LocationFilter", new LocationFilter());
 	}
 	
