@@ -12,8 +12,8 @@ public class Location {
 	 * @param longitude longitude
 	 */
 	public Location(double latitude, double longitude) {
-		this.lat = latitude;
-		this.lng = longitude;
+		setLat(latitude);
+		setLng(longitude);
 	}
 	/**
 	 * Returns the latitude.

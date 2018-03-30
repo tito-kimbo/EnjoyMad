@@ -21,11 +21,11 @@ public class ClubPOJO extends DataPOJO {
 	 * @param price price
 	 * @param tags tags
 	 */
-	public ClubPOJO(String id, String address, float price, List<String> tags){
+	public ClubPOJO(String id, String address, float price, ArrayList<String> tags){
 		super(id);
-		this.address = address;
-		this.price = price;
-		this.tags = tags;
+		setAddress(address);
+		setPrice(price);
+		setTags(tags);
 		//this.coordinates = new Location(latitude,longitude);
 	}
 	/**
@@ -60,7 +60,8 @@ public class ClubPOJO extends DataPOJO {
 	 * @return price of a ticket
 	 */
 	public void setPrice(float price) {
-		this.price = price;
+		if(price > 0)
+			this.price = price;
 	}
 	/**
 	 * Returns the tags.
