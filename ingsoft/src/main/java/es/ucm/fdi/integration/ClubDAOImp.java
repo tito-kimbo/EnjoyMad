@@ -1,29 +1,59 @@
 package es.ucm.fdi.integration;
 
+import java.util.Map;
 import java.util.List;
+import java.util.HashMap;
 import java.util.ArrayList;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
-
+/**
+ * This class is a Club data access object that implements {@link ClubDAO}.
+ * @author Fco Borja 
+ * @author Carlijn
+ */
 public class ClubDAOImp implements ClubDAO {
-	List<ClubPOJO> clubs;
-	
-	private int getclub(String id, int ini, int last) {
-		if(ini == last)
-			return ini;
-		int mid = (last + ini)/2;
-		return (clubs.get(mid).getID().compareTo(id) < 0) ? getclub(id,mid+1,last) : getclub(id,ini,mid);
-	}
+	Map<String, ClubPOJO> clubMap;
+
+	/**
+	 * Constructor of the ClubDAO. Sets the list of clubs empty.
+	 */
 	public ClubDAOImp() {
-		clubs = new ArrayList<ClubPOJO>();
+		clubMap = new HashMap<String, ClubPOJO>();
 	}
+
+  /**
+	 * @inheritDoc
+	 */
 	public ClubPOJO getClub(String id) {
-		return clubs.get(getclub(id,0,clubs.size()-1));
+		return clubMap.get(id);
 	}
-	public void insert(ClubPOJO club) {
-		//clubs.add(club,getclub(club.getId(),0,clubs.size()-1));
-		clubs.add(club);
+	
+ 	/**
+	 * @inheritDoc
+	 */
+	public List<ClubPOJO> getClubs(){
+		List<ClubPOJO> aux = new ArrayList<ClubPOJO>(clubMap.values());
+		return aux;
 	}
-	public List<ClubPOJO> getClubs() {return clubs;}
-	public ClubPOJO getUser(String id){return null;}
+
+ 	/**
+	 * @inheritDoc
+	 */
+	public boolean exist(String id) {
+		return clubMap.containsKey(id);
+	}
+
+ 	/**
+	 * @inheritDoc
+	 */
+	public void addClub(ClubPOJO club) {
+		clubMap.put(club.getID(), club);
+	}
+
+  /**
+	 * @inheritDoc
+	 */
+	public void removeClub(String id) {
+		clubMap.remove(id);
+	}
 }
