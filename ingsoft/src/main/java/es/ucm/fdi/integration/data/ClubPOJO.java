@@ -1,5 +1,6 @@
 package es.ucm.fdi.integration.data;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -73,8 +74,58 @@ public class ClubPOJO extends DataPOJO {
 	}
 
 	/**
+	 * Returns the address string.
+	 * @return address
+	 */
+	public String getAddress() {
+		return address;
+	}
+	
+	/**
+	 * Sets the string of the location.
+	 * @param address new address
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	/**
+	 * Returns the price.
+	 * @return price
+	 */
+	public float getPrice() {
+		return price;
+	}
+	
+	/**
+	 * Sets the price of a ticket.
+	 * @return price of a ticket
+	 */
+	public void setPrice(float price) {
+		if(price > 0)
+			this.price = price;
+	}
+
+	/**
+	 * Returns the tags.
+	 * @return tags
+	 */
+	public Set<String> getTags() {
+		return tags;
+	}
+	
+	/**
+	 * Sets the tags
+	 * @param tags new tags
+	 */
+	public void setTags(Set<String> tags) {
+		this.tags = new HashSet<String>(tags);
+	}
+
+	/**
 	 * Adds a tag to the club tags set. If it already exists, it
 	 * won't be duplicated.
+	 * @param tag tag to be added
 	 */
 	public void addTag(String tag) {
 		tags.add(tag);
@@ -83,6 +134,7 @@ public class ClubPOJO extends DataPOJO {
 	/**
 	 * Removes tag from the club tags set. If it is not
 	 * in the set, nothing happens.
+	 * @param tag tag to be removed
 	 */
 	public void removeTag(String tag) {
 		tags.remove(tag);
@@ -96,15 +148,10 @@ public class ClubPOJO extends DataPOJO {
 	}
 
 	/**
-	 * Adds a new/modified user opinion to the opinion map.
-	 */
-	public void addUserOpinion(String userID, String opinion) {
-		userOpinions.put(userID, opinion); // Overwrites previous rate (if exist)
-	}
-
-	/**
 	 * Adds a new/modified user rate to the rates map
-	 * and modifies the total rating.
+	 * and updates the total rating.
+	 * @param userID rating user
+	 * @param rate rate integer
 	 */
 	public void addUserRate(String userID, int rate) {
 		int numRates = userRates.size();
@@ -118,6 +165,23 @@ public class ClubPOJO extends DataPOJO {
 		}
 
 		userRates.put(userID, rate); // Overwrites previous rate (if exist)
+	}
+
+	/**
+	 * Removes a user rate from the rates map (if present) 
+	 * and updates the total rating.
+	 * @param userID unrating user
+	 */
+	public void removeUserRate(String userID) {
+		Integer removedRateInt = userRates.remove(userID);
+		
+		if (removedRateInt != null) {
+			int removedRate = removedRateInt; // unbox
+			int size = userRates.remove(userID);
+
+			rating -= removedRate / (size + 1);
+			rating *= (size + 1) / size;
+		}		
 	}
 
 	/**
@@ -138,6 +202,14 @@ public class ClubPOJO extends DataPOJO {
 			return false;
 		}
 	}
+
+	/**
+	 * Returns a Collection with raters (users) IDs.
+	 * @return Collection of String
+	 */
+	public Collection<String> getRaters() {
+		return (Collection<String>) userRates.keySet();
+	}
 	
     /**
 	 * Returns the rating.
@@ -149,56 +221,43 @@ public class ClubPOJO extends DataPOJO {
 	
 	/**
 	 * Sets the club's rating.
+	 * @param rating new rating
 	 */
 	public void setRating(float rating) {
 		this.rating = rating;
 	}
+
 	/**
-	 * Returns the address string.
-	 * @return address
+	 * Adds a new/modified user opinion to the opinion map.
+	 * @param userID reviewing user
+	 * @param opinion user's opinion
 	 */
-	public String getAddress() {
-		return address;
+	public void addUserOpinion(String userID, String opinion) {
+		userOpinions.put(userID, opinion); // Overwrites previous rate (if exist)
 	}
+
+	/**
+	 * Removes a user opinion (if present).
+	 * @param userID unreviewing user
+	 */
+	public void removeUserOpinion(String userID) {
+		userOpinions.remove(userID);
+	}
+
+	/**
+	 * Returns a Collection with reviewers (users) IDs.
+	 * @return Collection of String
+	 */
+	public Collection<String> getReviewers() {
+		return (Collection<String>) userOpinions.keySet();
+	}
+
 	
-	/**
-	 * Sets the string of the location.
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
 	
-	/**
-	 * Returns the price.
-	 * @return price
-	 */
-	public float getPrice() {
-		return price;
-	}
 	
-	/**
-	 * Sets the price of a ticket.
-	 * @return price of a ticket
-	 */
-	public void setPrice(float price) {
-		if(price > 0)
-			this.price = price;
-	}
 	
-	/**
-	 * Returns the tags.
-	 * @return tags
-	 */
-	public Set<String> getTags() {
-		return tags;
-	}
 	
-	/**
-	 * Sets the tags
-	 */
-	public void setTags(Set<String> tags) {
-		this.tags = new HashSet<String>(tags);
-	}
+	
 	
 	/**
 	 * Returns the latitude.

@@ -25,9 +25,9 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         userDAO = users;
     }
 
-    public void addNewClub(String id, String location, float price, Set<String> tags) {
+    public void addNewClub(String clubID, String location, float price, Set<String> tags) {
         // Is already registered?
-        if (clubDAO.exist(id)) {
+        if (clubDAO.exist(clubID)) {
             // throw AlreadyExistingClub exception
         }
         
@@ -37,13 +37,13 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
         // Valid tags? [¿Usaremos tags preestblecidos (TagsDAO)?]
 
-        ClubPOJO newClub = new ClubPOJO(id, location, price, tags);
+        ClubPOJO newClub = new ClubPOJO(clubID, location, price, tags);
         clubDAO.addClub(newClub);
     }
 
-    public void addNewUser(String id, String password, String email, String name, LocalDate birthday) {
+    public void addNewUser(String userID, String password, String email, String name, LocalDate birthday) {
         // Is already registered?
-        if (userDAO.exist(id)) {
+        if (userDAO.exist(userID)) {
             // throw AlreadyExistingUser exception
         }
 
@@ -55,12 +55,12 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
         // Valid birthday? [¿filtro de edad?]
 
-        UserPOJO newUser = new UserPOJO(id, password, email, name, birthday);
+        UserPOJO newUser = new UserPOJO(userID, password, email, name, birthday);
         userDAO.addUser(newUser);
     }
 
-	public void modifyClubData(String id, ClubDataID dataID, Object newData) {
-        ClubPOJO club = clubDAO.getClub(id);
+	public void modifyClubData(String clubID, ClubDataID dataID, Object newData) {
+        ClubPOJO club = clubDAO.getClub(clubID);
 
         if (club == null) {
             // throw NonExistingClub excepction
@@ -71,8 +71,8 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         clubManager.modify(dataID, newData);
     }
     
-    public void modifyUserData(String id, UserDataID dataID, Object newData) {
-        UserPOJO user = userDAO.getUser(id);
+    public void modifyUserData(String userID, UserDataID dataID, Object newData) {
+        UserPOJO user = userDAO.getUser(userID);
 
         if (user == null) {
             // throw NonExistingUser exception //Better use an already existing exception
@@ -83,20 +83,52 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         userManager.modify(dataID, newData);
     }
 
-	public void removeClub(String id) {
-        if ( ! clubDAO.exist(id)) {
+	public void removeClub(String clubID) {
+        ClubPOJO removingClub = clubDAO.getClub(clubID);
+
+        if (removingClub == null) {
             //throw NonExistingProfile exception
         }
 
-        clubDAO.removeClub(id);
+        // Removal of raters (in user attributes)
+        for ( String userID : removingClub.getRaters() ) {
+            UserPOJO rater = userDAO.getUser(userID);
+
+            rater.removeRated(clubID);
+        }
+
+        // Removal of reviewers (in user attributes)
+        for ( String userID : removingClub.getReviewers() ) {
+            UserPOJO rater = userDAO.getUser(userID);
+
+            rater.removeReviewed(clubID);
+        }
+
+        clubDAO.removeClub(clubID);
     }
 
-    public void removeUser(String id) {
-        if ( ! userDAO.exist(id)) {
+    public void removeUser(String userID) {
+        UserPOJO removingUser = userDAO.getUser(userID);
+        
+        if (removingUser == null) {
             // throw NonExistingProfile exception
         }
 
-        userDAO.removeUser(id);
+        // Removal of user ratings
+        for ( String clubID : removingUser.getRatedClubs() ) {
+            ClubPOJO ratedClub = clubDAO.getClub(clubID);
+
+            ratedClub.removeUserRate(userID);
+        }
+
+        // Removal of user reviews
+        for ( String clubID : removingUser.getReviewedClubs() ) {
+            ClubPOJO reviewedClub = clubDAO.getClub(clubID);
+
+            reviewedClub.removeUserOpinion(userID);
+        }
+
+        userDAO.removeUser(userID);
     }
 
     public void addNewRate(String clubID, int rate, String userID) {
@@ -112,14 +144,36 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
     }
 
     public void addNewOpinion(String clubID, String opinion, String userID) {
-        ClubPOJO evaluatedClub = clubDAO.getClub(clubID);
+        ClubPOJO reviewedClub = clubDAO.getClub(clubID);
 
-        if (evaluatedClub == null) {
+        if (reviewedClub == null) {
             // throw NonExistingClub exception
         }
 
         // Parse? [Número máximo de caracteres]
 
-        evaluatedClub.addUserOpinion(userID, opinion);
+        reviewedClub.addUserOpinion(userID, opinion);
+    }
+
+    public void removeUserRate(String clubID, String userID) {
+        ClubPOJO unratedClub = clubDAO.getClub(clubID);
+
+        if (unratedClub == null) {
+            // throw exception
+        }
+
+        // existUser exception ???
+        unratedClub.removeUserRate(userID);
+    }
+
+    public void removeUserOpinion(String clubID, String userID) {
+        ClubPOJO unreviewedClub = clubDAO.getClub(clubID);
+        
+        if (unreviewedClub == null) {
+            // throw exception
+        }
+
+        // existUer excp ???
+        unreviewedClub.removeUserOpinion(userID);        
     }
 }
