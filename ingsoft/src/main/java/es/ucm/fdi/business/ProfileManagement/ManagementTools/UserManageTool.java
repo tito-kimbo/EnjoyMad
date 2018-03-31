@@ -2,10 +2,10 @@ package es.ucm.fdi.business.ProfileManagement.ManagementTools;
 
 import java.time.LocalDate;
 
-import es.ucm.fdi.integration.data.UserPOJO;
-import es.ucm.fdi.business.ProfileManagement.ManagementTools.UserDataID;
+import org.mindrot.jbcrypt.BCrypt;
 
 import es.ucm.fdi.integration.UserDAOImp;
+import es.ucm.fdi.integration.data.UserPOJO;
 
 
 
@@ -62,8 +62,12 @@ public class UserManageTool {
             // throw NotValidModification exception
         }
 
-        // ¿Parse?
+        // Valid?
         String newID = (String) newData;
+
+        if ( ! ParsingTool.parseID(newID) ) {
+            
+        }
         
         // Map change
         userDAO.removeUser(userToManage.getID());        
@@ -81,10 +85,17 @@ public class UserManageTool {
             // throw NotValidModification exception
         }
 
-        // ¿Parse?
+        // Valid?
         String newPassword = (String) newData;
 
-        userToManage.setPassword(newPassword);
+        if ( ! ParsingTool.parsePassword(newPassword) ) {
+            
+        }
+
+        // Password protection.
+        String hashPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+
+        userToManage.setPassword(hashPassword);
     }
 
     /**
@@ -97,8 +108,12 @@ public class UserManageTool {
             // throw NotValidModification exception
         }
 
-        // Parse?
+        // Valid?
         String newEmail = (String) newData;
+
+        if ( ! ParsingTool.parseEmail(newEmail) ) {
+            
+        }
 
         userToManage.setEmail(newEmail);
     }
@@ -113,8 +128,12 @@ public class UserManageTool {
             // throw NotValidModification exception
         }
 
-        // Parse?
+        // Valid?
         String newName = (String) newData;
+
+        if ( ! ParsingTool.parseName(newName) ) {
+            
+        }
 
         userToManage.setName(newName);
     }
@@ -128,7 +147,12 @@ public class UserManageTool {
             // throw ...
         }
 
+        // Valid?
         LocalDate newBirthday = (LocalDate) newData;
+        
+        if ( ! ParsingTool.parseBirthday(newBirthday) ) {
+            
+        }
 
         userToManage.setBirthday(newBirthday);
     }

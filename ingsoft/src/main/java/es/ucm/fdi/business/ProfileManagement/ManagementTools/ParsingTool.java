@@ -1,6 +1,7 @@
 package es.ucm.fdi.business.ProfileManagement.ManagementTools;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.regex.Pattern;
 
 /**
@@ -9,39 +10,63 @@ import java.util.regex.Pattern;
  */
 public class ParsingTool {
     /**
-     * A pattern that matches non-alphanumeric sequences [^A-Za-z0-9_].
+     * A pattern that matches alphanumeric sequences [A-Za-z0-9_].
      * Used for alphanumeric Strings with no whitespaces.
+     * 
+     * @see #parseID(String)
+     * @see #parseUsername(String)
      */
-    static Pattern nonAlphaNumChecker = Pattern.compile("\\W+");
+    public static Pattern alphaNumKeyChecker = Pattern.compile("\\^(\\w+)$");
     
     /**
-     * A pattern that matches ASCII printable chars from Whitespace(#32) to ~(#126). 
+     * A series of Patterns to match a password that matches ASCII 
+     * printable sequence from Whitespace(#32) to ~(#126) and size over 8. 
+     * At least minus, mayus and numeric char. 
      * Not allowed extended ASCII chars (from #126 upwards).
+     * 
+     * @see #parsePassword(String)
      */
-    static Pattern nonPrintableChecker = Pattern.compile("\\[^ -~]");
-
-    /**
-     * A pattern that matches alphabet characters. 
-     */
-    static Pattern alphabetChecker = Pattern.compile("\\[A-Za-z]");
-
-    /**
-     * A pattern that matches numeric characters.
-     */
-    static Pattern numericChecker = Pattern.compile("\\[0-9]");
+    private static Pattern[] passwordCheckers = new Pattern[4];
+    {
+            passwordCheckers[0] = Pattern.compile("\\^([ -~]{8,})$");
+            passwordCheckers[1] = Pattern.compile("\\.*[A-Z].*");
+            passwordCheckers[2] = Pattern.compile("\\.*[a-z].*");
+            passwordCheckers[3] = Pattern.compile("\\.*[0-9].*");
+    }
 
     /**
      * A pattern that matches an email address elements.
-     * Example: ABCdef123.hijKLM@NOPqrs456.Tu
+     * Example: ABCdef123.hijKLM@NOPqrs456.ucm.es
+     * 
+     * @see #parseEmail(String)
      */
-    static Pattern emailChecker = Pattern.compile("\\[A-z0-9._%+-]+[@][A-z0-9-]+[.][A-z0-9.]{2,}");
+    public static Pattern emailChecker = Pattern.compile("\\^([A-z0-9._%+-]+)[@]([A-z0-9-]+[.][A-z0-9.]{2,})$");
 
     /**
      * A pattern that matches a name with at least one surname. No
      * extended ASCII characters allowed.
+     * 
+     * @see #parseName(String)
      */
-    static Pattern nameChecker = Pattern.compile("\\[A-z]+([ ][A-z]+){1,}");
+    public static Pattern nameChecker = Pattern.compile("\\^(?:\b[A-z]+\b[ \r\n]*){2,}$");
     
+    /**
+     * A pattern that matches an address. Typically used address chars
+     * allowed.
+     */
+    public static Pattern addressChecker = Pattern.compile("\\^[A-z0-9\\/ªº ]+$");
+
+    /**
+     * A pattern that matches a valid tag: #-preceded and 
+     * less than 25 chars long. It also groups the tag without #.
+     */
+    public static Pattern tagChecker = Pattern.compile("\\^[#]([A-z0-9_]+)$");
+
+    /**
+     * A pattern that matches a valid opinion: printable characters and
+     * less than 280 chars long.
+     */
+    public static Pattern opinionChecker = Pattern.compile("\\^(?:[ -~\n\r]{1,280})$");
 
     /**
      * Parses id so it must be an alphanumerical sequence with no
@@ -53,7 +78,7 @@ public class ParsingTool {
     public static boolean parseID(String id) {
         boolean valid = true;
         
-        if ( nonAlphaNumChecker.matcher(id).matches() ) {
+        if ( ! alphaNumKeyChecker.matcher(id).matches() ) {
             // Invalid ID
             valid = false;
         }
@@ -64,11 +89,14 @@ public class ParsingTool {
     /**
      * Parses username so it must be an alphanumerical sequence with
      * no whitespaces.
+     * 
+     * @param username username to be parsed
+     * @return if username is valid
      */
     public static boolean parseUsername(String username) {
         boolean valid = true;
         
-        if ( nonAlphaNumChecker.matcher(username).matches() ) {
+        if ( ! alphaNumKeyChecker.matcher(username).matches() ) {
             // Invalid username
             valid = false;
         }
@@ -81,23 +109,16 @@ public class ParsingTool {
      * password security. The password stored in the database will be a hashed key
      * extracted from this password.
      * 
-     * @param password user login password
+     * @param password user login password to be parsed
+     * @return if password is valid
      */
     public static boolean parsePassword(String password) {
         boolean valid = true;
 
-        if (password.length() < 8) {
-            // No longer than 8 chars
-            valid = false;
-        } else if ( ! alphabetChecker.matcher(password).matches() ) {
-            // No alphabet chars
-            valid = false;
-        } else if ( ! numericChecker.matcher(password).matches() ) {
-            // No numeric chars
-            valid = false;
-        } else if ( nonPrintableChecker.matcher(password).matches() ) {
-            // Non printable chars
-            valid = false;
+        for (Pattern p : passwordCheckers) {
+            if ( ! p.matcher(password).matches() ) {
+                valid = false;
+            }
         }
 
         return valid;
@@ -106,7 +127,8 @@ public class ParsingTool {
     /**
      * Parses a user's email to check if it is a valid email format.
      * 
-     * @param email user's id
+     * @param email email to be parsed
+     * @return if email is valid
      */
     public static boolean parseEmail(String email) {
         boolean valid = true;
@@ -121,6 +143,9 @@ public class ParsingTool {
     /**
      * Parses a user's name to check if it is valid:
      * alphabetic characters and with surname.
+     * 
+     * @param name user name to be parsed
+     * @return if name is valid
      */
     public static boolean parseName(String name) {
         boolean valid = true;
@@ -135,6 +160,9 @@ public class ParsingTool {
     /**
      * Parses a user birthday's registration to ensure
      * he is +18.
+     * 
+     * @param birthday birthday to be parsed
+     * @return if birthday is valid
      */
     public static boolean parseBirthday(LocalDate birthday) {
         boolean valid = true;
@@ -143,6 +171,98 @@ public class ParsingTool {
         allowedDate.minusYears(18);
 
         if ( birthday.isAfter(allowedDate) ) {
+            valid = false;
+        }
+
+        return valid;
+    }
+
+    /**
+     * Parses a club commercial name. Initially no conditions.
+     * 
+     * @param commName commercial name to be parsed
+     * @return if commercial name is valid
+     */
+    public static boolean parseCommercialName(String commName) {
+        return true;
+    }
+
+    /** 
+     * Parses a club address, with an address typically used symbols.
+     * 
+     * @param address address to be parsed
+     * @return if address is valid
+     */
+    public static boolean parseAddress(String address) {
+        boolean valid = true;
+
+        if ( ! addressChecker.matcher(address).matches() ) {
+            valid = false;
+        }
+
+        return valid;
+    }
+
+    /**
+     * Parses a club ticket price to ensure it is not a negative
+     * value.
+     * 
+     * @param price price to be parsed
+     * @return if price is valid
+     */
+    public static boolean parsePrice(float price) {
+        boolean valid = true;
+
+        if (price < 0.0f) {
+            valid = false;
+        }
+
+        return valid;
+    }
+
+    /**
+     * Parses a tag collection to ensure every tag is correct.
+     * 
+     * @param tags <code>Collection</code> of <code>String</code>
+     * @return if tags are valid
+     */
+    public static boolean parseTags(Collection<String> tags) {
+        boolean valid = true;
+
+        for (String tag : tags) {
+            if ( ! tagChecker.matcher(tag).matches() ) {
+                valid = false;
+            }
+        }
+
+        return valid;
+    }
+
+    /**
+     * Parses a user rating to ensure it is an integer between
+     * 0 and 10.
+     * 
+     * @param rate user rating
+     * @return if rate is valid
+     */
+    public static boolean parseRate(int rate) {
+        boolean valid = true;
+
+        if (rate < 0 || 10 < rate) {
+            valid = false;
+        }
+
+        return valid;
+    }
+
+    /**
+     * Parses a user opinion to ensure it consists of printable
+     * characters and is less than 280 chars long.
+     */
+    public static boolean parseOpinion(String opinion) {
+        boolean valid = true;
+
+        if ( ! opinionChecker.matcher(opinion).matches() ) {
             valid = false;
         }
 

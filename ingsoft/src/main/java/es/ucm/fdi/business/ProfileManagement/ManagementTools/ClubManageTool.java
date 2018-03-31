@@ -55,51 +55,6 @@ public class ClubManageTool {
     }
 
     /**
-     * Adds a new tag to the club tags list if
-     * the new tag data is correct.
-     * 
-     * @param newData new tag
-     */
-    private void addTag(Object newData)
-    {
-        if ( ! (newData instanceof String)) {
-            // throw NotValidModification exception
-        }
-
-        // ¿Parse?
-        String newTag = (String) newData;
-
-        clubToManage.addTag(newTag);
-    }
-
-    /**
-     * Removes a tag from the club tags list if
-     * the new tag data is correct.
-     * 
-     * @param newData tag to remove
-     */
-    private void removeTag(Object newData)
-    {
-        if ( ! (newData instanceof String)) {
-            // throw NotValidModification exception
-        }
-
-        // ¿Parse?
-        String tagToRemove = (String) newData;
-
-        clubToManage.removeTag(tagToRemove);
-    }
-
-    /**
-     * Removes a tag from the club tags list if
-     * the new tag data is correct.
-     */
-    private void clearTags()
-    {
-        clubToManage.clearTags();
-    }
-
-    /**
      * Modifies the club's id if the data is correct.
      * 
      * @param newData new id
@@ -109,8 +64,12 @@ public class ClubManageTool {
             // throw NotValidModification exception
         }
 
-        // ¿Parse?
+        // Valid?
         String newID = (String) newData;
+
+        if ( ! ParsingTool.parseID(newID) ) {
+            
+        }
 
         // Map change
         clubDAO.removeClub(clubToManage.getID());        
@@ -128,8 +87,12 @@ public class ClubManageTool {
             // throw NotValidModification exception
         }
 
-        // ¿Parse?
+        // Valid?
         String newAddress = (String) newData;
+
+        if ( ! ParsingTool.parseAddress(newAddress) ) {
+            
+        }
 
         clubToManage.setAddress(newAddress);
     }
@@ -144,7 +107,7 @@ public class ClubManageTool {
             // throw NotValidModification exception
         }
 
-        // Parse?
+        // Valid?
         Location newCoordinates = (Location) newData;
 
         clubToManage.set
@@ -160,14 +123,20 @@ public class ClubManageTool {
             // throw NotValidModification exception
         }
 
-        // Parse?
+        // Valid?
         float newPrice = (Float) newData;
+
+        if ( ! ParsingTool.parsePrice(newPrice) ) {
+            
+        }
 
         clubToManage.setPrice(newPrice);
     }
 
     /**
      * Modifies the club's rating if the data is correct.
+     * ATTENTION: This method is not thought to be used
+     * initially in the general implementation.
      * 
      * @param newData new rating
      */
@@ -176,9 +145,62 @@ public class ClubManageTool {
             // throw NotValidModification exception
         }
 
-        // Parse?
+        // Valid?
         float newRating = (Float) newData;
 
         clubToManage.setRating(newRating);
     }   
+
+    /**
+     * Adds a new tag to the club tags list if
+     * the new tag data is correct.
+     * 
+     * @param newData new tag
+     */
+    private void addTag(Object newData)
+    {
+        if ( ! (newData instanceof String)) {
+            // throw NotValidModification exception
+        }
+
+        // Valid?
+        String newTag = (String) newData;
+
+        if ( ! ParsingTool.tagChecker.matcher(newTag).matches() ) {
+
+        }
+
+        clubToManage.addTag(newTag);
+    }
+
+    /**
+     * Removes a tag from the club tags list if
+     * the new tag data is correct.
+     * 
+     * @param newData tag to remove
+     */
+    private void removeTag(Object newData)
+    {
+        if ( ! (newData instanceof String)) {
+            // throw NotValidModification exception
+        }
+
+        // Valid?
+        String tagToRemove = (String) newData;
+
+        if ( ! ParsingTool.tagChecker.matcher(tagToRemove).matches() ) {
+            
+        }
+
+        clubToManage.removeTag(tagToRemove);
+    }
+
+    /**
+     * Removes a tag from the club tags list if
+     * the new tag data is correct.
+     */
+    private void clearTags()
+    {
+        clubToManage.clearTags();
+    }
 }
