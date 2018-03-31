@@ -73,15 +73,33 @@ public class UserPOJO extends DataPOJO {
 	 * @return valid
 	 */
 	public static boolean isValidEmailAddress(String email) {
-		   boolean result = true;
-		   try {
-		      InternetAddress emailAddr = new InternetAddress(email);
-		      emailAddr.validate();
-		   } catch (AddressException ex) {
-		      result = false;
-		   }
-		   return result;
+		boolean result = true;
+		try {
+			InternetAddress emailAddr = new InternetAddress(email);
+			emailAddr.validate();
+		} catch (AddressException ex) {
+			result = false;
 		}
+		return result;
+	}
+
+	/**
+	 * Returns the username.
+	 * 
+	 * @return username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * Sets the username.
+	 * 
+	 * @param newUsername
+	 */
+	public void setUsername(String user) {
+		username = user;
+	}
 	
 	/**
 	 * Returns the password.
