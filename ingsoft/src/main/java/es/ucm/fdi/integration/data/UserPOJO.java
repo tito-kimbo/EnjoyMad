@@ -67,21 +67,6 @@ public class UserPOJO extends DataPOJO {
 		this.ratedClubs = new HashSet<String>(rates);
 		this.reviewedClubs = new HashSet<String>(reviews);
 	}
-  
-	/**
-	 * Returns whether the email address is valid.
-	 * @return valid
-	 */
-	public static boolean isValidEmailAddress(String email) {
-		boolean result = true;
-		try {
-			InternetAddress emailAddr = new InternetAddress(email);
-			emailAddr.validate();
-		} catch (AddressException ex) {
-			result = false;
-		}
-		return result;
-	}
 
 	/**
 	 * Returns the username.
@@ -130,9 +115,7 @@ public class UserPOJO extends DataPOJO {
 	 * @param email email
 	 */
 	public void setEmail(String email){
-		if(isValidEmailAddress(email)){
-			this.email = email;
-		}
+		this.email = email;		
 	}
 	
 	/**
