@@ -9,7 +9,10 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 public class UserPOJO extends DataPOJO {
-	String password, email, name;
+	String username;
+	String password;
+	String email;
+	String name; 
 	LocalDate birthday;
 
 	/**
@@ -32,8 +35,9 @@ public class UserPOJO extends DataPOJO {
 	 * @param rates user rated clubs
 	 * @param reviews user reviewed clubs
 	 */
-	public UserPOJO(String id, String pass, String email, String name, LocalDate bday) {
+	public UserPOJO(String id, String user, String pass, String email, String name, LocalDate bday) {
 		super(id);
+		this.username = user;
 		this.password = pass;
 		this.email = email;
 		this.name = name;
@@ -53,8 +57,9 @@ public class UserPOJO extends DataPOJO {
 	 * @param rates user rated clubs
 	 * @param reviews user reviewed clubs
 	 */
-	public UserPOJO(String id, String pass, String email, String name, LocalDate bday, Set<String> rates, Set<String> reviews) {
+	public UserPOJO(String id, String user, String pass, String email, String name, LocalDate bday, Set<String> rates, Set<String> reviews) {
 		super(id);
+		this.username = user;
 		this.password = pass;
 		this.email = email;
 		this.name = name;

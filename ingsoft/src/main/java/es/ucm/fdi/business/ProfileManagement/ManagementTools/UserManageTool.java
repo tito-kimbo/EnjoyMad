@@ -23,8 +23,9 @@ public class UserManageTool {
     }
 
     /**
-     * Given a new data and its type, it modifies the user's attribute,
+     * Given a new data and its type, it modifies the <code>User</code> attribute,
      * provided the new data corresponds with the instance type.
+     * 
      * @param dataID id of the attribute to be modified
      * @param newData new data of the attribute
      */
@@ -53,7 +54,8 @@ public class UserManageTool {
 
     /**
      * Modifies the user's id if the data is correct.
-     * @param newData new data (String)
+     * 
+     * @param newData new id
      */
     private void modifyID(Object newData) {
         if ( ! (newData instanceof String)) {
@@ -71,7 +73,8 @@ public class UserManageTool {
 
     /**
      * Modifies the user's password if the data is correct.
-     * @param newData new data (String)
+     * 
+     * @param newData new password
      */
     private void modifyPassWord(Object newData) {
         if ( ! (newData instanceof String)) {
@@ -86,7 +89,8 @@ public class UserManageTool {
 
     /**
      * Modifies the user's email if the data is correct.
-     * @param newData new data (String)
+     * 
+     * @param newData new email
      */
     private void modifyEmail(Object newData) {
         if ( ! (newData instanceof String)) {
@@ -101,7 +105,8 @@ public class UserManageTool {
 
     /**
      * Modifies the user's name if the data is correct.
-     * @param newData new data (String)
+     * 
+     * @param newData new name
      */
     private void modifyName(Object newData) {
         if ( ! (newData instanceof String)) {
@@ -116,7 +121,7 @@ public class UserManageTool {
 
     /**
      * Modifies the user's birthday if the data is correct.
-     * @param newData new data (LocalDate)
+     * @param newData new birthday
      */
     private void modifyBirthday(Object newData) {
         if ( ! (newData instanceof LocalDate)) {

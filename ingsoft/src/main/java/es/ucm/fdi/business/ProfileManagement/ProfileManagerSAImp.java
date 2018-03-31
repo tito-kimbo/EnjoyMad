@@ -25,23 +25,23 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         userDAO = users;
     }
 
-    public void addNewClub(String clubID, String location, float price, Set<String> tags) {
+    public void addNewClub(String clubID, String name, String address, float price, Set<String> tags) {
         // Is already registered?
         if (clubDAO.exist(clubID)) {
             // throw AlreadyExistingClub exception
         }
         
-        // Valid location? [Qué formato vamos a usar]
+        // Valid address? [Qué formato vamos a usar]
 
         // Valid price? [Sólo 2 decimales]
 
         // Valid tags? [¿Usaremos tags preestblecidos (TagsDAO)?]
 
-        ClubPOJO newClub = new ClubPOJO(clubID, location, price, tags);
+        ClubPOJO newClub = new ClubPOJO(clubID, name, address, price, tags);
         clubDAO.addClub(newClub);
     }
 
-    public void addNewUser(String userID, String password, String email, String name, LocalDate birthday) {
+    public void addNewUser(String userID, String username, String password, String email, String name, LocalDate birthday) {
         // Is already registered?
         if (userDAO.exist(userID)) {
             // throw AlreadyExistingUser exception
@@ -55,7 +55,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
         // Valid birthday? [¿filtro de edad?]
 
-        UserPOJO newUser = new UserPOJO(userID, password, email, name, birthday);
+        UserPOJO newUser = new UserPOJO(userID, username, password, email, name, birthday);
         userDAO.addUser(newUser);
     }
 
