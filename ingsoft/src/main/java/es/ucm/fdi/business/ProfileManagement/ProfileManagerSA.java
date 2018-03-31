@@ -101,7 +101,7 @@ public interface ProfileManagerSA {
 	 * @param clubID id of club
 	 * @param userID id of user
 	 */
-	// public void removeUserRate(String clubID, String userID);
+	public void removeUserRate(String clubID, String userID);
 
 	/**
 	 * Removes a user opinion.
@@ -109,5 +109,5 @@ public interface ProfileManagerSA {
 	 * @param clubID id of club
 	 * @param userID id of user
 	 */
-	// publi void removeUserOpinion(String clubID, String userID);
+	public void removeUserOpinion(String clubID, String userID);
 }
