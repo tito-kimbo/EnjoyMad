@@ -34,10 +34,10 @@ public class UserPOJO extends DataPOJO {
 	 */
 	public UserPOJO(String id, String pass, String email, String name, LocalDate bday) {
 		super(id);
-		this.password = pass;
-		this.email = email;
-		this.name = name;
-		this.birthday = bday;
+		setPassword(pass);
+-		setEmail(email);
+-		setName(name);
+-		setBirthday(bday);
 
 		ratedClubs = new HashSet<String>();
 		reviewedClubs = new HashSet<String>();
