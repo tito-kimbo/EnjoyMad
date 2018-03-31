@@ -19,8 +19,9 @@ public class ClubManageTool {
     }
 
     /**
-     * Given a new data and its type, it modifies the club's attribute,
-     * provided the new data corresponds with the instance type.
+     * Given a new data and its type, it modifies the <code>Club</code> 
+     * attribute, provided the new data corresponds with the instance type.
+     * 
      * @param dataID id of the attribute to be modified
      * @param newData new data of the attribute
      */
@@ -56,6 +57,8 @@ public class ClubManageTool {
     /**
      * Adds a new tag to the club tags list if
      * the new tag data is correct.
+     * 
+     * @param newData new tag
      */
     private void addTag(Object newData)
     {
@@ -72,6 +75,8 @@ public class ClubManageTool {
     /**
      * Removes a tag from the club tags list if
      * the new tag data is correct.
+     * 
+     * @param newData tag to remove
      */
     private void removeTag(Object newData)
     {
@@ -96,7 +101,8 @@ public class ClubManageTool {
 
     /**
      * Modifies the club's id if the data is correct.
-     * @param newData new data (String)
+     * 
+     * @param newData new id
      */
     private void modifyID(Object newData) {
         if ( ! (newData instanceof String)) {
@@ -114,7 +120,8 @@ public class ClubManageTool {
 
     /**
      * Modifies the club's address if the data is correct.
-     * @param newData new data (String)
+     * 
+     * @param newData new adress
      */
     private void modifyAddress(Object newData) {
         if ( ! (newData instanceof String)) {
@@ -129,7 +136,8 @@ public class ClubManageTool {
 
     /**
      * Modifies the club's location if the data is correct.
-     * @param newData new data (String)
+     * 
+     * @param newData new location
      */
     /*private void modifyCoordinates(Object newData) {
         if ( ! (newData instanceof Location)) {
@@ -144,7 +152,8 @@ public class ClubManageTool {
 
     /**
      * Modifies the club's ticket price if the data is correct.
-     * @param newData new data (String)
+     * 
+     * @param newData new ticket price
      */
     private void modifyPrice(Object newData) {
         if ( ! (newData instanceof Float)) {
@@ -159,7 +168,8 @@ public class ClubManageTool {
 
     /**
      * Modifies the club's rating if the data is correct.
-     * @param newData new data (String)
+     * 
+     * @param newData new rating
      */
     private void modifyRating(Object newData) {
         if ( ! (newData instanceof Float)) {

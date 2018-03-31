@@ -11,9 +11,11 @@ import java.util.Set;
  * @author Fco Borja
  */
 public class ClubPOJO extends DataPOJO {
+	String commercialName;
 	String address;
-	//Location coordinates;
 	float price;
+
+	//Location coordinates;
 	
 	/**
 	 * Set of descriptive tags about the club. It will be initialized as
@@ -42,8 +44,9 @@ public class ClubPOJO extends DataPOJO {
 	 * @param price price
 	 * @param tags set of tags
 	 */
-	public ClubPOJO(String id, String address, float price, Set<String> tags) {
+	public ClubPOJO(String id, String name, String address, float price, Set<String> tags) {
 		super(id);
+		this.commercialName = name;
 		this.address = address;
 		this.price = price;
 		this.tags = new HashSet<String>(tags);
@@ -62,8 +65,9 @@ public class ClubPOJO extends DataPOJO {
 	 * @param rates map of user->rates
 	 * @param rating total rating
 	 */
-	public ClubPOJO(String id, String address, float price, Set<String> tags, Map<String, Integer> rates, float rating, Map<String, String> opinions){
+	public ClubPOJO(String id, String name, String address, float price, Set<String> tags, Map<String, Integer> rates, float rating, Map<String, String> opinions){
 		super(id);
+		this.commercialName = name;
 		this.address = address;
 		//this.coordinates = new Location(latitude,longitude);
 		this.price = price;
@@ -71,6 +75,22 @@ public class ClubPOJO extends DataPOJO {
 		this.userRates = new HashMap<String, Integer>(rates); // Map constructor
 		this.rating = rating;	
 		this.userOpinions = opinions;	
+	}
+
+	/**
+	 * Returns the club commercial name.
+	 * @return club name
+	 */
+	public String getCommercialName() {
+		return commercialName;
+	}
+
+	/**
+	 * Sets the club commercial name.
+	 * @param name new name
+	 */
+	public void setCommercialName(String name) {
+		commercialName = name;
 	}
 
 	/**
