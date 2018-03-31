@@ -16,7 +16,7 @@ abstract class TicketManagerSAImp implements TicketManagerSA {
 		UserPOJO user = users.getUser(user_id);
 		
 		String email = user.getEmail();
-		String psw = user.getPassword();
+		String psw = "OurPassword";
 		
 		/*
 		 *  Payment code

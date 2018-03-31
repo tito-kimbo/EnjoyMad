@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
+
 /**
  * This interface declares the methods a Club data access object needs to implement.
  * @author Fco Borja 
@@ -15,6 +16,7 @@ public interface ClubDAO {
 	 * 
 	 * @return List of <code>Clubs</code>.
 	 */
+  
 	public List<ClubPOJO> getClubs();
 
 	/**

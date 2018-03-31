@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-
 /**
  * Class that represents a club.
  * @author Fco Borja
@@ -139,14 +138,15 @@ public class ClubPOJO extends DataPOJO {
 			return false;
 		}
 	}
-
-	/**
+	
+    /**
 	 * Returns the rating.
 	 * @return rating
 	 */
 	public float getRating() {
 		return rating;
 	}
+	
 	/**
 	 * Sets the club's rating.
 	 */
@@ -160,12 +160,14 @@ public class ClubPOJO extends DataPOJO {
 	public String getAddress() {
 		return address;
 	}
+	
 	/**
 	 * Sets the string of the location.
 	 */
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
 	/**
 	 * Returns the price.
 	 * @return price
@@ -173,13 +175,16 @@ public class ClubPOJO extends DataPOJO {
 	public float getPrice() {
 		return price;
 	}
+	
 	/**
 	 * Sets the price of a ticket.
 	 * @return price of a ticket
 	 */
 	public void setPrice(float price) {
-		this.price = price;
+		if(price > 0)
+			this.price = price;
 	}
+	
 	/**
 	 * Returns the tags.
 	 * @return tags
@@ -187,12 +192,14 @@ public class ClubPOJO extends DataPOJO {
 	public Set<String> getTags() {
 		return tags;
 	}
+	
 	/**
 	 * Sets the tags
 	 */
 	public void setTags(Set<String> tags) {
 		this.tags = new HashSet<String>(tags);
 	}
+	
 	/**
 	 * Returns the latitude.
 	 * @return the latitude.
