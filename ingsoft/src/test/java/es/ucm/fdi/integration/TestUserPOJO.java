@@ -43,7 +43,7 @@ public class TestUserPOJO {
 	@Test
 	public final void testIncorrectYear() {
 		LocalDate date = LocalDate.of(2010, 1, 1);
-		UserPOJO user = new UserPOJO("IDNumber1", "MyUser", "MyPsw", "myname@domain.com", "myname", date);
+		UserPOJO user = new UserPOJO("IDNumber1", "MyUser", "MyPsw", "mynamedomain.com", "myname", date);
 		assertEquals(user.getBirthday().getYear(),2010);
 	}
 	
