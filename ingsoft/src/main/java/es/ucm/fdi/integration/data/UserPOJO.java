@@ -7,9 +7,9 @@ import javax.mail.internet.InternetAddress;
 public class UserPOJO extends DataPOJO {
 	String password, email, name;
 	LocalDate birthday;
+	
 
-	public UserPOJO(String id, String pass, String email, String name, 
-			LocalDate bday){
+	public UserPOJO(String id, String pass, String email, String name, LocalDate bday) {
 		super(id);
 		setPassword(pass);
 		setEmail(email);
@@ -18,10 +18,9 @@ public class UserPOJO extends DataPOJO {
 	}
   
 	/**
-	 * Returns whether the; email address is valid.
+	 * Returns whether the email address is valid.
 	 * @return valid
 	 */
-	
 	public static boolean isValidEmailAddress(String email) {
 		   boolean result = true;
 		   try {
@@ -37,7 +36,6 @@ public class UserPOJO extends DataPOJO {
 	 * Returns the password.
 	 * @return password
 	 */
-	
 	public String getPassword() {
 		return password;
 	}
@@ -46,7 +44,6 @@ public class UserPOJO extends DataPOJO {
 	 * Sets the password.
 	 * @param password password
 	 */
-	
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -55,7 +52,6 @@ public class UserPOJO extends DataPOJO {
 	 * Returns the email.
 	 * @return email
 	 */
-	
 	public String getEmail() {
 		return email;
 	}
@@ -64,7 +60,6 @@ public class UserPOJO extends DataPOJO {
 	 * Sets the email.
 	 * @param email email
 	 */
-	
 	public void setEmail(String email){
 		if(isValidEmailAddress(email)){
 			this.email = email;
@@ -75,7 +70,6 @@ public class UserPOJO extends DataPOJO {
 	 * Returns the name.
 	 * @return name
 	 */
-	
 	public String getName() {
 		return name;
 	}
@@ -84,7 +78,6 @@ public class UserPOJO extends DataPOJO {
 	 * Sets the name
 	 * @param name
 	 */
-	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -101,7 +94,6 @@ public class UserPOJO extends DataPOJO {
 	 * Sets the birthday
 	 * @param birthday
 	 */
-	
 	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
 	}

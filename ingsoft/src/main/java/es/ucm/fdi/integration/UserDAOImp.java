@@ -25,27 +25,27 @@ public class UserDAOImp implements UserDAO {
 		return userMap.get(id);
 	}
 	
-  /**
+  	/**
 	 * @inheritDoc
 	 */
 	public void addUser(UserPOJO user) {
 		userMap.put(user.getID(), user);
 	}
 	
-  /**
+ 	/**
 	 * @inheritDoc
 	 */
 	public boolean exist(String id) {
 		return userMap.containsKey(id);
 	}
 	
-  /**
+ 	/**
 	 * @inheritDoc
 	 */
 	public void removeUser(String id){
-		if(exist(id)){
+		if(exist(id)) {
 			userMap.remove(id);
-		}else{
+		} else {
 			//throw exception
 		}
 	}
@@ -54,7 +54,7 @@ public class UserDAOImp implements UserDAO {
 	 * @inheritDoc
 	 */
 	public List<UserPOJO> getUsers() {
-    List<UserPOJO> aux = new ArrayList<UserPOJO>(userMap.values());
-    return aux;
-  }
+		List<UserPOJO> aux = new ArrayList<UserPOJO>(userMap.values());
+		return aux;
+	}
 }
