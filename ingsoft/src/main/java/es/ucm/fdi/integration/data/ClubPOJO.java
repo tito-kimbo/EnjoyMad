@@ -17,6 +17,7 @@ public class ClubPOJO extends DataPOJO {
 
 	//Location coordinates;
 	
+	
 	/**
 	 * Set of descriptive tags about the club. It will be initialized as
 	 * a HashSet, which ensures constant time basic operations
