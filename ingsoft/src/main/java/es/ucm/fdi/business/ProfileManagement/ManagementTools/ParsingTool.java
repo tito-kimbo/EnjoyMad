@@ -239,7 +239,7 @@ public class ParsingTool {
     }
 
     /**
-     * Parses a user rating to ensure it is an integer between
+     * Parses a user rating to ensure it is an <code>Integer</code> between
      * 0 and 10.
      * 
      * @param rate user rating
@@ -249,6 +249,20 @@ public class ParsingTool {
         boolean valid = true;
 
         if (rate < 0 || 10 < rate) {
+            valid = false;
+        }
+
+        return valid;
+    }
+
+    /**
+     * Parses a club rating to ensure it is a <code>Float</code> between
+     * 0 and 10.
+     */
+    public static boolean parseRating(Float rating) {
+        boolean valid = true;
+
+        if (rating < 0.0F || 10.0F < rating) {
             valid = false;
         }
 

@@ -5,8 +5,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 
 public class UserPOJO extends DataPOJO {
 	String username, password, email, name; 
@@ -149,7 +147,7 @@ public class UserPOJO extends DataPOJO {
 
 	/**
 	 * Returns a Collection of rated clubs IDs.
-	 * @see es.ucm.fdi.business.ProfileManagement.ProfileManagerSAImp#removeUser(String) removeUser
+	 * @see ProfileManagerSAImp#removeUser(String) 
 	 * @return Collection of String
 	 */
 	public Collection<String> getRatedClubs() {
@@ -158,7 +156,7 @@ public class UserPOJO extends DataPOJO {
 
 	/**
 	 * Returns a Collection of reviewed clubs IDs.
-	 * @see es.ucm.fdi.business.ProfileManagement.ProfileManagerSAImp#removeUser(String) removeUser
+	 * @see ProfileManagerSAImp.removeUser(String) 
 	 * @return Collection of String
 	 */
 	public Collection<String> getReviewedClubs() {
@@ -166,14 +164,36 @@ public class UserPOJO extends DataPOJO {
 	}
 
 	/**
+	 * Adds a club to the rated clubs set.
+	 * 
+	 * @param clubID rated club id
+	 */
+	public void addRated(String clubID) {
+		ratedClubs.add(clubID);
+	}
+
+	/**
 	 * Removes a club from the rated clubs set.
+	 * 
+	 * @param clubID unrated club id
 	 */
 	public void removeRated(String clubID) {
 		ratedClubs.remove(clubID);
 	}
 
 	/**
+	 * Adds a club to the reviewed clubs set.
+	 * 
+	 * @param clubID reviewed club id
+	 */
+	public void addReviewed(String clubID) {
+		reviewedClubs.add(clubID);
+	}
+
+	/**
 	 * Removes a club from the reviewed clubs set.
+	 * 
+	 * @param clubID unreviewed club id
 	 */
 	public void removeReviewed(String clubID) {
 		reviewedClubs.remove(clubID);
