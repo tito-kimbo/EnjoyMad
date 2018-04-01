@@ -19,42 +19,42 @@ public class UserDAOImp implements UserDAO {
 	}
   
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public UserPOJO getUser(String id) {
 		return userMap.get(id);
 	}
 	
-  /**
-	 * @inheritDoc
+  	/**
+	 * {@inheritDoc}
 	 */
 	public void addUser(UserPOJO user) {
 		userMap.put(user.getID(), user);
 	}
 	
-  /**
-	 * @inheritDoc
+ 	/**
+	 * {@inheritDoc}
 	 */
 	public boolean exist(String id) {
 		return userMap.containsKey(id);
 	}
 	
-  /**
-	 * @inheritDoc
+ 	/**
+	 * {@inheritDoc}
 	 */
 	public void removeUser(String id){
-		if(exist(id)){
+		if(exist(id)) {
 			userMap.remove(id);
-		}else{
+		} else {
 			//throw exception
 		}
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public List<UserPOJO> getUsers() {
-    List<UserPOJO> aux = new ArrayList<UserPOJO>(userMap.values());
-    return aux;
-  }
+		List<UserPOJO> aux = new ArrayList<UserPOJO>(userMap.values());
+		return aux;
+	}
 }

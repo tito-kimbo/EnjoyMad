@@ -4,14 +4,14 @@ import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
 public class PriceFilter implements Filter{
-	private int maxPrice;
+	private float maxPrice;
 
 	public PriceFilter(){}
-	public PriceFilter(int maxPrice) {
+	public PriceFilter(float maxPrice) {
 		this.maxPrice = maxPrice;
 	}
 	public Object clone(FilterPOJO fp){
-		return new PriceFilter(Integer.parseInt(fp.getParams().get(0)));
+		return new PriceFilter(Float.parseFloat(fp.getParams().get(0)));
 	}
 	
 	public boolean filter(ClubPOJO c) {

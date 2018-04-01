@@ -4,17 +4,23 @@ import java.util.List;
 import java.util.ArrayList;
 
 import es.ucm.fdi.integration.ClubDAO;
-import es.ucm.fdi.integration.ClubDAOImp;
-import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
+
+import es.ucm.fdi.business.util.Element;
+import es.ucm.fdi.business.data.FilterPOJO;
+
 import es.ucm.fdi.business.SearchEngine.FilterMapper;
 import es.ucm.fdi.business.SearchEngine.Filters.Filter;
 
 public class SearchEngineSAImp implements SearchEngineSA {
-	private static List<Element<ClubPOJO>> searchResults;
+	private List<Element<ClubPOJO>> searchResults;
+	private ClubDAO clubAccess;
+	
+	public SearchEngineSAImp(ClubDAO clubs){
+		clubAccess = clubs;
+	}
 	
 	public void search(String words, List<FilterPOJO> filters){
-		ClubDAO clubAccess = new ClubDAOImp();
 		Element<ClubPOJO> aux;
 		List<ClubPOJO> clubs;
 		
@@ -23,9 +29,8 @@ public class SearchEngineSAImp implements SearchEngineSA {
 		//Here we must find all the matching Data
 		for(ClubPOJO c : clubs){
 			aux = new Element<ClubPOJO>(c);
-			aux.setVisible( c.getID().toLowerCase().contains(words.toLowerCase()) );
+			aux.setVisible( c.getCommercialName().toLowerCase().contains(words.toLowerCase()) );
 			searchResults.add(aux);
-
 		}
 		
 		for(FilterPOJO f : filters){
@@ -38,5 +43,9 @@ public class SearchEngineSAImp implements SearchEngineSA {
 	
 	public List<Element<ClubPOJO>> getSearchResults(){
 		return searchResults;
+	}
+	
+	public void select(){
+		
 	}
 }

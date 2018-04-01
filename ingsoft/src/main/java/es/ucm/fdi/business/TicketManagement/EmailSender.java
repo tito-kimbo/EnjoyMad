@@ -26,7 +26,7 @@ public class EmailSender {
 	 * @param subject subject
 	 * @throws RuntimeException if there is an error
 	 */
-    public static void send(String from, String to, String password,  String text, String subject) throws RuntimeException {
+    public static void send(final String from, String to, final String password,  String text, String subject) throws RuntimeException {
         Properties props = new Properties();
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");

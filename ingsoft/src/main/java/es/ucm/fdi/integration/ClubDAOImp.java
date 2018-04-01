@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
 /**
@@ -23,14 +22,14 @@ public class ClubDAOImp implements ClubDAO {
 	}
 
   /**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public ClubPOJO getClub(String id) {
 		return clubMap.get(id);
 	}
 	
  	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public List<ClubPOJO> getClubs(){
 		List<ClubPOJO> aux = new ArrayList<ClubPOJO>(clubMap.values());
@@ -38,21 +37,21 @@ public class ClubDAOImp implements ClubDAO {
 	}
 
  	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public boolean exist(String id) {
 		return clubMap.containsKey(id);
 	}
 
  	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public void addClub(ClubPOJO club) {
 		clubMap.put(club.getID(), club);
 	}
 
-  /**
-	 * @inheritDoc
+  	/**
+	 * {@inheritDoc}
 	 */
 	public void removeClub(String id) {
 		clubMap.remove(id);
