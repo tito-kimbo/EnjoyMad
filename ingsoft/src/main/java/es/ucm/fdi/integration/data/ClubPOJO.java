@@ -11,8 +11,7 @@ import java.util.Set;
  * @author Fco Borja
  */
 public class ClubPOJO extends DataPOJO {
-	String commercialName;
-	String address;
+	String commercialName, address;
 	float price;
 
 	//Location coordinates;

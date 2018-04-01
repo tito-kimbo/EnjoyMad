@@ -9,10 +9,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 public class UserPOJO extends DataPOJO {
-	String username;
-	String password;
-	String email;
-	String name; 
+	String username, password, email, name; 
 	LocalDate birthday;
 
 	/**

@@ -18,7 +18,7 @@ import org.mindrot.jbcrypt.BCrypt;
  * Class to be used as the Profile Manager of the application.
  */
 public class ProfileManagerSAImp implements ProfileManagerSA {
-    private static ClubDAOImp clubDAO = new ClubDAOImp(); //¿Singleton?
+    private static ClubDAOImp clubDAO = new ClubDAOImp();
     private static UserDAOImp userDAO = new UserDAOImp();
 
     public ProfileManagerSAImp(ClubDAOImp clubs, UserDAOImp users) {
