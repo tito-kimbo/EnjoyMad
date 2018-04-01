@@ -1,8 +1,12 @@
 package es.ucm.fdi.bussines.SearchEngine;
-import static org.junit.Assert.*;
 
-import java.util.ArrayList;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 import org.junit.Test;
 
@@ -14,20 +18,23 @@ import es.ucm.fdi.integration.data.ClubPOJO;
 public class PriceFilterTest {
 	@Test
 	public void testPriceFilter(){
-		List <String> l1 = new ArrayList<String>();
+		Set <String> l1 = new HashSet<String>();
 		l1.add("tecno");
 		l1.add("reggaeton");
 		l1.add("electronica");
-		ClubPOJO c = new ClubPOJO("Pacha", "C/Falsa 123", 20.30F, l1);
-		FilterMapper fm = new FilterMapper();
+		
+		//The provisional ID in this test is the MD5 hash generated from the name
+		ClubPOJO c = new ClubPOJO("af836aad1e889f499aa4d5a4aafd34cd", "Pacha", "C/Falsa 123", 20.30F, l1);
+		
 		List <String> l2 = new ArrayList<String>();
 		l2.add("30.50");
+		
 		FilterPOJO fp = new FilterPOJO("PriceFilter", l2);
 		Filter f = FilterMapper.mapFilter(fp);
 		assertTrue("Expected true",f.filter(c));
-		c  = new ClubPOJO("Pacha", "C/Falsa 123", 30.50F, l1);
+		c.setPrice(30.50F);
 		assertTrue("Expected true",f.filter(c));
-		c  = new ClubPOJO("Pacha", "C/Falsa 123", 30.60F, l1);
+		c.setPrice(30.60F);
 		assertFalse("Expected false",f.filter(c));
 		
 	}

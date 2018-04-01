@@ -15,12 +15,13 @@ import es.ucm.fdi.business.SearchEngine.Filters.RatingFilter;
 public class FilterMapper {
 	static private HashMap<String, Filter> map;
 	
-	public FilterMapper(){
+	//Static initializer for the class
+	static {
 		map = new HashMap<String, Filter>();
 		map.put("PriceFilter", new PriceFilter());
 		map.put("TagFilter", new TagFilter());
 		map.put("RatingFilter", new RatingFilter());
-		map.put("LocationFilter", new LocationFilter());
+		map.put("LocationFilter", new LocationFilter());	
 	}
 	
 	

@@ -21,15 +21,15 @@ public class ClubDAOImp implements ClubDAO {
 		clubMap = new HashMap<String, ClubPOJO>();
 	}
 
-	/**
-	 * @inheritDoc
+  /**
+	 * {@inheritDoc}
 	 */
 	public ClubPOJO getClub(String id) {
 		return clubMap.get(id);
 	}
 	
  	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public List<ClubPOJO> getClubs(){
 		List<ClubPOJO> aux = new ArrayList<ClubPOJO>(clubMap.values());
@@ -37,21 +37,21 @@ public class ClubDAOImp implements ClubDAO {
 	}
 
  	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public boolean exist(String id) {
 		return clubMap.containsKey(id);
 	}
 
  	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public void addClub(ClubPOJO club) {
 		clubMap.put(club.getID(), club);
 	}
 
-  /**
-	 * @inheritDoc
+  	/**
+	 * {@inheritDoc}
 	 */
 	public void removeClub(String id) {
 		clubMap.remove(id);

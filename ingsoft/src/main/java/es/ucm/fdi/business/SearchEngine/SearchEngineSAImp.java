@@ -29,7 +29,7 @@ public class SearchEngineSAImp implements SearchEngineSA {
 		//Here we must find all the matching Data
 		for(ClubPOJO c : clubs){
 			aux = new Element<ClubPOJO>(c);
-			aux.setVisible( c.getID().toLowerCase().contains(words.toLowerCase()) );
+			aux.setVisible( c.getCommercialName().toLowerCase().contains(words.toLowerCase()) );
 			searchResults.add(aux);
 		}
 		
