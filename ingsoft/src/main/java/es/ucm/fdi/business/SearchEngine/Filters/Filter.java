@@ -4,8 +4,8 @@ import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.business.data.FilterPOJO;
 
 /**
- * 
- *
+ * General scheme to build new <code>Filters</code>. Clone is implemented
+ * for prototyping purposes.
  */
 public interface Filter extends Cloneable{
 	public Object clone(FilterPOJO fp);
