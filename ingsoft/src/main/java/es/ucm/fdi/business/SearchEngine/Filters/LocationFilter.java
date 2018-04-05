@@ -21,12 +21,14 @@ public class LocationFilter implements Filter{
 	}
 	
 	//EN DESARROLLO!
-	public void getCoordenates()
+	public void getCoordinates()
 	{
-		/*LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
-		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		double longitude = location.getLongitude();
-		double latitude = location.getLatitude();*/
+		//NEEDS A CONTEXT -> Create a main Singleton base for the App with its context
+		
+		//LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
+		//Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		//double longitude = location.getLongitude();
+		//double latitude = location.getLatitude();
 	}
 
 }
