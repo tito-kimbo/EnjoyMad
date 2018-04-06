@@ -273,7 +273,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        reviewedClub.addUserOpinion(userID, new Opinion(userID, opinion, rating));
+        reviewedClub.addUserOpinion(userID, new Opinion(opinion, rating));
         reviewingUser.addReviewed(clubID);
     }
 

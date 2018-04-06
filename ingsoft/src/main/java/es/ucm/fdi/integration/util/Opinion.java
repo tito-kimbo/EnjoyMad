@@ -1,24 +1,19 @@
 package es.ucm.fdi.integration.util;
 
 public class Opinion {
-	private String user, opinion;
-	private int rating;
+	private String opinion;
+	private double rating;
 	
-	public Opinion(String user, String opinion, int rating){
-		this.user = user;
+	public Opinion(String opinion, double rating){
 		this.opinion = opinion;
 		this.rating = rating;
-	}
-	
-	public String getUser(){
-		return user;
 	}
 	
 	public String getOpinion(){
 		return opinion;
 	}
 	
-	public int getRating(){
+	public double getRating(){
 		return rating;
 	}
 }

@@ -10,12 +10,12 @@ import org.junit.Test;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 /**
- *This test execute several cases of the userPOJO.
+ *This test execute several cases of the <code>UserPOJO</code>.
  *Should return Success, Failure, Failure, Failure, Failure, Failure in that order.
  *@author Carlijn
  */
 
-public class TestUserPOJO {
+public class UserPOJOTest {
 	
 	/**
 	 * Tests a normal case of user info.
@@ -60,33 +60,5 @@ public class TestUserPOJO {
 		LocalDate date = LocalDate.of(1980, 32, 1);		
 		UserPOJO user = new UserPOJO("IDNumber1", "MyUser", "MyPsw", "myname@domain.com", "myname", date);
 	}
-	
-	/*
-	** SHOULDN'T BE CHECKED HERE.
-	**
-	 * Tests an invalid email address.
-	 * @result incorrect email and thus account won't be created properly.
-	 *
-	@Test
-	public final void testIncorrectEmail() {
-		LocalDate date = LocalDate.of(1980, 1, 1);
-		UserPOJO user = new UserPOJO("IDNumber1", "MyUser", "MyPsw", "myname@domain.com", "myname", date);
-		assertEquals(user.getEmail(), null);
-	}
-	
-	**
-	 * Tests empty strings.
-	 * @result empty strings and thus account won't be created properly.
-	 *
-	@Test
-	public final void testEmptyStrings() {
-		LocalDate date = LocalDate.of(1980, 1, 1);
-		UserPOJO user = new UserPOJO("","","","","", date);
-		assertEquals(user.getEmail(),"");
-		assertEquals(user.getID(),"");
-		assertEquals(user.getName(),"");
-		assertEquals(user.getPassword(),"");
-	}
-	*/
 
 }

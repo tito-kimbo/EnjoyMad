@@ -13,9 +13,9 @@ import  es.ucm.fdi.integration.util.Opinion;
  * @author Fco Borja
  */
 public class ClubPOJO extends DataPOJO {
-	String commercialName;
-	String address;
-	float price;
+	private String commercialName;
+	private String address;
+	private float price;
 	
 	private double latitude;
 	private double longitude;
@@ -26,14 +26,14 @@ public class ClubPOJO extends DataPOJO {
 	 * a HashSet, which ensures constant time basic operations
 	 * (add, remove, contains).
 	 */
-	Set<String> tags;
-	float rating;
+	private Set<String> tags;
+	private float rating;
 
 	/**
 	 * Map relating users' IDs with their opinion about this club.
 	 * It will be initialized as a HashMap.
 	 */
-	Map<String, Opinion> userOpinions;
+	private Map<String, Opinion> userOpinions;
 	
 	/**
 	 * Club class normal constructor
@@ -162,25 +162,6 @@ public class ClubPOJO extends DataPOJO {
 	public void clearTags() {
 		tags.clear();
 	}
-
-	/**
-	 * Checks if total rating is correct (linear over user rates)
-	 * @return if total rating is correct
-	 */
-	public boolean checkRating() {
-		float checkedRating = 0.0f;
-		int numRates = userOpinions.size();
-
-		for(Opinion o : userOpinions.values()) {
-			checkedRating += (o.getRating() / numRates);
-		}
-
-		if (checkedRating == rating) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 	
     /**
 	 * Returns the rating.
@@ -205,6 +186,13 @@ public class ClubPOJO extends DataPOJO {
 	 */
 	public void addUserOpinion(String userID, Opinion opinion) {
 		userOpinions.put(userID, opinion); // Overwrites previous rate (if exist)
+		//Now updates the current rating
+		
+		/*
+		 * FORMULA: R = (avg*(n-1)+opRating)/n = (rating+opRating)/n
+		 */
+		rating = (float)((rating*(userOpinions.size()-1)+opinion.getRating())
+				/((double)userOpinions.size()));
 	}
 
 	/**
@@ -212,7 +200,16 @@ public class ClubPOJO extends DataPOJO {
 	 * @param userID unreviewing user
 	 */
 	public void removeUserOpinion(String userID) {
+		Opinion aux = userOpinions.get(userID);
 		userOpinions.remove(userID);
+		//Now updates the current rating
+		
+		if(userOpinions.size() == 0){
+			rating = 0;
+		}else{
+			rating = (float )( (((userOpinions.size()+1)*rating)-aux.getRating())
+					/userOpinions.size() );
+		}
 	}
 
 	/**
@@ -222,10 +219,6 @@ public class ClubPOJO extends DataPOJO {
 	public Collection<String> getReviewers() {
 		return (Collection<String>) userOpinions.keySet();
 	}
-	
-	
-	
-	
 	
 	
 	/**

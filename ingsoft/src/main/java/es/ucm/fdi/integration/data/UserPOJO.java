@@ -7,13 +7,13 @@ import java.util.Set;
 
 
 public class UserPOJO extends DataPOJO {
-	String username, password, email, name; 
-	LocalDate birthday;
+	private String username, password, email, name; 
+	private LocalDate birthday;
 
 	/**
 	 * Set of reviewed clubs IDs.
 	 */
-	Set<String> reviewedClubs;
+	private Set<String> reviewedClubs;
 
 	/**
 	 * User class normal constructor
