@@ -2,7 +2,7 @@ package es.ucm.fdi.business.SearchEngine.Filters;
 
 import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
-import android.content.Context;
+import android.content.*;
 import android.location.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +14,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.app.*;
 
 /**
  * This class is responsible of deciding whether a Club is near enough to satisfy the client search filter or not.
@@ -25,16 +26,21 @@ public class LocationFilter implements Filter{
 	private final static String API_KEY = "AIzaSyDCASxz1lerrq1zkYhhbO7FAKDrcmNx9xo";
 	private final static double MILES_TO_KM = 1.60934;
 	
-	private float maxDistance;
+	private double maxDistance;
 	private double deviceLatitude;
 	private double deviceLongitude;
-	private Context myContext; //NEEDS INITIALIZATION, possibly used via Singleton pattern
-	//in external class
+	private Context myContext; 		//NEEDS INITIALIZATION, possibly used via Singleton pattern in external class
+				
 	
 	public LocationFilter()	{
 		//WARNING! Unimplemented, just to avoid error in FilterMapper
 	}
 	public LocationFilter(Context contexto)	{
+		myContext = contexto;
+	}
+	public LocationFilter(String string, Context contexto)
+	{
+		maxDistance = Double.valueOf(string).doubleValue();
 		myContext = contexto;
 	}
 	public boolean filter(ClubPOJO c) 
@@ -43,14 +49,17 @@ public class LocationFilter implements Filter{
 		try {
 			double distance = getNavigableDistance(c);	//Calculates distance
 			return distance <= maxDistance;				//We check
-		}catch(NullPointerException nptr) {
+		}catch(NullPointerException nptr) {//There is no location register
 			
-		}catch(MalformedURLException url) {
+		}catch(MalformedURLException url) {//Bad GPS coordenates
 			
-		}catch(IOException io) {
+		}catch(JSONException json) {//Parsing Json
 			
-		}catch(JSONException json) {
+		}catch(IOException io) {//Getting Json from url
 			
+		}catch(IllegalStateException state) {//There is no "distance" value in Json
+			
+		}catch(Exception e) {//This is unexpected!
 		}
 		
 		return false;
@@ -58,7 +67,7 @@ public class LocationFilter implements Filter{
 
 	public Object clone(FilterPOJO fp) {
 		
-		return null;
+		return new LocationFilter(fp.getParams().get(0), myContext);
 	}
 	
 	
@@ -111,12 +120,12 @@ public class LocationFilter implements Filter{
 		
 		Scanner scanner = new Scanner(distanceRequest.openStream());
 		String response = scanner.useDelimiter("\\Z").next();
- !! --> JSONObject json = Util.parseJson(response); 
+		JSONObject json = Util.parseJson(response); 
 		scanner.close();*/
 		
 		JSONObject json = JsonReader.readJsonFromUrl(requestURL);
 		
-		/* ->We suppose loaded JSON correctly? */
+		// ->We suppose loaded JSON correctly? /
 		
 		String aux = (String) json.get("rows");
 		String[] values = aux.split("[,:{}\\[\\]\\s\\t\n]");
@@ -125,6 +134,7 @@ public class LocationFilter implements Filter{
 		{
 			if(values[i].equals("distance"))
 			{
+				//should be  -> { ... ,"distance", "test", "41,6", ...}
 				return MILES_TO_KM * Double.valueOf(values[i+2]).doubleValue();
 			}
 		}
@@ -132,7 +142,7 @@ public class LocationFilter implements Filter{
 		throw new IllegalStateException("Unable to get the distance from the JSON object.");
 	}
 	
-	public static class JsonReader {
+	private static class JsonReader {
 		//Check code marked by !!
 		  private static String readAll(Reader rd) throws IOException {
 		    StringBuilder sb = new StringBuilder();
@@ -145,7 +155,7 @@ public class LocationFilter implements Filter{
 		  
 		  }
 
-		  public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+		  private static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
 		    InputStream is = new URL(url).openStream(); /*!! Usa URL no URLConnection !!*/
 		    try {
 		      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
