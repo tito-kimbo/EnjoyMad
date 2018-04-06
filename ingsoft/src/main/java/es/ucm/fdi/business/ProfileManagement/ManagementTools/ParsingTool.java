@@ -21,7 +21,7 @@ public class ParsingTool {
     /**
      * A series of Patterns to match a password that matches ASCII 
      * printable sequence from Whitespace(#32) to ~(#126) and size over 8. 
-     * At least minus, mayus and numeric char. 
+     * At least minus, capital and numeric char. 
      * Not allowed extended ASCII chars (from #126 upwards).
      * 
      * @see #parsePassword(String)

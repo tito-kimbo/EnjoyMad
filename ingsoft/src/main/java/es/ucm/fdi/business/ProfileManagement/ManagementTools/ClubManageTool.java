@@ -14,8 +14,8 @@ import android.provider.ContactsContract.Data;
  * particular attributes of a ClubPOJO instance.
  */
 public class ClubManageTool {
-    ClubPOJO clubToManage;
-    ClubDAOImp clubDAO;
+    private ClubPOJO clubToManage;
+    private ClubDAOImp clubDAO;
 
     /**
      * Constructs a <code>ClubManageTool</code> to be used in <code>ProfileManager</code>
