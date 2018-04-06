@@ -91,19 +91,7 @@ public interface ProfileManagerSA {
 	public void removeUser(String userID) throws ProfileManagementException;
 
 	//** PROFILE UPDATING **//
-
-	/**
-	 * Adds a new or modified user rating and recalculates 
-	 * the club's total rating.
-	 * <code>Club</code> receives RATE from <code>User</code>.
-	 * 
-	 * @param clubID id of rated club
-	 * @param rate rate
-	 * @param userID rating user
-	 * @throws ProfileManagementException if rate adding was not possible
-	 */
-	public void addNewRate(String clubID, int rate, String userID) throws ProfileManagementException;
-
+	
 	/**
 	 * Adds a new user opinion.
 	 * <code>Club</code> receives OPINION from <code>User</code>.
@@ -113,18 +101,8 @@ public interface ProfileManagerSA {
 	 * @param userID id of user
 	 * @throws ProfileManagementException if opinion adding was not possible
 	 */
-	public void addNewOpinion(String clubID, String opinion, String userID) 
+	public void addNewOpinion(String clubID, int rating, String opinion, String userID) 
 			throws ProfileManagementException;
-
-	/**
-	 * Removes a user rating.
-	 * <code>Club</code> deletes rate from <code>User</code>.
-	 * 
-	 * @param clubID id of club
-	 * @param userID id of user
-	 * @throws ProfileManagementException if rate removal was not possible
-	 */
-	public void removeUserRate(String clubID, String userID) throws ProfileManagementException;
 
 	/**
 	 * Removes a user opinion.

@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import  es.ucm.fdi.integration.util.Opinion;
+
 /**
  * Class that represents a club.
  * @author Fco Borja
@@ -25,19 +27,13 @@ public class ClubPOJO extends DataPOJO {
 	 * (add, remove, contains).
 	 */
 	Set<String> tags;
-	
-	/**
-	 * Map relating users' IDs with their rate (1 to 10) on this club.
-	 * It will be initialized as a HashMap.
-	 */
-	Map<String, Integer> userRates;
 	float rating;
 
 	/**
 	 * Map relating users' IDs with their opinion about this club.
 	 * It will be initialized as a HashMap.
 	 */
-	Map<String, String> userOpinions;
+	Map<String, Opinion> userOpinions;
 	
 	/**
 	 * Club class normal constructor
@@ -53,9 +49,8 @@ public class ClubPOJO extends DataPOJO {
 		this.price = price;
 		this.tags = new HashSet<String>(tags);
 
-		userRates = new HashMap<String, Integer>();
 		rating = 0.0f;
-		userOpinions = new HashMap<String, String>();
+		userOpinions = new HashMap<String, Opinion>();
 	}
 
 	/**
@@ -67,14 +62,13 @@ public class ClubPOJO extends DataPOJO {
 	 * @param rates map of user->rates
 	 * @param rating total rating
 	 */
-	public ClubPOJO(String id, String name, String address, float price, Set<String> tags, Map<String, Integer> rates, float rating, Map<String, String> opinions){
+	public ClubPOJO(String id, String name, String address, float price, Set<String> tags, float rating, Map<String, Opinion> opinions){
 		super(id);
 		this.commercialName = name;
 		this.address = address;
 		//this.coordinates = new Location(latitude,longitude);
 		this.price = price;
 		this.tags = new HashSet<String>(tags); // Set constructor
-		this.userRates = new HashMap<String, Integer>(rates); // Map constructor
 		this.rating = rating;	
 		this.userOpinions = opinions;	
 	}
@@ -170,52 +164,15 @@ public class ClubPOJO extends DataPOJO {
 	}
 
 	/**
-	 * Adds a new/modified user rate to the rates map
-	 * and updates the total rating.
-	 * @param userID rating user
-	 * @param rate rate integer
-	 */
-	public void addUserRate(String userID, int rate) {
-		int numRates = userRates.size();
-		
-		if (userRates.containsKey(userID)) {
-			int previousRate = userRates.get(userID);
-
-			rating += ( (rate - previousRate) / numRates );
-		} else {
-			rating = ( rating * ( numRates / (numRates + 1) ) ) + ( rate / (numRates + 1) );
-		}
-
-		userRates.put(userID, rate); // Overwrites previous rate (if exist)
-	}
-
-	/**
-	 * Removes a user rate from the rates map (if present) 
-	 * and updates the total rating.
-	 * @param userID unrating user
-	 */
-	public void removeUserRate(String userID) {
-		Integer removedRateInt = userRates.remove(userID);
-		
-		if (removedRateInt != null) {
-			int removedRate = removedRateInt; // unbox
-			int size = userRates.remove(userID);
-
-			rating -= removedRate / (size + 1);
-			rating *= (size + 1) / size;
-		}		
-	}
-
-	/**
 	 * Checks if total rating is correct (linear over user rates)
 	 * @return if total rating is correct
 	 */
 	public boolean checkRating() {
 		float checkedRating = 0.0f;
-		int numRates = userRates.size();
+		int numRates = userOpinions.size();
 
-		for(int r : userRates.values()) {
-			checkedRating += (r / numRates);
+		for(Opinion o : userOpinions.values()) {
+			checkedRating += (o.getRating() / numRates);
 		}
 
 		if (checkedRating == rating) {
@@ -223,14 +180,6 @@ public class ClubPOJO extends DataPOJO {
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * Returns a Collection with raters (users) IDs.
-	 * @return Collection of String
-	 */
-	public Collection<String> getRaters() {
-		return (Collection<String>) userRates.keySet();
 	}
 	
     /**
@@ -254,7 +203,7 @@ public class ClubPOJO extends DataPOJO {
 	 * @param userID reviewing user
 	 * @param opinion user's opinion
 	 */
-	public void addUserOpinion(String userID, String opinion) {
+	public void addUserOpinion(String userID, Opinion opinion) {
 		userOpinions.put(userID, opinion); // Overwrites previous rate (if exist)
 	}
 

@@ -11,11 +11,6 @@ public class UserPOJO extends DataPOJO {
 	LocalDate birthday;
 
 	/**
-	 * Set of rated clubs IDs.
-	 */
-	Set<String> ratedClubs;
-
-	/**
 	 * Set of reviewed clubs IDs.
 	 */
 	Set<String> reviewedClubs;
@@ -38,7 +33,6 @@ public class UserPOJO extends DataPOJO {
 		this.name = name;
 		this.birthday = bday;
 
-		ratedClubs = new HashSet<String>();
 		reviewedClubs = new HashSet<String>();
 	}
 	
@@ -52,14 +46,13 @@ public class UserPOJO extends DataPOJO {
 	 * @param rates user rated clubs
 	 * @param reviews user reviewed clubs
 	 */
-	public UserPOJO(String id, String user, String pass, String email, String name, LocalDate bday, Set<String> rates, Set<String> reviews) {
+	public UserPOJO(String id, String user, String pass, String email, String name, LocalDate bday, Set<String> reviews) {
 		super(id);
 		this.username = user;
 		this.password = pass;
 		this.email = email;
 		this.name = name;
 		this.birthday = bday;
-		this.ratedClubs = new HashSet<String>(rates);
 		this.reviewedClubs = new HashSet<String>(reviews);
 	}
 
@@ -146,39 +139,12 @@ public class UserPOJO extends DataPOJO {
 	}
 
 	/**
-	 * Returns a Collection of rated clubs IDs.
-	 * @see ProfileManagerSAImp#removeUser(String) 
-	 * @return Collection of String
-	 */
-	public Collection<String> getRatedClubs() {
-		return (Collection<String>) ratedClubs;
-	}
-
-	/**
 	 * Returns a Collection of reviewed clubs IDs.
 	 * @see ProfileManagerSAImp.removeUser(String) 
 	 * @return Collection of String
 	 */
 	public Collection<String> getReviewedClubs() {
 		return (Collection<String>) reviewedClubs;
-	}
-
-	/**
-	 * Adds a club to the rated clubs set.
-	 * 
-	 * @param clubID rated club id
-	 */
-	public void addRated(String clubID) {
-		ratedClubs.add(clubID);
-	}
-
-	/**
-	 * Removes a club from the rated clubs set.
-	 * 
-	 * @param clubID unrated club id
-	 */
-	public void removeRated(String clubID) {
-		ratedClubs.remove(clubID);
 	}
 
 	/**

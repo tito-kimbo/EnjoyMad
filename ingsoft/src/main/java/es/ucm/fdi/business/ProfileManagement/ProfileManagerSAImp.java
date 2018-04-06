@@ -7,7 +7,6 @@ import java.util.zip.DataFormatException;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import android.provider.ContactsContract.Profile;
 import es.ucm.fdi.business.ProfileManagement.ManagementExceptions.AlreadyExistingProfileException;
 import es.ucm.fdi.business.ProfileManagement.ManagementExceptions.ProfileManagementException;
 import es.ucm.fdi.business.ProfileManagement.ManagementTools.ClubDataID;
@@ -15,8 +14,10 @@ import es.ucm.fdi.business.ProfileManagement.ManagementTools.ClubManageTool;
 import es.ucm.fdi.business.ProfileManagement.ManagementTools.ParsingTool;
 import es.ucm.fdi.business.ProfileManagement.ManagementTools.UserDataID;
 import es.ucm.fdi.business.ProfileManagement.ManagementTools.UserManageTool;
+
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.UserDAOImp;
+import es.ucm.fdi.integration.util.Opinion;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 
@@ -210,13 +211,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        // Removal of raters (in user attributes)
-        for ( String userID : removingClub.getRaters() ) {
-            UserPOJO rater = userDAO.getUser(userID);
-
-            rater.removeRated(clubID);
-        }
-
         // Removal of reviewers (in user attributes)
         for ( String userID : removingClub.getReviewers() ) {
             UserPOJO rater = userDAO.getUser(userID);
@@ -238,13 +232,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        // Removal of user ratings
-        for ( String clubID : removingUser.getRatedClubs() ) {
-            ClubPOJO ratedClub = clubDAO.getClub(clubID);
-
-            ratedClub.removeUserRate(userID);
-        }
-
         // Removal of user reviews
         for ( String clubID : removingUser.getReviewedClubs() ) {
             ClubPOJO reviewedClub = clubDAO.getClub(clubID);
@@ -255,45 +242,12 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         userDAO.removeUser(userID);
     }
 
-    public void addNewRate(String clubID, int rate, String userID)
-            throws ProfileManagementException {
-        ClubPOJO ratedClub = clubDAO.getClub(clubID);
-        UserPOJO ratingUser = userDAO.getUser(userID);
-
-        if (ratedClub == null) {
-            throw new ProfileManagementException(
-                new NoSuchElementException(
-                    "In RATE adding: rated club not found in database. ID -> " + clubID
-                )
-            );
-        }
-
-        if (ratingUser == null) {
-            throw new ProfileManagementException(
-                new NoSuchElementException(
-                    "In RATE adding: rating user not found in database. ID -> " + userID
-                )
-            );
-        }
-
-        // Valid rate?
-        if ( ! ParsingTool.parseRate(rate) ) {
-            throw new ProfileManagementException(
-                new DataFormatException(
-                    "In RATE adding: not a valid user rate -> " + rate
-                )
-            );
-        }
-
-        ratedClub.addUserRate(userID, rate);
-        ratingUser.addRated(clubID);
-    }
-
-    public void addNewOpinion(String clubID, String opinion, String userID) 
+    public void addNewOpinion(String clubID, int rating, String opinion, String userID) 
             throws ProfileManagementException {
         ClubPOJO reviewedClub = clubDAO.getClub(clubID);
         UserPOJO reviewingUser = userDAO.getUser(userID);
-
+        //We will assume rating is in correct range
+        
         if (reviewedClub == null) {
             throw new ProfileManagementException(
                 new NoSuchElementException(
@@ -319,32 +273,8 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        reviewedClub.addUserOpinion(userID, opinion);
+        reviewedClub.addUserOpinion(userID, new Opinion(userID, opinion, rating));
         reviewingUser.addReviewed(clubID);
-    }
-
-    public void removeUserRate(String clubID, String userID) throws ProfileManagementException {
-        ClubPOJO unratedClub = clubDAO.getClub(clubID);
-        UserPOJO unratingUser = userDAO.getUser(userID);
-
-        if (unratedClub == null) {
-            throw new ProfileManagementException(
-                new NoSuchElementException(
-                    "In RATE removal: unrated club not found in database. ID -> " + clubID
-                )
-            );
-        }
-
-        if (unratingUser == null) {
-            throw new ProfileManagementException(
-                new NoSuchElementException(
-                    "In RATE removal: unrating user not found in database. ID -> " + userID
-                )
-            );
-        }
-
-        unratedClub.removeUserRate(userID);
-        unratingUser.removeRated(clubID);
     }
 
     public void removeUserOpinion(String clubID, String userID) throws ProfileManagementException {
@@ -367,7 +297,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        unreviewedClub.removeUserRate(userID);
-        unreviewingUser.removeRated(clubID);        
+        unreviewedClub.removeUserOpinion(userID);    
     }
 }
