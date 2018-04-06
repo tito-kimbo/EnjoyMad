@@ -16,10 +16,19 @@ public class SearchEngineSAImp implements SearchEngineSA {
 	private List<Element<ClubPOJO>> searchResults;
 	private ClubDAO clubAccess;
 	
+	/**
+	 * Constructor for the <code>SearchEngineSAImp</code>. Requires to provide a valid 
+	 * <code>ClubDAO</code>
+	 * 
+	 * @param clubs	DAO implementation to access to the club data
+	 */
 	public SearchEngineSAImp(ClubDAO clubs){
 		clubAccess = clubs;
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
 	public void search(String words, List<FilterPOJO> filters){
 		Element<ClubPOJO> aux;
 		List<ClubPOJO> clubs;
@@ -45,7 +54,10 @@ public class SearchEngineSAImp implements SearchEngineSA {
 		return searchResults;
 	}
 	
-	public void select(){
-		
+	/**
+	 * @inheritDoc
+	 */
+	public ClubPOJO select(String id){
+		return clubAccess.getClub(id);
 	}
 }

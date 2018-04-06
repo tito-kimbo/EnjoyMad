@@ -235,4 +235,13 @@ public class ClubPOJO extends DataPOJO {
 	public double getLongitude() {
 		return longitude;
 	}
+
+	public void setLatitude(double lat)
+	{
+		latitude = lat;		
+	}
+	public void setLongitude(double lon)
+	{
+		longitude = lon;
+	}
 }

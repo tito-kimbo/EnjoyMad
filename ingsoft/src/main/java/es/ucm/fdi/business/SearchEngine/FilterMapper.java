@@ -24,7 +24,6 @@ public class FilterMapper {
 		map.put("LocationFilter", new LocationFilter());	
 	}
 	
-	
 	public static Filter mapFilter(FilterPOJO fp){
 		return (Filter) map.get(fp.getID()).clone(fp);
 	}
