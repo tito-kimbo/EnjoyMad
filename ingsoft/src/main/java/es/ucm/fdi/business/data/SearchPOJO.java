@@ -12,6 +12,11 @@ public class SearchPOJO {
 	private String words;
 	private List<Element<ClubPOJO>> searchResults;
 	
+	public SearchPOJO(String w){
+		words = w;
+		searchResults = null;
+	}
+	
 	public SearchPOJO(String w, List<Element<ClubPOJO>> sr){
 		words = w;
 		searchResults = sr;

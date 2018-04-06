@@ -12,8 +12,8 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * @author Carlijn
  */
 public abstract class TicketManagerSAImp implements TicketManagerSA {
-	UserDAOImp users;
-	ClubDAOImp clubs;
+	private UserDAOImp users;
+	private ClubDAOImp clubs;
 	/**
 	 * Class constructor.
 	 * @param users users
