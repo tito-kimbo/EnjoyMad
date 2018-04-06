@@ -79,7 +79,7 @@ public class LocationFilter implements Filter{
 			double distance = getNavigableDistance(club);	//Calculates distance
 			return distance <= maxDistance;					//We check
 		}catch(NullPointerException nptr) {					//There is no location register
-			
+		
 		}catch(MalformedURLException url) {					//Bad GPS coordenates
 			
 		}catch(JSONException json) {						//Parsing Json
@@ -143,7 +143,12 @@ public class LocationFilter implements Filter{
 		
 		//throw new IllegalStateException("Unable to get the distance from the JSON object.");
 	}
-	/**Class just for reading a {@link JSONObject} from an url.*/
+	
+	/**Class just for reading a {@link JSONObject} from an url. Free source code published by Roland Illig.
+	 * 
+	 * @author Roland Illig
+	 * @see https://stackoverflow.com/users/225757/roland-illig
+	 */
 	public static class JsonReader {
 		//Check code marked by !!
 		  private static String readAll(Reader rd) throws IOException {
