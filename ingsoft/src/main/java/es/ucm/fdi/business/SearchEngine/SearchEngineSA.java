@@ -21,9 +21,9 @@ public interface SearchEngineSA {
 	public void search(String words, List<FilterPOJO> filters);
 	
 	/**
-	 * Selects a club from a given list.
+	 *	Retrieves the data of the selected club.
 	 */
-	public void select();
+	public ClubPOJO select(String id);
 	
 	/**
 	 * Returns the results of a search as a list of <code>Element</code> of 
