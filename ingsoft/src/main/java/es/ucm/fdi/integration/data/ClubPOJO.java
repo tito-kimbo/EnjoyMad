@@ -273,8 +273,6 @@ public class ClubPOJO extends DataPOJO {
 	public Collection<String> getReviewers() {
 		return (Collection<String>) userOpinions.keySet();
 	}
-
-	
 	
 	
 	
@@ -285,14 +283,14 @@ public class ClubPOJO extends DataPOJO {
 	 * Returns the latitude.
 	 * @return the latitude.
 	 */
-	/*public double getLatitude() {
-		return this.coordinates.getLat();
-	}*/
+	public double getLatitude() {
+		return latitude;
+	}
 	/**
 	 * Returns the longitude.
 	 * @return the longitude.
 	 */
-	/*public double getLongitude() {
-		return this.coordinates.getLng();
-	}*/
+	public double getLongitude() {
+		return longitude;
+	}
 }
