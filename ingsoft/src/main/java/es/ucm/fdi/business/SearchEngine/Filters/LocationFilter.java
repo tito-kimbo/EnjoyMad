@@ -12,6 +12,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 /**
  * This class is responsible of deciding whether a Club is near enough to satisfy the client search filter or not.
@@ -20,7 +21,7 @@ import org.json.JSONObject;
  */
 public class LocationFilter implements Filter{
 	
-	private final static String API_KEY = "AIzaSyDCASxz1lerrq1zkYhhbO7FAKDrcmNx9xo";
+	public  final static String API_KEY = "AIzaSyDCASxz1lerrq1zkYhhbO7FAKDrcmNx9xo";
 	private final static double MILES_TO_KM = 1.60934;
 	
 	private double maxDistance;
@@ -124,21 +125,23 @@ public class LocationFilter implements Filter{
 		
 		JSONObject json = JsonReader.readJsonFromUrl(requestURL);
 		
-		/* -> We suppose that json was loaded successfully */
+		/* -> We have the json object */
 		
-		String aux = (String) json.get("rows");
-		String[] values = aux.split("[,:{}\\[\\]\\s\\t\n]");
+		JSONArray array  = json.getJSONArray("rows");
+		JSONObject object = array.getJSONObject(0);
+		JSONArray array2 = object.getJSONArray("elements");
+		JSONObject object2 = array2.getJSONObject(0);
+		JSONObject object3 = object2.getJSONObject("distance");
 		
-		for(int i = 0; i < 10000; i++)
-		{
-			if(values[i].equals("distance"))
-			{
-				//should be  -> { ... ,"distance", "test", "41,6", ...}
-				return MILES_TO_KM * Double.valueOf(values[i+2]).doubleValue();
-			}
-		}
+		/* -> We have the element we wanted */
 		
-		throw new IllegalStateException("Unable to get the distance from the JSON object.");
+		String aux = (String) object3.get("text"); 	// "1,1 mi"
+		aux = aux.substring(0 ,aux.length() - 3);	// "1,1"
+		aux.replaceAll(",", ".");					// "1.1"
+				
+		return MILES_TO_KM * Double.valueOf(aux).doubleValue();
+		
+		//throw new IllegalStateException("Unable to get the distance from the JSON object.");
 	}
 	/**Class just for reading a {@link JSONObject} from an url.*/
 	public static class JsonReader {
@@ -169,19 +172,12 @@ public class LocationFilter implements Filter{
 	
 	/*
 	 * PENDING:
-	 * 
-	 * -> LocationManager initialization (requires a Context).
-	 * -> Check javadoc 
-	 * -> Exceptions?
-	 * -> Clean JSON code
+	 * -> Exceptions in getNavigableDistance?
 	 * 
 	 * OBSERVATIONS:
-	 * 
-	 * -> myContext needs initialization!!!.
-	 *    (getCoordinatesDevice() and LocationManager lm).
-	 * -> We suppose correct latitude/longitude in ClubPOJO.
-	 * -> For modifications in request format we need to modify requestURL in
-	 *    getNavigableDistance().
+	 * -> We suppose correct latitude/longitude in ClubPOJO. But there is no initialization.
+	 * -> We can get the distance between two gps coordinates of between two addresses. We 
+	 *    have to decide which one we are going to use definitely.
 	 * 
 	 */
 	
