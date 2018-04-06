@@ -28,7 +28,8 @@ public class LocationFilter implements Filter{
 	private float maxDistance;
 	private double deviceLatitude;
 	private double deviceLongitude;
-	private Context myContext;
+	private Context myContext; //NEEDS INITIALIZATION, possibly used via Singleton pattern
+	//in external class
 	
 	public LocationFilter()	{
 		//WARNING! Unimplemented, just to avoid error in FilterMapper
@@ -38,9 +39,10 @@ public class LocationFilter implements Filter{
 	}
 	public boolean filter(ClubPOJO c) 
 	{	
+		//This function might need cleaning
 		try {
-			double distance = getNavigableDistance(c);	//Calcula la distancia al club
-			return distance <= maxDistance;				//Realizamos la comprobación.
+			double distance = getNavigableDistance(c);	//Calculates distance
+			return distance <= maxDistance;				//We check
 		}catch(NullPointerException nptr) {
 			
 		}catch(MalformedURLException url) {
@@ -66,11 +68,10 @@ public class LocationFilter implements Filter{
 	 * @throws NullPointerException	In case the mobile phone has no location registers, so that it's not possible 
 	 * to get the last and nearest location of the device.
 	 */
-	private void getCoordinatesDevice() //EN DESARROLLO!
+	private void getDeviceCoordinates() //IN DEVELOPMENT!
 	{
-		//NEEDS A CONTEXT -> Create a main Singleton base for the App with its context
+		//NEEDS A CONTEXT -> Create a main Singleton base for the App with its context (?)
 		
-		//https://stackoverflow.com/questions/2227292/how-to-get-latitude-and-longitude-of-the-mobile-device-in-android
 		String context = Context.LOCATION_SERVICE;
 		LocationManager lm = (LocationManager)myContext.getSystemService(context); 
 		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER); 
@@ -81,7 +82,7 @@ public class LocationFilter implements Filter{
 		deviceLongitude = location.getLongitude();
 		deviceLatitude  = location.getLatitude();
 		
-		//Suponemos de momento que inicializa correctamente la latitud y longitud a la actual del dispositivo.
+		//We suppose correct latitude/longitude.
 	}
 	
 	/**
@@ -96,11 +97,10 @@ public class LocationFilter implements Filter{
 	 */
 	private double getNavigableDistance(ClubPOJO club) throws IOException, JSONException
 	{
-		getCoordinatesDevice();
+		getDeviceCoordinates();
 		
-		/* -> Aquí se supone que se tienen ya las coordenadas GPS del dispositivo y del club.*/
+		/* -> We have the device coordinates */
 		
-		//https://stackoverflow.com/questions/11901831/how-to-get-json-object-from-http-request-in-java
 		String requestURL = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" +
 							+ deviceLatitude     + "," + deviceLongitude     + "&destinations=" +
 							+ club.getLatitude() + "," + club.getLongitude() + "&key=" + API_KEY;
@@ -116,7 +116,7 @@ public class LocationFilter implements Filter{
 		
 		JSONObject json = JsonReader.readJsonFromUrl(requestURL);
 		
-		/* -> Auí se supone que se ha cargado correctamente el json generado al llamar a la página de arriba.*/
+		/* ->We suppose loaded JSON correctly? */
 		
 		String aux = (String) json.get("rows");
 		String[] values = aux.split("[,:{}\\[\\]\\s\\t\n]");
@@ -132,10 +132,8 @@ public class LocationFilter implements Filter{
 		throw new IllegalStateException("Unable to get the distance from the JSON object.");
 	}
 	
-	//https://stackoverflow.com/questions/4308554/simplest-way-to-read-json-from-a-url-in-java
 	public static class JsonReader {
-		//Copiado de un usuario de mucha reputación, NADA testeado.
-		//Me preocupa lo marcado con /*!!*/
+		//Check code marked by !!
 		  private static String readAll(Reader rd) throws IOException {
 		    StringBuilder sb = new StringBuilder();
 		    int cp;
@@ -160,20 +158,20 @@ public class LocationFilter implements Filter{
 		  }
 	}
 	/*
-	 * DUDAS PARA EDU Y OTROS:
+	 * PENDING:
 	 * 
-	 * -> Aclarar la forma de inicializar una variable de tipo LocationManager creando artificialmente un contexto.
-	 * -> Antes de presentar versión definitiva repasar la corrección del inglés de los javadocs (no me fío de mí).
-	 * -> Excepciones no controladas.
-	 * -> Código chapuza por no saber manejar bien el formato JSON.
+	 * -> LocationManager initialization (requires a Context).
+	 * -> Check javadoc 
+	 * -> Exceptions?
+	 * -> Clean JSON code
 	 * 
-	 * OTRAS OBSERVACIONES:
+	 * OBSERVATIONS:
 	 * 
-	 * -> El Context myContext no se inicializa en ningún momento, es algo propio del móvil que queda pendiente.
-	 *    (ver getCoordinatesDevice() y la inicialización de LocationManager lm).
-	 * -> Suponemos en esta clase inicializadas correctamente la latitud y longitud del ClubPOJO (cosa que no se hace).
-	 * -> Si quisieramos prescindir de la lat y long de los clubs habría que modificar String requestURL en el mth.
-	 *    getNavigableDistance()
+	 * -> myContext needs initialization!!!.
+	 *    (getCoordinatesDevice() and LocationManager lm).
+	 * -> We suppose correct latitude/longitude in ClubPOJO.
+	 * -> For modifications in request format we need to modify requestURL in
+	 *    getNavigableDistance().
 	 * 
 	 */
 	
