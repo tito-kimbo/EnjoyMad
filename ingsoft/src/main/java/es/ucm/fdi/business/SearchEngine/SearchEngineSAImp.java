@@ -24,6 +24,7 @@ public class SearchEngineSAImp implements SearchEngineSA {
 	 */
 	public SearchEngineSAImp(ClubDAO clubs){
 		clubAccess = clubs;
+		searchResults = new ArrayList<Element<ClubPOJO>>();
 	}
 	
 	/**
@@ -34,7 +35,7 @@ public class SearchEngineSAImp implements SearchEngineSA {
 		List<ClubPOJO> clubs;
 		
 		clubs = clubAccess.getClubs();
-		searchResults = new ArrayList<Element<ClubPOJO>>();
+		
 		//Here we must find all the matching Data
 		for(ClubPOJO c : clubs){
 			aux = new Element<ClubPOJO>(c);
