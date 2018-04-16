@@ -58,7 +58,7 @@ public class UserPOJOTest {
 	@Test(expected = DateTimeException.class)
 	public final void testIncorrectDay() {
 		LocalDate date = LocalDate.of(1980, 32, 1);		
-		UserPOJO user = new UserPOJO("IDNumber1", "MyUser", "MyPsw", "myname@domain.com", "myname", date);
+		new UserPOJO("IDNumber1", "MyUser", "MyPsw", "myname@domain.com", "myname", date);
 	}
 
 }

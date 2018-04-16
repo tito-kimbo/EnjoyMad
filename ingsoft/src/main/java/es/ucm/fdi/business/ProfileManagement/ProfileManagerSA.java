@@ -3,7 +3,6 @@ package es.ucm.fdi.business.ProfileManagement;
 import java.time.LocalDate;
 import java.util.Set;
 
-import android.provider.ContactsContract.Profile;
 import es.ucm.fdi.business.ProfileManagement.ManagementExceptions.ProfileManagementException;
 import es.ucm.fdi.business.ProfileManagement.ManagementTools.ClubDataID;
 import es.ucm.fdi.business.ProfileManagement.ManagementTools.UserDataID;

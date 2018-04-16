@@ -3,7 +3,12 @@ package es.ucm.fdi.business.ProfileManagement.ManagementExceptions;
 import java.lang.Exception;
 
 public class ProfileManagementException extends Exception {
-    public ProfileManagementException() {
+    /**
+	 * Generated serial UID.
+	 */
+	private static final long serialVersionUID = 3671499596936349788L;
+
+	public ProfileManagementException() {
         super();
     }
 

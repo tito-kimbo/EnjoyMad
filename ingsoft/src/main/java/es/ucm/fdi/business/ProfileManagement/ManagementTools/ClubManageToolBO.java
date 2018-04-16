@@ -7,8 +7,6 @@ import es.ucm.fdi.integration.ClubDAOImp;
 
 import java.util.zip.DataFormatException;
 
-import android.provider.ContactsContract.Data;
-
 /**
  * Class to be used by the ProfileManagerSAImp to modify
  * particular attributes of a ClubPOJO instance.

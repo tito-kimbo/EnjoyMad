@@ -28,7 +28,7 @@ public class LocationFilterTest
 
 		try	
 		{
-			JSONObject json = JsonReader.readJsonFromUrl(requestURL);
+			JsonReader.readJsonFromUrl(requestURL);
 		}catch(Exception e) 
 		{
 			fail("No exception should have been thrown");
