@@ -9,6 +9,7 @@ import java.util.HashSet;
 
 import org.junit.Test;
 
+import es.ucm.fdi.business.SearchEngine.FilterMapper;
 import es.ucm.fdi.business.SearchEngine.SearchEngineSA;
 import es.ucm.fdi.business.SearchEngine.SearchEngineSAImp;
 import es.ucm.fdi.business.data.FilterPOJO;
@@ -29,6 +30,7 @@ public class SearchEngineSAImpTest {
 		cd.addClub(c);
 		
 		SearchEngineSA se = new SearchEngineSAImp(cd);
+		FilterMapper.addAll();
 		se.search("kapi", filters);
 		List<Element<ClubPOJO>> results = se.getSearchResults();
 		assertTrue("Expected true",results.get(0).isVisible());

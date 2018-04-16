@@ -16,16 +16,18 @@ import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
 public class RatingFilter {
+	
 	@Test
 	public void testRatingFilter(){
 		Set<String> l1 = new HashSet<String>();
-		l1.add("tecno");
+		l1.add("techno");
 		l1.add("reggaeton");
 		l1.add("electronica");
 		
 		List <String> l2 = new ArrayList<String>();
 		l2.add("4.0");
 		FilterPOJO fp = new FilterPOJO("RatingFilter", l2);
+		FilterMapper.addAll();
 		Filter f = FilterMapper.mapFilter(fp);
 		
 		//The provisional ID in this test is the MD5 hash generated from the name

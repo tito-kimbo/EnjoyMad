@@ -19,7 +19,7 @@ public class PriceFilterTest {
 	@Test
 	public void testPriceFilter(){
 		Set <String> l1 = new HashSet<String>();
-		l1.add("tecno");
+		l1.add("techno");
 		l1.add("reggaeton");
 		l1.add("electronica");
 		
@@ -30,6 +30,7 @@ public class PriceFilterTest {
 		l2.add("30.50");
 		
 		FilterPOJO fp = new FilterPOJO("PriceFilter", l2);
+		FilterMapper.addAll();
 		Filter f = FilterMapper.mapFilter(fp);
 		assertTrue("Expected true",f.filter(c));
 		c.setPrice(30.50F);
