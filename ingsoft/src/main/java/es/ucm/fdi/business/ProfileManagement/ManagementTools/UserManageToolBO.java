@@ -14,7 +14,7 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * Class to be used by the ProfileManagerSAImp to modify
  * particular attributes of a UserPOJO instance.
  */
-public class UserManageTool {
+public class UserManageToolBO {
     private UserPOJO userToManage;
     private UserDAOImp userDAO;
 
@@ -26,7 +26,7 @@ public class UserManageTool {
      * @param user user to be managed
      * @param userDAO users database
      */
-    public UserManageTool(UserPOJO user, UserDAOImp userDAO) {
+    public UserManageToolBO(UserPOJO user, UserDAOImp userDAO) {
         userToManage = user;
         this.userDAO = userDAO;
     }
@@ -91,7 +91,7 @@ public class UserManageTool {
         // Valid?
         String newID = (String) newData;
 
-        if ( ! ParsingTool.parseID(newID) ) {
+        if ( ! ParsingToolBO.parseID(newID) ) {
             throw new DataFormatException(
                 "In ID modification: not a valid ID format -> " + newID
             );
@@ -120,7 +120,7 @@ public class UserManageTool {
         // Valid?
         String newUsername = (String) newData;
 
-        if ( ! ParsingTool.parseUsername(newUsername) ) {
+        if ( ! ParsingToolBO.parseUsername(newUsername) ) {
             throw new DataFormatException(
                 "In USERNAME modification: not a valid username format -> " + newUsername
             );
@@ -146,7 +146,7 @@ public class UserManageTool {
         // Valid?
         String newPassword = (String) newData;
 
-        if ( ! ParsingTool.parsePassword(newPassword) ) {
+        if ( ! ParsingToolBO.parsePassword(newPassword) ) {
             throw new DataFormatException(
                 "In PASSWORD modification: not a valid password format -> " + newPassword
             );
@@ -175,7 +175,7 @@ public class UserManageTool {
         // Valid?
         String newEmail = (String) newData;
 
-        if ( ! ParsingTool.parseEmail(newEmail) ) {
+        if ( ! ParsingToolBO.parseEmail(newEmail) ) {
             throw new DataFormatException(
                 "In EMAIL modification: not a valid email format -> " + newEmail
             );
@@ -201,7 +201,7 @@ public class UserManageTool {
         // Valid?
         String newName = (String) newData;
 
-        if ( ! ParsingTool.parseName(newName) ) {
+        if ( ! ParsingToolBO.parseName(newName) ) {
             throw new DataFormatException(
                 "In NAME modification: not a valid name format -> " + newName
             );
@@ -226,7 +226,7 @@ public class UserManageTool {
         // Valid?
         LocalDate newBirthday = (LocalDate) newData;
         
-        if ( ! ParsingTool.parseBirthday(newBirthday) ) {
+        if ( ! ParsingToolBO.parseBirthday(newBirthday) ) {
             throw new DataFormatException(
                 "In BIRTHDAY modification: not a valid birth date -> " + newBirthday.toString()
             );

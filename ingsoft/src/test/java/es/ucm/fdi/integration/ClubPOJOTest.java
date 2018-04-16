@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
-import es.ucm.fdi.integration.util.Opinion;
+import es.ucm.fdi.integration.util.OpinionPOJO;
 
 public class ClubPOJOTest {
 	
@@ -21,7 +21,7 @@ public class ClubPOJOTest {
 	}
 	
 	private static void addOpinions(ClubPOJO c){
-		Opinion op = new Opinion("", 4.0f);
+		OpinionPOJO op = new OpinionPOJO("", 4.0f);
 		for(int i = 0; i < 8; ++i){
 			c.addUserOpinion("anotherUser" + i, op);
 		}
@@ -45,7 +45,7 @@ public class ClubPOJOTest {
 	@Test
 	public void ratingCalculationAndUpdateTest(){
 		ClubPOJO testClub = createTestClubPOJO();
-		Opinion op1 = new Opinion("", 3.0f), op2 = new Opinion("", 4.0f);
+		OpinionPOJO op1 = new OpinionPOJO("", 3.0f), op2 = new OpinionPOJO("", 4.0f);
 		
 		//No delta error margin here
 		assertEquals("Club rating not properly initialized.", 0, testClub.getRating(), 0);

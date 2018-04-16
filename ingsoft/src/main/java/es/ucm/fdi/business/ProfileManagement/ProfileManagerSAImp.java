@@ -10,14 +10,14 @@ import org.mindrot.jbcrypt.BCrypt;
 import es.ucm.fdi.business.ProfileManagement.ManagementExceptions.AlreadyExistingProfileException;
 import es.ucm.fdi.business.ProfileManagement.ManagementExceptions.ProfileManagementException;
 import es.ucm.fdi.business.ProfileManagement.ManagementTools.ClubDataID;
-import es.ucm.fdi.business.ProfileManagement.ManagementTools.ClubManageTool;
-import es.ucm.fdi.business.ProfileManagement.ManagementTools.ParsingTool;
+import es.ucm.fdi.business.ProfileManagement.ManagementTools.ClubManageToolBO;
+import es.ucm.fdi.business.ProfileManagement.ManagementTools.ParsingToolBO;
 import es.ucm.fdi.business.ProfileManagement.ManagementTools.UserDataID;
-import es.ucm.fdi.business.ProfileManagement.ManagementTools.UserManageTool;
+import es.ucm.fdi.business.ProfileManagement.ManagementTools.UserManageToolBO;
 
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.UserDAOImp;
-import es.ucm.fdi.integration.util.Opinion;
+import es.ucm.fdi.integration.util.OpinionPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 
@@ -47,35 +47,35 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         }
 
         // Valid arguments? If not -> Exception throwing
-        if ( ! ParsingTool.parseID(clubID) ) {
+        if ( ! ParsingToolBO.parseID(clubID) ) {
             throw new ProfileManagementException(
                 new DataFormatException(
                     "In CLUB creation: not a valid ID format -> " + clubID
                 )
             );
         }
-        if ( ! ParsingTool.parseCommercialName(name) ) {
+        if ( ! ParsingToolBO.parseCommercialName(name) ) {
             throw new ProfileManagementException(
                 new DataFormatException(
                     "In CLUB creation: not a valid commercial name format -> " + name
                 )
             );
         }
-        if ( ! ParsingTool.parseAddress(address) ) {
+        if ( ! ParsingToolBO.parseAddress(address) ) {
             throw new ProfileManagementException(
                 new DataFormatException(
                     "In CLUB creation: not a valid address format -> " + address
                 )
             );
         }
-        if ( ! ParsingTool.parsePrice(price) ) {
+        if ( ! ParsingToolBO.parsePrice(price) ) {
             throw new ProfileManagementException(
                 new DataFormatException(
                     "In CLUB creation: not a valid price -> " + price
                 )
             );
         }
-        if ( ! ParsingTool.parseTags(tags) ) {
+        if ( ! ParsingToolBO.parseTags(tags) ) {
             String tagsInfo = "";
             for (String t : tags) {
                 tagsInfo += t + " ";
@@ -104,42 +104,42 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         }
 
         // Valid arguments? If not -> Exception throwing
-        if ( ! ParsingTool.parseID(userID) ) {
+        if ( ! ParsingToolBO.parseID(userID) ) {
             throw new ProfileManagementException(
                 new DataFormatException(
                     "In USER creation: not a valid ID format -> " + userID
                 )
             );
         }
-        if ( ! ParsingTool.parseUsername(username) ) {
+        if ( ! ParsingToolBO.parseUsername(username) ) {
             throw new ProfileManagementException(
                 new DataFormatException(
                     "In USER creation: not a valid username format -> " + username
                 )
             );
         }
-        if ( ! ParsingTool.parsePassword(password) ) {
+        if ( ! ParsingToolBO.parsePassword(password) ) {
             throw new ProfileManagementException( 
                 new DataFormatException(
                     "In USER creation: not a valid password format -> " + password
                 )
             );
         }
-        if ( ! ParsingTool.parseEmail(email) ) {
+        if ( ! ParsingToolBO.parseEmail(email) ) {
             throw new ProfileManagementException(
                 new DataFormatException(
                    "In USER creation: not a valid email format -> " + email
                 )
             );
         }
-        if ( ! ParsingTool.parseName(name) ) {
+        if ( ! ParsingToolBO.parseName(name) ) {
             throw new ProfileManagementException(
                 new DataFormatException(
                  "In USER creation: not a valid name format -> " + name
                 )
             );
         }
-        if ( ! ParsingTool.parseBirthday(birthday) ) {
+        if ( ! ParsingToolBO.parseBirthday(birthday) ) {
             throw new ProfileManagementException(
                 new DataFormatException(
                     "In USER creation: not a valid birth date -> " + birthday.toString()
@@ -168,7 +168,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
         // Valid newData?
         try {
-            ClubManageTool clubManager = new ClubManageTool(club, clubDAO);
+            ClubManageToolBO clubManager = new ClubManageToolBO(club, clubDAO);
             clubManager.modify(dataID, newData);
         } catch (IllegalArgumentException ilegArg) {
             throw new ProfileManagementException(ilegArg);
@@ -191,7 +191,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
         // Valid newData?
         try {
-            UserManageTool userManager = new UserManageTool(user, userDAO);
+            UserManageToolBO userManager = new UserManageToolBO(user, userDAO);
             userManager.modify(dataID, newData);
         } catch (IllegalArgumentException ilegArg) {
             throw new ProfileManagementException(ilegArg);
@@ -265,7 +265,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         }
 
         // Valid?
-        if ( ! ParsingTool.parseOpinion(opinion) ) {
+        if ( ! ParsingToolBO.parseOpinion(opinion) ) {
             throw new ProfileManagementException(
                 new DataFormatException(
                     "In OPINION adding: not a valid user opinion -> " + opinion
@@ -273,7 +273,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        reviewedClub.addUserOpinion(userID, new Opinion(opinion, rating));
+        reviewedClub.addUserOpinion(userID, new OpinionPOJO(opinion, rating));
         reviewingUser.addReviewed(clubID);
     }
 

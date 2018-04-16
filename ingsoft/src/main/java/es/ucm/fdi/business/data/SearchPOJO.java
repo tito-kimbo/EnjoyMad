@@ -2,7 +2,7 @@ package es.ucm.fdi.business.data;
 
 import java.util.List;
 
-import es.ucm.fdi.business.util.Element;
+import es.ucm.fdi.business.util.ElementBO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
 /**
@@ -10,14 +10,14 @@ import es.ucm.fdi.integration.data.ClubPOJO;
  */
 public class SearchPOJO {
 	private String words;
-	private List<Element<ClubPOJO>> searchResults;
+	private List<ElementBO<ClubPOJO>> searchResults;
 	
 	public SearchPOJO(String w){
 		words = w;
 		searchResults = null;
 	}
 	
-	public SearchPOJO(String w, List<Element<ClubPOJO>> sr){
+	public SearchPOJO(String w, List<ElementBO<ClubPOJO>> sr){
 		words = w;
 		searchResults = sr;
 	}
@@ -26,7 +26,7 @@ public class SearchPOJO {
 		return words;
 	}
 	
-	public List<Element<ClubPOJO>> getSearchResults(){
+	public List<ElementBO<ClubPOJO>> getSearchResults(){
 		return searchResults;
 	}
 }

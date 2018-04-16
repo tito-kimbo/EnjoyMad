@@ -10,18 +10,18 @@ import es.ucm.fdi.business.SearchEngine.Filters.*;
  * The function of this class is to create the 
  */
 public class FilterMapper {
-	static private HashMap<String, Filter> map;
+	static private HashMap<String, FilterBO> map;
 	
 	//Static initializer for the class
 	public static void addAll() {
-		map = new HashMap<String, Filter>();
-		map.put("PriceFilter", new PriceFilter());
-		map.put("TagFilter", new TagFilter());
-		map.put("RatingFilter", new RatingFilter());
-		map.put("LocationFilter", new LocationFilter());	
+		map = new HashMap<String, FilterBO>();
+		map.put("PriceFilter", new PriceFilterBO());
+		map.put("TagFilter", new TagFilterBO());
+		map.put("RatingFilter", new RatingFilterBO());
+		map.put("LocationFilter", new LocationFilterBO());	
 	}
 	
-	public static void addFilter(String name, Filter prototype){
+	public static void addFilter(String name, FilterBO prototype){
 		map.put(name, prototype);
 	}
 	
@@ -33,7 +33,7 @@ public class FilterMapper {
 		}
 	}
 	
-	public static Filter mapFilter(FilterPOJO fp){
-		return (Filter) map.get(fp.getID()).clone(fp);
+	public static FilterBO mapFilter(FilterPOJO fp){
+		return (FilterBO) map.get(fp.getID()).clone(fp);
 	}
 }

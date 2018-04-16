@@ -6,11 +6,11 @@ package es.ucm.fdi.business.util;
  *
  * @param <T> Type of the content of the class
  */
-public class Element<T>{
+public class ElementBO<T>{
 	private boolean visible;
 	private T element;
 	
-	public Element(T e){
+	public ElementBO(T e){
 		visible = false;
 		element = e;
 	}

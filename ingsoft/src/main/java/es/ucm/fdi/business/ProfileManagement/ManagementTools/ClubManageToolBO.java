@@ -13,7 +13,7 @@ import android.provider.ContactsContract.Data;
  * Class to be used by the ProfileManagerSAImp to modify
  * particular attributes of a ClubPOJO instance.
  */
-public class ClubManageTool {
+public class ClubManageToolBO {
     private ClubPOJO clubToManage;
     private ClubDAOImp clubDAO;
 
@@ -25,7 +25,7 @@ public class ClubManageTool {
      * @param club club to be managed
      * @param clubDAO clubs database
      */
-    public ClubManageTool(ClubPOJO club, ClubDAOImp clubDAO) {
+    public ClubManageToolBO(ClubPOJO club, ClubDAOImp clubDAO) {
         clubToManage = club;
         this.clubDAO = clubDAO;
     }
@@ -96,7 +96,7 @@ public class ClubManageTool {
         // Valid?
         String newID = (String) newData;
 
-        if ( ! ParsingTool.parseID(newID) ) {
+        if ( ! ParsingToolBO.parseID(newID) ) {
             throw new DataFormatException(
                 "In ID modification: not a valid ID format -> " + newID
             );
@@ -125,7 +125,7 @@ public class ClubManageTool {
         // Valid?
         String newCommercialName = (String) newData;
 
-        if ( ! ParsingTool.parseCommercialName(newCommercialName) ) {
+        if ( ! ParsingToolBO.parseCommercialName(newCommercialName) ) {
             throw new DataFormatException(
                 "In COMMERCIAL NAME modification: not a valid commercial name format -> " + newCommercialName
             );
@@ -151,7 +151,7 @@ public class ClubManageTool {
         // Valid?
         String newAddress = (String) newData;
 
-        if ( ! ParsingTool.parseAddress(newAddress) ) {
+        if ( ! ParsingToolBO.parseAddress(newAddress) ) {
             throw new DataFormatException(
                 "In ADDRESS modification: not a valid address format -> " + newAddress
             );
@@ -177,7 +177,7 @@ public class ClubManageTool {
         // Valid?
         float newPrice = (Float) newData;
 
-        if ( ! ParsingTool.parsePrice(newPrice) ) {
+        if ( ! ParsingToolBO.parsePrice(newPrice) ) {
             throw new DataFormatException(
                 "In PRICE modification: not a valid price -> " + newPrice
             );
@@ -205,7 +205,7 @@ public class ClubManageTool {
         // Valid?
         float newRating = (Float) newData;
 
-        if ( ! ParsingTool.parseRating(newRating) ) {
+        if ( ! ParsingToolBO.parseRating(newRating) ) {
             throw new DataFormatException(
                 "In RATING modification: not a valid rating -> " + newRating
             );
@@ -233,7 +233,7 @@ public class ClubManageTool {
         // Valid?
         String newTag = (String) newData;
 
-        if ( ! ParsingTool.tagChecker.matcher(newTag).matches() ) {
+        if ( ! ParsingToolBO.tagChecker.matcher(newTag).matches() ) {
             throw new DataFormatException(
                 "In TAG adding: not a valid tag format -> " + newTag
             );
@@ -261,7 +261,7 @@ public class ClubManageTool {
         // Valid?
         String tagToRemove = (String) newData;
 
-        if ( ! ParsingTool.tagChecker.matcher(tagToRemove).matches() ) {
+        if ( ! ParsingToolBO.tagChecker.matcher(tagToRemove).matches() ) {
             throw new DataFormatException(
                 "In TAG removal: not a valid tag format -> " + tagToRemove
             );

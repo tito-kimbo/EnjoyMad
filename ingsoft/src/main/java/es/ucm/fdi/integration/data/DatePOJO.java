@@ -5,7 +5,7 @@ package es.ucm.fdi.integration.data;
  * @author Fco Borja
  * @author Carlijn
  */
-public class Date{
+public class DatePOJO{
 	int day, month, year;
 	
 	/**
@@ -15,7 +15,7 @@ public class Date{
 	 * @param year year
 	 */
 	
-	public Date(int day, int month, int year) {
+	public DatePOJO(int day, int month, int year) {
 		setDay(day);
 		setMonth(month);
 		setYear(year);

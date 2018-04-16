@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import  es.ucm.fdi.integration.util.Opinion;
+import  es.ucm.fdi.integration.util.OpinionPOJO;
 
 /**
  * Class that represents a club.
@@ -33,7 +33,7 @@ public class ClubPOJO extends DataPOJO {
 	 * Map relating users' IDs with their opinion about this club.
 	 * It will be initialized as a HashMap.
 	 */
-	private Map<String, Opinion> userOpinions;
+	private Map<String, OpinionPOJO> userOpinions;
 	
 	/**
 	 * Club class normal constructor
@@ -50,7 +50,7 @@ public class ClubPOJO extends DataPOJO {
 		this.tags = new HashSet<String>(tags);
 
 		rating = 0.0f;
-		userOpinions = new HashMap<String, Opinion>();
+		userOpinions = new HashMap<String, OpinionPOJO>();
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class ClubPOJO extends DataPOJO {
 	 * @param rates map of user->rates
 	 * @param rating total rating
 	 */
-	public ClubPOJO(String id, String name, String address, float price, Set<String> tags, float rating, Map<String, Opinion> opinions){
+	public ClubPOJO(String id, String name, String address, float price, Set<String> tags, float rating, Map<String, OpinionPOJO> opinions){
 		super(id);
 		this.commercialName = name;
 		this.address = address;
@@ -184,7 +184,7 @@ public class ClubPOJO extends DataPOJO {
 	 * @param userID reviewing user
 	 * @param opinion user's opinion
 	 */
-	public void addUserOpinion(String userID, Opinion opinion) {
+	public void addUserOpinion(String userID, OpinionPOJO opinion) {
 		userOpinions.put(userID, opinion); // Overwrites previous rate (if exist)
 		//Now updates the current rating
 		
@@ -200,7 +200,7 @@ public class ClubPOJO extends DataPOJO {
 	 * @param userID unreviewing user
 	 */
 	public void removeUserOpinion(String userID) {
-		Opinion aux = userOpinions.get(userID);
+		OpinionPOJO aux = userOpinions.get(userID);
 		userOpinions.remove(userID);
 		//Now updates the current rating
 		

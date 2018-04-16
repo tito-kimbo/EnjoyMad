@@ -2,7 +2,7 @@ package es.ucm.fdi.business.SearchEngine;
 
 import java.util.List;
 
-import es.ucm.fdi.business.util.Element;
+import es.ucm.fdi.business.util.ElementBO;
 import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
@@ -29,6 +29,6 @@ public interface SearchEngineSA {
 	 * Returns the results of a search as a list of <code>Element</code> of 
 	 * type <code>ClubPOJO</code>.
 	 */
-	public List<Element<ClubPOJO>> getSearchResults();
+	public List<ElementBO<ClubPOJO>> getSearchResults();
 
 }

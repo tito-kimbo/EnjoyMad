@@ -11,7 +11,7 @@ import java.util.HashSet;
 import org.junit.Test;
 
 import es.ucm.fdi.business.SearchEngine.FilterMapper;
-import es.ucm.fdi.business.SearchEngine.Filters.Filter;
+import es.ucm.fdi.business.SearchEngine.Filters.FilterBO;
 import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
@@ -28,7 +28,7 @@ public class RatingFilter {
 		l2.add("4.0");
 		FilterPOJO fp = new FilterPOJO("RatingFilter", l2);
 		FilterMapper.addAll();
-		Filter f = FilterMapper.mapFilter(fp);
+		FilterBO f = FilterMapper.mapFilter(fp);
 		
 		//The provisional ID in this test is the MD5 hash generated from the name
 		ClubPOJO c = new ClubPOJO("aae032dec67f8f572570597421ad4b7e", "Mitty", 

@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * Class with stati methods used as a tool to check the validity
  * of arguments in management methods.
  */
-public class ParsingTool {
+public class ParsingToolBO {
     /**
      * A pattern that matches alphanumeric sequences [A-Za-z0-9_].
      * Used for alphanumeric Strings with no whitespaces.

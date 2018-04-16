@@ -13,7 +13,7 @@ import es.ucm.fdi.business.SearchEngine.FilterMapper;
 import es.ucm.fdi.business.SearchEngine.SearchEngineSA;
 import es.ucm.fdi.business.SearchEngine.SearchEngineSAImp;
 import es.ucm.fdi.business.data.FilterPOJO;
-import es.ucm.fdi.business.util.Element;
+import es.ucm.fdi.business.util.ElementBO;
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
@@ -32,7 +32,7 @@ public class SearchEngineSAImpTest {
 		SearchEngineSA se = new SearchEngineSAImp(cd);
 		FilterMapper.addAll();
 		se.search("kapi", filters);
-		List<Element<ClubPOJO>> results = se.getSearchResults();
+		List<ElementBO<ClubPOJO>> results = se.getSearchResults();
 		assertTrue("Expected true",results.get(0).isVisible());
 	}
 }
