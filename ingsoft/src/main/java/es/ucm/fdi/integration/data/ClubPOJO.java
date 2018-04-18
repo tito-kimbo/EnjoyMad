@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import es.ucm.fdi.integration.data.Location;
+
 /**
  * Class that represents a club.
  * @author Fco Borja
@@ -14,9 +16,8 @@ public class ClubPOJO extends DataPOJO {
 	String commercialName;
 	String address;
 	float price;
-	
-	private double latitude;
-	private double longitude;
+
+	private Location location;
 	
 	
 	/**
@@ -53,8 +54,11 @@ public class ClubPOJO extends DataPOJO {
 		this.price = price;
 		this.tags = new HashSet<String>(tags);
 
+		// Location calculation
+		location = new Location(address);
+
 		userRates = new HashMap<String, Integer>();
-		rating = 0.0f;
+		rating = 0.0F;
 		userOpinions = new HashMap<String, String>();
 	}
 
@@ -67,11 +71,12 @@ public class ClubPOJO extends DataPOJO {
 	 * @param rates map of user->rates
 	 * @param rating total rating
 	 */
-	public ClubPOJO(String id, String name, String address, float price, Set<String> tags, Map<String, Integer> rates, float rating, Map<String, String> opinions){
+	public ClubPOJO(String id, String name, String address, float price, Location location, Set<String> tags, 
+			Map<String, Integer> rates, float rating, Map<String, String> opinions) {
 		super(id);
 		this.commercialName = name;
 		this.address = address;
-		//this.coordinates = new Location(latitude,longitude);
+		this.location = location;
 		this.price = price;
 		this.tags = new HashSet<String>(tags); // Set constructor
 		this.userRates = new HashMap<String, Integer>(rates); // Map constructor
@@ -121,11 +126,47 @@ public class ClubPOJO extends DataPOJO {
 	
 	/**
 	 * Sets the price of a ticket.
-	 * @return price of a ticket
+	 * @param price price of a ticket
 	 */
 	public void setPrice(float price) {
 		if(price > 0)
 			this.price = price;
+	}
+
+	/**
+	 * Returns the location of the club.
+	 * 
+	 * @return <code>Location</code> of <code>Club</code>
+	 */
+	public Location getLocation() {
+		return location;
+	}
+
+	/**
+	 * Sets the location of the club.
+	 * 
+	 * @param location new club location
+	 */
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	/**
+	 * Returns the latitude coordinate of the club.
+	 * 
+	 * @return <code>Double</code> with the club latitude
+	 */
+	public Double getLatitude() {
+		return ( location.getLat() );
+	}
+
+	/**
+	 * Returns the longitude coordinate of the club.
+	 * 
+	 * @return <code>Double</code> with the club longitude
+	 */
+	public Double getLongitude() {
+		return ( location.getLng() );
 	}
 
 	/**
@@ -272,25 +313,5 @@ public class ClubPOJO extends DataPOJO {
 	 */
 	public Collection<String> getReviewers() {
 		return (Collection<String>) userOpinions.keySet();
-	}
-	
-	
-	
-	
-	
-	
-	/**
-	 * Returns the latitude.
-	 * @return the latitude.
-	 */
-	public double getLatitude() {
-		return latitude;
-	}
-	/**
-	 * Returns the longitude.
-	 * @return the longitude.
-	 */
-	public double getLongitude() {
-		return longitude;
 	}
 }
