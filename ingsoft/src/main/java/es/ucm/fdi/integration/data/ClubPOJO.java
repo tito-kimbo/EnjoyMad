@@ -6,19 +6,18 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import  es.ucm.fdi.integration.util.OpinionPOJO;
+import es.ucm.fdi.integration.util.ReviewPOJO;
 
 /**
  * Class that represents a club.
  * @author Fco Borja
  */
 public class ClubPOJO extends DataPOJO {
-	private String commercialName;
-	private String address;
-	private float price;
-	
-	private double latitude;
-	private double longitude;
+	String commercialName;
+	String address;
+	float price;
+
+	private Location location;
 	
 	
 	/**
@@ -33,7 +32,7 @@ public class ClubPOJO extends DataPOJO {
 	 * Map relating users' IDs with their opinion about this club.
 	 * It will be initialized as a HashMap.
 	 */
-	private Map<String, OpinionPOJO> userOpinions;
+	private Map<String, ReviewPOJO> userReviews;
 	
 	/**
 	 * Club class normal constructor
@@ -49,8 +48,11 @@ public class ClubPOJO extends DataPOJO {
 		this.price = price;
 		this.tags = new HashSet<String>(tags);
 
-		rating = 0.0f;
-		userOpinions = new HashMap<String, OpinionPOJO>();
+		// Location calculation
+		location = new Location(address);
+
+		rating = 0.0F;
+		userReviews = new HashMap<String, ReviewPOJO>();
 	}
 
 	/**
@@ -62,15 +64,16 @@ public class ClubPOJO extends DataPOJO {
 	 * @param rates map of user->rates
 	 * @param rating total rating
 	 */
-	public ClubPOJO(String id, String name, String address, float price, Set<String> tags, float rating, Map<String, OpinionPOJO> opinions){
+	public ClubPOJO(String id, String name, String address, float price, Location location, Set<String> tags, 
+			Map<String, Integer> rates, float rating, Map<String, ReviewPOJO> opinions) {
 		super(id);
 		this.commercialName = name;
 		this.address = address;
-		//this.coordinates = new Location(latitude,longitude);
+		this.location = location;
 		this.price = price;
 		this.tags = new HashSet<String>(tags); // Set constructor
 		this.rating = rating;	
-		this.userOpinions = opinions;	
+		this.userReviews = opinions;	
 	}
 
 	/**
@@ -115,11 +118,65 @@ public class ClubPOJO extends DataPOJO {
 	
 	/**
 	 * Sets the price of a ticket.
-	 * @return price of a ticket
+	 * @param price price of a ticket
 	 */
 	public void setPrice(float price) {
 		if(price > 0)
 			this.price = price;
+	}
+
+	/**
+	 * Returns the location of the club.
+	 * 
+	 * @return <code>Location</code> of <code>Club</code>
+	 */
+	public Location getLocation() {
+		return location;
+	}
+
+	/**
+	 * Sets the location of the club.
+	 * 
+	 * @param location new club location
+	 */
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	/**
+	 * Returns the latitude coordinate of the club.
+	 * 
+	 * @return <code>Double</code> with the club latitude
+	 */
+	public Double getLatitude() {
+		return ( location.getLat() );
+	}
+
+	/**
+	 * Sets the latitude coordinate of the club.
+	 * 
+	 * @param latitude <code>Double</code> with new latitude
+	 */
+	public void setLatitude(Double latitude) {
+		location.setLat(latitude);
+	}
+
+	/**
+	 * Returns the longitude coordinate of the club.
+	 * 
+	 * @return <code>Double</code> with the club longitude
+	 */
+	public Double getLongitude() {
+		return ( location.getLng() );
+	}
+
+	/**
+	 * Sets the longitude coordinate of the club.
+	 * 
+	 * @param longitude <code>Double</code> with new longitude
+	 */
+	public void setLongitude(Double longitude) {
+		location.setLng(longitude);
 	}
 
 	/**
@@ -180,68 +237,51 @@ public class ClubPOJO extends DataPOJO {
 	}
 
 	/**
-	 * Adds a new/modified user opinion to the opinion map.
+	 * Adds a new/modified user review to the review map.
 	 * @param userID reviewing user
-	 * @param opinion user's opinion
+	 * @param review user's review
 	 */
-	public void addUserOpinion(String userID, OpinionPOJO opinion) {
-		userOpinions.put(userID, opinion); // Overwrites previous rate (if exist)
-		//Now updates the current rating
+	public void addUserReview(String userID, ReviewPOJO review) {
+		userReviews.put(userID, review); // Overwrites previous rate (if exist)
+		
+		// Now updates the current rating
 		
 		/*
-		 * FORMULA: R = (avg*(n-1)+opRating)/n = (rating+opRating)/n
+		 * FORMULA: R = ( avg * (n-1) + opRating ) / n = ( rating + opRating ) / n
 		 */
-		rating = (float)((rating*(userOpinions.size()-1)+opinion.getRating())
-				/((double)userOpinions.size()));
+		rating = (float) ( 
+				( rating * (userReviews.size() - 1) + review.getRating() ) / 
+				( (double) userReviews.size() ) 
+				);
 	}
 
 	/**
-	 * Removes a user opinion (if present).
-	 * @param userID unreviewing user
+	 * Removes a user review (if present).
+	 * @param userID user removing review
 	 */
-	public void removeUserOpinion(String userID) {
-		OpinionPOJO aux = userOpinions.get(userID);
-		userOpinions.remove(userID);
-		//Now updates the current rating
-		
-		if(userOpinions.size() == 0){
-			rating = 0;
-		}else{
-			rating = (float )( (((userOpinions.size()+1)*rating)-aux.getRating())
-					/userOpinions.size() );
-		}
+	public void removeUserReview(String userID) {
+		ReviewPOJO removedReview = userReviews.get(userID);
+
+		// If there is no review, nothing is modified.
+		if ( removedReview != null ) {
+			// Review is removed
+			userReviews.remove(userID);
+
+			// Now updates the current rating		
+			if (userReviews.size() == 0) {
+				rating = 0;
+			} else {
+				rating = (float) (((userReviews.size() + 1) * rating - removedReview.getRating())
+						/ (userReviews.size()));
+			}
+		}		
 	}
 
 	/**
-	 * Returns a Collection with reviewers (users) IDs.
+	 * Returns a Collection with reviewers (Users) IDs.
 	 * @return Collection of String
 	 */
 	public Collection<String> getReviewers() {
-		return (Collection<String>) userOpinions.keySet();
-	}
-	
-	
-	/**
-	 * Returns the latitude.
-	 * @return the latitude.
-	 */
-	public double getLatitude() {
-		return latitude;
-	}
-	/**
-	 * Returns the longitude.
-	 * @return the longitude.
-	 */
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLatitude(double lat)
-	{
-		latitude = lat;		
-	}
-	public void setLongitude(double lon)
-	{
-		longitude = lon;
+		return ( (Collection<String>) userReviews.keySet() );
 	}
 }

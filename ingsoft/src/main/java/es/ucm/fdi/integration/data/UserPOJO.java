@@ -152,7 +152,7 @@ public class UserPOJO extends DataPOJO {
 	 * 
 	 * @param clubID reviewed club id
 	 */
-	public void addReviewed(String clubID) {
+	public void addToReviewed(String clubID) {
 		reviewedClubs.add(clubID);
 	}
 
@@ -161,7 +161,7 @@ public class UserPOJO extends DataPOJO {
 	 * 
 	 * @param clubID unreviewed club id
 	 */
-	public void removeReviewed(String clubID) {
+	public void removeFromReviewed(String clubID) {
 		reviewedClubs.remove(clubID);
 	}
 }

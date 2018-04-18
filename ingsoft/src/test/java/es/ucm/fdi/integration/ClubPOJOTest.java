@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
-import es.ucm.fdi.integration.util.OpinionPOJO;
+import es.ucm.fdi.integration.util.ReviewPOJO;
 
 public class ClubPOJOTest {
 	
@@ -21,15 +21,15 @@ public class ClubPOJOTest {
 	}
 	
 	private static void addOpinions(ClubPOJO c){
-		OpinionPOJO op = new OpinionPOJO("", 4.0f);
+		ReviewPOJO op = new ReviewPOJO("", 4.0f);
 		for(int i = 0; i < 8; ++i){
-			c.addUserOpinion("anotherUser" + i, op);
+			c.addUserReview("anotherUser" + i, op);
 		}
 	}
 	
 	private static void removeOpinions(ClubPOJO c){
 		for(int i = 0; i < 8; ++i){
-			c.removeUserOpinion("anotherUser" + i);
+			c.removeUserReview("anotherUser" + i);
 		}
 	}
 	
@@ -45,14 +45,14 @@ public class ClubPOJOTest {
 	@Test
 	public void ratingCalculationAndUpdateTest(){
 		ClubPOJO testClub = createTestClubPOJO();
-		OpinionPOJO op1 = new OpinionPOJO("", 3.0f), op2 = new OpinionPOJO("", 4.0f);
+		ReviewPOJO op1 = new ReviewPOJO("", 3.0f), op2 = new ReviewPOJO("", 4.0f);
 		
 		//No delta error margin here
 		assertEquals("Club rating not properly initialized.", 0, testClub.getRating(), 0);
-		testClub.addUserOpinion("user1", op1);
+		testClub.addUserReview("user1", op1);
 		assertEquals("Club rating not properly updated adding one opinion.", 3.0f, 
 				testClub.getRating(), 0);
-		testClub.addUserOpinion("user2", op2);
+		testClub.addUserReview("user2", op2);
 		assertEquals("Club rating not properly updated adding two opinions.", 3.5f, 
 				testClub.getRating(), 0.000001);
 		
@@ -67,8 +67,8 @@ public class ClubPOJOTest {
 		removeOpinions(testClub);
 		assertEquals("Club rating not properly updated removing multiple opinions.", 3.5f, 
 				testClub.getRating(), 0.000001);
-		testClub.removeUserOpinion("user1");
-		testClub.removeUserOpinion("user2");
+		testClub.removeUserReview("user1");
+		testClub.removeUserReview("user2");
 		assertEquals("Club rating not properly updated when removing all opinions.", 0f,
 				testClub.getRating(), 0);
 		
