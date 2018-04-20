@@ -3,6 +3,8 @@ package es.ucm.fdi.integration.data;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.mail.internet.AddressException;
@@ -11,7 +13,9 @@ import javax.mail.internet.InternetAddress;
 public class UserPOJO extends DataPOJO {
 	String username, password, email, name; 
 	LocalDate birthday;
-
+	
+	private List <ClubPOJO> preferencesList;
+	private Map<String, Integer> valueTags;
 	/**
 	 * Set of rated clubs IDs.
 	 */
@@ -44,6 +48,27 @@ public class UserPOJO extends DataPOJO {
 		reviewedClubs = new HashSet<String>();
 	}
 	
+	
+	public List<ClubPOJO> getPreferencesList() {
+		return preferencesList;
+	}
+
+
+	public void setPreferencesList(List<ClubPOJO> preferencesList) {
+		this.preferencesList = preferencesList;
+	}
+
+
+	public Map<String, Integer> getValueTags() {
+		return valueTags;
+	}
+
+
+	public void setValueTags(Map<String, Integer> valueTags) {
+		this.valueTags = valueTags;
+	}
+
+
 	/**
 	 * User class whole constructor (for testing).
 	 * @param id user id

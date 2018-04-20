@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 public class UserDAOImp implements UserDAO {
-	Map<String, UserPOJO> userMap;
+	private Map<String, UserPOJO> userMap;
 	
 	/**
 	 * Constructor of the UserDAO. Sets the list of clubs empty.

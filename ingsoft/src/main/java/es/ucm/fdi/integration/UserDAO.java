@@ -1,5 +1,7 @@
 package es.ucm.fdi.integration;
 
+import java.util.List;
+
 import es.ucm.fdi.integration.data.UserPOJO;
 
 /**
@@ -33,4 +35,10 @@ public interface UserDAO {
 	 * @param id user's id to be removed
 	 */
 	public void removeUser(String id);
+	
+	/**
+	 * Retrieves the full list of <code>Users</code>
+	 * @return the list of <code>Users</code>>
+	 */
+	public List<UserPOJO> getUsers();
 }
