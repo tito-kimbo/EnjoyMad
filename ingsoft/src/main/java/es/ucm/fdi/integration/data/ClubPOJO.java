@@ -6,11 +6,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import es.ucm.fdi.integration.util.ReviewPOJO;
-
 /**
  * Class that represents a club.
- * @author Fco Borja
+ * 
+ * @version 22.04.2018
  */
 public class ClubPOJO extends DataPOJO {
 	String commercialName;

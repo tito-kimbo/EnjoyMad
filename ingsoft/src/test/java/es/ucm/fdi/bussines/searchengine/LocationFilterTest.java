@@ -1,8 +1,8 @@
-package es.ucm.fdi.bussines.SearchEngine;
+package es.ucm.fdi.bussines.searchengine;
 
-import es.ucm.fdi.business.SearchEngine.FilterMapper;
-import es.ucm.fdi.business.SearchEngine.Filters.LocationFilterBO;
-import es.ucm.fdi.business.SearchEngine.Filters.LocationFilterBO.JsonReader;
+import es.ucm.fdi.business.searchengine.FilterMapper;
+import es.ucm.fdi.business.searchengine.filters.LocationFilterBO;
+import es.ucm.fdi.business.searchengine.filters.LocationFilterBO.JsonReader;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
 import java.util.HashSet;

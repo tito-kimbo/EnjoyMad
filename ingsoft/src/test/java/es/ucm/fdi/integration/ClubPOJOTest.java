@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
-import es.ucm.fdi.integration.util.ReviewPOJO;
+import es.ucm.fdi.integration.data.ReviewPOJO;
 
 public class ClubPOJOTest {
 	

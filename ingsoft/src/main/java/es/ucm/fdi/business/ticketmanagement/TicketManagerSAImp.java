@@ -1,4 +1,4 @@
-package es.ucm.fdi.business.TicketManagement;
+package es.ucm.fdi.business.ticketmanagement;
 
 import java.util.NoSuchElementException;
 
@@ -23,8 +23,9 @@ public abstract class TicketManagerSAImp implements TicketManagerSA {
 		this.users = users;
 		this.clubs = clubs;
 	}
+	
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public void buyTicket(String club_id, String user_id) throws NoSuchElementException {
 		ClubPOJO club = clubs.getClub(club_id);

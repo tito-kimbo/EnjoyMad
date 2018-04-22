@@ -5,7 +5,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-
+/**
+ * Class that contains representative information of a certain user.
+ * 
+ * @version 22.04.2018
+ */
 public class UserPOJO extends DataPOJO {
 	private String username, password, email, name; 
 	private LocalDate birthday;

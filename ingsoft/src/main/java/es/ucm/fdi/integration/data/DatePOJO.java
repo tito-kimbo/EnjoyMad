@@ -2,8 +2,8 @@ package es.ucm.fdi.integration.data;
 
 /**
  * Class that represents the birthday.
- * @author Fco Borja
- * @author Carlijn
+ * 
+ * @version 22.04.2018
  */
 public class DatePOJO{
 	int day, month, year;

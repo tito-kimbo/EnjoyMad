@@ -1,4 +1,4 @@
-package es.ucm.fdi.business.SearchEngine.Filters;
+package es.ucm.fdi.business.searchengine.filters;
 
 import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
@@ -17,7 +17,7 @@ import org.json.JSONArray;
 /**
  * This class is responsible of deciding whether a Club is near enough to satisfy the client search filter or not.
  * 
- * @author Francisco Javier Blázquez Martínez
+ * @version 22.04.2018
  */
 public class LocationFilterBO implements FilterBO{
 	

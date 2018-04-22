@@ -1,16 +1,14 @@
-package es.ucm.fdi.business.SearchEngine;
+package es.ucm.fdi.business.searchengine;
 
 import java.util.List;
 import java.util.ArrayList;
 
 import es.ucm.fdi.integration.ClubDAO;
 import es.ucm.fdi.integration.data.ClubPOJO;
-
+import es.ucm.fdi.business.searchengine.FilterMapper;
+import es.ucm.fdi.business.searchengine.filters.FilterBO;
 import es.ucm.fdi.business.util.ElementBO;
 import es.ucm.fdi.business.data.FilterPOJO;
-
-import es.ucm.fdi.business.SearchEngine.FilterMapper;
-import es.ucm.fdi.business.SearchEngine.Filters.FilterBO;
 
 public class SearchEngineSAImp implements SearchEngineSA {
 	private List<ElementBO<ClubPOJO>> searchResults;
@@ -28,7 +26,7 @@ public class SearchEngineSAImp implements SearchEngineSA {
 	}
 	
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public void search(String words, List<FilterPOJO> filters){
 		ElementBO<ClubPOJO> aux;
@@ -51,12 +49,17 @@ public class SearchEngineSAImp implements SearchEngineSA {
 		}
 	}
 	
+	/**
+	 * Getter method for {@link #searchResults}
+	 * 
+	 * @return The results of the last search.
+	 */
 	public List<ElementBO<ClubPOJO>> getSearchResults(){
 		return searchResults;
 	}
 	
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public ClubPOJO select(String id){
 		return clubAccess.getClub(id);
