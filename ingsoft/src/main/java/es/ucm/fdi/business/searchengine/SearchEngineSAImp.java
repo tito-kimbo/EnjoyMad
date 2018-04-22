@@ -57,11 +57,4 @@ public class SearchEngineSAImp implements SearchEngineSA {
 	public List<ElementBO<ClubPOJO>> getSearchResults(){
 		return searchResults;
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public ClubPOJO select(String id){
-		return clubAccess.getClub(id);
-	}
 }
