@@ -49,4 +49,10 @@ public class ClubDAOImpTest{
 		createTestClubDAOImp();
 		assertEquals(clubDao.getClubs(), list);
 	}
+	
+	@Test
+	public void testRemoveClub(){
+		clubDao.removeClub("id");
+		assertEquals(clubDao.exist("id"),false);
+	}
 }
