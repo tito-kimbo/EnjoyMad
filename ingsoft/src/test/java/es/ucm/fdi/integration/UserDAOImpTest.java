@@ -1,34 +1,59 @@
 package es.ucm.fdi.integration;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+
 import org.junit.Test;
 
-public class UserDAOImpTest {
+import es.ucm.fdi.integration.data.UserPOJO;
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+/**
+ * This class tests the functionality of UserDAOImp.
+ * @author Carlijn
+ */
+
+public class UserDAOImpTest{
+	private static UserPOJO user;
+	private static UserDAO userDao;
+	private static ArrayList<UserPOJO> list = new ArrayList<UserPOJO>();
+	
+	private static void createTestUserDAOImp(){
+		LocalDate date = LocalDate.of(1980, 1, 1);
+		user = new UserPOJO("IDNumber1", "MyUser", "MyPsw", "myname@domain.com", "myname", date);
+		
+		userDao = new UserDAOImp();
+		
+		list = new ArrayList<UserPOJO>(Arrays.asList(user));
+		
+		userDao.addUser(user);
 	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
+	
+	
+	@Test
+	public void testExist(){
+		createTestUserDAOImp();
+		assertEquals(userDao.exist("IDNumber1"),true);
 	}
 
 	@Test
-	public final void test() {
-		fail("Not yet implemented"); // TODO
+	public void testGetUser() {
+		createTestUserDAOImp();
+		assertEquals(userDao.getUser("IDNumber1"), user);
 	}
-
+	
+	@Test
+	public void testGetUsers() {
+		createTestUserDAOImp();
+		assertEquals(userDao.getUsers(), list);
+	}
+	
+	@Test
+	public void testRemoveUser(){
+		userDao.removeUser("IDNumber1");
+		assertEquals(userDao.exist("IDNumber1"),false);
+	}
 }
