@@ -12,7 +12,7 @@ import es.ucm.fdi.integration.data.ClubPOJO;
  * @version 22.04.2018
  */
 public class ClubDAOImp implements ClubDAO {
-	Map<String, ClubPOJO> clubMap;
+	private Map<String, ClubPOJO> clubMap;
 
 	/**
 	 * Constructor of the ClubDAO. Sets the list of clubs empty.

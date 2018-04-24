@@ -27,9 +27,9 @@ public abstract class TicketManagerSAImp implements TicketManagerSA {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void buyTicket(String club_id, String user_id) throws NoSuchElementException {
-		ClubPOJO club = clubs.getClub(club_id);
-		UserPOJO user = users.getUser(user_id);
+	public void buyTicket(String clubID, String userID) throws NoSuchElementException {
+		ClubPOJO club = clubs.getClub(clubID);
+		UserPOJO user = users.getUser(userID);
 		
 		if(club == null || user == null)
 			throw new NoSuchElementException();
@@ -43,7 +43,7 @@ public abstract class TicketManagerSAImp implements TicketManagerSA {
 		 *  Stripe seems the best API to do it easily, it is not for free, it takes a 1.4% for each transaction + 0.25�
 		 */
 		
-		EmailSenderBO.send("enjoymad@gmail.com", email, psw, "Se ha completado la compra de una entrada de " + club_id, "Tramite EnjoyMad");
+		EmailSenderBO.send("enjoymad@gmail.com", email, psw, "Se ha completado la compra de una entrada de " + clubID, "Tramite EnjoyMad");
 	}
 	
 }
