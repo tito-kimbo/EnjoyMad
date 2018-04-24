@@ -4,11 +4,13 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
-import es.ucm.fdi.integration.util.ReviewPOJO;
+import es.ucm.fdi.integration.data.ReviewPOJO;
 
 /**
  * Class with static methods used as a tool to check the validity
  * of arguments, mainly in ProfileManagement methods.
+ * 
+ * @version 22.04.2018
  */
 public class ParsingToolBO {
     

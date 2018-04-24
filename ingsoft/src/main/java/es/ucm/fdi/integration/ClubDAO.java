@@ -7,8 +7,8 @@ import es.ucm.fdi.integration.data.ClubPOJO;
 
 /**
  * This interface declares the methods a Club data access object needs to implement.
- * @author Fco Borja 
- * @author Carlijn
+ * 
+ * @version 22.04.2018
  */
 public interface ClubDAO {	
 	/**

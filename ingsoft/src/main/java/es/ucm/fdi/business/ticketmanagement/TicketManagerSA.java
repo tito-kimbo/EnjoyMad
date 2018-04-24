@@ -1,4 +1,4 @@
-package es.ucm.fdi.business.TicketManagement;
+package es.ucm.fdi.business.ticketmanagement;
 /**
  * Interface containing the methods necessary in a TicketManager.
  * @author Fco Borja

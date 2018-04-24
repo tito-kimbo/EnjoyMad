@@ -1,19 +1,17 @@
-package es.ucm.fdi.business.ProfileManagement;
+package es.ucm.fdi.business.profilemanagement;
 
 import java.time.LocalDate;
 import java.util.Set;
-
 import java.util.NoSuchElementException;
 import java.util.zip.DataFormatException;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 import es.ucm.fdi.business.util.ParsingToolBO;
-
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.UserDAOImp;
-import es.ucm.fdi.integration.util.ReviewPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.ReviewPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 import es.ucm.fdi.integration.data.Location;
 

@@ -1,4 +1,4 @@
-package es.ucm.fdi.business.SearchEngine;
+package es.ucm.fdi.business.searchengine;
 
 import java.util.List;
 
@@ -19,11 +19,6 @@ public interface SearchEngineSA {
 	 * @param filters	list of filters to apply.
 	 */
 	public void search(String words, List<FilterPOJO> filters);
-	
-	/**
-	 *	Retrieves the data of the selected club.
-	 */
-	public ClubPOJO select(String id);
 	
 	/**
 	 * Returns the results of a search as a list of <code>Element</code> of 

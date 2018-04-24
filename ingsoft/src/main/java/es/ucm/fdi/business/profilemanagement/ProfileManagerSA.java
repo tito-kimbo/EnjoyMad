@@ -1,4 +1,4 @@
-package es.ucm.fdi.business.ProfileManagement;
+package es.ucm.fdi.business.profilemanagement;
 
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.zip.DataFormatException;
 
 import es.ucm.fdi.integration.data.Location;
-import es.ucm.fdi.integration.util.ReviewPOJO;
+import es.ucm.fdi.integration.data.ReviewPOJO;
 
 
 /**
