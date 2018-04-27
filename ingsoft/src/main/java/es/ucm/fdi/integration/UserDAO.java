@@ -6,8 +6,8 @@ import es.ucm.fdi.integration.data.UserPOJO;
 
 /**
  * This interface declares the methods a User data access object needs to implement.
- * @author Fco Borja 
- * @author Carlijn
+ * 
+ * @version 22.04.2018
  */
 public interface UserDAO {
 	/**
@@ -41,4 +41,5 @@ public interface UserDAO {
 	 * @return the list of <code>Users</code>>
 	 */
 	public List<UserPOJO> getUsers();
+
 }

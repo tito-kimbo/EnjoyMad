@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-
+/**
+ * Class that contains representative information of a certain user.
+ * 
+ * @version 22.04.2018
+ */
 public class UserPOJO extends DataPOJO {
 	String username, password, email, name; 
 	LocalDate birthday;
@@ -21,10 +23,11 @@ public class UserPOJO extends DataPOJO {
 	 */
 	Set<String> ratedClubs;
 
+
 	/**
 	 * Set of reviewed clubs IDs.
 	 */
-	Set<String> reviewedClubs;
+	private Set<String> reviewedClubs;
 
 	/**
 	 * User class normal constructor
@@ -44,7 +47,6 @@ public class UserPOJO extends DataPOJO {
 		this.name = name;
 		this.birthday = bday;
 
-		ratedClubs = new HashSet<String>();
 		reviewedClubs = new HashSet<String>();
 	}
 	
@@ -79,14 +81,13 @@ public class UserPOJO extends DataPOJO {
 	 * @param rates user rated clubs
 	 * @param reviews user reviewed clubs
 	 */
-	public UserPOJO(String id, String user, String pass, String email, String name, LocalDate bday, Set<String> rates, Set<String> reviews) {
+	public UserPOJO(String id, String user, String pass, String email, String name, LocalDate bday, Set<String> reviews) {
 		super(id);
 		this.username = user;
 		this.password = pass;
 		this.email = email;
 		this.name = name;
 		this.birthday = bday;
-		this.ratedClubs = new HashSet<String>(rates);
 		this.reviewedClubs = new HashSet<String>(reviews);
 	}
 
@@ -173,17 +174,8 @@ public class UserPOJO extends DataPOJO {
 	}
 
 	/**
-	 * Returns a Collection of rated clubs IDs.
-	 * @see es.ucm.fdi.business.ProfileManagement.ProfileManagerSAImp#removeUser(String) removeUser
-	 * @return Collection of String
-	 */
-	public Collection<String> getRatedClubs() {
-		return (Collection<String>) ratedClubs;
-	}
-
-	/**
 	 * Returns a Collection of reviewed clubs IDs.
-	 * @see es.ucm.fdi.business.ProfileManagement.ProfileManagerSAImp#removeUser(String) removeUser
+	 * @see ProfileManagerSAImp.removeUser(String) 
 	 * @return Collection of String
 	 */
 	public Collection<String> getReviewedClubs() {
@@ -191,16 +183,20 @@ public class UserPOJO extends DataPOJO {
 	}
 
 	/**
-	 * Removes a club from the rated clubs set.
+	 * Adds a club to the reviewed clubs set.
+	 * 
+	 * @param clubID reviewed club id
 	 */
-	public void removeRated(String clubID) {
-		ratedClubs.remove(clubID);
+	public void addToReviewed(String clubID) {
+		reviewedClubs.add(clubID);
 	}
 
 	/**
 	 * Removes a club from the reviewed clubs set.
+	 * 
+	 * @param clubID unreviewed club id
 	 */
-	public void removeReviewed(String clubID) {
+	public void removeFromReviewed(String clubID) {
 		reviewedClubs.remove(clubID);
 	}
 }

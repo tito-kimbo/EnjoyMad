@@ -8,6 +8,11 @@ import java.util.ArrayList;
 
 import es.ucm.fdi.integration.data.UserPOJO;
 
+/**
+ * Implementation of <code>UserDAO</code> that works with a database.
+ * 
+ * @version 22.04.2018
+ */
 public class UserDAOImp implements UserDAO {
 	private Map<String, UserPOJO> userMap;
 	

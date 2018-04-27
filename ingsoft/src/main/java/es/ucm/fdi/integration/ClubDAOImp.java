@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import es.ucm.fdi.integration.data.ClubPOJO;
 /**
  * This class is a Club data access object that implements {@link ClubDAO}.
- * @author Fco Borja 
- * @author Carlijn
+ * 
+ * @version 22.04.2018
  */
 public class ClubDAOImp implements ClubDAO {
-	Map<String, ClubPOJO> clubMap;
+	private Map<String, ClubPOJO> clubMap;
 
 	/**
 	 * Constructor of the ClubDAO. Sets the list of clubs empty.
@@ -21,7 +21,7 @@ public class ClubDAOImp implements ClubDAO {
 		clubMap = new HashMap<String, ClubPOJO>();
 	}
 
-  /**
+	/**
 	 * {@inheritDoc}
 	 */
 	public ClubPOJO getClub(String id) {
