@@ -13,13 +13,13 @@ import es.ucm.fdi.business.data.TagPOJO;
  *	@version 22.04.2018
  */
 public class TagManagerSAImp implements TagManagerSA {
-	private Set<String> activeTags;
+	private Set<TagPOJO> activeTags;
 	
 	/**
 	 * Empty constructor for this class.
 	 */
 	public TagManagerSAImp(){
-		activeTags = new HashSet<String>();
+		activeTags = new HashSet<TagPOJO>();
 		load();
 	}
 	
@@ -40,22 +40,22 @@ public class TagManagerSAImp implements TagManagerSA {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void addTags(TagPOJO tp){
-		
+	public void newTag(TagPOJO tp) {
+		activeTags.add(tp);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	public void removeTags(TagPOJO tp){
-		
+		activeTags.remove(tp);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean hasTag(String s){
-		return activeTags.contains(s);
+	public boolean hasTag(TagPOJO tp){
+		return activeTags.contains(tp);
 	}
 	
 	/**
@@ -66,4 +66,5 @@ public class TagManagerSAImp implements TagManagerSA {
 		list.addAll(activeTags);
 		return list;
 	}
+
 }
