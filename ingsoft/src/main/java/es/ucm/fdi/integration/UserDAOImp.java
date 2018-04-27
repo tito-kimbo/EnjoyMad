@@ -14,7 +14,7 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * @version 22.04.2018
  */
 public class UserDAOImp implements UserDAO {
-	Map<String, UserPOJO> userMap;
+	private Map<String, UserPOJO> userMap;
 	
 	/**
 	 * Constructor of the UserDAO. Sets the list of clubs empty.

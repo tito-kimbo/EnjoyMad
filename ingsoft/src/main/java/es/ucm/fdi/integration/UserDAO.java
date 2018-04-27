@@ -37,11 +37,9 @@ public interface UserDAO {
 	public void removeUser(String id);
 	
 	/**
-	 * Returns the full map of <code>Users</code>.
-	 * 
-	 * @return List of <code>Users</code>.
+	 * Retrieves the full list of <code>Users</code>
+	 * @return the list of <code>Users</code>>
 	 */
-	
 	public List<UserPOJO> getUsers();
 
 }
