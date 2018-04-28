@@ -5,8 +5,10 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.zip.DataFormatException;
 
+import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.integration.data.ReviewPOJO;
+import es.ucm.fdi.integration.data.UserPOJO;
 
 
 /**
@@ -22,42 +24,24 @@ public interface ProfileManagerSA {
 	//** PROFILE CREATION **//
 
 	/**
-	 * Adds a new <code>Club</code> to the <code>ClubDAO</code> database.
+	 * Adds a new <code>Club</code> to the database.
 	 * 
-	 * @param clubID <code>String</code> with the new club <code>ID</code>
-	 * @param name <code>String</code> with the new club <code>CommercialName</code>
-	 * @param address <code>String</code> with the new club <code>Address</code>
-	 * @param price <code>String</code> with the new club <code>TicketPrice</code>
-	 * @param tags <code>Set<String></code> with list of the new club <code>Tags</code>
+	 * @param club <code>ClubPOJO</code> with the new club
 	 * 
-	 * @throws IllegalArgumentException if <code>clubID</code> already stored in <code>clubDAO</code> database
+	 * @throws IllegalArgumentException if <code>clubID</code> already stored in database
 	 */
-	public void addNewClub(String clubID, String name, String address, float price, Set<String> tags)
+	public void addNewClub(ClubPOJO club)
 			throws IllegalArgumentException, DataFormatException;
 
 	/**
-	 * Adds a new <code>User</code> to the <code>UserDAO</code> database.
+	 * Adds a new <code>User</code> to the database.
 	 * 
-	 * @param userID <code>String</code> with the new user <code>ID</code>
-	 * @param password <code>String</code> with the new user <code>Password</code>
-	 * @param email <code>String</code> with the new user <code>Email</code>
-	 * @param name <code>String</code> with the new user <code>Name</code>
-	 * @param birthday <code>LocalDate</code> with the new club <code>Birthday</code>
+	 * @param user <code>UserPOJO</code> with the new user
 	 * 
-	 * @throws IllegalArgumentException if <code>userID</code> already stored in <code>userDAO</code> database
+	 * @throws IllegalArgumentException if <code>userID</code> already stored in database
 	 */
-	public void addNewUser(String userID, String username, String password, String email, String name, LocalDate birthday) 
+	public void addNewUser(UserPOJO user) 
 			throws IllegalArgumentException, DataFormatException;
-
-
-
-
-
-
-
-
-
-
 
 	//** CLUB MODIFICATION **//
 
@@ -70,18 +54,7 @@ public interface ProfileManagerSA {
 	 * @throws NoSuchElementException if <code>clubID</code> not found in <code>clubDAO</code> database
 	 * @throws DataFormatException if <code>newID</code> parsing failed
 	 */
-	public void modifyClubID(String newID, String clubID) 
-			throws NoSuchElementException, DataFormatException;
 
-	/**
-	 * Modifies a club <code>CommercialName</code> if the data is correct.
-	 * 
-	 * @param newCommercialName <code>String</code> with new <code>CommercialName</code>
-	 * @param clubID <code>ID</code> of <code>Club</code> to be modified
-	 * 
-	 * @throws NoSuchElementException if <code>clubID</code> not found in <code>clubDAO</code> database
-	 * @throws DataFormatException if <code>newCommercialName</code> parsing failed
-	 */
 	public void modifyClubCommercialName(String newCommercialName, String clubID) 
 			throws NoSuchElementException, DataFormatException;
 
@@ -191,18 +164,7 @@ public interface ProfileManagerSA {
 	 * @throws NoSuchElementException if <code>userID</code> not found in <code>userDAO</code> database
 	 * @throws DataFormatException if <code>newID</code> parsing failed
 	 */
-	public void modifyUserID(String newID, String userID)
-			throws NoSuchElementException, DataFormatException;
 
-	/**
-	 * Modifies the user's username if the data is correct.
-	 * 
-	 * @param newUsername <code>String</code> with new <code>Username</code>
-	 * @param userID <code>ID</code> of <code>User</code> to be modified
-	 * 
-	 * @throws NoSuchElementException if <code>userID</code> not found in <code>userDAO</code> database
-	 * @throws DataFormatException if <code>newUsername</code> parsing failed
-	 */
     public void modifyUserUsername(String newUsername, String userID) 
 			throws NoSuchElementException, DataFormatException;
 

@@ -31,7 +31,6 @@ public class CustomDataSAImp implements CustomDataSA{
 		
 	}
 	
-	
 	UserDAO user = new UserDAOImp();
 	ClubDAO club = new ClubDAOImp();
 
