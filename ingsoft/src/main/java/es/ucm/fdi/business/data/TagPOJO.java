@@ -8,7 +8,9 @@ import java.util.List;
  * @version 22.04.2018
  */
 public class TagPOJO {
-
+	
+	private String tag;
+	
 	private List<String> tags;
 
 	/**
