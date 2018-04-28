@@ -24,7 +24,7 @@ public interface TagManagerSA {
 	 * 
 	 * @param tp POJO representing the tag to add.
 	 */
-	public void addTags(TagPOJO tp);
+	public void newTag(TagPOJO tp);
 	
 	/**
 	 * Removes a tag from the active list.
@@ -38,7 +38,7 @@ public interface TagManagerSA {
 	 * @param s
 	 * @return
 	 */
-	public boolean hasTag(String s);
+	public boolean hasTag(TagPOJO tp);
 	
 	
 	
