@@ -1,4 +1,4 @@
-package es.ucm.fdi.bussines.SearchEngine;
+package es.ucm.fdi.bussines.searchengine;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -10,9 +10,9 @@ import java.util.HashSet;
 
 import org.junit.Test;
 
-import es.ucm.fdi.business.SearchEngine.FilterMapper;
-import es.ucm.fdi.business.SearchEngine.Filters.FilterBO;
 import es.ucm.fdi.business.data.FilterPOJO;
+import es.ucm.fdi.business.searchengine.FilterMapper;
+import es.ucm.fdi.business.searchengine.filters.FilterBO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
 public class PriceFilterTest {

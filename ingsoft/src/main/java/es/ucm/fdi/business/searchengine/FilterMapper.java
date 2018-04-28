@@ -1,10 +1,10 @@
-package es.ucm.fdi.business.SearchEngine;
+package es.ucm.fdi.business.searchengine;
 
 import java.util.HashMap;
 import java.lang.IllegalArgumentException;
 
 import es.ucm.fdi.business.data.FilterPOJO;
-import es.ucm.fdi.business.SearchEngine.Filters.*;
+import es.ucm.fdi.business.searchengine.filters.*;
 
 /**
  * The function of this class is to create the 

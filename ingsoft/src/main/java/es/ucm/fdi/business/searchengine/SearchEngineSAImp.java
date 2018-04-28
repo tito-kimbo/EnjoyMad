@@ -1,16 +1,14 @@
-package es.ucm.fdi.business.SearchEngine;
+package es.ucm.fdi.business.searchengine;
 
 import java.util.List;
 import java.util.ArrayList;
 
 import es.ucm.fdi.integration.ClubDAO;
 import es.ucm.fdi.integration.data.ClubPOJO;
-
+import es.ucm.fdi.business.searchengine.FilterMapper;
+import es.ucm.fdi.business.searchengine.filters.FilterBO;
 import es.ucm.fdi.business.util.ElementBO;
 import es.ucm.fdi.business.data.FilterPOJO;
-
-import es.ucm.fdi.business.SearchEngine.FilterMapper;
-import es.ucm.fdi.business.SearchEngine.Filters.FilterBO;
 
 public class SearchEngineSAImp implements SearchEngineSA {
 	private List<ElementBO<ClubPOJO>> searchResults;

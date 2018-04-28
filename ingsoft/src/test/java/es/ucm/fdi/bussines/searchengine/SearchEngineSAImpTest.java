@@ -1,4 +1,4 @@
-package es.ucm.fdi.bussines.SearchEngine;
+package es.ucm.fdi.bussines.searchengine;
 
 import static org.junit.Assert.*;
 
@@ -9,10 +9,10 @@ import java.util.HashSet;
 
 import org.junit.Test;
 
-import es.ucm.fdi.business.SearchEngine.FilterMapper;
-import es.ucm.fdi.business.SearchEngine.SearchEngineSA;
-import es.ucm.fdi.business.SearchEngine.SearchEngineSAImp;
 import es.ucm.fdi.business.data.FilterPOJO;
+import es.ucm.fdi.business.searchengine.FilterMapper;
+import es.ucm.fdi.business.searchengine.SearchEngineSA;
+import es.ucm.fdi.business.searchengine.SearchEngineSAImp;
 import es.ucm.fdi.business.util.ElementBO;
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;

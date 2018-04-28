@@ -1,4 +1,4 @@
-package es.ucm.fdi.business.ProfileManagement;
+package es.ucm.fdi.business.profilemanagement;
 
 import java.time.LocalDate;
 import java.util.NoSuchElementException;

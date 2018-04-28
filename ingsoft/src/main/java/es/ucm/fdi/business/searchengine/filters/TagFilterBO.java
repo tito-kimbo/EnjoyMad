@@ -1,4 +1,4 @@
-package es.ucm.fdi.business.SearchEngine.Filters;
+package es.ucm.fdi.business.searchengine.filters;
 
 import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
