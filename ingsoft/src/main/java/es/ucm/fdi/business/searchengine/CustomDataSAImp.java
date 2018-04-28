@@ -1,4 +1,4 @@
-package es.ucm.fdi.business.SearchEngine;
+package es.ucm.fdi.business.searchengine;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +30,6 @@ public class CustomDataSAImp implements CustomDataSA{
 		}
 		
 	}
-	
 	
 	UserDAO user = new UserDAOImp();
 	ClubDAO club = new ClubDAOImp();
