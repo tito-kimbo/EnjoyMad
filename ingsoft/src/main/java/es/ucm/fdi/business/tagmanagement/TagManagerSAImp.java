@@ -61,8 +61,8 @@ public class TagManagerSAImp implements TagManagerSA {
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<String> getActiveTags(){
-		List<String> list = new ArrayList<String>();
+	public List<TagPOJO> getActiveTags(){
+		List<TagPOJO> list = new ArrayList<TagPOJO>();
 		list.addAll(activeTags);
 		return list;
 	}
