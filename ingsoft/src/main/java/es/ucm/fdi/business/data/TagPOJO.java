@@ -1,5 +1,6 @@
 package es.ucm.fdi.business.data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,14 +8,21 @@ import java.util.List;
  * 
  * @version 22.04.2018
  */
-public class TagPOJO {
+public class TagPOJO implements Serializable{
 	
 	private String tag;
-	
+
 	private List<String> tags;
+	
+	
+	public TagPOJO(String tag, List<String> tags) {
+		super();
+		this.tag = tag;
+		this.tags = tags;
+	}
 
 	/**
-	 * Getter method for the tag array.
+	 * Getter method for the tag
 	 */
 	public List<String> getTags() {
 		return tags;
