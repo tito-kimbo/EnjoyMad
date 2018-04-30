@@ -29,7 +29,7 @@ public interface TagManagerSA {
 	/**
 	 * Removes a tag from the active list.
 	 * 
-	 * @param tp	POJO representing the tag to add.
+	 * @param tp POJO representing the tag to add.
 	 */
 	public void removeTags(TagPOJO tp);
 	

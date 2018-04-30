@@ -12,14 +12,13 @@ import es.ucm.fdi.business.searchengine.filters.*;
  * @version 22.04.2018
  */
 public class FilterMapper {
-	static private HashMap<String, FilterBO> map;
+	static private HashMap<String, FilterBO> map = new HashMap<String, FilterBO>();
 	
 	//Static initializer for the class
 	/**
 	 * Adds all existing <code>Filters</code> to the map.
 	 */
 	public static void addAll() {
-		map = new HashMap<String, FilterBO>();
 		map.put("PriceFilter", new PriceFilterBO());
 		map.put("TagFilter", new TagFilterBO());
 		map.put("RatingFilter", new RatingFilterBO());

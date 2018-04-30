@@ -1,5 +1,6 @@
 package es.ucm.fdi.integration.data;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,7 +12,7 @@ import java.util.Set;
  * 
  * @version 22.04.2018
  */
-public class ClubPOJO extends DataPOJO {
+public class ClubPOJO extends DataPOJO implements Serializable{
 	String commercialName;
 	String address;
 	float price;

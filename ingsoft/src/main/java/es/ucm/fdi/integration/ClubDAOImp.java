@@ -1,5 +1,7 @@
 package es.ucm.fdi.integration;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
@@ -14,12 +16,22 @@ import es.ucm.fdi.integration.data.ClubPOJO;
 public class ClubDAOImp implements ClubDAO {
 	private Map<String, ClubPOJO> clubMap;
 
+	
 	/**
 	 * Constructor of the ClubDAO. Sets the list of clubs empty.
 	 */
 	public ClubDAOImp() {
 		clubMap = new HashMap<String, ClubPOJO>();
 	}
+	
+	/**
+	 * @param stream get out a copy of the object of this DAO
+	 * @throws IOException if I/O operations have an interruption
+	 */
+	private void writeObject(ObjectOutputStream stream) throws IOException{
+		stream.writeObject(clubMap);
+	}
+	
 
 	/**
 	 * {@inheritDoc}

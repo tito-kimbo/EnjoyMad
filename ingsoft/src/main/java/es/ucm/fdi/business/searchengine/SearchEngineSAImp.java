@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import es.ucm.fdi.integration.ClubDAO;
+import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.filters.FilterBO;
@@ -11,27 +12,15 @@ import es.ucm.fdi.business.util.ElementBO;
 import es.ucm.fdi.business.data.FilterPOJO;
 
 public class SearchEngineSAImp implements SearchEngineSA {
-	private List<ElementBO<ClubPOJO>> searchResults;
-	private ClubDAO clubAccess;
-	
-	/**
-	 * Constructor for the <code>SearchEngineSAImp</code>. Requires to provide a valid 
-	 * <code>ClubDAO</code>
-	 * 
-	 * @param clubs	DAO implementation to access to the club data
-	 */
-	public SearchEngineSAImp(ClubDAO clubs){
-		clubAccess = clubs;
-		searchResults = new ArrayList<ElementBO<ClubPOJO>>();
-	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public void search(String words, List<FilterPOJO> filters){
+	public List<ElementBO<ClubPOJO>> search(String words, List<FilterPOJO> filters){
 		ElementBO<ClubPOJO> aux;
+		List<ElementBO<ClubPOJO>> searchResults = new ArrayList<ElementBO<ClubPOJO>>();
 		List<ClubPOJO> clubs;
-		
+		ClubDAO clubAccess = new ClubDAOImp();
 		clubs = clubAccess.getClubs();
 		
 		//Here we must find all the matching Data
@@ -47,14 +36,7 @@ public class SearchEngineSAImp implements SearchEngineSA {
 				c.setVisible(currentFilter.filter(c.getElement()));
 			}
 		}
-	}
-	
-	/**
-	 * Getter method for {@link #searchResults}
-	 * 
-	 * @return The results of the last search.
-	 */
-	public List<ElementBO<ClubPOJO>> getSearchResults(){
 		return searchResults;
 	}
+	
 }

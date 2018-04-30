@@ -1,5 +1,6 @@
 package es.ucm.fdi.integration.data;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
@@ -12,7 +13,7 @@ import java.util.Set;
  * 
  * @version 22.04.2018
  */
-public class UserPOJO extends DataPOJO {
+public class UserPOJO extends DataPOJO implements Serializable{
 	String username, password, email, name; 
 	LocalDate birthday;
 	
