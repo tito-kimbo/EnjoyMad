@@ -19,7 +19,7 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 
 	private Location location;
 	
-	
+
 	/**
 	 * Set of descriptive tags about the club. It will be initialized as
 	 * a HashSet, which ensures constant time basic operations
@@ -75,6 +75,29 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 		this.rating = rating;	
 		this.userReviews = opinions;	
 	}
+	
+	
+	/**
+	 * Club class copy constructor
+	 * @param otherClub club to be copied
+	 */
+	
+	public ClubPOJO(ClubPOJO otherClub) {
+		super(otherClub.getID());
+		this.commercialName = otherClub.getCommercialName();
+		this.address = otherClub.getAddress();
+		this.price = otherClub.getPrice();
+		this.tags = otherClub.getTags();
+
+		// Location calculation
+		location = new Location(otherClub.getLatitude(),otherClub.getLongitude());
+
+		rating = otherClub.getRating();
+		
+		//FALTA COPIAR USERREVIEWS. LUEGO VEO COMO HACERLO. ME TENGO QUE IR.
+		userReviews = new HashMap<String, ReviewPOJO>();
+	}
+	
 
 	/**
 	 * Returns the club commercial name.
