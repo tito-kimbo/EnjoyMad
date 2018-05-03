@@ -27,11 +27,13 @@ public class UserDAOMySqlImp implements UserDAOMySql {
     PreparedStatement statement = null;
 	ResultSet result = null;	
 	
-	
+
 	/**
-	 * {@inheritDoc}
+	 * Creates connection to the database.
+	 * 
 	 */
-	public UserPOJO getUser(String id) {
+	
+	private void createConnection() {
 		try {
 		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
 		    statement = null;
@@ -40,7 +42,30 @@ public class UserDAOMySqlImp implements UserDAOMySql {
 	    catch (SQLException ex) {
 	    	System.exit(1);
 	    }
-		
+	}
+	
+	/**
+	 * Closes connection to the database.
+	 * 
+	 */
+	
+	private void closeConnection() {
+        try{
+            con.close();
+            statement.close();
+            result.close();
+        }
+        catch (SQLException ex) {
+        	System.exit(1);
+        }
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public UserPOJO getUser(String id) {
+		createConnection();
+	
 		//Not recognizing LocalDate. Will figure out tomorrow.
 		LocalDate date = new LocalDate(1980,1,1);
 		UserPOJO user = new UserPOJO(id,"","","","", date);
@@ -58,14 +83,7 @@ public class UserDAOMySqlImp implements UserDAOMySql {
 	    }
 		    
 	    finally{
-	        try{
-	            con.close();
-	            statement.close();
-	            result.close();
-	        }
-	        catch (SQLException ex) {
-	        	System.exit(1);
-	        }
+	    	closeConnection();
 	    }
 	    return user;
 	}
@@ -74,14 +92,7 @@ public class UserDAOMySqlImp implements UserDAOMySql {
 	 * {@inheritDoc}
 	 */
 	public boolean addUser(UserPOJO user) {
-		try {
-		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
-		    statement = null;
-			result = null;
-		}
-	    catch (SQLException ex) {
-	    	System.exit(1);
-	    }
+		createConnection();
 		
 		try {
 	    	//missing numbers of the columns in the db. Waiting for UserPOJO updates.
@@ -97,15 +108,8 @@ public class UserDAOMySqlImp implements UserDAOMySql {
 	    }
 		    
 	    finally{
-	        try{
-	            con.close();
-	            statement.close();
-	            result.close();
-	        }
-	        catch (SQLException ex) {
-	        	System.exit(1);
-	        }
-        }
+	    	closeConnection();
+	    }
 		return false;
 	}
 	
@@ -113,14 +117,7 @@ public class UserDAOMySqlImp implements UserDAOMySql {
 	 * {@inheritDoc}
 	 */
 	public boolean exist(String id) {
-		try {
-		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
-		    statement = null;
-			result = null;
-		}
-	    catch (SQLException ex) {
-	    	System.exit(1);
-	    }
+		createConnection();
 		
 		try {
 	        statement = con.prepareStatement("select id from Users where id="+id);
@@ -135,15 +132,8 @@ public class UserDAOMySqlImp implements UserDAOMySql {
 	    }
 		    
 	    finally{
-	        try{
-	            con.close();
-	            statement.close();
-	            result.close();
-	        }
-	        catch (SQLException ex) {
-	        	System.exit(1);
-	        }
-        }
+	    	closeConnection();
+	    }
 		return false;
 	}
 	
@@ -151,14 +141,7 @@ public class UserDAOMySqlImp implements UserDAOMySql {
 	 * {@inheritDoc}
 	 */
 	public boolean removeUser(String id) {
-		try {
-		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
-		    statement = null;
-			result = null;
-		}
-	    catch (SQLException ex) {
-	    	System.exit(1);
-	    }
+		createConnection();
 		
 		try {
 	        statement = con.prepareStatement("delete from Users where id="+id);
@@ -173,15 +156,8 @@ public class UserDAOMySqlImp implements UserDAOMySql {
 	    }
 		    
 	    finally{
-	        try{
-	            con.close();
-	            statement.close();
-	            result.close();
-	        }
-	        catch (SQLException ex) {
-	        	System.exit(1);
-	        }
-        }
+	    	closeConnection();
+	    }
 		return false;
 	}
 
@@ -192,14 +168,7 @@ public class UserDAOMySqlImp implements UserDAOMySql {
 	public List<UserPOJO> getUsers() {
 		List<UserPOJO> listUsers = new ArrayList<UserPOJO>();
 		
-		try {
-		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
-		    statement = null;
-			result = null;
-		}
-	    catch (SQLException ex) {
-	    	System.exit(1);
-	    }
+		createConnection();
 		
 		//Not recognizing LocalDate. Will figure out tomorrow.
 		LocalDate date = new LocalDate(1980,1,1);
@@ -221,15 +190,8 @@ public class UserDAOMySqlImp implements UserDAOMySql {
 		    }
 		    
 	    finally{
-	        try{
-	            con.close();
-	            statement.close();
-	            result.close();
-	        }
-	        catch (SQLException ex) {
-	        	System.exit(1);
-	        }
-        }
+	    	closeConnection();
+	    }
 	    return listUsers;
 	}
 }
