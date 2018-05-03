@@ -1,12 +1,7 @@
 package es.ucm.fdi.integration;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.sql.*;
-import java.util.Map;
-import java.util.Set;
 import java.util.List;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ArrayList;
 import es.ucm.fdi.integration.data.Location;
@@ -24,11 +19,12 @@ public class ClubDAOMySqlImp implements ClubDAOMySql {
     PreparedStatement statement = null;
 	ResultSet result = null;
 
-	
 	/**
-	 * {@inheritDoc}
+	 * Creates connection to the database.
+	 * 
 	 */
-	public ClubPOJO getClub(String id) {
+	
+	private void createConnection() {
 		try {
 		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
 		    statement = null;
@@ -37,6 +33,30 @@ public class ClubDAOMySqlImp implements ClubDAOMySql {
 	    catch (SQLException ex) {
 	    	System.exit(1);
 	    }
+	}
+	
+	/**
+	 * Closes connection to the database.
+	 * 
+	 */
+	
+	private void closeConnection() {
+        try{
+            con.close();
+            statement.close();
+            result.close();
+        }
+        catch (SQLException ex) {
+        	System.exit(1);
+        }
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	
+	public ClubPOJO getClub(String id) {
+		createConnection();
 		
 		ClubPOJO club = new ClubPOJO("","","",0f, new Location(0, 0), new HashSet<String>(), null, 0, null);
 		club.setID(id);
@@ -53,14 +73,7 @@ public class ClubDAOMySqlImp implements ClubDAOMySql {
 	    }
 		    
 	    finally{
-	        try{
-	            con.close();
-	            statement.close();
-	            result.close();
-	        }
-	        catch (SQLException ex) {
-	        	System.exit(1);
-	        }
+	    	closeConnection();
 	    }
 	    return club;
 	}
@@ -68,17 +81,11 @@ public class ClubDAOMySqlImp implements ClubDAOMySql {
  	/**
 	 * {@inheritDoc}
 	 */
+	
 	public List<ClubPOJO> getClubs(){
 		List<ClubPOJO> listClubs = new ArrayList<ClubPOJO>();
 		
-		try {
-		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
-		    statement = null;
-			result = null;
-		}
-	    catch (SQLException ex) {
-	    	System.exit(1);
-	    }
+		createConnection();
 		
 		ClubPOJO club = new ClubPOJO("","","",0f, new Location(0, 0), new HashSet<String>(), null, 0, null);
 		    try {
@@ -98,14 +105,7 @@ public class ClubDAOMySqlImp implements ClubDAOMySql {
 		    }
 		    
 	    finally{
-	        try{
-	            con.close();
-	            statement.close();
-	            result.close();
-	        }
-	        catch (SQLException ex) {
-	        	System.exit(1);
-	        }
+	    	closeConnection();
 	    }
 	    return listClubs;
 	}
@@ -113,15 +113,9 @@ public class ClubDAOMySqlImp implements ClubDAOMySql {
  	/**
 	 * {@inheritDoc}
 	 */
+	
 	public boolean exist(String id) {
-		try {
-		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
-		    statement = null;
-			result = null;
-		}
-	    catch (SQLException ex) {
-	    	System.exit(1);
-	    }
+		createConnection();
 		
 		try {
 	        statement = con.prepareStatement("select id from Clubs where id="+id);
@@ -136,14 +130,7 @@ public class ClubDAOMySqlImp implements ClubDAOMySql {
 	    }
 		    
 	    finally{
-	        try{
-	            con.close();
-	            statement.close();
-	            result.close();
-	        }
-	        catch (SQLException ex) {
-	        	System.exit(1);
-	        }
+	    	closeConnection();
 	    }
 		return false;
 	}
@@ -151,15 +138,9 @@ public class ClubDAOMySqlImp implements ClubDAOMySql {
  	/**
 	 * {@inheritDoc}
 	 */
+	
 	public boolean addClub(ClubPOJO club) {
-		try {
-		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
-		    statement = null;
-			result = null;
-		}
-	    catch (SQLException ex) {
-	    	System.exit(1);
-	    }
+		createConnection();
 		
 		try {
 	    	//missing numbers 8, 9 and 10 of the columns in the db. Waiting for ClubPOJO updates.
@@ -177,14 +158,7 @@ public class ClubDAOMySqlImp implements ClubDAOMySql {
 	    }
 		    
 	    finally{
-	        try{
-	            con.close();
-	            statement.close();
-	            result.close();
-	        }
-	        catch (SQLException ex) {
-	        	System.exit(1);
-	        }
+	    	closeConnection();
 	    }
 		return false;
 	}
@@ -192,15 +166,9 @@ public class ClubDAOMySqlImp implements ClubDAOMySql {
   	/**
 	 * {@inheritDoc}
 	 */
+	
 	public boolean removeClub(String id) {
-		try {
-		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
-		    statement = null;
-			result = null;
-		}
-	    catch (SQLException ex) {
-	    	System.exit(1);
-	    }
+		createConnection();
 		
 		try {
 	        statement = con.prepareStatement("delete from Clubs where id="+id);
@@ -215,14 +183,7 @@ public class ClubDAOMySqlImp implements ClubDAOMySql {
 	    }
 		    
 	    finally{
-	        try{
-	            con.close();
-	            statement.close();
-	            result.close();
-	        }
-	        catch (SQLException ex) {
-	        	System.exit(1);
-	        }
+	    	closeConnection();
 	    }
 		return false;
 	}

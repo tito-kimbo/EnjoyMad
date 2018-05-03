@@ -13,6 +13,8 @@ import es.ucm.fdi.integration.data.ClubPOJO;
 
  */
 public interface ClubDAOMySql {	
+	
+
 	/**
 	 * Returns the full list of <code>Clubs</code>.
 	 * 
