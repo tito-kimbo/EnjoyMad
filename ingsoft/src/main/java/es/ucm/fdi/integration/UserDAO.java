@@ -1,11 +1,13 @@
 package es.ucm.fdi.integration;
 
+import java.util.List;
+
 import es.ucm.fdi.integration.data.UserPOJO;
 
 /**
  * This interface declares the methods a User data access object needs to implement.
- * @author Fco Borja 
- * @author Carlijn
+ * 
+ * @version 22.04.2018
  */
 public interface UserDAO {
 	/**
@@ -33,4 +35,11 @@ public interface UserDAO {
 	 * @param id user's id to be removed
 	 */
 	public void removeUser(String id);
+	
+	/**
+	 * Retrieves the full list of <code>Users</code>
+	 * @return the list of <code>Users</code>>
+	 */
+	public List<UserPOJO> getUsers();
+
 }

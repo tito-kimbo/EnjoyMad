@@ -1,8 +1,8 @@
 package es.ucm.fdi.integration.data;
 /**
  * This class represents a location in coordinates.
- * @author Fco Borja
- * @author Carlijn
+ * 
+ * @version 22.04.2018
  */
 public class Location {
 	private double lat, lng;

@@ -7,6 +7,8 @@ import es.ucm.fdi.integration.data.ClubPOJO;
 
 /**
  * Class that registers a search and its results.
+ * 
+ * @version 22.04.2018
  */
 public class SearchPOJO {
 	private String words;

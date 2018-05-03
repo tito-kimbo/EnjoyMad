@@ -17,7 +17,7 @@ import org.json.JSONArray;
 /**
  * This class is responsible of deciding whether a Club is near enough to satisfy the client search filter or not.
  * 
- * @author Francisco Javier Blázquez Martínez
+ * @version 22.04.2018
  */
 public class LocationFilterBO implements FilterBO{
 	

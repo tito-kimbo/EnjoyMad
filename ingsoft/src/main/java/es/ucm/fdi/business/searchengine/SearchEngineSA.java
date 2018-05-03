@@ -17,18 +17,10 @@ public interface SearchEngineSA {
 	 * 
 	 * @param words		words of the search in progress.
 	 * @param filters	list of filters to apply.
+	 * 
+	 * @return List of <code>ElementBO<ClubPOJO></code>
 	 */
-	public void search(String words, List<FilterPOJO> filters);
+	public List<ElementBO<ClubPOJO>> search(String words, List<FilterPOJO> filters);
 	
-	/**
-	 *	Retrieves the data of the selected club.
-	 */
-	public ClubPOJO select(String id);
-	
-	/**
-	 * Returns the results of a search as a list of <code>Element</code> of 
-	 * type <code>ClubPOJO</code>.
-	 */
-	public List<ElementBO<ClubPOJO>> getSearchResults();
 
 }
