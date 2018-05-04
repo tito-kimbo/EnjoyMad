@@ -38,14 +38,14 @@ public class TagManagerSAImp implements TagManagerSA {
 	 * {@inheritDoc}
 	 */
 	public void load(){
-		for ()
+		tagAccess.saveTags(new ArrayList<TagPOJO>(activeTags));
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	public void save(){
-		
+		activeTags = new HashSet<TagPOJO>(tagAccess.loadTags());
 	}
 	
 	/**

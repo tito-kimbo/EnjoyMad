@@ -24,9 +24,17 @@ import es.ucm.fdi.integration.data.Location;
  */
 public class ProfileManagerSAImp implements ProfileManagerSA {
     
+	private ClubDAO clubDAO;
+    private UserDAO userDAO;
+	
+    public ProfileManagerSAImp(ClubDAO clubDAO, UserDAO userDAO) {
+		super();
+		this.clubDAO = clubDAO;
+		this.userDAO = userDAO;
+	}
 
-    
-    /**
+
+	/**
      * {@inheritDoc}
      * 
      * @param club {@inheritDoc}
@@ -34,7 +42,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
     public void addNewClub(ClubPOJO club) 
             throws IllegalArgumentException, DataFormatException {
         // Is already registered?
-    	ClubDAO clubDAO = new ClubDAOImp();
         if (clubDAO.exist(club.getID())) {
             throw new IllegalArgumentException(
                 "In CLUB creation: clubID is already registered -> " + club.getID()
@@ -88,7 +95,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      */
     public void addNewUser(UserPOJO user) 
             throws IllegalArgumentException, DataFormatException {
-    	UserDAO userDAO = new UserDAOImp();
         // Is already registered?
         if (userDAO.exist(user.getID())) {
             throw new IllegalArgumentException(
@@ -149,7 +155,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param clubID {@inheritDoc}
      */
     public void modifyClubCommercialName(String newCommercialName, String clubID) throws NoSuchElementException, DataFormatException {
-    	ClubDAO clubDAO = new ClubDAOImp();
 		ClubPOJO clubToManage = clubDAO.getClub(clubID);
 
         if (clubToManage == null) {
@@ -174,7 +179,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param clubID {@inheritDoc}
      */
     public void modifyClubAddress(String newAddress, String clubID) throws NoSuchElementException, DataFormatException {
-    	ClubDAO clubDAO = new ClubDAOImp();
 		ClubPOJO clubToManage = clubDAO.getClub(clubID);
 
         if (clubToManage == null) {
@@ -201,7 +205,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param clubID {@inheritDoc}
      */
     public void modifyClubPrice(Float newPrice, String clubID) throws NoSuchElementException, DataFormatException {
-    	ClubDAO clubDAO = new ClubDAOImp();
         ClubPOJO clubToManage = clubDAO.getClub(clubID);
 
         if (clubToManage == null) {
@@ -226,7 +229,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param clubID {@inheritDoc}
      */
     public void modifyClublocation(Location newLocation, String clubID) throws NoSuchElementException {
-    	ClubDAO clubDAO = new ClubDAOImp();
 	    ClubPOJO clubToManage = clubDAO.getClub(clubID);
 
         if (clubToManage == null) {
@@ -247,7 +249,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param clubID {@inheritDoc}
      */
     public void modifyClubRating(Float newRating, String clubID) throws NoSuchElementException, DataFormatException {
-    	ClubDAO clubDAO = new ClubDAOImp();
         ClubPOJO clubToManage = clubDAO.getClub(clubID);
 
         if (clubToManage == null) {
@@ -272,7 +273,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param clubID {@inheritDoc}
      */
     public void addClubTag(String newTag, String clubID) throws NoSuchElementException, DataFormatException {
-    	ClubDAO clubDAO = new ClubDAOImp();
         ClubPOJO clubToManage = clubDAO.getClub(clubID);
 
         if (clubToManage == null) {
@@ -297,7 +297,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param clubID {@inheritDoc}
      */
     public void removeClubTag(String tagToRemove, String clubID) throws NoSuchElementException, DataFormatException {
-    	ClubDAO clubDAO = new ClubDAOImp();
         ClubPOJO clubToManage = clubDAO.getClub(clubID);
 
         if (clubToManage == null) {
@@ -321,7 +320,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param clubID {@inheritDoc}
      */
     public void clearClubTags(String clubID) throws NoSuchElementException {
-    	ClubDAO clubDAO = new ClubDAOImp();
         ClubPOJO clubToManage = clubDAO.getClub(clubID);
 
         if (clubToManage == null) {
@@ -344,7 +342,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param userID {@inheritDoc}
      */
     public void modifyUserUsername(String newUsername, String userID) throws NoSuchElementException, DataFormatException {
-    	UserDAO userDAO = new UserDAOImp();
 		UserPOJO userToManage = userDAO.getUser(userID);
 
         if (userToManage == null) {
@@ -369,7 +366,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param userID {@inheritDoc}
      */
     public void modifyUserPassWord(String newPassword, String userID) throws NoSuchElementException, DataFormatException {
-    	UserDAO userDAO = new UserDAOImp();
         UserPOJO userToManage = userDAO.getUser(userID);
 
         if (userToManage == null) {
@@ -397,7 +393,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param userID {@inheritDoc}
      */
     public void modifyUserEmail(String newEmail, String userID) throws NoSuchElementException, DataFormatException {
-    	UserDAO userDAO = new UserDAOImp();
         UserPOJO userToManage = userDAO.getUser(userID);
 
         if (userToManage == null) {
@@ -422,7 +417,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param userID {@inheritDoc}
      */
     public void modifyUserName(String newName, String userID) throws NoSuchElementException, DataFormatException {
-    	UserDAO userDAO = new UserDAOImp();
         UserPOJO userToManage = userDAO.getUser(userID);
 
         if (userToManage == null) {
@@ -447,7 +441,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param userID {@inheritDoc}
      */
     public void modifyUserBirthday(LocalDate newBirthday, String userID) throws NoSuchElementException, DataFormatException {
-    	UserDAO userDAO = new UserDAOImp();
     	UserPOJO userToManage = userDAO.getUser(userID);
 
         if (userToManage == null) {
@@ -466,24 +459,12 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
     }
 
 
-
-
-
-
-
-
-
-
-    
-
     /**
      * {@inheritDoc}
      * 
      * @param clubID {@inheritDoc}
      */
     public void removeClub(String clubID) throws NoSuchElementException {
-    	ClubDAO clubDAO = new ClubDAOImp();
-    	UserDAO userDAO = new UserDAOImp();
         ClubPOJO removingClub = clubDAO.getClub(clubID);
 
         if (removingClub == null) {
@@ -508,8 +489,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param userID {@inheritDoc}
      */
     public void removeUser(String userID) throws NoSuchElementException {
-    	UserDAO userDAO = new UserDAOImp();
-    	ClubDAO clubDAO = new ClubDAOImp();
         UserPOJO removingUser = userDAO.getUser(userID);
         
         if (removingUser == null) {
@@ -541,8 +520,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      */
     public void addReview(String clubID, ReviewPOJO review, String userID) 
             throws NoSuchElementException, DataFormatException {
-    	ClubDAO clubDAO = new ClubDAOImp();
-    	UserDAO userDAO = new UserDAOImp();
         ClubPOJO reviewedClub = clubDAO.getClub(clubID);
         UserPOJO reviewingUser = userDAO.getUser(userID);
         
@@ -570,8 +547,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
     }
 
     public void removeReview(String clubID, String userID) throws NoSuchElementException {
-    	ClubDAO clubDAO = new ClubDAOImp();
-    	UserDAO userDAO = new UserDAOImp();
         ClubPOJO unreviewedClub = clubDAO.getClub(clubID);
         UserPOJO unreviewingUser = userDAO.getUser(userID);
 
