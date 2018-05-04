@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import es.ucm.fdi.integration.ClubDAO;
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.UserPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.filters.FilterBO;
 import es.ucm.fdi.business.util.ElementBO;
@@ -25,11 +26,11 @@ public class SearchEngineSAImp implements SearchEngineSA {
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<ElementBO<ClubPOJO>> search(String words, List<FilterPOJO> filters){
+	public List<ElementBO<ClubPOJO>> search(String words, List<FilterPOJO> filters, UserPOJO usr){
 		ElementBO<ClubPOJO> aux;
 		List<ElementBO<ClubPOJO>> searchResults = new ArrayList<ElementBO<ClubPOJO>>();
 		List<ClubPOJO> clubs;
-		clubs = clubAccess.getClubs();
+		clubs = usr.getPreferencesList();
 		
 		//Here we must find all the matching Data
 		for(ClubPOJO c : clubs){
