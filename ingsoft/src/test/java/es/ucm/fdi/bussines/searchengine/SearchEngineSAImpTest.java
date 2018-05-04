@@ -14,13 +14,12 @@ import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.SearchEngineSA;
 import es.ucm.fdi.business.searchengine.SearchEngineSAImp;
-import es.ucm.fdi.business.util.ElementBO;
+import es.ucm.fdi.business.util.ElementHelper;
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 public class SearchEngineSAImpTest {
-	
 	private static ClubDAOImp cd;
 	
 	static {
@@ -45,21 +44,5 @@ public class SearchEngineSAImpTest {
 		//Clubs to search
 		ClubPOJO c = new ClubPOJO("a2868521eac27ed8c7c4d7a38051f912", 
 				     "Teatro Kapital", "C/Falsa 1234", 20.30F, l1);	
-		c.setRating(3.1F);
-		
-		//This make the clubs accessible
-		cd.addClub(c);
-		//ud.add usuarios
-		
-		//This initializes the filters
-		FilterMapper.addAll();
-		
-		//Ready to search
-		SearchEngineSA se = new SearchEngineSAImp(cd);
-		
-		List<ElementBO<ClubPOJO>> results = se.search("kapi", filters, readyToSearchUser());
-		
-		//There isn't filters, so the result must be all the clubs (just one in this case)
-		assertTrue("Expected true",results.get(0).isVisible());
 	}
 }
