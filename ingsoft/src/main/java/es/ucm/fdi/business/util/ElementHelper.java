@@ -7,7 +7,7 @@ package es.ucm.fdi.business.util;
  * @param <T> Type of the content of the class.
  * @version 22.04.2018
  */
-public class ElementBO<T>{
+public class ElementHelper<T>{
 	private boolean visible;
 	private T element;
 	
@@ -16,7 +16,7 @@ public class ElementBO<T>{
 	 * 
 	 * @param e	Element contained in this object.
 	 */
-	public ElementBO(T e){
+	public ElementHelper(T e){
 		visible = false;
 		element = e;
 	}

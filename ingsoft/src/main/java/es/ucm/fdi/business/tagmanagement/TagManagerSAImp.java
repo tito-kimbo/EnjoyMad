@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.HashSet;
 
 import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.TagDAO;
 
 /**
  *	Implementation of the <code>TagManagerSA</code> service application based on hashsets.
@@ -14,14 +15,14 @@ import es.ucm.fdi.business.data.TagPOJO;
  */
 public class TagManagerSAImp implements TagManagerSA {
 	private Set<TagPOJO> activeTags;
-	
-	
+	private TagDAO tagAccess;
 	
 	/**
 	 * Empty constructor for this class.
 	 */
-	public TagManagerSAImp(){
+	public TagManagerSAImp(TagDAO tagAccess){
 		activeTags = new HashSet<TagPOJO>();
+		this.tagAccess = tagAccess;
 		load();
 	}
 	
@@ -37,7 +38,7 @@ public class TagManagerSAImp implements TagManagerSA {
 	 * {@inheritDoc}
 	 */
 	public void load(){
-		
+		for ()
 	}
 	
 	/**

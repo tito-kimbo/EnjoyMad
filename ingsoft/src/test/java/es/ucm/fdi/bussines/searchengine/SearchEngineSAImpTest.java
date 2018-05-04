@@ -13,12 +13,12 @@ import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.SearchEngineSA;
 import es.ucm.fdi.business.searchengine.SearchEngineSAImp;
-import es.ucm.fdi.business.util.ElementBO;
+import es.ucm.fdi.business.util.ElementHelper;
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
 public class SearchEngineSAImpTest {
-	/*@Test
+	@Test
 	public void SearchEngineTest(){
 		List <FilterPOJO> filters = new ArrayList<FilterPOJO>();
 		Set <String> l1 = new HashSet<String>();
@@ -34,5 +34,5 @@ public class SearchEngineSAImpTest {
 		se.search("kapi", filters);
 		List<ElementBO<ClubPOJO>> results = se.getSearchResults();
 		assertTrue("Expected true",results.get(0).isVisible());
-	}*/
+	}
 }
