@@ -12,6 +12,15 @@ import es.ucm.fdi.business.util.ElementBO;
 import es.ucm.fdi.business.data.FilterPOJO;
 
 public class SearchEngineSAImp implements SearchEngineSA {
+	private ClubDAO clubAccess;
+	
+	/**
+	 * @param clubAccess is the DAO to access the clubs
+	 */
+	public SearchEngineSAImp(ClubDAO clubAccess){
+		this.clubAccess = clubAccess;
+	}
+	
 	
 	/**
 	 * {@inheritDoc}
@@ -20,7 +29,6 @@ public class SearchEngineSAImp implements SearchEngineSA {
 		ElementBO<ClubPOJO> aux;
 		List<ElementBO<ClubPOJO>> searchResults = new ArrayList<ElementBO<ClubPOJO>>();
 		List<ClubPOJO> clubs;
-		ClubDAO clubAccess = new ClubDAOImp();
 		clubs = clubAccess.getClubs();
 		
 		//Here we must find all the matching Data

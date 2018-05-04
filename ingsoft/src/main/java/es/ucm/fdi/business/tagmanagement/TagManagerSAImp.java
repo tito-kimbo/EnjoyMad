@@ -15,12 +15,22 @@ import es.ucm.fdi.business.data.TagPOJO;
 public class TagManagerSAImp implements TagManagerSA {
 	private Set<TagPOJO> activeTags;
 	
+	
+	
 	/**
 	 * Empty constructor for this class.
 	 */
 	public TagManagerSAImp(){
 		activeTags = new HashSet<TagPOJO>();
 		load();
+	}
+	
+	
+	/**
+	 * @param tagsList is a List of <code>TagPOJO<code> with the activeTags
+	 */
+	public TagManagerSAImp(List<TagPOJO> tagList){
+		activeTags = new HashSet<TagPOJO>(tagList);
 	}
 	
 	/**
