@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -67,7 +68,7 @@ public class UserDAOMySqlImp implements UserDAOMySql {
 		createConnection();
 	
 		//Not recognizing LocalDate. Will figure out tomorrow.
-		LocalDate date = new LocalDate(1980,1,1);
+		LocalDate date = LocalDate.of(1980,Month.JANUARY,1);
 		UserPOJO user = new UserPOJO(id,"","","","", date);
 		user.setID(id);
 	    try {
@@ -171,7 +172,7 @@ public class UserDAOMySqlImp implements UserDAOMySql {
 		createConnection();
 		
 		//Not recognizing LocalDate. Will figure out tomorrow.
-		LocalDate date = new LocalDate(1980,1,1);
+		LocalDate date = LocalDate.of(1980,Month.JANUARY,1);
 		UserPOJO user = new UserPOJO("","","","","", date);
 		try {
 	        statement = con.prepareStatement("select * from Users");
