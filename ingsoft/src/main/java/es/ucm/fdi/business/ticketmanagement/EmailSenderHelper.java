@@ -16,7 +16,7 @@ import javax.mail.internet.MimeMessage;
  * @author Fco Borja
  *
  */
-public class EmailSenderBO {
+public class EmailSenderHelper {
 	/**
 	 * Sends and email from 'from' to 'to' containing the provided text.
 	 * @param from origin email
