@@ -32,14 +32,14 @@ public interface ClubDAO {
 	 * 
 	 * @param club <code>Club</code> to be added.
 	 */
-	public void addClub(ClubPOJO club);
+	public boolean addClub(ClubPOJO club);
 
 	/**
 	 * Removes an existing <code>Club</code> from the <code>Club</code> map.
 	 * 
 	 * @param id <code>Club</code>'s id to be removed.
 	 */
-	public void removeClub(String id);
+	public boolean removeClub(String id);
 	
 	/**
 	 * Returns the club instance which matches the identification.

@@ -14,7 +14,7 @@ import es.ucm.fdi.integration.data.ClubPOJO;
  * @version 03.05.2018
  * @author Carlijn
  */
-public class ClubDAOMySqlImp implements ClubDAOMySql {
+public class ClubDAOMySqlImp implements ClubDAO {
     Connection con = null;
     PreparedStatement statement = null;
 	ResultSet result = null;

@@ -23,7 +23,7 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * 
  * @version 22.04.2018
  */
-public class UserDAOMySqlImp implements UserDAOMySql {
+public class UserDAOMySqlImp implements UserDAO {
     Connection con = null;
     PreparedStatement statement = null;
 	ResultSet result = null;	
