@@ -6,9 +6,9 @@ import org.junit.Test;
 
 public class TagMangerSAImpTest {
 
-	@Test
+	/*@Test
 	public void test() {
 		fail("Not yet implemented");
-	}
+	}*/
 
 }
