@@ -11,6 +11,7 @@ import java.util.HashSet;
 import org.junit.Test;
 
 import es.ucm.fdi.business.data.FilterPOJO;
+import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.filters.FilterBO;
 import es.ucm.fdi.integration.data.ClubPOJO;
@@ -19,10 +20,10 @@ public class RatingFilter {
 	
 	@Test
 	public void testRatingFilter(){
-		Set<String> l1 = new HashSet<String>();
-		l1.add("techno");
-		l1.add("reggaeton");
-		l1.add("electronica");
+		Set<TagPOJO> l1 = new HashSet<TagPOJO>();
+		l1.add(new TagPOJO("techno"));
+		l1.add(new TagPOJO("reggaeton"));
+		l1.add(new TagPOJO("electronica"));
 		
 		List <String> l2 = new ArrayList<String>();
 		l2.add("4.0");

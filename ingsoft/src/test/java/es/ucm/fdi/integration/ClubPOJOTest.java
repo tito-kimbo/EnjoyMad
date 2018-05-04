@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 
@@ -16,8 +17,11 @@ public class ClubPOJOTest {
 	
 	private static ClubPOJO createTestClubPOJO(){
 		return new ClubPOJO("id", "Kapital", "Calle Atocha, 125, 28012 Madrid", 17.0f, 
-				new HashSet<String>(Arrays.asList("Electronica", "Reggaeton", "Funky",
-						"R&B")) );
+				new HashSet<TagPOJO>(Arrays.asList(
+									new TagPOJO("Electronica")
+									,new TagPOJO("Reggaeton")
+									,new TagPOJO("Funky")
+									,new TagPOJO("R&B"))));
 	}
 	
 	private static void addOpinions(ClubPOJO c){

@@ -15,6 +15,10 @@ import es.ucm.fdi.business.data.TagPOJO;
  * @version 22.04.2018
  */
 public class ClubPOJO extends DataPOJO implements Serializable{
+	/**
+	 * Generated serial UID.
+	 */
+	private static final long serialVersionUID = 3099911602624644548L;
 	String commercialName;
 	String address;
 	float price;
