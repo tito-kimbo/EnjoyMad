@@ -28,13 +28,14 @@ public interface UserDAO {
 	 * Adds a new user to the user map.
 	 * @param user user to be added
 	 */
-	public void addUser(UserPOJO user);
+	public boolean addUser(UserPOJO user);
 
 	/**
 	 * Removes an existing user from the user map.
 	 * @param id user's id to be removed
+	 * @return 
 	 */
-	public void removeUser(String id);
+	public boolean removeUser(String id);
 	
 	/**
 	 * Retrieves the full list of <code>Users</code>

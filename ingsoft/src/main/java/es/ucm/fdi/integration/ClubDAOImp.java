@@ -58,14 +58,16 @@ public class ClubDAOImp implements ClubDAO {
  	/**
 	 * {@inheritDoc}
 	 */
-	public void addClub(ClubPOJO club) {
+	public boolean addClub(ClubPOJO club) {
 		clubMap.put(club.getID(), club);
+		return true;
 	}
 
   	/**
 	 * {@inheritDoc}
 	 */
-	public void removeClub(String id) {
+	public boolean removeClub(String id) {
 		clubMap.remove(id);
+		return true;
 	}
 }

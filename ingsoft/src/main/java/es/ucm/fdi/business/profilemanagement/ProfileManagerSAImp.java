@@ -11,7 +11,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.business.profilemanagement.tools.ClubModifierBO;
 import es.ucm.fdi.business.profilemanagement.tools.UserModifierBO;
-import es.ucm.fdi.business.util.ParsingToolBO;
+import es.ucm.fdi.business.util.ParsingToolHelper;
 
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.UserDAOImp;
@@ -55,7 +55,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
 
 
-    /**
+  
      * {@inheritDoc}
      * 
      * @param clubID  {@inheritDoc}
@@ -70,6 +70,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         
         // Is already registered?
         if ( clubDAO.exist(clubID) ) {
+
             throw new IllegalArgumentException(
                 "In CLUB creation:" + 
                 "clubID is already registered -> " + 
@@ -78,7 +79,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         }
 
         // Arguments are checked
-        if ( ! ParsingToolBO.parseID(clubID) ) {
+        if ( ! ParsingToolHelper.parseID(clubID) ) {
             throw new DataFormatException(
                 "In CLUB creation: " + 
                 "not a valid ID format -> " + 
@@ -86,15 +87,15 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        if ( ! ParsingToolBO.parseCommercialName(name) ) {
+        if ( ! ParsingToolHelper.parseCommercialName(name) ) {
             throw new DataFormatException(
                 "In CLUB creation: " + 
                 "not a valid commercial name format -> " + 
                 name
             );
         }
-
-        if ( ! ParsingToolBO.parseAddress(address) ) {
+                
+        if ( ! ParsingToolHelper.parseAddress(address) ) {
             throw new DataFormatException(
                 "In CLUB creation: " + 
                 "not a valid address format -> " + 
@@ -102,16 +103,17 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        if ( ! ParsingToolBO.parsePrice(price) ) {
+        if ( ! ParsingToolHelper.parsePrice(price) ) {
             throw new DataFormatException(
                 "In CLUB creation: " + 
                 "not a valid price -> " + 
                 price
             );
         }
-
+        
         /*
-        if ( ! ParsingToolBO.parseTags(tags) ) {
+        if ( ! ParsingToolHelper.parseTags(tags) ) {
+
             String tagsInfo = "";
             for (String t : tags) {
                 tagsInfo += t + " ";
@@ -137,7 +139,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      */
     public void addNewClub(ClubPOJO club) throws IllegalArgumentException, 
             DataFormatException {
-        
+                
         // Is already registered?
         if ( clubDAO.exist( club.getID() ) ) {
             throw new IllegalArgumentException(
@@ -148,7 +150,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         }
 
         // Arguments are checked
-        if ( ! ParsingToolBO.parseID( club.getID() ) ) {
+        if ( ! ParsingToolHelper.parseID( club.getID() ) ) {
             throw new DataFormatException(
                 "In CLUB creation: " + 
                 "not a valid ID format -> " + 
@@ -156,7 +158,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        if ( ! ParsingToolBO.parseCommercialName( club.getCommercialName() ) ) {
+        if ( ! ParsingToolHelper.parseCommercialName( club.getCommercialName() ) ) {
             throw new DataFormatException(
                 "In CLUB creation: " + 
                 "not a valid commercial name format -> " + 
@@ -164,7 +166,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        if ( ! ParsingToolBO.parseAddress( club.getAddress() ) ) {
+        if ( ! ParsingToolHelper.parseAddress( club.getAddress() ) ) {
             throw new DataFormatException(
                 "In CLUB creation: " + 
                 "not a valid address format -> " + 
@@ -172,7 +174,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        if ( ! ParsingToolBO.parsePrice( club.getPrice() ) ) {
+        if ( ! ParsingToolHelper.parsePrice( club.getPrice() ) ) {
             throw new DataFormatException(
                 "In CLUB creation: " + 
                 "not a valid price -> " + 
@@ -185,9 +187,9 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
     }
 
 
-
-
-
+    
+    
+    
 
     /**
      * {@inheritDoc}
@@ -336,6 +338,8 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
 
 
+
+
     /**
      * {@inheritDoc}
      * 
@@ -397,7 +401,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             throw dataForm;
         }
     }
-
 
 
 

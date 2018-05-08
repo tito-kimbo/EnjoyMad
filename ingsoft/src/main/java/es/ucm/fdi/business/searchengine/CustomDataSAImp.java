@@ -31,8 +31,8 @@ public class CustomDataSAImp implements CustomDataSA{
 		
 	}
 	
-	UserDAO user = new UserDAOImp();
-	ClubDAO club = new ClubDAOImp();
+	private UserDAO user = new UserDAOImp();
+	private ClubDAO club = new ClubDAOImp();
 
 	public void updateValues() {
 		List<ObjectValue> clubsWithValue = new ArrayList<ObjectValue>();
