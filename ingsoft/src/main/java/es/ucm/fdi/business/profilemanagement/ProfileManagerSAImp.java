@@ -9,10 +9,8 @@ import java.util.zip.DataFormatException;
 import org.mindrot.jbcrypt.BCrypt;
 
 import es.ucm.fdi.business.data.TagPOJO;
-import es.ucm.fdi.business.profilemanagement.tools.ClubDataType;
-import es.ucm.fdi.business.profilemanagement.tools.ClubManageToolBO;
-import es.ucm.fdi.business.profilemanagement.tools.UserDataType;
-import es.ucm.fdi.business.profilemanagement.tools.UserManageToolBO;
+import es.ucm.fdi.business.profilemanagement.tools.ClubModifierBO;
+import es.ucm.fdi.business.profilemanagement.tools.UserModifierBO;
 import es.ucm.fdi.business.util.ParsingToolBO;
 
 import es.ucm.fdi.integration.ClubDAOImp;
@@ -32,21 +30,18 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
     /**
      * <p>
-     * Builds a {@link ProfileManagerSAImp ProfileManager} 
-     * whose funcionality is:
+     * Builds a {@link ProfileManagerSAImp ProfileManager} whose funcionality 
+     * is:
      * </p> <p>
-     * 1)   To add and remove {@code UserPOJO}s and
-     *      {@code ClubPOJO}s.
+     * 1)   To add and remove {@code UserPOJO}s and {@code ClubPOJO}s.
      * </p> <p>
-     * 2)   To modify {@code UserPOJO}s and 
-     *      {@code ClubPOJO}s inner attributes.
+     * 2)   To modify {@code UserPOJO}s and {@code ClubPOJO}s inner attributes.
      * </p> <p>
-     * 3)   To handle users feedback of clubs with
-     *      {@code ReviewPOJO}s.
+     * 3)   To handle users feedback of clubs with {@code ReviewPOJO}s.
      * </p>
      * 
-     * @param clubs     - the app {@code ClubDAO} database
-     * @param users     - the app {@code UserDAO} database 
+     * @param clubs  - the app {@code ClubDAO} database
+     * @param users  - the app {@code UserDAO} database 
      */
     public ProfileManagerSAImp(ClubDAOImp clubs, UserDAOImp users) {
         clubDAO = clubs;
@@ -67,9 +62,9 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param price   {@inheritDoc}
      * @param tags    {@inheritDoc}
      */
-    public void addNewClub(String clubID, String name, String address,
-            float price, Set<TagPOJO> tags)
-            throws IllegalArgumentException, DataFormatException {
+    public void addNewClub(String clubID, String name, String address, 
+            float price, Set<TagPOJO> tags) throws IllegalArgumentException, 
+            DataFormatException {
         
         // Is already registered?
         if ( clubDAO.exist(clubID) ) {
@@ -138,14 +133,48 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * 
      * @param club {@inheritDoc}
      */
-    public void addNewClub(ClubPOJO club) throws IllegalArgumentException {
+    public void addNewClub(ClubPOJO club) throws IllegalArgumentException, 
+            DataFormatException {
         
         // Is already registered?
         if ( clubDAO.exist( club.getID() ) ) {
             throw new IllegalArgumentException(
-                    "In CLUB addition: " + 
-                    "club ID is already registered -> " + 
-                    club.getID()
+                "In CLUB creation:" + 
+                "clubID is already registered -> " + 
+                club.getID()
+            );
+        }
+
+        // Arguments are checked
+        if ( ! ParsingToolBO.parseID( club.getID() ) ) {
+            throw new DataFormatException(
+                "In CLUB creation: " + 
+                "not a valid ID format -> " + 
+                club.getID()
+            );
+        }
+
+        if ( ! ParsingToolBO.parseCommercialName( club.getCommercialName() ) ) {
+            throw new DataFormatException(
+                "In CLUB creation: " + 
+                "not a valid commercial name format -> " + 
+                club.getCommercialName()
+            );
+        }
+
+        if ( ! ParsingToolBO.parseAddress( club.getAddress() ) ) {
+            throw new DataFormatException(
+                "In CLUB creation: " + 
+                "not a valid address format -> " + 
+                club.getAddress()
+            );
+        }
+
+        if ( ! ParsingToolBO.parsePrice( club.getPrice() ) ) {
+            throw new DataFormatException(
+                "In CLUB creation: " + 
+                "not a valid price -> " + 
+                club.getPrice()
             );
         }
 
@@ -243,14 +272,56 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * 
      * @param user {@inheritDoc}
      */
-    public void addNewUser(UserPOJO user) throws IllegalArgumentException {
+    public void addNewUser(UserPOJO user) throws IllegalArgumentException,
+        DataFormatException {
         
         // Is already registered?
         if ( userDAO.exist( user.getID() ) ) {
             throw new IllegalArgumentException(
-                    "In USER addition: " + 
-                    "user ID is already registered -> " + 
-                    user.getID()
+                "In USER creation: " +
+                "userID is already registered -> " +
+                user.getID()
+            );
+        }
+
+        // Arguments are checked
+        if ( ! ParsingToolBO.parseID( user.getID() ) ) {
+            throw new DataFormatException(
+                "In USER creation: " + 
+                "not a valid ID format -> " + 
+                user.getID()
+            );
+        }
+
+        if ( ! ParsingToolBO.parseUsername( user.getUsername() ) ) {
+            throw new DataFormatException(
+                "In USER creation: " + 
+                "not a valid username format -> " +
+                user.getUsername()
+            );
+        }
+
+        if ( ! ParsingToolBO.parseEmail( user.getEmail() ) ) {
+            throw new DataFormatException(
+                "In USER creation: " + 
+                "not a valid email format -> " + 
+                user.getEmail()
+            );
+        }
+
+        if ( ! ParsingToolBO.parseName( user.getName() ) ) {
+            throw new DataFormatException(
+                "In USER creation: " + 
+                "not a valid name format -> " + 
+                user.getName()
+            );
+        }
+
+        if ( ! ParsingToolBO.parseBirthday( user.getBirthday() ) ) {
+            throw new DataFormatException(
+                "In USER creation: " + 
+                "not a valid birth date -> " + 
+                user.getBirthday()
             );
         }
 
@@ -259,13 +330,25 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
     }
 
 
-    public void modifyClubData(String clubID, ClubDataType dataID,
-            Object newData) throws DataFormatException {
+
+
+
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @param clubID   {@inheritDoc}
+     * @param dataType {@inheritDoc}
+     * @param newData  {@inheritDoc}
+     */
+    public void modifyClubData(String clubID, ClubModifierBO dataType,
+            Object newData) throws IllegalArgumentException,
+            DataFormatException {
 
         ClubPOJO club = clubDAO.getClub(clubID);
 
         if (club == null) {
-            throw  new NoSuchElementException(
+            throw new NoSuchElementException(
                 "In CLUB modification: " + 
                 "club not found in database. ID -> " + 
                 clubID
@@ -274,8 +357,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
         // Valid newData?
         try {
-            ClubManageToolBO clubManager = new ClubManageToolBO(club, clubDAO);
-            clubManager.modify(dataID, newData);
+            dataType.modify(club, newData);
         } catch (IllegalArgumentException ilegArg) {
             throw ilegArg;
         } catch (DataFormatException dataForm) {
@@ -283,8 +365,16 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         }        
     }
 
-    public void modifyUserData(String userID, UserDataType dataID,
-            Object newData) throws DataFormatException {
+    /**
+     * {@inheritDoc}
+     * 
+     * @param userID   {@inheritDoc}
+     * @param dataType {@inheritDoc}
+     * @param newData  {@inheritDoc}
+     */
+    public void modifyUserData(String userID, UserModifierBO dataType,
+            Object newData) throws IllegalArgumentException,
+            DataFormatException {
 
         UserPOJO user = userDAO.getUser(userID);
 
@@ -298,13 +388,12 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
         // Valid newData?
         try {
-            UserManageToolBO userManager = new UserManageToolBO(user, userDAO);
-            userManager.modify(dataID, newData);
+            dataType.modify(user, newData);
         } catch (IllegalArgumentException ilegArg) {
             throw ilegArg;
         } catch (DataFormatException dataForm) {
             throw dataForm;
-        }        
+        }
     }
 
 
@@ -361,6 +450,12 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
         userDAO.removeUser(userID);
     }
+
+
+
+
+
+
 
     /**
      * {@inheritDoc}
