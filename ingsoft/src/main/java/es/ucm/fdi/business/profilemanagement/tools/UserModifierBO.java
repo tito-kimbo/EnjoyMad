@@ -10,6 +10,8 @@ import es.ucm.fdi.integration.data.UserPOJO;
 
 /**
  * Enum class representing the attributes of a UserPOJO.
+ * 
+ * @version 08.05.2018
  */
 public enum UserModifierBO {
     USERNAME("USERNAME") {

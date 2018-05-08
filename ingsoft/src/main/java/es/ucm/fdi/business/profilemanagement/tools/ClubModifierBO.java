@@ -9,6 +9,8 @@ import es.ucm.fdi.integration.data.Location;
 
 /**
  * Enum class representing the attributes of a ClubPOJO.
+ * 
+ * @version 08.05.2018
  */
 public enum ClubModifierBO { 
 

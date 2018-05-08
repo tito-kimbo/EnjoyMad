@@ -1,7 +1,6 @@
 package es.ucm.fdi.integration;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
 
@@ -16,7 +15,6 @@ public interface ClubDAO {
 	 * 
 	 * @return List of <code>Clubs</code>.
 	 */
-  
 	public List<ClubPOJO> getClubs();
 
 	/**
@@ -45,7 +43,6 @@ public interface ClubDAO {
 	 * Returns the club instance which matches the identification.
 	 * @param id identification of the club
 	 * @return club that matches the id
-	 * @throws NoSuchElementException if no element matches the identification
 	 */
 	public ClubPOJO getClub(String id);
 }

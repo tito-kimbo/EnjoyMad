@@ -16,6 +16,8 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * Interface defining the functionalities to be used in profile management. It
  * extends to an implemented class with necessary attributes.
  * 
+ * @version 08.05.2018
+ * 
  * @author behergue [Beatriz Herguedas]
  * @author PabloHdez [Pablo Hernández]
  */
@@ -125,12 +127,42 @@ public interface ProfileManagerSA {
 	
 	// ** CLUB MODIFICATION **//
 
+    /**
+     * Modifies a specific atribute of the indicated {@code ClubPOJO}, provided
+     * it exists and the modification is valid.
+     * 
+     * @param clubID   - id of {@code ClubPOJO} to be modified
+     * @param dataType - {@code ClubModifierBO} indicating the specific
+     *                   modification
+     * @param newData  - new data to replace the old one in the modification
+     * 
+     * @throws NoSuchElementException   if {@code clubID} not found in
+     *                                  {@code clubDAO} database
+     * @throws IllegalArgumentException if {@code newData} class does not match
+     *                                  that needed for the modification
+     * @throws DataFormatException      if {@code newData} parsing failed
+     */
     public void modifyClubData(String clubID, ClubModifierBO dataType, 
-            Object newData) throws IllegalArgumentException, 
-            DataFormatException;
+            Object newData) throws NoSuchElementException, 
+            IllegalArgumentException, DataFormatException;
 
 	// ** USER MODIFICATION **//
 
+    /**
+     * Modifies a specific atribute of the indicated {@code UserPOJO}, provided
+     * it exists and the modification is valid.
+     * 
+     * @param userID   - id of {@code UserPOJO} to be modified
+     * @param dataType - {@code UserModifierBO} indicating the specific
+     *                   modification
+     * @param newData  - new data to replace the old one in the modification
+     * 
+     * @throws NoSuchElementException   if {@code userID} not found in
+     *                                  {@code userDAO} database
+     * @throws IllegalArgumentException if {@code newData} class does not match
+     *                                  that needed for the modification
+     * @throws DataFormatException      if {@code newData} parsing failed
+     */
 	public void modifyUserData(String userID, UserModifierBO dataType, 
             Object newData) throws IllegalArgumentException,
             DataFormatException;
@@ -146,7 +178,7 @@ public interface ProfileManagerSA {
     /**
      * Removes the {@code ClubPOJO} from the {@code ClubDAO} database if found.
      * 
-     * @param clubID - {@code ID} of {@code ClubPOJO} to be removed
+     * @param clubID - id of {@code ClubPOJO} to be removed
      * 
      * @throws NoSuchElementException if {@code clubID} not found in
      *                                {@code clubDAO} database
@@ -156,7 +188,7 @@ public interface ProfileManagerSA {
     /**
      * Removes the {@code UserPOJO} from the {@code UserDAO} database if found.
      * 
-     * @param userID - {@code ID} of {@code UserPOJO} to be removed
+     * @param userID - id of {@code UserPOJO} to be removed
      * 
      * @throws NoSuchElementException if {@code userID} not found in
      *                                {@code userDAO} database
@@ -179,9 +211,9 @@ public interface ProfileManagerSA {
      * {@code ClubPOJO} receives {@code Rate} from {@code UserPOJO}.
      * </p>
      * 
-     * @param clubID - {@code ID} of {@code ClubPOJO} to be reviewed
+     * @param clubID - id of {@code ClubPOJO} to be reviewed
      * @param review - {@code ReviewPOJO} with user {@code Review}
-     * @param userID - {@code ID} of the reviewing {@code UserPOJO}
+     * @param userID - id of the reviewing {@code UserPOJO}
      * 
      * @throws NoSuchElementException if {@code userID, clubID} not found in
      *                                {@code userDAO, clubDAO} databases
@@ -191,19 +223,14 @@ public interface ProfileManagerSA {
             throws NoSuchElementException, DataFormatException;
 
     /**
-     * <p>
-     * Removes a user {@code Review}.
-     * </p>
-     * <p>
-     * {@code ClubPOJO} deletes {@code Review} from {@code UserPOJO}.
-     * </p>
+     * Removes a user {@code ReviewPOJO}. 
      * 
-     * @param clubID - {@code ID} of reviewed {@code ClubPOJO}
-     * @param userID - {@code ID} of {@code UserPOJO} removing the 
-     *                 {@code Review}
+     * @param clubID - id of reviewed {@code ClubPOJO}
+     * @param userID - id of {@code UserPOJO} removing the 
+     *                 {@code ReviewPOJO}
      * 
-     * @throws NoSuchElementException if {@code userID, clubID} not found in
-     *                                {@code userDAO, clubDAO} databases
+     * @throws NoSuchElementException if {@code userID} or {@code clubID} not 
+     *                                found in their respective DAOs
      */
     public void removeReview(String clubID, String userID) throws 
             NoSuchElementException;

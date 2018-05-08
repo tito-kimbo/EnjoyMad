@@ -22,6 +22,8 @@ import es.ucm.fdi.integration.data.UserPOJO;
 /**
  * Class to be used as the Profile Manager of the application. 
  * It implements the functionality of {@link ProfileManagerSA}.
+ * 
+ * @version 08.05.2018
  */
 public class ProfileManagerSAImp implements ProfileManagerSA {
 
@@ -342,8 +344,8 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param newData  {@inheritDoc}
      */
     public void modifyClubData(String clubID, ClubModifierBO dataType,
-            Object newData) throws IllegalArgumentException,
-            DataFormatException {
+            Object newData) throws NoSuchElementException, 
+            IllegalArgumentException, DataFormatException {
 
         ClubPOJO club = clubDAO.getClub(clubID);
 
