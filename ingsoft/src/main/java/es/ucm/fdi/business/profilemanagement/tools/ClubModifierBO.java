@@ -3,7 +3,7 @@ package es.ucm.fdi.business.profilemanagement.tools;
 import java.util.zip.DataFormatException;
 
 import es.ucm.fdi.business.data.TagPOJO;
-import es.ucm.fdi.business.util.ParsingToolBO;
+import es.ucm.fdi.business.util.ParsingToolHelper;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.Location;
 
@@ -30,7 +30,7 @@ public enum ClubModifierBO {
             // Valid?
             String newCommercialName = (String) newData;
 
-            if ( ! ParsingToolBO.parseCommercialName(newCommercialName) ) {
+            if ( ! ParsingToolHelper.parseCommercialName(newCommercialName) ) {
                 throw new DataFormatException(
                     "In COMMERCIAL NAME modification: " + 
                     "not a valid commercial name format -> " + 
@@ -78,7 +78,7 @@ public enum ClubModifierBO {
             // Valid?
             String newAddress = (String) newData;
 
-            if ( ! ParsingToolBO.parseAddress(newAddress) ) {
+            if ( ! ParsingToolHelper.parseAddress(newAddress) ) {
                 throw new DataFormatException(
                     "In ADDRESS modification: " + 
                     "not a valid address format -> " + 
@@ -106,7 +106,7 @@ public enum ClubModifierBO {
             // Valid?
             float newPrice = (Float) newData;
 
-            if ( ! ParsingToolBO.parsePrice(newPrice) ) {
+            if ( ! ParsingToolHelper.parsePrice(newPrice) ) {
                 throw new DataFormatException(
                     "In PRICE modification: " + 
                     "not a valid price -> " + 
@@ -135,7 +135,7 @@ public enum ClubModifierBO {
             // Valid?
             float newRating = (Float) newData;
 
-            if ( ! ParsingToolBO.parseRating(newRating) ) {
+            if ( ! ParsingToolHelper.parseRating(newRating) ) {
                 throw new DataFormatException(
                     "In RATING modification: " + 
                     "not a valid rating -> " + 
@@ -165,7 +165,7 @@ public enum ClubModifierBO {
             TagPOJO newTag = (TagPOJO) newData;
 
             /*
-            if (!ParsingToolBO.tagChecker.matcher(newTag).matches()) {
+            if (!ParsingToolHelper.tagChecker.matcher(newTag).matches()) {
                 throw new DataFormatException("In TAG adding: not a valid tag format -> " + newTag);
             }
             */

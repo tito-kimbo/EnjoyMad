@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.HashSet;
 import java.util.ArrayList;
 import es.ucm.fdi.integration.data.Location;
-
-
+import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 /**
  * This class is a Club data access object that implements {@link ClubDAOMySqñ}.
@@ -58,7 +57,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	public ClubPOJO getClub(String id) {
 		createConnection();
 		
-		ClubPOJO club = new ClubPOJO("","","",0f, new Location(0, 0), new HashSet<String>(), null, 0, null);
+		ClubPOJO club = new ClubPOJO("","","",0f, new Location(0, 0), new HashSet<TagPOJO>(), null, 0, null);
 		club.setID(id);
 	    try {
 	        statement = con.prepareStatement("select * from Clubs where id="+id);
@@ -87,7 +86,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		
 		createConnection();
 		
-		ClubPOJO club = new ClubPOJO("","","",0f, new Location(0, 0), new HashSet<String>(), null, 0, null);
+		ClubPOJO club = new ClubPOJO("","","",0f, new Location(0, 0), new HashSet<TagPOJO>(), null, 0, null);
 		    try {
 		        statement = con.prepareStatement("select * from Clubs");
 		        result = statement.executeQuery();

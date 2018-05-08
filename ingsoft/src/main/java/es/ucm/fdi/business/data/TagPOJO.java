@@ -1,7 +1,6 @@
 package es.ucm.fdi.business.data;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Container class for tags.

@@ -55,7 +55,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
 
 
-  
+    /**
      * {@inheritDoc}
      * 
      * @param clubID  {@inheritDoc}
@@ -215,7 +215,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         }
 
         // Arguments are checked
-        if ( ! ParsingToolBO.parseID(userID) ) {
+        if ( ! ParsingToolHelper.parseID(userID) ) {
             throw new DataFormatException(
                 "In USER creation: " + 
                 "not a valid ID format -> " + 
@@ -223,7 +223,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        if ( ! ParsingToolBO.parseUsername(username) ) {
+        if ( ! ParsingToolHelper.parseUsername(username) ) {
             throw new DataFormatException(
                 "In USER creation: " + 
                 "not a valid username format -> " 
@@ -231,7 +231,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        if ( ! ParsingToolBO.parsePassword(password) ) {
+        if ( ! ParsingToolHelper.parsePassword(password) ) {
             throw new DataFormatException(
                 "In USER creation: " +
                 "not a valid password format -> " + 
@@ -239,7 +239,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        if ( ! ParsingToolBO.parseEmail(email) ) {
+        if ( ! ParsingToolHelper.parseEmail(email) ) {
             throw new DataFormatException(
                 "In USER creation: " + 
                 "not a valid email format -> " + 
@@ -247,7 +247,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        if ( ! ParsingToolBO.parseName(name) ) {
+        if ( ! ParsingToolHelper.parseName(name) ) {
             throw new DataFormatException(
                 "In USER creation: " + 
                 "not a valid name format -> " + 
@@ -255,7 +255,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        if ( ! ParsingToolBO.parseBirthday(birthday) ) {
+        if ( ! ParsingToolHelper.parseBirthday(birthday) ) {
             throw new DataFormatException(
                 "In USER creation: " + 
                 "not a valid birth date -> " + 
@@ -289,7 +289,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         }
 
         // Arguments are checked
-        if ( ! ParsingToolBO.parseID( user.getID() ) ) {
+        if ( ! ParsingToolHelper.parseID( user.getID() ) ) {
             throw new DataFormatException(
                 "In USER creation: " + 
                 "not a valid ID format -> " + 
@@ -297,7 +297,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        if ( ! ParsingToolBO.parseUsername( user.getUsername() ) ) {
+        if ( ! ParsingToolHelper.parseUsername( user.getUsername() ) ) {
             throw new DataFormatException(
                 "In USER creation: " + 
                 "not a valid username format -> " +
@@ -305,7 +305,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        if ( ! ParsingToolBO.parseEmail( user.getEmail() ) ) {
+        if ( ! ParsingToolHelper.parseEmail( user.getEmail() ) ) {
             throw new DataFormatException(
                 "In USER creation: " + 
                 "not a valid email format -> " + 
@@ -313,7 +313,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        if ( ! ParsingToolBO.parseName( user.getName() ) ) {
+        if ( ! ParsingToolHelper.parseName( user.getName() ) ) {
             throw new DataFormatException(
                 "In USER creation: " + 
                 "not a valid name format -> " + 
@@ -321,7 +321,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             );
         }
 
-        if ( ! ParsingToolBO.parseBirthday( user.getBirthday() ) ) {
+        if ( ! ParsingToolHelper.parseBirthday( user.getBirthday() ) ) {
             throw new DataFormatException(
                 "In USER creation: " + 
                 "not a valid birth date -> " + 
@@ -483,7 +483,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         }
 
         // Valid?
-        if (!ParsingToolBO.parseReview(review)) {
+        if (!ParsingToolHelper.parseReview(review)) {
             throw new DataFormatException("In REVIEW adding: not a valid user review -> " + review);
         }
 

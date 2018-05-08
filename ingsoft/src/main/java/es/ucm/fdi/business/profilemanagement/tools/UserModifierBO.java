@@ -5,7 +5,7 @@ import java.util.zip.DataFormatException;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import es.ucm.fdi.business.util.ParsingToolBO;
+import es.ucm.fdi.business.util.ParsingToolHelper;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 /**
@@ -30,7 +30,7 @@ public enum UserModifierBO {
             // Valid?
             String newUsername = (String) newData;
 
-            if ( ! ParsingToolBO.parseUsername(newUsername) ) {
+            if ( ! ParsingToolHelper.parseUsername(newUsername) ) {
                 throw new DataFormatException(
                     "In USERNAME modification: " +
                     "not a valid username format -> " + 
@@ -59,7 +59,7 @@ public enum UserModifierBO {
             // Valid?
             String newPassword = (String) newData;
 
-            if ( ! ParsingToolBO.parsePassword(newPassword) ) {
+            if ( ! ParsingToolHelper.parsePassword(newPassword) ) {
                 throw new DataFormatException(
                     "In PASSWORD modification: " +
                     "not a valid password format -> " + 
@@ -91,7 +91,7 @@ public enum UserModifierBO {
             // Valid?
             String newEmail = (String) newData;
 
-            if ( ! ParsingToolBO.parseEmail(newEmail) ) {
+            if ( ! ParsingToolHelper.parseEmail(newEmail) ) {
                 throw new DataFormatException(
                     "In EMAIL modification: " + 
                     "not a valid email format -> " + 
@@ -120,7 +120,7 @@ public enum UserModifierBO {
             // Valid?
             String newName = (String) newData;
 
-            if ( ! ParsingToolBO.parseName(newName) ) {
+            if ( ! ParsingToolHelper.parseName(newName) ) {
                 throw new DataFormatException(
                     "In NAME modification: " + 
                     "not a valid name format -> " + 
@@ -149,7 +149,7 @@ public enum UserModifierBO {
             // Valid?
             LocalDate newBirthday = (LocalDate) newData;
 
-            if ( ! ParsingToolBO.parseBirthday(newBirthday) ) {
+            if ( ! ParsingToolHelper.parseBirthday(newBirthday) ) {
                 throw new DataFormatException(
                     "In BIRTHDAY modification: " + 
                     "not a valid birth date -> " + 
