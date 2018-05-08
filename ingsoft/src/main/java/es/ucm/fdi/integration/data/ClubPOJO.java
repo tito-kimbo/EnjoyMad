@@ -7,12 +7,18 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import es.ucm.fdi.business.data.TagPOJO;
+
 /**
  * Class that represents a club.
  * 
  * @version 22.04.2018
  */
 public class ClubPOJO extends DataPOJO implements Serializable{
+	/**
+	 * Generated serial UID.
+	 */
+	private static final long serialVersionUID = 3099911602624644548L;
 	String commercialName;
 	String address;
 	float price;
@@ -25,7 +31,7 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 	 * a HashSet, which ensures constant time basic operations
 	 * (add, remove, contains).
 	 */
-	private Set<String> tags;
+	private Set<TagPOJO> tags;
 	private float rating;
 
 	/**
@@ -41,12 +47,12 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 	 * @param price price
 	 * @param tags set of tags
 	 */
-	public ClubPOJO(String id, String name, String address, float price, Set<String> tags) {
+	public ClubPOJO(String id, String name, String address, float price, Set<TagPOJO> tags) {
 		super(id);
 		this.commercialName = name;
 		this.address = address;
 		this.price = price;
-		this.tags = new HashSet<String>(tags);
+		this.tags = new HashSet<TagPOJO>(tags);
 
 		// Location calculation
 		location = new Location(address);
@@ -64,14 +70,14 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 	 * @param rates map of user->rates
 	 * @param rating total rating
 	 */
-	public ClubPOJO(String id, String name, String address, float price, Location location, Set<String> tags, 
+	public ClubPOJO(String id, String name, String address, float price, Location location, Set<TagPOJO> tags, 
 			Map<String, Integer> rates, float rating, Map<String, ReviewPOJO> opinions) {
 		super(id);
 		this.commercialName = name;
 		this.address = address;
 		this.location = location;
 		this.price = price;
-		this.tags = new HashSet<String>(tags); // Set constructor
+		this.tags = new HashSet<TagPOJO>(tags); // Set constructor
 		this.rating = rating;	
 		this.userReviews = opinions;	
 	}
@@ -206,7 +212,7 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 	 * Returns the tags.
 	 * @return tags
 	 */
-	public Set<String> getTags() {
+	public Set<TagPOJO> getTags() {
 		return tags;
 	}
 	
@@ -214,8 +220,8 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 	 * Sets the tags
 	 * @param tags new tags
 	 */
-	public void setTags(Set<String> tags) {
-		this.tags = new HashSet<String>(tags);
+	public void setTags(Set<TagPOJO> tags) {
+		this.tags = new HashSet<TagPOJO>(tags);
 	}
 
 	/**
@@ -223,7 +229,7 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 	 * won't be duplicated.
 	 * @param tag tag to be added
 	 */
-	public void addTag(String tag) {
+	public void addTag(TagPOJO tag) {
 		tags.add(tag);
 	}
 
@@ -232,7 +238,7 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 	 * in the set, nothing happens.
 	 * @param tag tag to be removed
 	 */
-	public void removeTag(String tag) {
+	public void removeTag(TagPOJO tag) {
 		tags.remove(tag);
 	}
 
