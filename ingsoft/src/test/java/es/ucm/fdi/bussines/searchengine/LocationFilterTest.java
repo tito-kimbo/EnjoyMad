@@ -13,12 +13,11 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-/** @author Francisco Javier Blázquez Martínez.*/
 public class LocationFilterTest
 {
 
-	/**This method checks that the JSON reading from url process is exception free for random
-	 *  chosen coordinates.*/
+	/**	This method checks that the JSON reading from url process is exception free for random
+	 *  chosen coordinates.	*/
 	//@Test
 	public void getJsonObjectFromUrl()
 	{
@@ -31,19 +30,18 @@ public class LocationFilterTest
 			JsonReader.readJsonFromUrl(requestURL);
 		}catch(Exception e) 
 		{
-			fail("No exception should have been thrown");
+			fail("Exception when reading valid JSON from " + requestURL);
 		}
 	}
 	
 	/**This method calls to getNavigableDistance() to test if it works properly, this also checks
 	 * the JSON reading from URL process.
 	 * 
-	 * That two gps coordinates are just 1.8km away. The final assert should be true.
+	 * That two GPS coordinates are just 1.8km away. The final assert should be true.
 	 */
 	@Test
 	public void getDistanceFrom2GpsPoints()
 	{
-		FilterMapper.addAll();
 		ClubPOJO club = new ClubPOJO("id","name", "calle", 0, new HashSet<TagPOJO>());
 		LocationFilterBO filter = new LocationFilterBO("5", "38.948706", "-2.544259");
 		
@@ -52,6 +50,6 @@ public class LocationFilterTest
 		
 		boolean inRange = filter.filter(club);
 		
-		assertTrue("Club should be in range.", inRange);
+		assertTrue("Error filtering by distance: club should be in range.", inRange);
 	}
 }

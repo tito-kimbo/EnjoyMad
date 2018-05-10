@@ -3,18 +3,18 @@ package es.ucm.fdi.bussines.searchengine;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
+import java.util.List;
 import java.util.HashSet;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
-import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.business.data.FilterPOJO;
+import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.filters.FilterBO;
-import es.ucm.fdi.integration.data.ClubPOJO;
 
 public class PriceFilterTest {
 	@Test
@@ -34,11 +34,17 @@ public class PriceFilterTest {
 		FilterPOJO fp = new FilterPOJO("PriceFilter", l2);
 		FilterMapper.addAll();
 		FilterBO f = FilterMapper.mapFilter(fp);
-		assertTrue("Expected true",f.filter(c));
+		
+		assertTrue("Error when filtering by price: club price lower "
+				+ "than threshold should yield true" + l2.get(0),f.filter(c));
+		
 		c.setPrice(30.50F);
-		assertTrue("Expected true",f.filter(c));
+		assertTrue("Error when filtering by price: equal prices should yield true"
+				,f.filter(c));
+		
 		c.setPrice(30.60F);
-		assertFalse("Expected false",f.filter(c));
+		assertFalse("Error when filtering by price: club price higher"
+				+ " than threshold should yield false",f.filter(c));
 		
 	}
 }

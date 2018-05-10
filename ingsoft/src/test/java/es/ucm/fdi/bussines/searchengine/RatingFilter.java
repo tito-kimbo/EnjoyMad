@@ -10,11 +10,11 @@ import java.util.HashSet;
 
 import org.junit.Test;
 
-import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.business.data.FilterPOJO;
+import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.filters.FilterBO;
-import es.ucm.fdi.integration.data.ClubPOJO;
 
 public class RatingFilter {
 	
@@ -34,10 +34,18 @@ public class RatingFilter {
 		//The provisional ID in this test is the MD5 hash generated from the name
 		ClubPOJO c = new ClubPOJO("aae032dec67f8f572570597421ad4b7e", "Mitty", 
 				"C/Falsa 1234", 20.30F, l1);
+		
 		c.setRating(3.1F);
-		assertFalse("Expected false",f.filter(c));
+		assertFalse("Error when filtering by rating: rating lower "
+				+ "than threshold should yield false", f.filter(c));
+		
+		c.setRating(4.0F);
+		assertTrue("Error when filtering by rating: rating equal "
+				+ "to threshold should yield true", f.filter(c));
+		
 		c.setRating(4.1F);
-		assertTrue("Expected true",f.filter(c));
+		assertTrue("Error when filtering by rating: rating higher "
+				+ "than threshold should yield true", f.filter(c));
 		
 	}
 }
