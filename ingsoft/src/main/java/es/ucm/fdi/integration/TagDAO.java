@@ -5,7 +5,7 @@ import java.util.List;
 import es.ucm.fdi.business.data.TagPOJO;
 
 /**
- * 
+ * Class in charge of accessing to <code>Tag</code>-related data.
  * 
  * @version 22.04.2018
  */

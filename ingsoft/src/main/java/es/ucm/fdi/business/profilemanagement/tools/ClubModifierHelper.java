@@ -12,7 +12,7 @@ import es.ucm.fdi.integration.data.Location;
  * 
  * @version 08.05.2018
  */
-public enum ClubModifierBO { 
+public enum ClubModifierHelper { 
 
     COMMERCIAL_NAME("COMMERCIAL_NAME") {
         @Override
@@ -210,7 +210,7 @@ public enum ClubModifierBO {
 
     private String type;
 
-    private ClubModifierBO(String type) {
+    private ClubModifierHelper(String type) {
         this.type = type;
     }
 

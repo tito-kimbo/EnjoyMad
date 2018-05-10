@@ -6,8 +6,8 @@ import java.util.Set;
 import java.util.zip.DataFormatException;
 
 import es.ucm.fdi.business.data.TagPOJO;
-import es.ucm.fdi.business.profilemanagement.tools.ClubModifierBO;
-import es.ucm.fdi.business.profilemanagement.tools.UserModifierBO;
+import es.ucm.fdi.business.profilemanagement.tools.ClubModifierHelper;
+import es.ucm.fdi.business.profilemanagement.tools.UserModifierHelper;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
@@ -142,7 +142,7 @@ public interface ProfileManagerSA {
      *                                  that needed for the modification
      * @throws DataFormatException      if {@code newData} parsing failed
      */
-    public void modifyClubData(String clubID, ClubModifierBO dataType, 
+    public void modifyClubData(String clubID, ClubModifierHelper dataType, 
             Object newData) throws NoSuchElementException, 
             IllegalArgumentException, DataFormatException;
 
@@ -163,7 +163,7 @@ public interface ProfileManagerSA {
      *                                  that needed for the modification
      * @throws DataFormatException      if {@code newData} parsing failed
      */
-	public void modifyUserData(String userID, UserModifierBO dataType, 
+	public void modifyUserData(String userID, UserModifierHelper dataType, 
             Object newData) throws IllegalArgumentException,
             DataFormatException;
 

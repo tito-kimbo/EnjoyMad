@@ -11,9 +11,6 @@ import es.ucm.fdi.integration.data.SessionPOJO;
  * functionality of {@link SessionManagerSA}.
  * 
  * @version 08.05.2018
- * 
- * @author behergue [Beatriz Herguedas]
- * @author PabloHdez [Pablo Hernández]
  */
 public class SessionManagerSAImp implements SessionManagerSA {
 

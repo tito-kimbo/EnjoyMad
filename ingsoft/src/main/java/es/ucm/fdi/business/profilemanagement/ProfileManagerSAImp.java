@@ -9,8 +9,8 @@ import java.util.zip.DataFormatException;
 import org.mindrot.jbcrypt.BCrypt;
 
 import es.ucm.fdi.business.data.TagPOJO;
-import es.ucm.fdi.business.profilemanagement.tools.ClubModifierBO;
-import es.ucm.fdi.business.profilemanagement.tools.UserModifierBO;
+import es.ucm.fdi.business.profilemanagement.tools.ClubModifierHelper;
+import es.ucm.fdi.business.profilemanagement.tools.UserModifierHelper;
 import es.ucm.fdi.business.util.ParsingToolHelper;
 
 import es.ucm.fdi.integration.ClubDAOImp;
@@ -347,7 +347,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param dataType {@inheritDoc}
      * @param newData  {@inheritDoc}
      */
-    public void modifyClubData(String clubID, ClubModifierBO dataType,
+    public void modifyClubData(String clubID, ClubModifierHelper dataType,
             Object newData) throws NoSuchElementException, 
             IllegalArgumentException, DataFormatException {
 
@@ -378,7 +378,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
      * @param dataType {@inheritDoc}
      * @param newData  {@inheritDoc}
      */
-    public void modifyUserData(String userID, UserModifierBO dataType,
+    public void modifyUserData(String userID, UserModifierHelper dataType,
             Object newData) throws IllegalArgumentException,
             DataFormatException {
 

@@ -2,14 +2,13 @@ package es.ucm.fdi.business.ticketmanagement;
 
 import java.util.NoSuchElementException;
 
+import es.ucm.fdi.business.util.EmailSenderHelper;
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.UserDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 /**
  * Class implementing the TicketManager interface.
- * @author Fco Borja
- * @author Carlijn
  */
 public abstract class TicketManagerSAImp implements TicketManagerSA {
 	private UserDAOImp users;

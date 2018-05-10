@@ -9,9 +9,6 @@ import es.ucm.fdi.integration.data.SessionPOJO;
  * extends to an implemented class with the necessary attributes.
  * 
  * @version 08.05.2018
- * 
- * @author behergue [Beatriz Herguedas]
- * @author PabloHdez [Pablo Hernández]
  */
 public interface SessionManagerSA {
     

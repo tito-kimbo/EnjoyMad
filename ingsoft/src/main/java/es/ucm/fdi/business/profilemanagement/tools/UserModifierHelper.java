@@ -13,7 +13,7 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * 
  * @version 08.05.2018
  */
-public enum UserModifierBO {
+public enum UserModifierHelper {
     USERNAME("USERNAME") {
         @Override
         public void modify(UserPOJO userToManage, Object newData) throws
@@ -169,7 +169,7 @@ public enum UserModifierBO {
     
     private String type;
 
-    private UserModifierBO(String type) {
+    private UserModifierHelper(String type) {
         this.type = type;
     }
 

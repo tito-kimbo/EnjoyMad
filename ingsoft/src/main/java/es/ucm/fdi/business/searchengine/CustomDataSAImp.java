@@ -11,8 +11,6 @@ import es.ucm.fdi.integration.UserDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 
-
-
 public class CustomDataSAImp implements CustomDataSA{
 	
 	private class ObjectValue implements Comparable<ObjectValue>{

@@ -1,7 +1,5 @@
 package es.ucm.fdi.integration;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,13 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
-import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 /**
@@ -33,7 +27,6 @@ public class UserDAOMySqlImp implements UserDAO {
 	 * Creates connection to the database.
 	 * 
 	 */
-	
 	private void createConnection() {
 		try {
 		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
@@ -74,7 +67,8 @@ public class UserDAOMySqlImp implements UserDAO {
 	    try {
 	        statement = con.prepareStatement("select * from Users where id="+id);
 	        result = statement.executeQuery();
-	        /* sin terminar. falta revisar constructor UserPOJO user = new UserPOJO(result.getString(1),
+	        /* Unfinished. need to recheck constructor
+	        UserPOJO user = new UserPOJO(result.getString(1),
 	        result.getString(2),result.getString(3),result.getFloat(4),new Location(result.getDouble(5),
 	        result.getDouble(6)),result.getFloat(7),result.getString(8));*/
 	        result.next();

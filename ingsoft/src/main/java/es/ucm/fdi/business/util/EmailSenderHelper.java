@@ -1,4 +1,4 @@
-package es.ucm.fdi.business.ticketmanagement;
+package es.ucm.fdi.business.util;
 
 
 import java.util.Properties;
