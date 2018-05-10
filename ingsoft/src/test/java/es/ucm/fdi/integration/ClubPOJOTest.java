@@ -52,28 +52,28 @@ public class ClubPOJOTest {
 		ReviewPOJO op1 = new ReviewPOJO("", 3.0f), op2 = new ReviewPOJO("", 4.0f);
 		
 		//No delta error margin here
-		assertEquals("Club rating not properly initialized.", 0, testClub.getRating(), 0);
+		assertEquals("Error: Club rating not properly initialized.", 0, testClub.getRating(), 0);
 		testClub.addUserReview("user1", op1);
-		assertEquals("Club rating not properly updated adding one opinion.", 3.0f, 
+		assertEquals("Error: Club rating not properly updated adding one opinion.", 3.0f, 
 				testClub.getRating(), 0);
 		testClub.addUserReview("user2", op2);
-		assertEquals("Club rating not properly updated adding two opinions.", 3.5f, 
+		assertEquals("Error: Club rating not properly updated adding two opinions.", 3.5f, 
 				testClub.getRating(), 0.000001);
 		
 		//Using StringBuilder would slightly improve efficiency (but on 8 elements it is somewhat
 		//irrelevant).
 		addOpinions(testClub);
-		assertEquals("Club rating not properly updated adding multiple opinions.", 3.9f, 
+		assertEquals("Error: Club rating not properly updated adding multiple opinions.", 3.9f, 
 				testClub.getRating(), 0.000001);
 		
 		
 		//Now removal
 		removeOpinions(testClub);
-		assertEquals("Club rating not properly updated removing multiple opinions.", 3.5f, 
+		assertEquals("Error: Club rating not properly updated removing multiple opinions.", 3.5f, 
 				testClub.getRating(), 0.000001);
 		testClub.removeUserReview("user1");
 		testClub.removeUserReview("user2");
-		assertEquals("Club rating not properly updated when removing all opinions.", 0f,
+		assertEquals("Error: Club rating not properly updated when removing all opinions.", 0f,
 				testClub.getRating(), 0);
 		
 	}
@@ -84,17 +84,17 @@ public class ClubPOJOTest {
 		Collection<String> col = testClub.getReviewers();
 				
 		
-		assertEquals("Club reviewers not properly initialized", 0, col.size());
+		assertEquals("Error: Club reviewers not properly initialized", 0, col.size());
 		addOpinions(testClub);
 		col = testClub.getReviewers();
-		assertEquals("Club reviewers not properly initialized", 8, col.size());
+		assertEquals("Error: Club reviewers not properly initialized", 8, col.size());
 		
 		for(int i = 0; i<8; ++i){
-			assertTrue("Club reviewer not added.", anyMatch(col, "anotherUser" + i));
+			assertTrue("Error: Club reviewer not added.", anyMatch(col, "anotherUser" + i));
 		}
 		removeOpinions(testClub);
 		col = testClub.getReviewers();
-		assertEquals("Club reviewers not properly removed", 0, col.size());
+		assertEquals("Error: Club reviewers not properly removed", 0, col.size());
 	}
 	
 }

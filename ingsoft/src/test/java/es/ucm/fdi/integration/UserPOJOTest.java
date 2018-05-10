@@ -12,7 +12,6 @@ import es.ucm.fdi.integration.data.UserPOJO;
 /**
  *This test execute several cases of the <code>UserPOJO</code>.
  *Should return Success, Failure, Failure, Failure, Failure, Failure in that order.
- *@author Carlijn
  */
 
 public class UserPOJOTest {
@@ -49,12 +48,10 @@ public class UserPOJOTest {
 	}
 	
 	//WE WILL ASSUME THE MONTH IS IN RANGE (SHOULD BE CONTROLLED IN PRESENTATION LAYER)
-	
 	/**
 	 * Tests a day out of range.
 	 * @result incorrect day and thus account won't be created properly.
 	 */
-	
 	@Test(expected = DateTimeException.class)
 	public final void testIncorrectDay() {
 		LocalDate date = LocalDate.of(1980, 32, 1);		
