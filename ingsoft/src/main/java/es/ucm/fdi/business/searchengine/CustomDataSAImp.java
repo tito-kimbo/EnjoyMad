@@ -39,7 +39,7 @@ public class CustomDataSAImp implements CustomDataSA{
 		int clubValue;
 		for (UserPOJO u: user.getUsers()){
 			for (ClubPOJO c: club.getClubs()){
-				clubValue = assignValues(u, c);
+				clubValue = assignValue(u, c);
 				clubsWithValue.add( new ObjectValue(c, clubValue));
 			}
 			Collections.sort(clubsWithValue);
@@ -53,7 +53,7 @@ public class CustomDataSAImp implements CustomDataSA{
 	}
 	
 
-	public int assignValues(UserPOJO user, ClubPOJO club) {
+	public int assignValue(UserPOJO user, ClubPOJO club) {
 		int valueOfClub = 0;
 		for (Integer s: user.getValueTags().values()){
 			valueOfClub += s;
