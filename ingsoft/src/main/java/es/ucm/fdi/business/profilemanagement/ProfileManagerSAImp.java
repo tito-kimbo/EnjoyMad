@@ -206,7 +206,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             throws IllegalArgumentException, DataFormatException {
         
         // Is already registered?
-        if ( userDAO.exist(userID) ) {
+        if ( userDAO.exists(userID) ) {
             throw new IllegalArgumentException(
                 "In USER creation: " +
                 "userID is already registered -> " +
@@ -280,7 +280,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         DataFormatException {
         
         // Is already registered?
-        if ( userDAO.exist( user.getID() ) ) {
+        if ( userDAO.exists( user.getID() ) ) {
             throw new IllegalArgumentException(
                 "In USER creation: " +
                 "userID is already registered -> " +

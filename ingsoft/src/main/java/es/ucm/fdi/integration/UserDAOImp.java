@@ -52,7 +52,7 @@ public class UserDAOImp implements UserDAO {
  	/**
 	 * {@inheritDoc}
 	 */
-	public boolean exist(String id) {
+	public boolean exists(String id) {
 		return userMap.containsKey(id);
 	}
 	
@@ -60,7 +60,7 @@ public class UserDAOImp implements UserDAO {
 	 * {@inheritDoc}
 	 */
 	public boolean removeUser(String id){
-		if(exist(id)) {
+		if(exists(id)) {
 			userMap.remove(id);
 			return true;
 		} else {

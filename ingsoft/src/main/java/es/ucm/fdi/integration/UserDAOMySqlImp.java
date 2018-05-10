@@ -117,7 +117,7 @@ public class UserDAOMySqlImp implements UserDAO {
  	/**
 	 * {@inheritDoc}
 	 */
-	public boolean exist(String id) {
+	public boolean exists(String id) {
 		createConnection();
 		
 		try {

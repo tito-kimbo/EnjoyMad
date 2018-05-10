@@ -35,7 +35,7 @@ public class UserDAOImpTest{
 	@Test
 	public void testExist(){
 		createTestUserDAOImp();
-		assertEquals(userDao.exist("IDNumber1"),true);
+		assertEquals(userDao.exists("IDNumber1"),true);
 	}
 
 	@Test
@@ -53,6 +53,6 @@ public class UserDAOImpTest{
 	@Test
 	public void testRemoveUser(){
 		userDao.removeUser("IDNumber1");
-		assertEquals(userDao.exist("IDNumber1"),false);
+		assertEquals(userDao.exists("IDNumber1"),false);
 	}
 }
