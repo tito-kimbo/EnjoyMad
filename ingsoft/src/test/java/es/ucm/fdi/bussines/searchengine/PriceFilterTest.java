@@ -18,13 +18,11 @@ import es.ucm.fdi.integration.data.ClubPOJO;
 public class PriceFilterTest {
 	@Test
 	public void testPriceFilter(){
-		Set <String> l1 = new HashSet<String>();
-		l1.add("techno");
-		l1.add("reggaeton");
-		l1.add("electronica");
-		
 		//The provisional ID in this test is the MD5 hash generated from the name
-		ClubPOJO c = new ClubPOJO("af836aad1e889f499aa4d5a4aafd34cd", "Pacha", "C/Falsa 123", 20.30F, l1);
+		ClubPOJO c = new ClubPOJO("af836aad1e889f499aa4d5a4aafd34cd", "Pacha", "C/Falsa 123", 20.30F, null, 0);
+		c.addTag("techno");
+		c.addTag("techno");
+		c.addTag("techno");
 		
 		List <String> l2 = new ArrayList<String>();
 		l2.add("30.50");

@@ -44,7 +44,7 @@ public class LocationFilterTest
 	public void getDistanceFrom2GpsPoints()
 	{
 		FilterMapper.addAll();
-		ClubPOJO club = new ClubPOJO("id","name", "calle", 0, new HashSet<String>());
+		ClubPOJO club = new ClubPOJO("id","name", "calle", 0, null, 0);
 		LocationFilterBO filter = new LocationFilterBO("5", "38.948706", "-2.544259");
 		
 		club.setLatitude(38.9507191);

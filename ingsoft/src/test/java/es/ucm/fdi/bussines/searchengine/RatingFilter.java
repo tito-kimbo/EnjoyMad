@@ -19,11 +19,6 @@ public class RatingFilter {
 	
 	@Test
 	public void testRatingFilter(){
-		Set<String> l1 = new HashSet<String>();
-		l1.add("techno");
-		l1.add("reggaeton");
-		l1.add("electronica");
-		
 		List <String> l2 = new ArrayList<String>();
 		l2.add("4.0");
 		FilterPOJO fp = new FilterPOJO("RatingFilter", l2);
@@ -32,7 +27,12 @@ public class RatingFilter {
 		
 		//The provisional ID in this test is the MD5 hash generated from the name
 		ClubPOJO c = new ClubPOJO("aae032dec67f8f572570597421ad4b7e", "Mitty", 
-				"C/Falsa 1234", 20.30F, l1);
+				"C/Falsa 1234", 20.30F, null, 0);
+		
+		c.addTag("techno");
+		c.addTag("reggaeton");
+		c.addTag("electronica");
+		
 		c.setRating(3.1F);
 		assertFalse("Expected false",f.filter(c));
 		c.setRating(4.1F);
