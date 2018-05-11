@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
-import es.ucm.fdi.business.searchengine.filters.FilterBO;
+import es.ucm.fdi.business.searchengine.filters.FilterStrategy;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
 public class PriceFilterTest {
@@ -31,7 +31,7 @@ public class PriceFilterTest {
 		
 		FilterPOJO fp = new FilterPOJO("PriceFilter", l2);
 		FilterMapper.addAll();
-		FilterBO f = FilterMapper.mapFilter(fp);
+		FilterStrategy f = FilterMapper.mapFilter(fp);
 		assertTrue("Expected true",f.filter(c));
 		c.setPrice(30.50F);
 		assertTrue("Expected true",f.filter(c));

@@ -1,8 +1,8 @@
 package es.ucm.fdi.bussines.searchengine;
 
 import es.ucm.fdi.business.searchengine.FilterMapper;
-import es.ucm.fdi.business.searchengine.filters.LocationFilterBO;
-import es.ucm.fdi.business.searchengine.filters.LocationFilterBO.JsonReader;
+import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy;
+import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy.JsonReader;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
 import java.util.HashSet;
@@ -24,7 +24,7 @@ public class LocationFilterTest
 	{
 		String requestURL = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" +
 							+ 47.948706    + "," + -5.544259   		   + "&destinations=" +
-							+ 20.9507191   + "," + -3.5397826999999324 + "&key=" + LocationFilterBO.API_KEY;
+							+ 20.9507191   + "," + -3.5397826999999324 + "&key=" + LocationFilterStrategy.API_KEY;
 
 		try	
 		{
@@ -45,7 +45,7 @@ public class LocationFilterTest
 	{
 		FilterMapper.addAll();
 		ClubPOJO club = new ClubPOJO("id","name", "calle", 0, new HashSet<String>());
-		LocationFilterBO filter = new LocationFilterBO("5", "38.948706", "-2.544259");
+		LocationFilterStrategy filter = new LocationFilterStrategy("5", "38.948706", "-2.544259");
 		
 		club.setLatitude(38.9507191);
 		club.setLongitude(-2.5397826999999324);

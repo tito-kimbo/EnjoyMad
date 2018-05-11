@@ -19,7 +19,7 @@ import org.json.JSONArray;
  * 
  * @version 22.04.2018
  */
-public class LocationFilterBO implements FilterBO{
+public class LocationFilterStrategy implements FilterStrategy{
 	
 	public  final static String API_KEY = "AIzaSyDCASxz1lerrq1zkYhhbO7FAKDrcmNx9xo";
 	private final static double MILES_TO_KM = 1.60934;
@@ -29,7 +29,7 @@ public class LocationFilterBO implements FilterBO{
 	private double deviceLongitude;
 				
 	
-	public LocationFilterBO()	{
+	public LocationFilterStrategy()	{
 		//WARNING! Unimplemented, just to avoid error in FilterMapper
 	}
 	/*--------------------- THIS CALL IS SUPOSED TO BE DONE BEFORE GETTING HERE ------------------------
@@ -61,7 +61,7 @@ public class LocationFilterBO implements FilterBO{
 	 * @param devLati GPS latitude coordinates.
 	 * @param devLong GPS longitude coordinates.
 	 */
-	public LocationFilterBO(String maxDist, String devLati, String devLong)
+	public LocationFilterStrategy(String maxDist, String devLati, String devLong)
 	{
 		maxDistance     = Double.valueOf(maxDist).doubleValue();
 		deviceLatitude  = Double.valueOf(devLati).doubleValue();
@@ -103,7 +103,7 @@ public class LocationFilterBO implements FilterBO{
 	 */
 	public Object clone(FilterPOJO fp) {
 		
-		return new LocationFilterBO(fp.getParams().get(0), fp.getParams().get(1), fp.getParams().get(2));
+		return new LocationFilterStrategy(fp.getParams().get(0), fp.getParams().get(1), fp.getParams().get(2));
 	}	
 	/**
 	 * Method to get the distance from the device to a club.
