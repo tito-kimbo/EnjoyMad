@@ -13,7 +13,6 @@ import es.ucm.fdi.integration.data.ClubPOJO;
 
 /**
  * This class tests the functionality of ClubDAOImp.
- * @author Carlijn
  */
 
 public class ClubDAOImpTest{
