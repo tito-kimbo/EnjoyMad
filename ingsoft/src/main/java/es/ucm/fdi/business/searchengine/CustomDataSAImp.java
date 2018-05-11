@@ -34,7 +34,7 @@ public class CustomDataSAImp implements CustomDataSA{
 	private UserDAO user = new UserDAOImp();
 	private ClubDAO club = new ClubDAOImp();
 
-	public void updateValues() {
+	public synchronized void updateValues() {
 		List<ObjectValue> clubsWithValue = new ArrayList<ObjectValue>();
 		int clubValue;
 		for (UserPOJO u: user.getUsers()){
