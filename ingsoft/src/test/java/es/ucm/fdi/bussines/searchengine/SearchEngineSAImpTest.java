@@ -22,6 +22,12 @@ public class SearchEngineSAImpTest {
 	 */
 	static {
 		cd = new ClubDAOImp();
+		
+		Set <String> l1 = new HashSet<String>();				 //Club's tags (empty)
+		ClubPOJO c = new ClubPOJO("a2868521eac27ed8c7c4d7a38051f912", 
+			     "Teatro Kapital", "C/Falsa 1234", 20.30F, l1);
+		
+		cd.addClub(c);
 	}
 	
 	/**
@@ -35,14 +41,11 @@ public class SearchEngineSAImpTest {
 		return usr;
 	}
 	
-	
 	@Test
 	public void noFilterSearchTest(){
-		List <FilterPOJO> filters = new ArrayList<FilterPOJO>(); //Filters     (empty)
-		Set <String> l1 = new HashSet<String>();				 //Club's tags (empty)
+
+		List <FilterPOJO> filters = new ArrayList<FilterPOJO>(); //Filters (empty)
+		UserPOJO usr = readyToSearchUser("id", "frblazqu", "Francis");
 		
-		//Clubs to search
-		ClubPOJO c = new ClubPOJO("a2868521eac27ed8c7c4d7a38051f912", 
-				     "Teatro Kapital", "C/Falsa 1234", 20.30F, l1);	
 	}
 }
