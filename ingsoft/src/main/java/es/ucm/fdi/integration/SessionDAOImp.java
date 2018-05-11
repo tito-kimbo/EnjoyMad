@@ -23,7 +23,7 @@ public class SessionDAOImp implements SessionDAO {
     /**
      * {@inheritDoc}
      */
-	public List<SessionPOJO> getSessions() {
+    synchronized public List<SessionPOJO> getSessions() {
 		List<SessionPOJO> aux = 
                 new ArrayList<SessionPOJO>( sessionMap.values() );
         
@@ -35,7 +35,7 @@ public class SessionDAOImp implements SessionDAO {
      * 
      * @param id {@inheritDoc}
      */
-	public boolean exist(String id) {
+    synchronized public boolean exist(String id) {
 		return sessionMap.containsKey(id);
 	}
 
@@ -44,7 +44,7 @@ public class SessionDAOImp implements SessionDAO {
      * 
      * @param session {@inheritDoc}
      */
-	public void addSession(SessionPOJO session) {
+    synchronized public void addSession(SessionPOJO session) {
 		sessionMap.put(session.getID(), session);
 	}
 
@@ -53,7 +53,7 @@ public class SessionDAOImp implements SessionDAO {
      * 
      * @param id {@inheritDoc}
      */
-	public void removeSession(String id) {
+    synchronized public void removeSession(String id) {
 		sessionMap.remove(id);
 	}
 
@@ -62,7 +62,7 @@ public class SessionDAOImp implements SessionDAO {
      * 
      * @param id {@inhertiDoc}
      */
-	public SessionPOJO getSession(String id) {
+    synchronized public SessionPOJO getSession(String id) {
 		return sessionMap.get(id);
 	}
 }

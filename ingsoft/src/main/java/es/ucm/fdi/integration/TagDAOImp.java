@@ -27,21 +27,21 @@ public class TagDAOImp implements TagDAO{
 	 * @param stream get out a copy of the object of this DAO
 	 * @throws IOException if I/O operations have an interruption
 	 */
-	private void writeObject(ObjectOutputStream stream) throws IOException{
+	synchronized private void writeObject(ObjectOutputStream stream) throws IOException{
 		stream.writeObject(tags);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<TagPOJO> loadTags(){
+	synchronized public List<TagPOJO> loadTags(){
 		return new ArrayList<TagPOJO>(tags);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void saveTags(List<TagPOJO> list) {
+	synchronized public void saveTags(List<TagPOJO> list) {
 		tags.addAll(list);
 	}
 }

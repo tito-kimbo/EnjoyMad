@@ -29,7 +29,7 @@ public class UserDAOImp implements UserDAO {
 	 * @param stream get out a copy of the object of this DAO
 	 * @throws IOException if I/O operations have an interruption
 	 */
-	private void writeObject(ObjectOutputStream stream) throws IOException{
+	synchronized private void writeObject(ObjectOutputStream stream) throws IOException{
 		stream.writeObject(userMap);
 	}
 
@@ -37,14 +37,14 @@ public class UserDAOImp implements UserDAO {
 	/**
 	 * {@inheritDoc}
 	 */
-	public UserPOJO getUser(String id) {
+	synchronized public UserPOJO getUser(String id) {
 		return userMap.get(id);
 	}
 	
   	/**
 	 * {@inheritDoc}
 	 */
-	public boolean addUser(UserPOJO user) {
+	synchronized public boolean addUser(UserPOJO user) {
 		userMap.put(user.getID(), user);
 		return true;
 	}
@@ -52,7 +52,7 @@ public class UserDAOImp implements UserDAO {
  	/**
 	 * {@inheritDoc}
 	 */
-	public boolean exists(String id) {
+	synchronized public boolean exists(String id) {
 		return userMap.containsKey(id);
 	}
 	
@@ -71,7 +71,7 @@ public class UserDAOImp implements UserDAO {
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<UserPOJO> getUsers() {
+	synchronized public List<UserPOJO> getUsers() {
 		List<UserPOJO> aux = new ArrayList<UserPOJO>(userMap.values());
 		return aux;
 	}
