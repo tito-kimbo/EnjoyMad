@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
-import es.ucm.fdi.business.searchengine.filters.FilterBO;
+import es.ucm.fdi.business.searchengine.filters.FilterStrategy;
 import es.ucm.fdi.business.util.ElementHelper;
 import es.ucm.fdi.business.data.FilterPOJO;
 
@@ -29,7 +29,7 @@ public class SearchEngineSAImp implements SearchEngineSA {
 		}
 		
 		for(FilterPOJO f : filters){
-			FilterBO currentFilter = FilterMapper.mapFilter(f);
+			FilterStrategy currentFilter = FilterMapper.mapFilter(f);
 			for(ElementHelper<ClubPOJO> c : searchResults){
 				c.setVisible(currentFilter.filter(c.getElement()));
 			}
