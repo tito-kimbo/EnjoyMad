@@ -45,6 +45,7 @@ public class SearchEngineSAImp implements SearchEngineSA {
 				c.setVisible(currentFilter.filter(c.getElement()));
 			}
 		}
+		
 		return searchResults;
 	}
 	
