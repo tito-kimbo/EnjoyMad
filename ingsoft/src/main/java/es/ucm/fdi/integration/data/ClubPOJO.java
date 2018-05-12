@@ -105,6 +105,8 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 		this.location = location;
 		this.price = price;
 		this.rating = rating;	
+		this.tags = new HashSet<String>();
+		this.userReviews = new  HashMap<String, ReviewPOJO>();
 	}
 
 	/**

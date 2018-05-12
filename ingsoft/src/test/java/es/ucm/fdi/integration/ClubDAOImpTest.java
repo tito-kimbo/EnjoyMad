@@ -8,6 +8,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.Location;
 
 /**
  * This class tests the functionality of ClubDAOImp.
@@ -20,7 +21,7 @@ public class ClubDAOImpTest{
 	private static ArrayList<ClubPOJO> list = new ArrayList<ClubPOJO>();
 	
 	private static void createTestClubDAOImp(){
-		club = new ClubPOJO("id", "Kapital", "Calle Atocha, 125, 28012 Madrid", 17.0f, null, 0);
+		club = new ClubPOJO("id", "Kapital", "Calle Atocha, 125, 28012 Madrid", 17.0f, new Location(0,0), 0);
 		for(String tag : Arrays.asList("Electronica", "Reggaeton", "Funky", "R&B"))
 			club.addTag(tag);
 		clubDao = new ClubDAOImp();

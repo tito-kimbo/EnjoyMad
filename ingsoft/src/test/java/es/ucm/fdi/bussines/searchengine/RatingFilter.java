@@ -14,6 +14,7 @@ import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.filters.FilterBO;
 import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.Location;
 
 public class RatingFilter {
 	
@@ -27,7 +28,7 @@ public class RatingFilter {
 		
 		//The provisional ID in this test is the MD5 hash generated from the name
 		ClubPOJO c = new ClubPOJO("aae032dec67f8f572570597421ad4b7e", "Mitty", 
-				"C/Falsa 1234", 20.30F, null, 0);
+				"C/Falsa 1234", 20.30F, new Location(0,0), 0);
 		
 		c.addTag("techno");
 		c.addTag("reggaeton");

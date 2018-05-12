@@ -9,12 +9,13 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 
 public class ClubPOJOTest {
 	
 	private static ClubPOJO createTestClubPOJO(){
-		ClubPOJO club = new ClubPOJO("id", "Kapital", "Calle Atocha, 125, 28012 Madrid", 17.0f, null, 0);
+		ClubPOJO club = new ClubPOJO("id", "Kapital", "Calle Atocha, 125, 28012 Madrid", 17.0f, new Location(0,0), 0);
 		for(String tag : Arrays.asList("Electronica", "Reggaeton", "Funky", "R&B"))
 			club.addTag(tag);
 		return club;
