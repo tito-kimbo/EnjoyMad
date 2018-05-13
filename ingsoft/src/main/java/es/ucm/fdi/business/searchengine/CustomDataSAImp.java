@@ -15,6 +15,9 @@ import es.ucm.fdi.integration.data.UserPOJO;
 
 public class CustomDataSAImp implements CustomDataSA{
 	
+	private UserDAO user;
+	private ClubDAO club;
+	
 	private class ObjectValue implements Comparable<ObjectValue>{
 		private ClubPOJO club;
 		private Integer value;
@@ -25,14 +28,19 @@ public class CustomDataSAImp implements CustomDataSA{
 		}
 
 		public int compareTo(ObjectValue ov) {
-			if(value > ov.value) return 1;
-			else return 0;
+			if(value > ov.value) return -1;
+			else if(value == ov.value) return 0;
+			else return 1;
 		}
 		
 	}
 	
-	private UserDAO user = new UserDAOImp();
-	private ClubDAO club = new ClubDAOImp();
+
+	public CustomDataSAImp(UserDAO user, ClubDAO club) {
+		this.user = user;
+		this.club = club;
+	}
+
 
 	public void updateValues() {
 		List<ObjectValue> clubsWithValue = new ArrayList<ObjectValue>();
@@ -55,8 +63,8 @@ public class CustomDataSAImp implements CustomDataSA{
 
 	public int assignValues(UserPOJO user, ClubPOJO club) {
 		int valueOfClub = 0;
-		for (Integer s: user.getValueTags().values()){
-			valueOfClub += s;
+		for (String s: club.getTags()){
+			valueOfClub += user.getValueTags().get(s);
 		}
 		return valueOfClub;
 	}
