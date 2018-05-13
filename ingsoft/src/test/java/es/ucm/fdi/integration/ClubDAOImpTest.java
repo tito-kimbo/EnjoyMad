@@ -39,34 +39,7 @@ public class ClubDAOImpTest {
 		clubDao.addClub(club);
 	}
 	
-	private void newReadThread(){
-		new Thread() {
-			public void run() {
-				try{
-					assertEquals(
-						"Concurrent reading is not thread safe for ClubDAOImp, "
-								+ "mismatched club in DAO.",
-						clubDao.getClub("id"), club);
-				}catch(AssertionError assError){
-					assertionError = assError;
-				}finally{
-					latch.countDown();
-				}
-			}
-		}.start();
-	}
-	
-	private void newWriteThread(){
-		//Write thread
-		new Thread() {
-			public void run() {
-				clubDao.addClub(club);
-				latch.countDown();
-			}
-			
-			
-		}.start();
-	}
+
 	
 	private void awaitForLatch(){
 		try{
@@ -120,6 +93,20 @@ public class ClubDAOImpTest {
 		}
 	}
 
+	
+	private void newWriteThread(){
+		//Write thread
+		new Thread() {
+			public void run() {
+				clubDao.addClub(club);
+				latch.countDown();
+			}
+			
+			
+		}.start();
+	}
+	
+	
 	@Test
 	public void concurrentWriteTest() {
 		latch = new CountDownLatch(CONCURRENT_TESTS);
@@ -139,6 +126,26 @@ public class ClubDAOImpTest {
 							+ "mismatched club in DAO", clubDao.getClub("id"),
 					club);
 	}
+	
+	
+	
+	private void newReadThread(){
+		new Thread() {
+			public void run() {
+				try{
+					assertEquals(
+						"Concurrent reading is not thread safe for ClubDAOImp, "
+								+ "mismatched club in DAO.",
+						clubDao.getClub("id"), club);
+				}catch(AssertionError assError){
+					assertionError = assError;
+				}finally{
+					latch.countDown();
+				}
+			}
+		}.start();
+	}
+	
 	
 	@Test
 	public void concurrentReadWriteTest(){
