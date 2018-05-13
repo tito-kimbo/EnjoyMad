@@ -8,19 +8,19 @@ import es.ucm.fdi.integration.data.ClubPOJO;
  * 
  * @version 22.04.2018
  */
-public class PriceFilterBO implements FilterBO{
+public class PriceFilterStrategy implements FilterStrategy{
 	private float maxPrice;
 
 	/**
 	 * Empty constructor for the class.
 	 */
-	public PriceFilterBO(){}
+	public PriceFilterStrategy(){}
 	/**
 	 * Constructor with price parameter.
 	 * 
 	 * @param maxPrice	Maximum price to consider.
 	 */
-	public PriceFilterBO(float maxPrice) {
+	public PriceFilterStrategy(float maxPrice) {
 		this.maxPrice = maxPrice;
 	}
 	
@@ -28,7 +28,7 @@ public class PriceFilterBO implements FilterBO{
 	 * {@inheritDoc}
 	 */
 	public Object clone(FilterPOJO fp){
-		return new PriceFilterBO(Float.parseFloat(fp.getParams().get(0)));
+		return new PriceFilterStrategy(Float.parseFloat(fp.getParams().get(0)));
 	}
 	
 	/**

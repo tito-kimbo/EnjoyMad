@@ -3,30 +3,21 @@ package es.ucm.fdi.business.searchengine;
 import java.util.List;
 import java.util.ArrayList;
 
+
 import es.ucm.fdi.integration.ClubDAO;
-import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
-import es.ucm.fdi.business.searchengine.filters.FilterBO;
+import es.ucm.fdi.business.searchengine.filters.FilterStrategy;
 import es.ucm.fdi.business.util.ElementHelper;
 import es.ucm.fdi.business.data.FilterPOJO;
 
 public class SearchEngineSAImp implements SearchEngineSA {
-	private ClubDAO clubAccess;
-	
-	/**
-	 * @param clubAccess is the DAO to access the clubs
-	 */
-	public SearchEngineSAImp(ClubDAO clubAccess){
-		this.clubAccess = clubAccess;
-	}
-	
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<ElementHelper<ClubPOJO>> search(String words, List<FilterPOJO> filters, UserPOJO usr){
+	public synchronized List<ElementHelper<ClubPOJO>> search(String words, List<FilterPOJO> filters, UserPOJO usr){
 		ElementHelper<ClubPOJO> aux;
 		List<ElementHelper<ClubPOJO>> searchResults = new ArrayList<ElementHelper<ClubPOJO>>();
 		List<ClubPOJO> clubs;
@@ -40,11 +31,12 @@ public class SearchEngineSAImp implements SearchEngineSA {
 		}
 		
 		for(FilterPOJO f : filters){
-			FilterBO currentFilter = FilterMapper.mapFilter(f);
+			FilterStrategy currentFilter = FilterMapper.mapFilter(f);
 			for(ElementHelper<ClubPOJO> c : searchResults){
 				c.setVisible(currentFilter.filter(c.getElement()));
 			}
 		}
+		
 		return searchResults;
 	}
 	

@@ -8,20 +8,20 @@ import es.ucm.fdi.integration.data.ClubPOJO;
  * 
  * @version 22.04.2018
  */
-public class RatingFilterBO implements FilterBO{
+public class RatingFilterStrategy implements FilterStrategy{
 	private float rating;
 	
 	/**
 	 * Constructor for the class.
 	 */
-	public RatingFilterBO(){}
+	public RatingFilterStrategy(){}
 	
 	/**
 	 * Constructor for the class.
 	 * 
 	 * @param rating	Minimum rating to consider.
 	 */
-	public RatingFilterBO(float rating) {
+	public RatingFilterStrategy(float rating) {
 		this.rating = rating;
 	}
 
@@ -29,7 +29,7 @@ public class RatingFilterBO implements FilterBO{
 	 * {@inheritDoc}
 	 */
 	public Object clone(FilterPOJO fp){
-		return new RatingFilterBO(Float.parseFloat(fp.getParams().get(0)));
+		return new RatingFilterStrategy(Float.parseFloat(fp.getParams().get(0)));
 	}
 	
 	/**

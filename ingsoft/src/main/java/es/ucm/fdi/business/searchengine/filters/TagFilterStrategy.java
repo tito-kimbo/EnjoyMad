@@ -8,7 +8,7 @@ import es.ucm.fdi.integration.data.ClubPOJO;
  * 
  * @version 22.04.2018
  */
-public class TagFilterBO implements FilterBO{
+public class TagFilterStrategy implements FilterStrategy{
 		
 	//private TagManager tags;
 	

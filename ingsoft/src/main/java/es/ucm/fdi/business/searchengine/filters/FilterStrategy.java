@@ -7,7 +7,7 @@ import es.ucm.fdi.business.data.FilterPOJO;
  * General scheme to build new <code>Filters</code>. Clone is implemented
  * for prototyping purposes.
  */
-public interface FilterBO extends Cloneable{
+public interface FilterStrategy extends Cloneable{
 	
 	/**
 	 * Clones the filter with the relevant parameters.

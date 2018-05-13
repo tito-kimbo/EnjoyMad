@@ -7,6 +7,6 @@ import es.ucm.fdi.integration.data.UserPOJO;
 public interface CustomDataSA {
 
 	public void updateValues();
-	public int assignValues(UserPOJO user, ClubPOJO club);
+	public int assignValue(UserPOJO user, ClubPOJO club);
 
 }
