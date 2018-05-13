@@ -144,7 +144,7 @@ public class UserDAOImpTest {
 		}
 		awaitForLatch();
 		
-		assertEquals("Concurrent writing is not thread safe for ClubDAOImp, "
+		assertEquals("Concurrent writing is not thread safe for UserDAOImp, "
 				+ "mismatched club in DAO", 
 				userDao.getUser("id"), user);
 	}
@@ -169,7 +169,7 @@ public class UserDAOImpTest {
 		awaitForLatch();
 		
 		if(assertionError != null){
-			fail("Read/write interaction is not thread safe in ClubDAOImp.\n" 
+			fail("Read/write interaction is not thread safe in UserDAOImp.\n" 
 					+assertionError.getMessage());
 		}
 	}
