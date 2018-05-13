@@ -22,6 +22,56 @@ import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 public class CustomDataTest {
+	
+	@Test
+	public void assignValuesTest(){
+	UserPOJO uPOJO = new UserPOJO("Pepe", "pepe1", "constrasena", "pepe@gamil.com", "Pepe Dominguez", null);
+		
+		
+		Map<String, Integer> valueTags = new HashMap<String, Integer>();
+		valueTags.put("barato", 10);
+		valueTags.put("buena musica", 20);
+		valueTags.put("marchoso", 35);
+		valueTags.put("divertido", 5);
+		
+		Set<String> tags1 = new HashSet<String>();		
+		
+		Set<String> tags2 = new HashSet<String>();
+		tags2.add("barato");
+		tags2.add("buena musica");
+		tags2.add("marchoso");
+		tags2.add("divertido");
+		
+		
+		// Deberia tener 0 puntos con el mapa establecido
+		ClubPOJO cPOJO1 = new ClubPOJO("Disco 1", "PachaDisco"," C/ Falsa 123", null, 7.98F, tags1);
+		
+		// Deberia tener 70 puntos con el mapa establecido
+		ClubPOJO cPOJO2 = new ClubPOJO("Disco 2", "MittyDisco"," C/ Falsa 124", null, 10.98F, tags2);
+		
+		
+		uPOJO.setValueTags(valueTags);
+		
+		UserDAO uDAO = new UserDAOImp();
+		uDAO.addUser(uPOJO);
+		
+		uPOJO.setValueTags(valueTags);
+		
+		ClubDAO cDAO = new ClubDAOImp();
+		cDAO.addClub(cPOJO1);
+		cDAO.addClub(cPOJO2);
+		
+		CustomDataSA cd = new CustomDataSAImp(uDAO, cDAO);
+		
+		int valor1 = cd.assignValues(uPOJO, cPOJO1);
+		assertEquals("Expected 0 points but we have " + valor1, 0, valor1);
+		
+		int valor2 = cd.assignValues(uPOJO, cPOJO2);
+		assertEquals("Expected 70 points but we have " + valor2, 70, valor2);
+		
+	}
+	
+	
 	@Test
 	public void updateValuesTest() {
 		UserPOJO uPOJO = new UserPOJO("Pepe", "pepe1", "constrasena", "pepe@gamil.com", "Pepe Dominguez", null);
@@ -49,14 +99,14 @@ public class CustomDataTest {
 		tags3.add("barato");
 		tags3.add("marchoso");
 		
-		// Deberia tener 55 puntos con el mapa establecido
-		ClubPOJO cPOJO1 = new ClubPOJO("Pacha", "Pacha Disco"," C/ Falsa 123", null, 7.98F, tags1);
+		// Must have 55 with this map
+		ClubPOJO cPOJO1 = new ClubPOJO("Pacha", "PachaDisco","C/ Falsa 123", null, 7.98F, tags1);
 		
-		// Deberia tener 70 puntos con el mapa establecido
-		ClubPOJO cPOJO2 = new ClubPOJO("Mitty", "Mitty Disco"," C/ Falsa 124", null, 10.98F, tags2);
+		// Must have 70 with this map
+		ClubPOJO cPOJO2 = new ClubPOJO("Mitty", "MittyDisco","C/ Falsa 124", null, 10.98F, tags2);
 		
-		// Deberia tener 50 puntos con el mapa establecido
-		ClubPOJO cPOJO3 = new ClubPOJO("Kapital", "Teatro Kapi"," C/ Falsa 125", null, 15.98F, tags3);
+		// Must have 50 with this map
+		ClubPOJO cPOJO3 = new ClubPOJO("Kapital", "Kapi","C/ Falsa 125", null, 15.98F, tags3);
 		
 		UserDAO uDAO = new UserDAOImp();
 		uDAO.addUser(uPOJO);
@@ -77,6 +127,16 @@ public class CustomDataTest {
 		expPreferences.add(cPOJO3);
 		
 		assertEquals(expPreferences, uPOJO.getPreferencesList());
+		
+		// Now we want to know what appends if there are two clubs with the same tags valoration
+		// This disco has the same punctuation than cPOJO1
+		ClubPOJO cPOJO4 = new ClubPOJO("Coco Loco", "CocoLoco"," C/ Falsa 125", null, 8.14F, tags1);
+		cDAO.addClub(cPOJO4);
+		
+		expPreferences.add(1, cPOJO4); // We want opposite entry order if has the same points
+		cd.updateValues();
+		assertEquals(expPreferences, uPOJO.getPreferencesList());
+		
 		
 		
 	}
