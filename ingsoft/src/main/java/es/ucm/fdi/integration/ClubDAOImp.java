@@ -2,10 +2,10 @@ package es.ucm.fdi.integration;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.Map;
 import java.util.List;
-import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
 /**
@@ -14,14 +14,15 @@ import es.ucm.fdi.integration.data.ClubPOJO;
  * @version 22.04.2018
  */
 public class ClubDAOImp implements ClubDAO {
-	private Map<String, ClubPOJO> clubMap;
+	//Thread safe Map
+	private ConcurrentMap<String, ClubPOJO> clubMap;
 
 	
 	/**
 	 * Constructor of the ClubDAO. Sets the list of clubs empty.
 	 */
 	public ClubDAOImp() {
-		clubMap = new HashMap<String, ClubPOJO>();
+		clubMap = new ConcurrentHashMap<String, ClubPOJO>();
 	}
 	
 	/**

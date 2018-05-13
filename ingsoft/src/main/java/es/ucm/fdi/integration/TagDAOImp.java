@@ -3,9 +3,11 @@ package es.ucm.fdi.integration;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import es.ucm.fdi.business.data.TagPOJO;
 
@@ -20,7 +22,7 @@ public class TagDAOImp implements TagDAO{
 	 * Empty constructor for the set object of the DAO
 	 */
 	public TagDAOImp(){
-		tags = new HashSet<TagPOJO>();
+		tags = Collections.newSetFromMap(new ConcurrentHashMap<TagPOJO, Boolean>());
 	}
 
 	/**

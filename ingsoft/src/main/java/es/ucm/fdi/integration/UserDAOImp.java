@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import es.ucm.fdi.integration.data.UserPOJO;
 
@@ -15,14 +17,14 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * @version 22.04.2018
  */
 public class UserDAOImp implements UserDAO {
-	private Map<String, UserPOJO> userMap;
+	private ConcurrentMap<String, UserPOJO> userMap;
 	
 	
 	/**
 	 * Constructor of the UserDAO. Sets the list of clubs empty.
 	 */
 	public UserDAOImp() {
-		userMap = new HashMap<String, UserPOJO>();
+		userMap = new ConcurrentHashMap<String, UserPOJO>();
 	}
   
 	/**
