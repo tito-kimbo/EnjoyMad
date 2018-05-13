@@ -4,6 +4,7 @@ import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy;
 import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy.JsonReader;
 import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.Location;
 
 import java.util.HashSet;
 
@@ -46,6 +47,7 @@ public class LocationFilterTest
 		FilterMapper.addAll();
 		ClubPOJO club = new ClubPOJO("id","name", "calle", 0, new HashSet<String>());
 		LocationFilterStrategy filter = new LocationFilterStrategy("5", "38.948706", "-2.544259");
+
 		
 		club.setLatitude(38.9507191);
 		club.setLongitude(-2.5397826999999324);

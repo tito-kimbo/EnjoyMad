@@ -1,7 +1,6 @@
 package es.ucm.fdi.integration;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
@@ -10,14 +9,17 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 
 public class ClubPOJOTest {
 	
 	private static ClubPOJO createTestClubPOJO(){
-		return new ClubPOJO("id", "Kapital", "Calle Atocha, 125, 28012 Madrid", 17.0f, 
-				new HashSet<String>(Arrays.asList("Electronica", "Reggaeton", "Funky",
-						"R&B")) );
+		ClubPOJO club = new ClubPOJO("id", "Kapital", "Calle Atocha, 125, 28012 Madrid", 17.0f, new Location(0,0), 0);
+		for(String tag : Arrays.asList("Electronica", "Reggaeton", "Funky", "R&B"))
+			club.addTag(tag);
+		return club;
+			
 	}
 	
 	private static void addOpinions(ClubPOJO c){

@@ -19,7 +19,7 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 
 	private Location location;
 	
-	
+
 	/**
 	 * Set of descriptive tags about the club. It will be initialized as
 	 * a HashSet, which ensures constant time basic operations
@@ -41,7 +41,7 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 	 * @param price price
 	 * @param tags set of tags
 	 */
-	public ClubPOJO(String id, String name, String address, float price, Set<String> tags) {
+	public ClubPOJO(String id, String name, String address, Location location, float price, Set<String> tags) {
 		super(id);
 		this.commercialName = name;
 		this.address = address;
@@ -54,7 +54,7 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 		rating = 0.0F;
 		userReviews = new HashMap<String, ReviewPOJO>();
 	}
-
+	
 	/**
 	 * Club class whole constructor (for testing)
 	 * @param id identification
@@ -74,6 +74,39 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 		this.tags = new HashSet<String>(tags); // Set constructor
 		this.rating = rating;	
 		this.userReviews = opinions;	
+	}
+	
+	
+	/**
+	 * Club class copy constructor
+	 * @param otherClub club to be copied
+	 */
+	
+	public ClubPOJO(ClubPOJO otherClub) {
+		super(otherClub.getID());
+		this.commercialName = otherClub.getCommercialName();
+		this.address = otherClub.getAddress();
+		this.price = otherClub.getPrice();
+		this.tags = otherClub.getTags();
+
+		// Location calculation
+		location = new Location(otherClub.getLatitude(),otherClub.getLongitude());
+
+		rating = otherClub.getRating();
+		
+		//FALTA COPIAR USERREVIEWS. LUEGO VEO COMO HACERLO. ME TENGO QUE IR.
+		userReviews = new HashMap<String, ReviewPOJO>();
+	}
+
+	public ClubPOJO(String id, String commercialName, String address,  float price, Location location, float rating) {
+		super(id);
+		this.commercialName = commercialName;
+		this.address = address;
+		this.location = location;
+		this.price = price;
+		this.rating = rating;	
+		this.tags = new HashSet<String>();
+		this.userReviews = new  HashMap<String, ReviewPOJO>();
 	}
 
 	/**
@@ -283,5 +316,9 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 	 */
 	public Collection<String> getReviewers() {
 		return ( (Collection<String>) userReviews.keySet() );
+	}
+
+	public Map getReviews() {
+		return userReviews;
 	}
 }
