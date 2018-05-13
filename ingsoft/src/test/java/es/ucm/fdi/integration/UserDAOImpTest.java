@@ -71,6 +71,9 @@ public class UserDAOImpTest {
 
 	@Test
 	public void concurrentReadTest() {
+		
+		
+		
 		// This is a timer that will make the program wait for the threads to
 		// execute
 		latch = new CountDownLatch(CONCURRENT_TESTS);
@@ -85,9 +88,9 @@ public class UserDAOImpTest {
 		}
 		awaitForLatch();
 
-		/*if (assertionError != null) {
+		if (assertionError != null) {
 			fail(assertionError.getMessage());
-		}*/
+		}
 	}
 
 	private void newWriteThread() {
@@ -109,7 +112,7 @@ public class UserDAOImpTest {
 					assertEquals(
 							"Concurrent reading is not thread safe for UserDAOImp, "
 									+ "mismatched user in DAO.",
-							userDao.getUser("id"), user);
+							userDao.getUser("IDNumber1"), user);
 					
 				} catch (AssertionError assError) {
 					assertionError = assError;
@@ -151,8 +154,7 @@ public class UserDAOImpTest {
 		//This is a timer that will make the program wait for the threads to execute
 		latch = new CountDownLatch(2*CONCURRENT_TESTS);
 		assertionError = null;
-		user = new UserPOJO("id", "Juan13", "constrasena", "juan23@gmail.com",
-				"Juan García", LocalDate.now());
+		
 		
 		
 		userDao.addUser(user);
