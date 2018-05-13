@@ -51,7 +51,7 @@ public class ClubDAOImp implements ClubDAO {
  	/**
 	 * {@inheritDoc}
 	 */
-	synchronized public boolean exist(String id) {
+	synchronized public boolean exists(String id) {
 		return clubMap.containsKey(id);
 	}
 

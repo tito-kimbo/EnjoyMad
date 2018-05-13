@@ -69,7 +69,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             DataFormatException {
         
         // Is already registered?
-        if ( clubDAO.exist(clubID) ) {
+        if ( clubDAO.exists(clubID) ) {
 
             throw new IllegalArgumentException(
                 "In CLUB creation:" + 
@@ -141,7 +141,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
             DataFormatException {
                 
         // Is already registered?
-        if ( clubDAO.exist( club.getID() ) ) {
+        if ( clubDAO.exists( club.getID() ) ) {
             throw new IllegalArgumentException(
                 "In CLUB creation:" + 
                 "clubID is already registered -> " + 

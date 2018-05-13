@@ -39,7 +39,7 @@ public class ClubDAOImpTest{
 	@Test
 	public void testExist(){
 		createTestClubDAOImp();
-		assertEquals(clubDao.exist("id"),true);
+		assertEquals(clubDao.exists("id"),true);
 	}
 
 	@Test
@@ -57,6 +57,6 @@ public class ClubDAOImpTest{
 	@Test
 	public void testRemoveClub(){
 		clubDao.removeClub("id");
-		assertEquals(clubDao.exist("id"),false);
+		assertEquals(clubDao.exists("id"),false);
 	}
 }

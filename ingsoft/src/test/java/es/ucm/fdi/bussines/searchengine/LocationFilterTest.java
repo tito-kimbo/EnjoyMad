@@ -5,6 +5,7 @@ import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.filters.LocationFilterBO;
 import es.ucm.fdi.business.searchengine.filters.LocationFilterBO.JsonReader;
 import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.Location;
 
 import java.util.HashSet;
 
@@ -42,7 +43,8 @@ public class LocationFilterTest
 	@Test
 	public void getDistanceFrom2GpsPoints()
 	{
-		ClubPOJO club = new ClubPOJO("id","name", "calle", 0, new HashSet<TagPOJO>());
+		FilterMapper.addAll();
+		ClubPOJO club = new ClubPOJO("id","name", "calle", 0, new Location(0,0), 0);
 		LocationFilterBO filter = new LocationFilterBO("5", "38.948706", "-2.544259");
 		
 		club.setLatitude(38.9507191);

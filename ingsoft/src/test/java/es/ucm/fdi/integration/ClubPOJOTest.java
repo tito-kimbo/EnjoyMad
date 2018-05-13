@@ -1,8 +1,8 @@
 package es.ucm.fdi.integration;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Collection;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 
 public class ClubPOJOTest {
@@ -22,7 +23,7 @@ public class ClubPOJOTest {
 									,new TagPOJO("Reggaeton")
 									,new TagPOJO("Funky")
 									,new TagPOJO("R&B"))));
-	}
+		}
 	
 	private static void addOpinions(ClubPOJO c){
 		ReviewPOJO op = new ReviewPOJO("", 4.0f);

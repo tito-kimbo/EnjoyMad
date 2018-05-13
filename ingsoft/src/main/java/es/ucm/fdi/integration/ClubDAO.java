@@ -23,7 +23,7 @@ public interface ClubDAO {
 	 * @param id the <code>Club</code>'s id.
 	 * @return if the <code>Club</code> is registered.
 	 */
-	public boolean exist(String id);
+	public boolean exists(String id);
 
 	/**
 	 * Adds a new <code>Club</code> to the <code>Club</code> map.

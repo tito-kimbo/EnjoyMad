@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.integration.ClubDAO;
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.UserDAO;
@@ -12,6 +13,9 @@ import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 public class CustomDataSAImp implements CustomDataSA{
+	
+	private UserDAO user;
+	private ClubDAO club;
 	
 	private class ObjectValue implements Comparable<ObjectValue>{
 		private ClubPOJO club;
@@ -23,14 +27,19 @@ public class CustomDataSAImp implements CustomDataSA{
 		}
 
 		public int compareTo(ObjectValue ov) {
-			if(value > ov.value) return 1;
-			else return 0;
+			if(value > ov.value) return -1;
+			else if(value == ov.value) return 0;
+			else return 1;
 		}
 		
 	}
 	
-	private UserDAO user = new UserDAOImp();
-	private ClubDAO club = new ClubDAOImp();
+
+	public CustomDataSAImp(UserDAO user, ClubDAO club) {
+		this.user = user;
+		this.club = club;
+	}
+
 
 	public void updateValues() {
 		List<ObjectValue> clubsWithValue = new ArrayList<ObjectValue>();
@@ -53,8 +62,8 @@ public class CustomDataSAImp implements CustomDataSA{
 
 	public int assignValue(UserPOJO user, ClubPOJO club) {
 		int valueOfClub = 0;
-		for (Integer s: user.getValueTags().values()){
-			valueOfClub += s;
+		for (TagPOJO tp: club.getTags()){
+			valueOfClub += user.getValueTags().get(tp.getTag());
 		}
 		return valueOfClub;
 	}

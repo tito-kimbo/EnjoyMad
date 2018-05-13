@@ -60,7 +60,7 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 		rating = 0.0F;
 		userReviews = new HashMap<String, ReviewPOJO>();
 	}
-
+	
 	/**
 	 * Club class whole constructor (for testing)
 	 * @param id identification
@@ -103,7 +103,17 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 		//FALTA COPIAR USERREVIEWS. LUEGO VEO COMO HACERLO. ME TENGO QUE IR.
 		userReviews = new HashMap<String, ReviewPOJO>();
 	}
-	
+
+	public ClubPOJO(String id, String commercialName, String address,  float price, Location location, float rating) {
+		super(id);
+		this.commercialName = commercialName;
+		this.address = address;
+		this.location = location;
+		this.price = price;
+		this.rating = rating;	
+		this.tags = new HashSet<TagPOJO>();
+		this.userReviews = new  HashMap<String, ReviewPOJO>();
+	}
 
 	/**
 	 * Returns the club commercial name.
@@ -312,5 +322,9 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 	 */
 	public Collection<String> getReviewers() {
 		return ( (Collection<String>) userReviews.keySet() );
+	}
+
+	public Map getReviews() {
+		return userReviews;
 	}
 }
