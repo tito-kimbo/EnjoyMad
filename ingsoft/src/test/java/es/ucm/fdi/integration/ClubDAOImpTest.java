@@ -38,7 +38,45 @@ public class ClubDAOImpTest {
 
 		clubDao.addClub(club);
 	}
+	
+	private void newReadThread(){
+		new Thread() {
+			public void run() {
+				try{
+					assertEquals(
+						"Concurrent reading is not thread safe for ClubDAOImp, "
+								+ "mismatched club in DAO.",
+						clubDao.getClub("id"), club);
+				}catch(AssertionError assError){
+					assertionError = assError;
+				}finally{
+					latch.countDown();
+				}
+			}
+		}.start();
+	}
+	
+	private void newWriteThread(){
+		//Write thread
+		new Thread() {
+			public void run() {
+				clubDao.addClub(club);
+				latch.countDown();
+			}
+			
+			
+		}.start();
+	}
+	
+	private void awaitForLatch(){
+		try{
+			latch.await();
+		}catch(InterruptedException ie){
+			fail("Await interrupted, test could not finish properly.");
+		}
 
+	}
+	
 	@Test
 	public void testExist() {
 		createTestClubDAOImp();
@@ -65,7 +103,7 @@ public class ClubDAOImpTest {
 	}
 
 	@Test
-	synchronized public void concurrentReadTest() {
+	public void concurrentReadTest() {
 		//This is a timer that will make the program wait for the threads to execute
 		latch = new CountDownLatch(CONCURRENT_TESTS);
 		assertionError = null;
@@ -73,25 +111,9 @@ public class ClubDAOImpTest {
 		createTestClubDAOImp();
 		for (int i = 0; i < CONCURRENT_TESTS; ++i) {
 			// Creates a new thread and runs it
-			new Thread() {
-				public void run() {
-					try{
-						assertEquals(
-							"Concurrent reading is not thread safe for ClubDAOImp, "
-									+ "mismatched club in DAO.",
-							clubDao.getClub("id"), club);
-						latch.countDown();
-					}catch(AssertionError assError){
-						assertionError = assError;
-					}
-				}
-			}.start();
+			newReadThread();
 		}
-		try{
-			latch.await();
-		}catch(InterruptedException ie){
-			fail("Await interrupted, test could not finish properly.");
-		}
+		awaitForLatch();
 
 		if(assertionError != null){
 			fail(assertionError.getMessage());
@@ -99,7 +121,8 @@ public class ClubDAOImpTest {
 	}
 
 	@Test
-	synchronized public void concurrentWriteTest() {
+	public void concurrentWriteTest() {
+		latch = new CountDownLatch(CONCURRENT_TESTS);
 		clubDao = new ClubDAOImp();
 		club = new ClubPOJO("id", "Kapital", "Calle Atocha, 125, 28012 Madrid",
 				17.0f, new HashSet<TagPOJO>(Arrays.asList(new TagPOJO(
@@ -107,17 +130,40 @@ public class ClubDAOImpTest {
 						"Funky"), new TagPOJO("R&B"))));
 
 		for (int i = 0; i < CONCURRENT_TESTS; ++i) {
-			new Thread() {
-				public void run() {
-					clubDao.addClub(club);
-				}
-				
-				
-			}.start();
+			newWriteThread();
 		}
+		awaitForLatch();
+		
 		assertEquals(
 					"Concurrent writing is not thread safe for ClubDAOImp, "
 							+ "mismatched club in DAO", clubDao.getClub("id"),
 					club);
+	}
+	
+	@Test
+	public void concurrentReadWriteTest(){
+		//This is a timer that will make the program wait for the threads to execute
+		latch = new CountDownLatch(2*CONCURRENT_TESTS);
+		assertionError = null;
+		club = new ClubPOJO("id", "Kapital", "Calle Atocha, 125, 28012 Madrid",
+				17.0f, new HashSet<TagPOJO>(Arrays.asList(new TagPOJO(
+						"Electronica"), new TagPOJO("Reggaeton"), new TagPOJO(
+						"Funky"), new TagPOJO("R&B"))));
+		
+		
+		clubDao.addClub(club);
+		for(int i = 0; i < CONCURRENT_TESTS; ++i){	
+			//Read thread
+			newReadThread();
+			
+			//Write thread
+			newWriteThread();
+		}
+		awaitForLatch();
+		
+		if(assertionError != null){
+			fail("Read/write interaction is not thread safe in ClubDAOImp.\n" 
+					+assertionError.getMessage());
+		}
 	}
 }
