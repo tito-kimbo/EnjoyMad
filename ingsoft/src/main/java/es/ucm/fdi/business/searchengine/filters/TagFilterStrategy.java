@@ -1,6 +1,9 @@
 package es.ucm.fdi.business.searchengine.filters;
 
+import java.util.List;
+
 import es.ucm.fdi.business.data.FilterPOJO;
+import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
 /**
@@ -12,11 +15,12 @@ public class TagFilterStrategy implements FilterStrategy{
 	private List<TagPOJO> tags;
 
 	public boolean filter(ClubPOJO c) {
-		for(String tag : tags){
-			if(!c.contains(tag.getTag())){
+		for(TagPOJO tag : tags){
+			if(!c.getTags().contains(tag)){
 				//DOES THE TAG EXIST?				
 				return false;
 			}
+		}
 		return true;
 	}
 

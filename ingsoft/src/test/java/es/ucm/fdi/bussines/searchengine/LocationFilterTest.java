@@ -45,7 +45,7 @@ public class LocationFilterTest
 	{
 		FilterMapper.addAll();
 		
-		ClubPOJO club = new ClubPOJO("id","name", "calle", 0, new HashSet<String>());
+		ClubPOJO club = new ClubPOJO("id","name", "calle", 0, new HashSet<TagPOJO>());
 		LocationFilterStrategy filter = new LocationFilterStrategy("5", "38.948706", "-2.544259");
 		
 		club.setLatitude(38.9507191);

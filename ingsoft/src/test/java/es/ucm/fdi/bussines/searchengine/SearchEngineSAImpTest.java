@@ -31,7 +31,7 @@ public class SearchEngineSAImpTest {
 	static {
 		cd = new ClubDAOImp();
 		
-		Set <String> l1 = new HashSet<String>();				 //Club's tags (empty)
+		Set <TagPOJO> l1 = new HashSet<TagPOJO>();				 //Club's tags (empty)
 		ClubPOJO c = new ClubPOJO("a2868521eac27ed8c7c4d7a38051f912", 
 			     "Teatro Kapital", "C/Falsa 1234", 20.30F, l1);
 		
