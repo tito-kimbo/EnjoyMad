@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import es.ucm.fdi.integration.data.UserPOJO;
 
@@ -15,21 +17,21 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * @version 22.04.2018
  */
 public class UserDAOImp implements UserDAO {
-	private Map<String, UserPOJO> userMap;
+	private ConcurrentMap<String, UserPOJO> userMap;
 	
 	
 	/**
 	 * Constructor of the UserDAO. Sets the list of clubs empty.
 	 */
 	public UserDAOImp() {
-		userMap = new HashMap<String, UserPOJO>();
+		userMap = new ConcurrentHashMap<String, UserPOJO>();
 	}
   
 	/**
 	 * @param stream get out a copy of the object of this DAO
 	 * @throws IOException if I/O operations have an interruption
 	 */
-	private void writeObject(ObjectOutputStream stream) throws IOException{
+	synchronized private void writeObject(ObjectOutputStream stream) throws IOException{
 		stream.writeObject(userMap);
 	}
 
@@ -37,14 +39,14 @@ public class UserDAOImp implements UserDAO {
 	/**
 	 * {@inheritDoc}
 	 */
-	public UserPOJO getUser(String id) {
+	synchronized public UserPOJO getUser(String id) {
 		return userMap.get(id);
 	}
 	
   	/**
 	 * {@inheritDoc}
 	 */
-	public boolean addUser(UserPOJO user) {
+	synchronized public boolean addUser(UserPOJO user) {
 		userMap.put(user.getID(), user);
 		return true;
 	}
@@ -52,7 +54,7 @@ public class UserDAOImp implements UserDAO {
  	/**
 	 * {@inheritDoc}
 	 */
-	public boolean exist(String id) {
+	synchronized public boolean exists(String id) {
 		return userMap.containsKey(id);
 	}
 	
@@ -60,7 +62,7 @@ public class UserDAOImp implements UserDAO {
 	 * {@inheritDoc}
 	 */
 	public boolean removeUser(String id){
-		if(exist(id)) {
+		if(exists(id)) {
 			userMap.remove(id);
 			return true;
 		} else {
@@ -71,7 +73,7 @@ public class UserDAOImp implements UserDAO {
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<UserPOJO> getUsers() {
+	synchronized public List<UserPOJO> getUsers() {
 		List<UserPOJO> aux = new ArrayList<UserPOJO>(userMap.values());
 		return aux;
 	}

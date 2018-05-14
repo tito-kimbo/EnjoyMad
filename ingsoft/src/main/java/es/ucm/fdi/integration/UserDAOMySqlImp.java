@@ -1,7 +1,5 @@
 package es.ucm.fdi.integration;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -90,7 +88,6 @@ public class UserDAOMySqlImp implements UserDAO {
  	/**
 	 * {@inheritDoc}
 	 */
-	
 	public List<UserPOJO> getUsers(){
 		createConnection();
 		List<UserPOJO> listUsers = new ArrayList<UserPOJO>();
@@ -126,7 +123,7 @@ public class UserDAOMySqlImp implements UserDAO {
 	 * {@inheritDoc}
 	 */
 	
-	public boolean exist(String id) {
+	public boolean exists(String id) {
 		createConnection();
 		
 		try {

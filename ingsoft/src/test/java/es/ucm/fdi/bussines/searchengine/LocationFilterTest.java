@@ -1,5 +1,6 @@
 package es.ucm.fdi.bussines.searchengine;
 
+import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy;
 import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy.JsonReader;
@@ -8,18 +9,16 @@ import es.ucm.fdi.integration.data.Location;
 
 import java.util.HashSet;
 
-import org.json.JSONObject;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-/** @author Francisco Javier Blázquez Martínez.*/
 public class LocationFilterTest
 {
 
-	/**This method checks that the JSON reading from url process is exception free for random
-	 *  chosen coordinates.*/
+	/**	This method checks that the JSON reading from url process is exception free for random
+	 *  chosen coordinates.	*/
 	//@Test
 	public void getJsonObjectFromUrl()
 	{
@@ -32,28 +31,28 @@ public class LocationFilterTest
 			JsonReader.readJsonFromUrl(requestURL);
 		}catch(Exception e) 
 		{
-			fail("No exception should have been thrown");
+			fail("Exception when reading valid JSON from " + requestURL);
 		}
 	}
 	
 	/**This method calls to getNavigableDistance() to test if it works properly, this also checks
 	 * the JSON reading from URL process.
 	 * 
-	 * That two gps coordinates are just 1.8km away. The final assert should be true.
+	 * That two GPS coordinates are just 1.8km away. The final assert should be true.
 	 */
 	@Test
 	public void getDistanceFrom2GpsPoints()
 	{
 		FilterMapper.addAll();
+		
 		ClubPOJO club = new ClubPOJO("id","name", "calle", 0, new HashSet<String>());
 		LocationFilterStrategy filter = new LocationFilterStrategy("5", "38.948706", "-2.544259");
-
 		
 		club.setLatitude(38.9507191);
 		club.setLongitude(-2.5397826999999324);
 		
 		boolean inRange = filter.filter(club);
 		
-		assertTrue("Club should be in range.", inRange);
+		assertTrue("Error filtering by distance: club should be in range.", inRange);
 	}
 }

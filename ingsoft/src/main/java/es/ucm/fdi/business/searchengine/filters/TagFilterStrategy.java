@@ -9,29 +9,21 @@ import es.ucm.fdi.integration.data.ClubPOJO;
  * @version 22.04.2018
  */
 public class TagFilterStrategy implements FilterStrategy{
-		
-	//private TagManager tags;
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Object clone(FilterPOJO fp){
-		//return new Object(FilterPOJO fp); //???
-		return null;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean filter(ClubPOJO c){
-		/*for(String tag : tags.getActiveTags()){
-			if(!c.contains(tag)){
+	private List<TagPOJO> tags;
+
+	public boolean filter(ClubPOJO c) {
+		for(String tag : tags){
+			if(!c.contains(tag.getTag())){
 				//DOES THE TAG EXIST?				
 				return false;
 			}
-		}*/
-		
 		return true;
+	}
+
+	public Object clone(FilterPOJO fp) {
+		//Pending
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

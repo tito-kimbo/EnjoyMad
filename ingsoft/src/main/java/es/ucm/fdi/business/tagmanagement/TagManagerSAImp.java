@@ -51,28 +51,28 @@ public class TagManagerSAImp implements TagManagerSA {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void newTag(TagPOJO tp) {
+	synchronized public void newTag(TagPOJO tp) {
 		activeTags.add(tp);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public void removeTags(TagPOJO tp){
+	synchronized public void removeTags(TagPOJO tp){
 		activeTags.remove(tp);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean hasTag(TagPOJO tp){
+	synchronized public boolean hasTag(TagPOJO tp){
 		return activeTags.contains(tp);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<TagPOJO> getActiveTags(){
+	synchronized public List<TagPOJO> getActiveTags(){
 		List<TagPOJO> list = new ArrayList<TagPOJO>();
 		list.addAll(activeTags);
 		return list;

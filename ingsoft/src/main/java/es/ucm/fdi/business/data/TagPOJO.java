@@ -1,38 +1,36 @@
 package es.ucm.fdi.business.data;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Container class for tags.
  * 
- * @version 22.04.2018
+ * @version 04.05.2018
  */
 public class TagPOJO implements Serializable{
 	
+	/**
+	 * Generated serial UID.
+	 */
+	private static final long serialVersionUID = -6625517701029668443L;
 	private String tag;
-
-	private List<String> tags;
 	
-	
-	public TagPOJO(String tag, List<String> tags) {
-		super();
+	public TagPOJO(String tag) {
 		this.tag = tag;
-		this.tags = tags;
 	}
 
 	/**
-	 * Getter method for the tag
+	 * Getter method for the tag.
 	 */
-	public List<String> getTags() {
-		return tags;
+	public String getTag() {
+		return tag;
 	}
 	
 	/**
-	 * Setter method for the tag array.
+	 * Setter method for the tag.
 	 */
-	public void setTags(List<String> tags){
-		this.tags = tags;
+	public void setTag(String tag){
+		this.tag = tag;
 	}
 	
 }

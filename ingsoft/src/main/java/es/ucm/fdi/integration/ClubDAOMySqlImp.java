@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import es.ucm.fdi.integration.data.Location;
+import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 /**
  * This class is a Club data access object that implements {@link ClubDAOMySqñ}.
  * 
  * @version 03.05.2018
- * @author Carlijn
  */
 public class ClubDAOMySqlImp implements ClubDAO {
     Connection con = null;
@@ -52,7 +52,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	public ClubPOJO getClub(String id) {
 		createConnection();
 		ClubPOJO club = null;
-		
+
 	    try {
 	        Statement st = con.createStatement();
 	        
@@ -68,7 +68,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	        
 	        rs = st.executeQuery("SELECT * FROM Tags where id="+id);
 	        while(rs.next()) {
-	        	club.addTag(rs.getString("tag"));
+	        	club.addTag(new TagPOJO(rs.getString("tag")));
 	        }
 	        
 	        rs = st.executeQuery("Select * FROM Opinions where club_id ="+ id);
@@ -90,7 +90,6 @@ public class ClubDAOMySqlImp implements ClubDAO {
  	/**
 	 * {@inheritDoc}
 	 */
-	
 	public List<ClubPOJO> getClubs(){
 		createConnection();
 		List<ClubPOJO> listClubs = new ArrayList<ClubPOJO>();
@@ -109,7 +108,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		        
 		        ResultSet auxS =st.executeQuery("SELECT * FROM Tags where id="+rs.getString("id"));
 		        while(auxS.next()) {
-		        	club.addTag(auxS.getString("tag"));
+		        	club.addTag(new TagPOJO(auxS.getString("tag")));
 		        }
 		        
 		        auxS = st.executeQuery("Select * FROM Opinions where club_id ="+ rs.getString("id"));
@@ -121,11 +120,10 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	    }
 	    catch (SQLException ex) {
 	    	System.exit(1);
-	    }
-		    
-	    finally{
+	    }finally{
 	    	closeConnection();
 	    }
+	    
 	    return listClubs;
 	}
 
@@ -133,7 +131,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	 * {@inheritDoc}
 	 */
 	
-	public boolean exist(String id) {
+	public boolean exists(String id) {
 		createConnection();
 		
 		try {
@@ -167,8 +165,8 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	        		+club.getCommercialName()+","+club.getAddress()+","+club.getPrice()+","
 	        		+club.getLatitude()+","+club.getLongitude()+","+club.getRating()+","+club.getAddress() + ")");
 	        
-	        for(String tag : club.getTags()) {
-	        	st.executeQuery("insert into Tags values (" + club.getID() + "," + tag + ")");
+	        for(TagPOJO tp : club.getTags()) {
+	        	st.executeQuery("insert into Tags values (" + club.getID() + "," + tp.getTag() + ")");
 	        }
 	        @SuppressWarnings("rawtypes")
 			Iterator it = club.getReviews().entrySet().iterator();

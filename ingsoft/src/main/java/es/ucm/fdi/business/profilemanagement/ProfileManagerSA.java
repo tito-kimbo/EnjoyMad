@@ -5,290 +5,233 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.zip.DataFormatException;
 
+import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.business.profilemanagement.tools.ClubModifierHelper;
+import es.ucm.fdi.business.profilemanagement.tools.UserModifierHelper;
 import es.ucm.fdi.integration.data.ClubPOJO;
-import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 
-
 /**
- * Interface defining the functionalities to be used in 
- * profile management.
- * It extends to an implemented class with necessary attributes.
+ * Interface defining the functionalities to be used in profile management. It
+ * extends to an implemented class with necessary attributes.
  * 
- * @author behergue 	[Beatriz Herguedas]
- * @author PabloHdez 	[Pablo Hernández]
+ * @version 08.05.2018
+ * 
+ * @author behergue [Beatriz Herguedas]
+ * @author PabloHdez [Pablo Hernández]
  */
 public interface ProfileManagerSA {
 
-	//** PROFILE CREATION **//
+	// ** PROFILE CREATION **//
 
 	/**
-	 * Adds a new <code>Club</code> to the database.
-	 * 
-	 * @param club <code>ClubPOJO</code> with the new club
-	 * 
-	 * @throws IllegalArgumentException if <code>clubID</code> already stored in database
-	 */
-	public void addNewClub(ClubPOJO club)
-			throws IllegalArgumentException, DataFormatException;
-
-	/**
-	 * Adds a new <code>User</code> to the database.
-	 * 
-	 * @param user <code>UserPOJO</code> with the new user
-	 * 
-	 * @throws IllegalArgumentException if <code>userID</code> already stored in database
-	 */
-	public void addNewUser(UserPOJO user) 
-			throws IllegalArgumentException, DataFormatException;
-
-	//** CLUB MODIFICATION **//
-
-	/**
-	 * Modifies a club <code>ID</code> if the data is correct.
-	 * 
-	 * @param newID <code>String</code> with new <code>ID</code>
-	 * @param clubID <code>ID</code> of <code>Club</code> to be modified
-	 * 
-	 * @throws NoSuchElementException if <code>clubID</code> not found in <code>clubDAO</code> database
-	 * @throws DataFormatException if <code>newID</code> parsing failed
-	 */
-
-	public void modifyClubCommercialName(String newCommercialName, String clubID) 
-			throws NoSuchElementException, DataFormatException;
-
-	/**
-	 * Modifies club <code>Address</code> if the data is correct.
-	 * 
-	 * @param newAddress <code>String</code> with new <code>Address</code>
-	 * @param clubID <code>ID</code> of <code>Club</code> to be modified
-	 * 
-	 * @throws NoSuchElementException if <code>clubID</code> not found in <code>clubDAO</code> database
-	 * @throws DataFormatException if <code>newAddress</code> parsing failed
-	 */
-	public void modifyClubAddress(String newAddress, String clubID) 
-			throws NoSuchElementException, DataFormatException ;
-
-	/**
-	 * Modifies a club <code>TicketPrice</code> if the data is correct.
-	 * 
-	 * @param newPrice <code>Float</code> with new <code>TicketPrice</code>
-	 * @param clubID <code>ID</code> of <code>Club</code> to be modified
-	 * 
-	 * @throws NoSuchElementException if <code>clubID</code> not found in <code>clubDAO</code> database
-	 * @throws DataFormatException if <code>newPrice</code> parsing failed
-	 */
-    public void modifyClubPrice(Float newPrice, String clubID) 
-			throws NoSuchElementException, DataFormatException;
-
-	/**
-	 * Modifies a club <code>Location</code> if the data is correct.
-	 * 
-	 * @param newLocation <code>Location</code> with the new club placement
-	 * @param clubID <code>ID</code> of <code>Club</code> to be modified 
-	 * 
-	 * @throws NoSuchElementException if <code>clubID</code> not found in <code>clubDAO</code> database
-	 */
-	public void modifyClublocation(Location newLocation, String clubID)
-			throws NoSuchElementException;
-
-	/**
-	 * Modifies a club <code>Rating</code> if the data is correct.
-	 * ATTENTION: This method is not thought to be used
-	 * initially in the general implementation.
-	 * 
-	 * @param newRating <code>Float</code> with new <code>Rating</code>
-	 * @param clubID <code>ID</code> of <code>Club</code> to be modified
-	 * 
-	 * @throws NoSuchElementException if <code>clubID</code> not found in <code>clubDAO</code> database
-	 * @throws DataFormatException if <code>newRating</code> parsing failed
-	 */
-    public void modifyClubRating(Float newRating, String clubID) 
-			throws NoSuchElementException, DataFormatException;
-
-	/**
-	 * Adds a new <code>Tag</code> to the club <code>Tags</code> if
-	 * the new <code>Tag</code> is correct.
-	 * 
-	 * @param newTag <code>String</code> with new <code>Tag</code>
-	 * @param clubID <code>ID</code> of <code>Club</code> to be modified
-	 * 
-	 * @throws NoSuchElementException if <code>clubID</code> not found in <code>clubDAO</code> database
-	 * @throws DataFormatException if <code>newTag</code> parsing failed
-	 */
-    public void addClubTag(String newTag, String clubID) 
-			throws NoSuchElementException, DataFormatException;
-
-	/**
-	* Removes a <code>Tag</code> from the club <code>Tags</code> if
-	* the new <code>tag</code> is correct.
-	* 
-	* @param tagToRemove <code>String</code> with <code>Tag</code> to be removed
-	* @param clubID <code>ID</code> of <code>Club</code> to be modified
-	* 
-	@throws NoSuchElementException if <code>clubID</code> not found in <code>clubDAO</code> database
-	* @throws DataFormatException if <code>tagToRemove</code> parsing failed
-	*/
-    public void removeClubTag(String tagToRemove, String clubID) 
-			throws NoSuchElementException, DataFormatException;
-
-	/**
-	 * Clears the club <code>Tags</code>.
-	 * 
-	 * @param clubID <code>ID</code> of <code>Club</code> to be modified
-	 * 
-	 * @throws NoSuchElementException if <code>clubID</code> not found in <code>clubDAO</code> database
-	 */
-	public void clearClubTags(String clubID)
-			throws NoSuchElementException;
-
-
-
-
-
-
-
-
-
-
-
-	//** USER MODIFICATION **//
-
-	/**
-	 * Modifies the user's id if the data is correct.
-	 * 
-	 * @param newData <code>String</code> with new <code>ID</code>
-	 * @param userID <code>ID</code> of <code>User</code> to be modified
-	 * 
-	 * @throws NoSuchElementException if <code>userID</code> not found in <code>userDAO</code> database
-	 * @throws DataFormatException if <code>newID</code> parsing failed
-	 */
-
-    public void modifyUserUsername(String newUsername, String userID) 
-			throws NoSuchElementException, DataFormatException;
-
-
-	/**
-	 * Modifies the user's password if the data is correct.
-	 * 
-	 * @param newPassword <code>String</code> with new <code>Password</code>
-	 * @param userID <code>ID</code> of <code>User</code> to be modified
-	 * 
-	 * @throws NoSuchElementException if <code>userID</code> not found in <code>userDAO</code> database
-	 * @throws DataFormatException if <code>newPassword</code> parsing failed
-	 */
-    public void modifyUserPassWord(String newPassword, String userID) 
-			throws NoSuchElementException, DataFormatException;
-
-	/**
-	 * Modifies the user's email if the data is correct.
-	 * 
-	 * @param newEmail <code>String</code> with new <code>Email</code>
-	 * @param userID <code>ID</code> of <code>User</code> to be modified
-	 * 
-	 * @throws NoSuchElementException if <code>userID</code> not found in <code>userDAO</code> database
-	 * @throws DataFormatException if <code>newEmail</code> parsing failed
-	 */
-    public void modifyUserEmail(String newEmail, String userID) 
-			throws NoSuchElementException, DataFormatException;
-
-	/**
-	 * Modifies the user's name if the data is correct.
-	 * 
-	 * @param newName <code>String</code> with new <code>Name</code>
-	 * @param userID <code>ID</code> of <code>User</code> to be modified
-	 * 
-	 * @throws NoSuchElementException if <code>userID</code> not found in <code>userDAO</code> database
-	 * @throws DataFormatException if <code>newName</code> parsing failed
-	 */
-    public void modifyUserName(String newName, String userID) 
-			throws NoSuchElementException, DataFormatException;
-
-	/**
-	 * Modifies the user's birthday if the data is correct.
-	 * 
-	 * @param newBirthday <code>LocalDate</code> with new <code>Birthday</code>
-	 * @param userID <code>ID</code> of <code>User</code> to be modified
-	 * 
-	 * @throws NoSuchElementException if <code>userID</code> not found in <code>userDAO</code> database
-	 * @throws DataFormatException if <code>newBirthday</code> parsing failed
-	 */
-    public void modifyUserBirthday(LocalDate newBirthday, String userID) 
-			throws NoSuchElementException, DataFormatException;
+     * <p>
+     * * DO NOT USE IN MAIN APP * Method is kept just in case for testing or future
+     * implementations.
+     * </p>
+     * <p>
+     * Builds a new {@code ClubPOJO} from the given arguments and adds a new to the
+     * app {@code ClubDAO} database.
+     * </p>
+     * 
+     * @param clubID  - {@code String} with the new club {@code ID}
+     * @param name    - {@code String} with the new club {@code CommercialName}
+     * @param address - {@code String} with the new club {@code Address}
+     * @param price   - {@code String} with the new club {@code TicketPrice}
+     * @param tags    - {@code Set<String>} with list of the new club {@code Tags}
+     * 
+     * @throws IllegalArgumentException if {@code clubID} already stored in
+     *                                  {@code ClubDAO} database
+     * @throws DataFormatException      if parsing failed while checking the new
+     *                                  club attributes
+     */
+	public void addNewClub(String clubID, String name, String address,
+			float price, Set<TagPOJO> tags) throws IllegalArgumentException, 
+            DataFormatException;
 	
 
+    /**
+     * Adds a given {@code ClubPOJO} to the app {@code ClubDAO} database, 
+     * rechecking its arguments for security (which have been supposedly 
+     * checked externally).
+     * 
+     * @param club - new {@code ClubPOJO} to be added
+     * 
+     * @throws IllegalArgumentException 	if {@code club} id already stored
+	 * 										in {@code ClubDAO} database
+     * @throws DataFormatException          if parsing failed while checking the
+     *                                      new club attributes
+     * 
+     */
+    public void addNewClub(ClubPOJO club) throws IllegalArgumentException, 
+            DataFormatException;
 
 
 
 
 
-
-
-
-
-	//** PROFILE REMOVAL **//
 
 	/**
-	 * Removes the <code>Club</code> from the <code>ClubDAO</code> database if found.
-	 * 
-	 * @param clubID <code>ID</code> of <code>Club</code> to be removed
-	 * 
-	 * @throws NoSuchElementException if <code>clubID</code> not found in <code>clubDAO</code> database
-	 */
-	public void removeClub(String clubID) throws NoSuchElementException;
+     * <p>
+     * * DO NOT USE IN MAIN APP * Method is kept just in case for testing or 
+     * future implementations.
+     * </p> 
+     * <p>
+     * Builds a new {@code UserPOJO} from the given arguments and adds a new to
+     * the app {@code UserDAO} database.
+     * </p>
+     * 
+     * @param userID   - {@code String} with the new user {@code ID}
+     * @param username - {@code String} with the new user {@code Username}
+     * @param password - {@code String} with the new user {@code Password}
+     * @param email    - {@code String} with the new user {@code Email}
+     * @param name     - {@code String} with the new user {@code TicketPrice}
+     * @param birthday - {@code Set<String>} with list of the new user 
+     *                   {@code Tags}
+     * 
+     * @throws IllegalArgumentException if {@code userID} already stored in
+     *                                  {@code UserDAO} database
+     * @throws DataFormatException      if parsing failed while checking the 
+     *                                  new user attributes
+     */
+	public void addNewUser(String userID, String username, String password, 
+			String email, String name, LocalDate birthday) 
+			throws IllegalArgumentException, DataFormatException;
 
-	/**
-	 * Removes the <code>User</code> from the <code>UserDAO</code> database if found.
-	 * 
-	 * @param userID <code>ID</code> of <code>User</code> to be removed
-	 * 
-	 * @throws NoSuchElementException if <code>userID</code> not found in <code>userDAO</code> database
-	 */
-	public void removeUser(String userID) throws NoSuchElementException;
+    /**
+     * <p>
+     * Adds a given {@code UserPOJO} to the app {@code UserDAO} database, 
+     * rechecking its arguments for security (which have been supposedly 
+     * checked externally).
+     * </p>
+     * <p>
+     * * PASSWORD SECURITY * The user passed as argument has already had
+     * the introduced password hashed.
+     * </p>
+     * 
+     * @param user - new {@code UserPOJO} to be added
+     *
+     * @throws IllegalArgumentException if {@code user} id already stored in
+     *                                  {@code userDAO} database
+     * @throws DataFormatException      if parsing failed while checking the 
+     *                                  new user attributes
+     */
+    public void addNewUser(UserPOJO user) 
+			throws IllegalArgumentException, DataFormatException;
 
+    
+	
+	
+	
+	
+	// ** CLUB MODIFICATION **//
 
+    /**
+     * Modifies a specific atribute of the indicated {@code ClubPOJO}, provided
+     * it exists and the modification is valid.
+     * 
+     * @param clubID   - id of {@code ClubPOJO} to be modified
+     * @param dataType - {@code ClubModifierBO} indicating the specific
+     *                   modification
+     * @param newData  - new data to replace the old one in the modification
+     * 
+     * @throws NoSuchElementException   if {@code clubID} not found in
+     *                                  {@code clubDAO} database
+     * @throws IllegalArgumentException if {@code newData} class does not match
+     *                                  that needed for the modification
+     * @throws DataFormatException      if {@code newData} parsing failed
+     */
+    public void modifyClubData(String clubID, ClubModifierHelper dataType, 
+            Object newData) throws NoSuchElementException, 
+            IllegalArgumentException, DataFormatException;
 
+	// ** USER MODIFICATION **//
 
+    /**
+     * Modifies a specific atribute of the indicated {@code UserPOJO}, provided
+     * it exists and the modification is valid.
+     * 
+     * @param userID   - id of {@code UserPOJO} to be modified
+     * @param dataType - {@code UserModifierBO} indicating the specific
+     *                   modification
+     * @param newData  - new data to replace the old one in the modification
+     * 
+     * @throws NoSuchElementException   if {@code userID} not found in
+     *                                  {@code userDAO} database
+     * @throws IllegalArgumentException if {@code newData} class does not match
+     *                                  that needed for the modification
+     * @throws DataFormatException      if {@code newData} parsing failed
+     */
+	public void modifyUserData(String userID, UserModifierHelper dataType, 
+            Object newData) throws IllegalArgumentException,
+            DataFormatException;
 
+    
+	
+	
+	
+	
+	
+	// ** PROFILE REMOVAL **//
 
+    /**
+     * Removes the {@code ClubPOJO} from the {@code ClubDAO} database if found.
+     * 
+     * @param clubID - id of {@code ClubPOJO} to be removed
+     * 
+     * @throws NoSuchElementException if {@code clubID} not found in
+     *                                {@code clubDAO} database
+     */
+    public void removeClub(String clubID) throws NoSuchElementException;
 
+    /**
+     * Removes the {@code UserPOJO} from the {@code UserDAO} database if found.
+     * 
+     * @param userID - id of {@code UserPOJO} to be removed
+     * 
+     * @throws NoSuchElementException if {@code userID} not found in
+     *                                {@code userDAO} database
+     */
+    public void removeUser(String userID) throws NoSuchElementException;
 
+    
+	
+	
+	
+	
+	// ** REVIEW UPDATING **//
 
+    /**
+     * <p>
+     * Adds a new or modified user {@code Review} and recalculates the club
+     * total {@code Rating}.
+     * </p>
+     * <p>
+     * {@code ClubPOJO} receives {@code Rate} from {@code UserPOJO}.
+     * </p>
+     * 
+     * @param clubID - id of {@code ClubPOJO} to be reviewed
+     * @param review - {@code ReviewPOJO} with user {@code Review}
+     * @param userID - id of the reviewing {@code UserPOJO}
+     * 
+     * @throws NoSuchElementException if {@code userID, clubID} not found in
+     *                                {@code userDAO, clubDAO} databases
+     * @throws DataFormatException    if {@code review} parsing failed
+     */
+    public void addReview(String clubID, ReviewPOJO review, String userID) 
+            throws NoSuchElementException, DataFormatException;
 
-
-	//** PROFILE UPDATING **//
-
-	/**
-	 * <p>
-	 * Adds a new or modified user <code>Review</code> and recalculates 
-	 * the club's total <code>Rating</code>.
-	 * </p> <p>
-	 * <code>Club</code> receives <code>Rate</code> from <code>User</code>.
-	 * </p>
-	 * 
-	 * @param clubID <code>ID</code> of <code>Club</code> to be reviewed
-	 * @param review <code>ReviewPOJO</code> with user <code>Review</code>
-	 * @param userID <code>ID</code> of the reviewing <code>User</code>
-	 * 
-	 * @throws NoSuchElementException if <code>userID, clubID</code> not found in <code>userDAO, clubDAO</code> databases
-	 * @throws DataFormatException if <code>rate</code> parsing failed
-	 */
-	public void addReview(String clubID, ReviewPOJO review, String userID) 
-			throws NoSuchElementException, DataFormatException;
-
-	/**
-	 * <p>
-	 * Removes a user <code>Review</code>.
-	 * </p> <p>
-	 * <code>Club</code> deletes <code>Review</code> from <code>User</code>.
-	 * </p>
-	 * 
-	 * @param clubID <code>ID</code> of reviewed <code>Club</code> 
-	 * @param userID <code>ID</code> of <code>User</code> removing the <code>Review</code>
-	 * 
-	 * @throws NoSuchElementException if <code>userID, clubID</code> not found in <code>userDAO, clubDAO</code> databases
-	 */
-	public void removeReview(String clubID, String userID) 
-			throws NoSuchElementException;
+    /**
+     * Removes a user {@code ReviewPOJO}. 
+     * 
+     * @param clubID - id of reviewed {@code ClubPOJO}
+     * @param userID - id of {@code UserPOJO} removing the 
+     *                 {@code ReviewPOJO}
+     * 
+     * @throws NoSuchElementException if {@code userID} or {@code clubID} not 
+     *                                found in their respective DAOs
+     */
+    public void removeReview(String clubID, String userID) throws 
+            NoSuchElementException;
 }

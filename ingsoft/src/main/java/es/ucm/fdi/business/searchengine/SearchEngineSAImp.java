@@ -13,7 +13,20 @@ import es.ucm.fdi.business.util.ElementHelper;
 import es.ucm.fdi.business.data.FilterPOJO;
 
 public class SearchEngineSAImp implements SearchEngineSA {
+	private ClubDAO clubAccess;
 	
+	/**
+	 * @param clubAccess is the DAO to access the clubs
+	 */
+
+	public SearchEngineSAImp(ClubDAO clubAccess){
+		this.clubAccess = clubAccess;
+	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	/**
 	 * {@inheritDoc}
 	 */
@@ -32,6 +45,7 @@ public class SearchEngineSAImp implements SearchEngineSA {
 		
 		for(FilterPOJO f : filters){
 			FilterStrategy currentFilter = FilterMapper.mapFilter(f);
+
 			for(ElementHelper<ClubPOJO> c : searchResults){
 				c.setVisible(currentFilter.filter(c.getElement()));
 			}
@@ -39,5 +53,5 @@ public class SearchEngineSAImp implements SearchEngineSA {
 		
 		return searchResults;
 	}
-	
+
 }

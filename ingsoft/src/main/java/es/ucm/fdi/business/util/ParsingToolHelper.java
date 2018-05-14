@@ -14,8 +14,8 @@ import es.ucm.fdi.integration.data.ReviewPOJO;
  */
 public class ParsingToolHelper {
     
-    private final int RATE_LOW_LIMIT = 0;
-    private final int RATE_UP_LIMIT = 10;
+    private final static int RATE_LOW_LIMIT = 0;
+    private final static int RATE_UP_LIMIT = 10;
     
     /**
      * A <code>Pattern</code> that matches alphanumeric sequences [A-Za-z0-9_].
@@ -303,6 +303,12 @@ public class ParsingToolHelper {
      */
     public static boolean parseReview(ReviewPOJO review) {
         boolean valid = true;
+        
+        if ( RATE_LOW_LIMIT > review.getRating() 
+                || RATE_UP_LIMIT < review.getRating() ) {
+
+            valid = false;
+        }
 
         if ( ! opinionChecker.matcher( review.getOpinion() ).matches() ) {
             valid = false;
