@@ -30,30 +30,8 @@ public class LocationFilterStrategy implements FilterStrategy{
 				
 	
 	public LocationFilterStrategy()	{
-		//WARNING! Unimplemented, just to avoid error in FilterMapper
 	}
-	/*--------------------- THIS CALL IS SUPOSED TO BE DONE BEFORE GETTING HERE ------------------------
-	 * Initializes {@link #deviceLatitude} and {@link #deviceLongitude} to the mobile device last known location.
-	 * 
-	 * @throws NullPointerException	In case the mobile phone has no location registers, so that it's not possible 
-	 * to get the last and nearest location of the device.
-	 *
-	private void getDeviceCoordinates() //IN DEVELOPMENT!
-	{
-		//NEEDS A CONTEXT -> Create a main Singleton base for the App with its context (?)
-		
-		String context = Context.LOCATION_SERVICE;
-		LocationManager lm = (LocationManager)myContext.getSystemService(context); 
-		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER); 
-	
-		if(location == null)
-			throw new NullPointerException("There is no last known location in this device.");
-		
-		deviceLongitude = location.getLongitude();
-		deviceLatitude  = location.getLatitude();
-		
-		//We suppose correct latitude/longitude.
-	}*/
+
 	/**
 	 * Creates a LocationFilter given the maximum distance selected an the GPS coordinates of the person.
 	 * 

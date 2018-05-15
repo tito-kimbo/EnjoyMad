@@ -38,7 +38,7 @@ public class LocationFilterTest
 	/**This method calls to getNavigableDistance() to test if it works properly, this also checks
 	 * the JSON reading from URL process.
 	 * 
-	 * That two GPS coordinates are just 1.8km away. The final assert should be true.
+	 * Those two GPS coordinates are just 1.8km away. The final assert should be true.
 	 */
 	@Test
 	public void getDistanceFrom2GpsPoints()
