@@ -11,39 +11,43 @@ import es.ucm.fdi.integration.data.SessionPOJO;
  * @version 08.05.2018
  */
 public interface SessionManagerSA {
-    
-    // ** SESSION CREATION ** //
 
-    /**
-     * Adds a given {@code SessionPOJO} to the app {@code SessionDAO} database,
-     * checking the session creation time.
-     * 
-     * @param session - new {@code SessionPOJO} to be added
-     * 
-     * @throws IllegalArgumentException if session creation time is higher than
-     *                                  actual local time
-     */
-    public void addNewSession(SessionPOJO session) throws 
-            IllegalArgumentException;
+	// ** SESSION CREATION ** //
 
-    /**
-     * Accesses an existing {@code SessionPOJO} and modifies its atribute
-     * {@code lastAccessedTime} to actual time.
-     * 
-     * @param sessionID - id of {@code SessionPOJO} to be accesseds
-     * 
-     * @throws NoSuchElementException if {@code sessionID} not found in 
-     *                                {@code sessionDAO} database
-     */
-    public void accessSession(String sessionID) throws NoSuchElementException;
+	/**
+	 * Adds a given {@code SessionPOJO} to the app {@code SessionDAO} database,
+	 * checking the session creation time.
+	 * 
+	 * @param session
+	 *            - new {@code SessionPOJO} to be added
+	 * 
+	 * @throws IllegalArgumentException
+	 *             if session creation time is higher than actual local time
+	 */
+	public void addNewSession(SessionPOJO session)
+			throws IllegalArgumentException;
 
-    /**
-     * Removes a {@code SessionPOJO} from the DAO map.
-     * 
-     * @param sessionID - id of {@code SessionPOJO} to be removed
-     * 
-     * @throws NoSuchElementException if {@code sessionID} not found in
-     *                                 {@code sesssionDAO} database
-     */
-    public void removeSession(String sessionID) throws NoSuchElementException;
+	/**
+	 * Accesses an existing {@code SessionPOJO} and modifies its atribute
+	 * {@code lastAccessedTime} to actual time.
+	 * 
+	 * @param sessionID
+	 *            - id of {@code SessionPOJO} to be accesseds
+	 * 
+	 * @throws NoSuchElementException
+	 *             if {@code sessionID} not found in {@code sessionDAO} database
+	 */
+	public void accessSession(String sessionID) throws NoSuchElementException;
+
+	/**
+	 * Removes a {@code SessionPOJO} from the DAO map.
+	 * 
+	 * @param sessionID
+	 *            - id of {@code SessionPOJO} to be removed
+	 * 
+	 * @throws NoSuchElementException
+	 *             if {@code sessionID} not found in {@code sesssionDAO}
+	 *             database
+	 */
+	public void removeSession(String sessionID) throws NoSuchElementException;
 }

@@ -15,36 +15,38 @@ import es.ucm.fdi.business.data.FilterPOJO;
 public class SearchEngineSAImp implements SearchEngineSA {
 
 	private ClubDAO clubAccess;
-	
+
 	/**
-	 * @param clubAccess is the DAO to access the clubs
+	 * @param clubAccess
+	 *            is the DAO to access the clubs
 	 */
 
-	public SearchEngineSAImp(ClubDAO clubAccess){
+	public SearchEngineSAImp(ClubDAO clubAccess) {
 		this.clubAccess = clubAccess;
 	}
-	
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<ElementHelper<ClubPOJO>> search(String words, List<FilterPOJO> filters, UserPOJO usr){
+	public List<ElementHelper<ClubPOJO>> search(String words,
+			List<FilterPOJO> filters, UserPOJO usr) {
 		ElementHelper<ClubPOJO> aux;
 		List<ElementHelper<ClubPOJO>> searchResults = new ArrayList<ElementHelper<ClubPOJO>>();
 		List<ClubPOJO> clubs;
 		clubs = usr.getPreferencesList();
-		
-		//Here we must find all the matching Data
-		for(ClubPOJO c : clubs){
+
+		// Here we must find all the matching Data
+		for (ClubPOJO c : clubs) {
 			aux = new ElementHelper<ClubPOJO>(c);
-			aux.setVisible( c.getCommercialName().toLowerCase().contains(words.toLowerCase()) );
+			aux.setVisible(c.getCommercialName().toLowerCase()
+					.contains(words.toLowerCase()));
 			searchResults.add(aux);
 		}
 
 		for (FilterPOJO f : filters) {
 			FilterBO currentFilter = FilterMapper.mapFilter(f);
 
-			for(ElementHelper<ClubPOJO> c : searchResults){
+			for (ElementHelper<ClubPOJO> c : searchResults) {
 				c.setVisible(currentFilter.filter(c.getElement()));
 			}
 		}

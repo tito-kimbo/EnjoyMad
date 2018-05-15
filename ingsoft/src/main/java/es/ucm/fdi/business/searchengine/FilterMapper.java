@@ -29,8 +29,10 @@ public class FilterMapper {
 	/**
 	 * Adds a specific <code>Filter</code> to the map.
 	 * 
-	 * @param name      <code>Filter</code> identifier.
-	 * @param prototype Prototype object for the <code>Filter</code>.
+	 * @param name
+	 *            <code>Filter</code> identifier.
+	 * @param prototype
+	 *            Prototype object for the <code>Filter</code>.
 	 */
 	public static void addFilter(String name, FilterBO prototype) {
 		map.put(name, prototype);
@@ -39,21 +41,24 @@ public class FilterMapper {
 	/**
 	 * Removes a specific <code>Filter</code> from the map.
 	 * 
-	 * @param name Identifier of the <code>Filter</code> to remove.
+	 * @param name
+	 *            Identifier of the <code>Filter</code> to remove.
 	 */
 	public static void removeFilter(String name) {
 		if (map.containsKey(name)) {
 			map.remove(name);
 		} else {
-			throw new IllegalArgumentException("Element to remove does not exist.");
+			throw new IllegalArgumentException(
+					"Element to remove does not exist.");
 		}
 	}
 
 	/**
 	 * Builds a certain <code>Filter</code> from the information given.
 	 * 
-	 * @param fp Object containing the information of the <code>Filter</code> to
-	 *           create.
+	 * @param fp
+	 *            Object containing the information of the <code>Filter</code>
+	 *            to create.
 	 * @return The newly built <code>Filter</code>.
 	 */
 	public static FilterBO mapFilter(FilterPOJO fp) {

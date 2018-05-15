@@ -14,86 +14,76 @@ import es.ucm.fdi.integration.data.SessionPOJO;
  */
 public class SessionManagerSAImp implements SessionManagerSA {
 
-    private static SessionDAOImp sessionDAO;
+	private static SessionDAOImp sessionDAO;
 
-    /**
-     * <p>
-     * Builds a {@link SessionManagerSAImp} whose funcionality is:
-     * </p> <p>
-     * 1)   To add and remove {@code SessionPOJO}s.
-     * </p> <p>
-     * 2)   To access {@code SessionPOJO}s and update their access times.
-     * </p>
-     * 
-     * @param sessions - the app {@code SessionDAOImp} database
-     */
-    public SessionManagerSAImp(SessionDAOImp sessions) {
-        sessionDAO = sessions;
-    }
+	/**
+	 * <p>
+	 * Builds a {@link SessionManagerSAImp} whose funcionality is:
+	 * </p>
+	 * <p>
+	 * 1) To add and remove {@code SessionPOJO}s.
+	 * </p>
+	 * <p>
+	 * 2) To access {@code SessionPOJO}s and update their access times.
+	 * </p>
+	 * 
+	 * @param sessions
+	 *            - the app {@code SessionDAOImp} database
+	 */
+	public SessionManagerSAImp(SessionDAOImp sessions) {
+		sessionDAO = sessions;
+	}
 
-	public void addNewSession(SessionPOJO session) throws 
-            IllegalArgumentException {
-        
-        LocalDateTime time = LocalDateTime.now();
+	public void addNewSession(SessionPOJO session)
+			throws IllegalArgumentException {
 
-        // Is already registered?
-        if ( sessionDAO.exist( session.getID() ) ) {
-            throw new IllegalArgumentException(
-                "In SESSION creation: " + 
-                "sessionID is already registered -> " + 
-                session.getID()
-            );
-        }
+		LocalDateTime time = LocalDateTime.now();
 
-        // Times checked
-        if ( time.compareTo( session.getCreationTime() ) < 0 ) {
-            throw new IllegalArgumentException(
-                "In SESSION creation: " + 
-                "session creation time is not valid -> " +
-                session.getCreationTime()
-            );
-        }
-            
-		if ( time.compareTo( session.getLastAccessedTime() ) < 0 ) {
-            throw new IllegalArgumentException(
-                "In SESSION creation: " + 
-                "session last access time is not valid -> " +
-                session.getLastAccessedTime()
-            );
-        }
+		// Is already registered?
+		if (sessionDAO.exist(session.getID())) {
+			throw new IllegalArgumentException("In SESSION creation: "
+					+ "sessionID is already registered -> " + session.getID());
+		}
 
-        // Addition to database.
-        sessionDAO.addSession(session);
+		// Times checked
+		if (time.compareTo(session.getCreationTime()) < 0) {
+			throw new IllegalArgumentException("In SESSION creation: "
+					+ "session creation time is not valid -> "
+					+ session.getCreationTime());
+		}
+
+		if (time.compareTo(session.getLastAccessedTime()) < 0) {
+			throw new IllegalArgumentException("In SESSION creation: "
+					+ "session last access time is not valid -> "
+					+ session.getLastAccessedTime());
+		}
+
+		// Addition to database.
+		sessionDAO.addSession(session);
 	}
 
 	public void accessSession(String sessionID) throws NoSuchElementException {
 		LocalDateTime time = null;
-        SessionPOJO sessionToAccess = sessionDAO.getSession(sessionID);
+		SessionPOJO sessionToAccess = sessionDAO.getSession(sessionID);
 
-        if (sessionToAccess == null) { 
-            throw new NoSuchElementException(
-                "In SESSION access: " +
-                "session not found in database. ID -> " +
-                sessionID
-            );
-        }
+		if (sessionToAccess == null) {
+			throw new NoSuchElementException("In SESSION access: "
+					+ "session not found in database. ID -> " + sessionID);
+		}
 
-        // XXX Esto debería ser más complejo quizá.
-        sessionToAccess.setLastAccessedTime(time);
+		// XXX Esto debería ser más complejo quizá.
+		sessionToAccess.setLastAccessedTime(time);
 	}
 
 	public void removeSession(String sessionID) throws NoSuchElementException {
 		SessionPOJO removingSession = sessionDAO.getSession(sessionID);
 
-        if (removingSession == null) {
-            throw new NoSuchElementException(
-                "In SESSION removal: " + 
-                "session not found in database. ID -> " +
-                sessionID
-            );
-        }
+		if (removingSession == null) {
+			throw new NoSuchElementException("In SESSION removal: "
+					+ "session not found in database. ID -> " + sessionID);
+		}
 
-        // XXX Esto debería ser más complejo quizá.
-        sessionDAO.removeSession(sessionID);
+		// XXX Esto debería ser más complejo quizá.
+		sessionDAO.removeSession(sessionID);
 	}
 }
