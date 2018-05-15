@@ -21,6 +21,7 @@ public class TagPOJO implements Serializable{
 
 	/**
 	 * Getter method for the tag.
+         * @return the tag
 	 */
 	public String getTag() {
 		return tag;
@@ -28,6 +29,7 @@ public class TagPOJO implements Serializable{
 	
 	/**
 	 * Setter method for the tag.
+         * @param tag
 	 */
 	public void setTag(String tag){
 		this.tag = tag;

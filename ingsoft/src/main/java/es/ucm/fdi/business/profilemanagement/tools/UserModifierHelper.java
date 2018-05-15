@@ -14,39 +14,39 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * @version 08.05.2018
  */
 public enum UserModifierHelper {
-    USERNAME("USERNAME") {
+    NICKNAME("NICKNAME") {
         @Override
-        public void modify(UserPOJO userToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
+        public void modify(UserPOJO userToManage, Object newData) 
+                throws IllegalArgumentException, DataFormatException {
             
             // Instance of...
             if ( ! ( newData instanceof String ) ) {
                 throw new IllegalArgumentException(
-                    "In USERNAME modification: " + 
+                    "In NICKNAME modification: " + 
                     "not a String type argument."
                 );
             }
 
             // Valid?
-            String newUsername = (String) newData;
+            String newNickname = (String) newData;
 
-            if ( ! ParsingToolHelper.parseUsername(newUsername) ) {
+            if ( ! ParsingToolHelper.parseUsername(newNickname) ) {
                 throw new DataFormatException(
-                    "In USERNAME modification: " +
+                    "In NICKNAME modification: " +
                     "not a valid username format -> " + 
-                    newUsername
+                    newNickname
                 );
             }
 
             // Modification.
-            userToManage.setUsername(newUsername);
+            userToManage.setNickname(newNickname);
         }
     },
     
     PASSWORD("PASSWORD") {
         @Override
-        public void modify(UserPOJO userToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
+        public void modify(UserPOJO userToManage, Object newData)
+                throws IllegalArgumentException, DataFormatException {
             
             // Instance of...
             if ( ! ( newData instanceof String ) ) {
@@ -77,8 +77,8 @@ public enum UserModifierHelper {
     
     EMAIL("EMAIL") {
         @Override
-        public void modify(UserPOJO userToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
+        public void modify(UserPOJO userToManage, Object newData) 
+                throws IllegalArgumentException, DataFormatException {
             
             // Instance of...
             if ( ! ( newData instanceof String ) ) {
@@ -106,8 +106,8 @@ public enum UserModifierHelper {
     
     NAME("NAME") {
         @Override
-        public void modify(UserPOJO userToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
+        public void modify(UserPOJO userToManage, Object newData) 
+                throws IllegalArgumentException, DataFormatException {
             
             // Instance of...             
             if ( ! ( newData instanceof String ) ) {
@@ -135,8 +135,8 @@ public enum UserModifierHelper {
     
     BIRTHDAY("BIRHTDAY") {
         @Override
-        public void modify(UserPOJO userToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
+        public void modify(UserPOJO userToManage, Object newData) 
+                throws IllegalArgumentException, DataFormatException {
             
             // Instance of...
             if ( ! ( newData instanceof LocalDate ) ) {
@@ -178,6 +178,7 @@ public enum UserModifierHelper {
      * 
      * @return type as {@code String}
      */
+    @Override
     public String toString() {
         return type;
     }
@@ -194,6 +195,6 @@ public enum UserModifierHelper {
      * @throws DataFormatException      if {@code newData} parsing failed
      *                                  
      */
-    public abstract void modify(UserPOJO userToManage, Object newData) throws
-            IllegalArgumentException, DataFormatException;
+    public abstract void modify(UserPOJO userToManage, Object newData) 
+            throws IllegalArgumentException, DataFormatException;
 }

@@ -2,23 +2,13 @@ package es.ucm.fdi.integration;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.Month;
 import java.time.ZoneId;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
-import es.ucm.fdi.integration.data.ClubPOJO;
-import es.ucm.fdi.integration.data.Location;
-import es.ucm.fdi.integration.data.ReviewPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 /**
@@ -34,7 +24,9 @@ public class UserDAOMySqlImp implements UserDAO {
 	 */
 	private void createConnection() {
 		try {
-		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
+		    con = DriverManager.
+                            getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942",
+                                    "sql7235942", "ZuYxbPsXjH");
 		}
 	    catch (SQLException ex) {
 	    	System.exit(1);
@@ -66,13 +58,15 @@ public class UserDAOMySqlImp implements UserDAO {
 	        
 	        ResultSet rs = st.executeQuery("SELECT * FROM Users where id="+id);
 	        
-	        if(rs.next()) //String id, String user, String pass, String email, String name, LocalDate bday
+	        if(rs.next()) 
+//String id, String user, String pass, String email, String name, LocalDate bday
 	        	user = new UserPOJO(rs.getString("id"), 
-	        			 rs.getString("username"), 
+	        			 rs.getString("nickname"), 
 	        			 rs.getString("password"), //
 	        			 rs.getString("address"), 
 	        			 rs.getString("email"), 
-	        			 rs.getDate("birthday").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+	        			 rs.getDate("birthday").toInstant().
+                                                 atZone(ZoneId.systemDefault()).toLocalDate());
 	        st.close();
 	    }
 	    catch (SQLException ex) {
@@ -99,11 +93,12 @@ public class UserDAOMySqlImp implements UserDAO {
 	        ResultSet rs = st.executeQuery("SELECT * FROM Users");
 	        while(rs.next()) {	    
         		user = new UserPOJO(rs.getString("id"), 
-	        			 rs.getString("username"), 
+	        			 rs.getString("nickname"), 
 	        			 rs.getString("password"), //
 	        			 rs.getString("address"), 
 	        			 rs.getString("email"), 
-	        			 rs.getDate("birthday").toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+	        			 rs.getDate("birthday").toInstant().
+                                                 atZone(ZoneId.systemDefault()).toLocalDate());
 		        
 	        	listUsers.add(user);
 	        }
@@ -129,10 +124,7 @@ public class UserDAOMySqlImp implements UserDAO {
 		try {
 	        Statement statement = con.createStatement();
 	        ResultSet rs = statement.executeQuery("select id from Users where id="+id);
-	        if(rs.next())
-	        	return true;
-	        else 
-	        	return false;
+                    return rs.next();
 	    }
 	    catch (SQLException ex) {
 	    	System.exit(1);
@@ -151,16 +143,15 @@ public class UserDAOMySqlImp implements UserDAO {
 	public boolean addUser(UserPOJO user) {
 		createConnection();
 		
-		try { //String id, String user, String pass, String email, String name, LocalDate bday
+                //String id, String user, String pass, String email, String name, LocalDate bday
+		try { 
 	        Statement st = con.createStatement();
 	        ResultSet rs = st.executeQuery("insert into Users values ("+user.getID()+","
-	        		+user.getUsername()+","+user.getPassword()+","+user.getName()+","+
+	        		+user.getNickname()+","+user.getPassword()+","+user.getName()+","+
 	        		user.getBirthday().toString() + ")");	
 	        
-	        if(rs.rowInserted()) // Doesn't check if the other insertions went wrong, just the club
-	        	return true;
-	        else 
-	        	return false;
+                // Doesn't check if the other insertions went wrong, just the club
+                    return rs.rowInserted(); 
 	    }
 	    catch (SQLException ex) {
 	    	System.exit(1);
@@ -185,10 +176,7 @@ public class UserDAOMySqlImp implements UserDAO {
 	        ResultSet rs = st.executeQuery("delete from Users where id="+id);
 	        st.executeQuery("delete from Opinions where user_id="+id);
 	        
-	        if(rs.rowDeleted())
-	        	return true;
-	        else 
-	        	return false;
+                    return rs.rowDeleted();
 	    }
 	    catch (SQLException ex) {
 	    	System.exit(1);

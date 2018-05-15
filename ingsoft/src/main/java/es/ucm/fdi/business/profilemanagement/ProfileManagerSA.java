@@ -9,8 +9,10 @@ import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.business.profilemanagement.tools.ClubModifierHelper;
 import es.ucm.fdi.business.profilemanagement.tools.UserModifierHelper;
 import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
+import java.util.List;
 
 /**
  * Interface defining the functionalities to be used in profile management. It
@@ -47,8 +49,8 @@ public interface ProfileManagerSA {
      *                                  club attributes
      */
 	public void addNewClub(String clubID, String name, String address,
-			float price, Set<TagPOJO> tags) throws IllegalArgumentException, 
-            DataFormatException;
+			float price, Set<TagPOJO> tags) 
+                throws IllegalArgumentException,DataFormatException;
 	
 
     /**
@@ -64,8 +66,8 @@ public interface ProfileManagerSA {
      *                                      new club attributes
      * 
      */
-    public void addNewClub(ClubPOJO club) throws IllegalArgumentException, 
-            DataFormatException;
+    public void addNewClub(ClubPOJO club) 
+            throws IllegalArgumentException,DataFormatException;
 
 
 
@@ -164,8 +166,8 @@ public interface ProfileManagerSA {
      * @throws DataFormatException      if {@code newData} parsing failed
      */
 	public void modifyUserData(String userID, UserModifierHelper dataType, 
-            Object newData) throws IllegalArgumentException,
-            DataFormatException;
+            Object newData)
+                throws IllegalArgumentException, DataFormatException;
 
     
 	
@@ -234,4 +236,96 @@ public interface ProfileManagerSA {
      */
     public void removeReview(String clubID, String userID) throws 
             NoSuchElementException;
+    
+    /**
+     * 
+     * @param clubID
+     * @return 
+     */
+    public String getCommercialName(String clubID);
+
+    /**
+     * 
+     * @param clubID
+     * @return 
+     */
+    public String getClubAdress(String clubID);
+
+    /**
+     * 
+     * @param clubID
+     * @return 
+     */
+    public float getClubPrice(String clubID);
+
+    /**
+     * 
+     * @param clubID
+     * @return 
+     */
+    public Location getClubLocation(String clubID);
+
+    /**
+     * 
+     * @param clubID
+     * @return 
+     */
+    public float getClubRating(String clubID);
+
+    /**
+     * 
+     * @param clubID
+     * @return 
+     */
+    public List<TagPOJO> getClubTags(String clubID);
+
+    /**
+     * 
+     * @param userID
+     * @return 
+     */
+    public String getUserNickname(String userID);
+
+    /**
+     * 
+     * @param userID
+     * @return 
+     */
+    public String getUserPassword(String userID);
+
+    /**
+     * 
+     * @param userID
+     * @return 
+     */
+    public String getUserEmail(String userID);
+
+    /**
+     * 
+     * @param userID
+     * @return 
+     */
+    public String getUserName(String userID);
+
+    /**
+     * 
+     * @param userID
+     * @return 
+     */
+    public LocalDate getUserBirthday(String userID);
+
+    /**
+     * 
+     * @param userID
+     * @return 
+     */
+    public List<String> getClubsReviewed(String userID);
+
+    /**
+     * 
+     * @param clubID
+     * @return 
+     */
+    public List<ReviewPOJO> getReviewsFromClub(String clubID);
+
 }

@@ -1,4 +1,4 @@
-package es.ucm.fdi.bussines.searchengine;
+package es.ucm.fdi.business.searchengine;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

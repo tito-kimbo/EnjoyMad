@@ -1,4 +1,4 @@
-package es.ucm.fdi.bussines.searchengine;
+package es.ucm.fdi.business.searchengine;
 
 import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;

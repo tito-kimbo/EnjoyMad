@@ -31,7 +31,7 @@ public class UserPOJOTest {
 		assertEquals(user.getEmail(),"myname@domain.com");
 		assertEquals(user.getID(),"IDNumber1");
 		assertEquals(user.getName(),"myname");
-		assertEquals(user.getUsername(), "MyUser");
+		assertEquals(user.getNickname(), "MyUser");
 		assertEquals(user.getPassword(),"MyPsw");
 	}
 	

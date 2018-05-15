@@ -45,8 +45,8 @@ public enum ClubModifierHelper {
 
     LOCATION("LOCATION") {
         @Override
-        public void modify(ClubPOJO clubToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
+        public void modify(ClubPOJO clubToManage, Object newData) 
+                throws IllegalArgumentException, DataFormatException {
 
             if ( ! (newData instanceof Location ) ) { 
             throw new IllegalArgumentException(
@@ -150,8 +150,8 @@ public enum ClubModifierHelper {
 
     ADD_TAG("ADD_TAG") {
         @Override
-        public void modify(ClubPOJO clubToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
+        public void modify(ClubPOJO clubToManage, Object newData) 
+                throws IllegalArgumentException, DataFormatException {
             
             // Instance of...
             if ( ! ( newData instanceof TagPOJO ) ) {
@@ -177,14 +177,14 @@ public enum ClubModifierHelper {
 
     REMOVE_TAG("REMOVE_TAG") {
         @Override
-        public void modify(ClubPOJO clubToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
+        public void modify(ClubPOJO clubToManage, Object newData) 
+                throws IllegalArgumentException, DataFormatException {
             
             // Instance of...
-            if ( ! ( newData instanceof String ) ) {
+            if ( ! ( newData instanceof TagPOJO ) ) {
                 throw new IllegalArgumentException(
                     "In TAG removal: " + 
-                    "not a String type argument."
+                    "not a TagPOJO type argument."
                 );
             }
 
@@ -197,8 +197,8 @@ public enum ClubModifierHelper {
 
     CLEAR_TAGS("CLEAR_TAGS") {
         @Override
-        public void modify(ClubPOJO clubToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
+        public void modify(ClubPOJO clubToManage, Object newData) 
+                throws IllegalArgumentException, DataFormatException {
             
             clubToManage.clearTags();
         }
@@ -219,6 +219,7 @@ public enum ClubModifierHelper {
      * 
      * @return type as {@code String}
      */
+    @Override
     public String toString() {
         return type;
     }
@@ -235,6 +236,6 @@ public enum ClubModifierHelper {
      * @throws DataFormatException      if {@code newData} parsing failed
      *                                  
      */
-    public abstract void modify(ClubPOJO clubToManage, Object newData) throws
-            IllegalArgumentException, DataFormatException;
+    public abstract void modify(ClubPOJO clubToManage, Object newData) 
+            throws IllegalArgumentException, DataFormatException;
 }
