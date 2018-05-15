@@ -33,4 +33,18 @@ public class TagPOJO implements Serializable{
 		this.tag = tag;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	public int hashCode(){
+		return tag.hashCode();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean equals(Object o){
+		return (o instanceof TagPOJO && (tag == ((TagPOJO)o).getTag()));
+	}
+	
 }
