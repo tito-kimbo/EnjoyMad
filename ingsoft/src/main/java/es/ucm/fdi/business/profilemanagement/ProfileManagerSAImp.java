@@ -299,6 +299,9 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 		} catch (DataFormatException dataForm) {
 			throw dataForm;
 		}
+		
+		clubDAO.removeClub(clubID);
+		clubDAO.addClub(club);
 	}
 
 	/**
@@ -330,6 +333,8 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 		} catch (DataFormatException dataForm) {
 			throw dataForm;
 		}
+		userDAO.removeUser(userID);
+		userDAO.addUser(user);
 	}
 
 	/**
