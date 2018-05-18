@@ -48,10 +48,18 @@ public class ProfileManagerSAImpTest {
      */
     @Test
     public void testAddNewClub() {
+        
         // We add a valid new club, no exception should be thrown
         try {
-            profileManager.addNewClub(new ClubPOJO("c2", "Pacha", 
-                    "C/ Barcelo 11", 20, new HashSet<TagPOJO>()));
+            profileManager.addNewClub(
+                new ClubPOJO(
+                    "c2", 
+                    "Pacha", 
+                    "C/ Barcelo 11", 
+                    20, 
+                    new HashSet<TagPOJO>()
+                )
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -65,8 +73,15 @@ public class ProfileManagerSAImpTest {
 
         // We add a non valid club, an exception should be thrown
         try {
-            profileManager.addNewClub(new ClubPOJO(" ", "Pacha", 
-                    "C/ Barcelo 11", 20, new HashSet<TagPOJO>()));
+            profileManager.addNewClub(
+                new ClubPOJO(
+                    " ", 
+                    "Pacha", 
+                    "C/ Barcelo 11", 
+                    20, 
+                    new HashSet<TagPOJO>()
+                )
+            );
             fail("The club was not correctly set up, you should not get here");
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
@@ -85,8 +100,16 @@ public class ProfileManagerSAImpTest {
     public void testAddNewUser() {
         // We add a valid new user, no exception should be thrown
         try {
-            profileManager.addNewUser(new UserPOJO("u1", "abc98", "Password1",
-                    "hola@gmail.com", "Alba Rosa", LocalDate.now()));
+            profileManager.addNewUser(
+                new UserPOJO(
+                    "u1", 
+                    "abc98", 
+                    "Password1",
+                    "hola@gmail.com", 
+                    "Alba Rosa", 
+                    LocalDate.now()
+                )
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -100,8 +123,16 @@ public class ProfileManagerSAImpTest {
 
         // We add a non valid user, an exception should be thrown
         try {
-            profileManager.addNewUser(new UserPOJO("#", "dhg11", "Password1",
-                    "adios@gmail.com", "Dani Ramiro", LocalDate.now()));
+            profileManager.addNewUser(
+                new UserPOJO(
+                    "#", 
+                    "dhg11", 
+                    "Password1",
+                    "adios@gmail.com", 
+                    "Dani Ramiro", 
+                    LocalDate.now()
+                )
+            );
             fail("The user was not correctly set up, you should not get here");
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
@@ -118,10 +149,17 @@ public class ProfileManagerSAImpTest {
      */
     @Test
     public void testModifyClubCommercialName() {
+        // We change the club commercial name, no exception should be thrown
         try {
-            // We change the club commercial name, no exception should be thrown
-            profileManager.addNewClub(new ClubPOJO("c2", "Pacha", 
-                    "C/ Barcelo 11", 20, new HashSet<TagPOJO>()));
+            profileManager.addNewClub(
+                new ClubPOJO(
+                    "c2", 
+                    "Pacha", 
+                    "C/ Barcelo 11", 
+                    20, 
+                    new HashSet<TagPOJO>()
+                )
+            );
         } catch (IllegalArgumentException ex) {
             // Should not enter here
             fail("The user was correctly set up but exception was thrown: "
@@ -133,8 +171,11 @@ public class ProfileManagerSAImpTest {
         }
 
         try {
-            profileManager.modifyClubData("c2", 
-                    ClubModifierHelper.COMMERCIAL_NAME, "Teatro Barcelo");
+            profileManager.modifyClubData(
+                "c2", 
+                ClubModifierHelper.COMMERCIAL_NAME, 
+                "Teatro Barcelo"
+            );
         } catch (NoSuchElementException ex) {
             // Should not enter here
             fail("The club commercial name was correctly changed but exception was thrown: "
@@ -144,8 +185,10 @@ public class ProfileManagerSAImpTest {
             fail("The club commercial name was correctly changed but exception was thrown: "
                     + ex.getMessage());
         }
-        assertTrue("The commercial name of the club has changed",
-                "Teatro Barcelo".equals(profileManager.getCommercialName("c2")));
+        assertTrue(
+            "The commercial name of the club has changed",
+            "Teatro Barcelo".equals(profileManager.getCommercialName("c2"))
+        );
     }
 
     /**
@@ -155,8 +198,15 @@ public class ProfileManagerSAImpTest {
     public void testModifyClubAddress() {
         try {
             // We change the club club adress, no exception should be thrown
-            profileManager.addNewClub(new ClubPOJO("c2", "Pacha", 
-                    "C/ Barcelo 11", 20, new HashSet<TagPOJO>()));
+            profileManager.addNewClub(
+                new ClubPOJO(
+                    "c2", 
+                    "Pacha", 
+                    "C/ Barcelo 11", 
+                    20, 
+                    new HashSet<TagPOJO>()
+                )
+            );
         } catch (IllegalArgumentException ex) {
             // Should not enter here
             fail("The user was correctly set up but exception was thrown: "
@@ -168,8 +218,11 @@ public class ProfileManagerSAImpTest {
         }
 
         try {
-            profileManager.modifyClubData("c2", 
-                    ClubModifierHelper.ADDRESS, "C/Gran Via 24");
+            profileManager.modifyClubData(
+                "c2",
+                ClubModifierHelper.ADDRESS, 
+                "C/Gran Via 24"
+            );
         } catch (NoSuchElementException ex) {
             // Should not enter here
             fail("The club adress was correctly changed but exception was thrown: "
@@ -179,9 +232,10 @@ public class ProfileManagerSAImpTest {
             fail("The club adress was correctly changed but exception was thrown: "
                     + ex.getMessage());
         }
-        assertTrue("The adress of the club has changed",
-                "C/Gran Via 24".equals(profileManager.getClubAdress("c2")));
-
+        assertTrue(
+            "The adress of the club has changed",
+            "C/Gran Via 24".equals(profileManager.getClubAdress("c2"))
+        );
     }
 
     /**
@@ -191,8 +245,15 @@ public class ProfileManagerSAImpTest {
     public void testModifyClubPrice() {
         try {
             // We change the club club price, no exception should be thrown
-           profileManager.addNewClub(new ClubPOJO("c2", "Pacha", 
-                    "C/ Barcelo 11", 20, new HashSet<TagPOJO>()));
+           profileManager.addNewClub(
+               new ClubPOJO(
+                    "c2", 
+                    "Pacha", 
+                    "C/ Barcelo 11", 
+                    20, 
+                    new HashSet<TagPOJO>()
+                )
+            );
         } catch (IllegalArgumentException ex) {
             // Should not enter here
             fail("The user was correctly set up but exception was thrown: "
@@ -204,8 +265,11 @@ public class ProfileManagerSAImpTest {
         }
 
         try {
-            profileManager.modifyClubData("c2", 
-                    ClubModifierHelper.PRICE, 25.0F);
+            profileManager.modifyClubData(
+                "c2",
+                ClubModifierHelper.PRICE, 
+                25.0F
+            );
         } catch (NoSuchElementException ex) {
             // Should not enter here
             fail("The club price was correctly changed but exception was thrown: "
@@ -215,8 +279,10 @@ public class ProfileManagerSAImpTest {
             fail("The club price was correctly changed but exception was thrown: "
                     + ex.getMessage());
         }
-        assertTrue("The price of the club has changed",
-                (25.0F) == (profileManager.getClubPrice("c2")));
+        assertTrue(
+            "The price of the club has changed",
+            25.0F == profileManager.getClubPrice("c2")
+        );
 
     }
 
@@ -227,8 +293,15 @@ public class ProfileManagerSAImpTest {
     public void testModifyClublocation() {
         try {
             // We change the club club location, no exception should be thrown
-            profileManager.addNewClub(new ClubPOJO("c2", "Pacha", 
-                    "C/ Barcelo 11", 20, new HashSet<TagPOJO>()));
+            profileManager.addNewClub(
+                new ClubPOJO(
+                    "c2", 
+                    "Pacha", 
+                    "C/ Barcelo 11", 
+                    20, 
+                    new HashSet<TagPOJO>()
+                )
+            );
         } catch (IllegalArgumentException ex) {
             // Should not enter here
             fail("The user was correctly set up but exception was thrown: "
@@ -241,8 +314,11 @@ public class ProfileManagerSAImpTest {
 
         Location newLoc = new Location(35.4, -5.61);
         try {
-            profileManager.modifyClubData("c2", 
-                    ClubModifierHelper.LOCATION, newLoc);
+            profileManager.modifyClubData(
+                "c2",
+                ClubModifierHelper.LOCATION, 
+                new Location(35.4, -5.61)
+            );
         } catch (IllegalArgumentException ex) {
             // Should not enter here
             fail("The club location was correctly changed but exception was thrown: "
@@ -252,8 +328,9 @@ public class ProfileManagerSAImpTest {
             fail("The club location was correctly changed but exception was thrown: "
                     + ex.getMessage());
         }
-        assertTrue("The location of the club has changed",
-                newLoc.equals(profileManager.getClubLocation("c2")));
+        assertTrue(
+            "The location of the club has changed",
+            newLoc.equals(profileManager.getClubLocation("c2")));
     }
 
     /**
@@ -263,8 +340,15 @@ public class ProfileManagerSAImpTest {
     public void testModifyClubRating() {
         try {
             // We change the club club rating, no exception should be thrown
-            profileManager.addNewClub(new ClubPOJO("c2", "Pacha", 
-                    "C/ Barcelo 11", 20, new HashSet<TagPOJO>()));
+            profileManager.addNewClub(
+                new ClubPOJO(
+                    "c2", 
+                    "Pacha", 
+                    "C/ Barcelo 11", 
+                    20, 
+                    new HashSet<TagPOJO>()
+                )
+            );
         } catch (IllegalArgumentException ex) {
             // Should not enter here
             fail("The user was correctly set up but exception was thrown: "
@@ -276,8 +360,11 @@ public class ProfileManagerSAImpTest {
         }
 
         try {
-            profileManager.modifyClubData("c2", 
-                    ClubModifierHelper.RATING, 8.3F);
+            profileManager.modifyClubData(
+                "c2", 
+                ClubModifierHelper.RATING, 
+                8.3F
+            );
         } catch (NoSuchElementException ex) {
             // Should not enter here
             fail("The club rating was correctly changed but exception was thrown: "
@@ -287,8 +374,11 @@ public class ProfileManagerSAImpTest {
             fail("The club rating was correctly changed but exception was thrown: "
                     + ex.getMessage());
         }
-        assertTrue("The rating of the club has changed",
-                8.3F == (profileManager.getClubRating("c2")));
+
+        assertTrue(
+            "The rating of the club has changed",
+            8.3F == profileManager.getClubRating("c2")
+        );
     }
 
     /**
@@ -298,8 +388,15 @@ public class ProfileManagerSAImpTest {
     public void testAddClubTag() {
         // We add a valid new club, no exception should be thrown
         try {
-            profileManager.addNewClub(new ClubPOJO("c2", "Pacha", 
-                    "C/ Barcelo 11", 20, new HashSet<TagPOJO>()));
+            profileManager.addNewClub(
+                new ClubPOJO(
+                    "c2", 
+                    "Pacha", 
+                    "C/ Barcelo 11", 
+                    20, 
+                    new HashSet<TagPOJO>()
+                )
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -310,11 +407,14 @@ public class ProfileManagerSAImpTest {
             fail("The club was correctly set up but exception was thrown: "
                     + e.getMessage());
         }
+        
         // We add a valid new club tag, no exception should be thrown
         try {
-            TagPOJO tag = new TagPOJO("barato");
-             profileManager.modifyClubData("c2", 
-                    ClubModifierHelper.ADD_TAG, tag);
+            profileManager.modifyClubData(
+                "c2",
+                ClubModifierHelper.ADD_TAG, 
+                new TagPOJO("barato")
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -332,11 +432,21 @@ public class ProfileManagerSAImpTest {
      */
     @Test
     public void testRemoveClubTag() {
-        // We add a valid new club, no exception should be thrown
+
+        // XXX ¿Por qué "was correctly added"? Si salta excepcion no se añade nada.
+        
+        // We add a valid new club, no exception should be thrown.
         try {
-            profileManager.addNewClub(new ClubPOJO("c2", "Pacha", 
-                    "C/ Barcelo 11", 20, new HashSet<TagPOJO>()));
-            // Not catching multitple exception available (version 1.5)
+            profileManager.addNewClub(
+                new ClubPOJO(
+                    "c2", 
+                    "Pacha", 
+                    "C/ Barcelo 11", 
+                    20, 
+                    new HashSet<TagPOJO>()
+                )
+            );
+            // Not catching multiple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
             fail("The club was correctly set up but exception was thrown: "
@@ -346,12 +456,15 @@ public class ProfileManagerSAImpTest {
             fail("The club was correctly set up but exception was thrown: "
                     + e.getMessage());
         }
+
         // We add a valid new club tag, no exception should be thrown
         try {
-            TagPOJO tag = new TagPOJO("barato");
-            profileManager.modifyClubData("c2", 
-                    ClubModifierHelper.ADD_TAG, tag);
-            // Not catching multitple exception available (version 1.5)
+            profileManager.modifyClubData(
+                "c2",
+                ClubModifierHelper.ADD_TAG, 
+                new TagPOJO("barato")
+            );
+            // Not catching multiple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
             fail("The club tag was correctly added but exception was thrown: "
@@ -361,10 +474,14 @@ public class ProfileManagerSAImpTest {
             fail("The club tag was correctly added but exception was thrown: "
                     + e.getMessage());
         }
+
+        // We remove a the added tag, no exception should be thrown
         try {
-            TagPOJO tag = new TagPOJO("barato");
-            profileManager.modifyClubData("c2", 
-                    ClubModifierHelper.REMOVE_TAG, tag);
+            profileManager.modifyClubData(
+                "c2", 
+                ClubModifierHelper.REMOVE_TAG, 
+                new TagPOJO("barato")
+            );
         } catch (NoSuchElementException ex) {
             // Should not enter here
             fail("The club tag was correctly removed but exception was thrown: "
@@ -375,9 +492,12 @@ public class ProfileManagerSAImpTest {
                     + ex.getMessage());
         }
 
-        assertFalse("The tag was previously removed",
-                profileManager.getClubTags("c2").contains("barato"));
-
+        assertFalse(
+            "The tag was previously removed",
+            profileManager
+                .getClubTags("c2")
+                .contains( new TagPOJO("barato") )
+        );
     }
 
     /**
@@ -385,10 +505,18 @@ public class ProfileManagerSAImpTest {
      */
     @Test
     public void testClearClubTags() {
+        
         // We add a valid new club, no exception should be thrown
         try {
-            profileManager.addNewClub(new ClubPOJO("c2", "Pacha", 
-                    "C/ Barcelo 11", 20, new HashSet<TagPOJO>()));
+            profileManager.addNewClub(
+                new ClubPOJO(
+                    "c2", 
+                    "Pacha", 
+                    "C/ Barcelo 11", 
+                    20, 
+                    new HashSet<TagPOJO>()
+                )
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -399,58 +527,31 @@ public class ProfileManagerSAImpTest {
             fail("The club was correctly set up but exception was thrown: "
                     + e.getMessage());
         }
+        
         // We add a valid new club tag, no exception should be thrown
         try {
-            TagPOJO tag = new TagPOJO("barato");
-            profileManager.modifyClubData("c2", 
-                    ClubModifierHelper.ADD_TAG, tag);
-            // Not catching multitple exception available (version 1.5)
-        } catch (DataFormatException e) {
-            // Should not enter here
-            fail("The club tag was correctly added but exception was thrown: "
-                    + e.getMessage());
-        } catch (NoSuchElementException e) {
-            // Should not enter here
-            fail("The club tag was correctly added but exception was thrown: "
-                    + e.getMessage());
-        }
-        // We add a valid new club tag, no exception should be thrown
-        try {
-            TagPOJO tag = new TagPOJO("bueno");
-            profileManager.modifyClubData("c2", 
-                    ClubModifierHelper.ADD_TAG, tag);
-            // Not catching multitple exception available (version 1.5)
-        } catch (DataFormatException e) {
-            // Should not enter here
-            fail("The club tag was correctly added but exception was thrown: "
-                    + e.getMessage());
-        } catch (NoSuchElementException e) {
-            // Should not enter here
-            fail("The club tag was correctly added but exception was thrown: "
-                    + e.getMessage());
-        }
+            profileManager.modifyClubData(
+                "c2", 
+                ClubModifierHelper.ADD_TAG, 
+                new TagPOJO("barato")
+            );
+            profileManager.modifyClubData(
+                "c2", 
+                ClubModifierHelper.ADD_TAG, 
+                new TagPOJO("bueno")
+            );
+            profileManager.modifyClubData(
+                "c2", 
+                ClubModifierHelper.ADD_TAG, 
+                new TagPOJO("famoso")
+            );
+            profileManager.modifyClubData(
+                "c2", 
+                ClubModifierHelper.ADD_TAG, 
+                new TagPOJO("lleno")
+            );
 
-        // We add a valid new club tag, no exception should be thrown
-        try {
-            TagPOJO tag = new TagPOJO("famoso");
-            profileManager.modifyClubData("c2", 
-                    ClubModifierHelper.ADD_TAG, tag);
-            // Not catching multitple exception available (version 1.5)
-        } catch (DataFormatException e) {
-            // Should not enter here
-            fail("The club tag was correctly added but exception was thrown: "
-                    + e.getMessage());
-        } catch (NoSuchElementException e) {
-            // Should not enter here
-            fail("The club tag was correctly added but exception was thrown: "
-                    + e.getMessage());
-        }
 
-        // We add a valid new club tag, no exception should be thrown
-        try {
-            TagPOJO tag = new TagPOJO("lleno");
-            profileManager.modifyClubData("c2", 
-                    ClubModifierHelper.ADD_TAG, tag);
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -463,9 +564,11 @@ public class ProfileManagerSAImpTest {
         }
         
         try {
-            profileManager.modifyClubData("c2", 
-                    ClubModifierHelper.CLEAR_TAGS, "");
-      
+            profileManager.modifyClubData(
+                "c2",
+                ClubModifierHelper.CLEAR_TAGS, 
+                null
+            );
         } catch (IllegalArgumentException ex) {
            // Should not enter here
             fail("The club tags were corregtly cleared but an unexpected "
@@ -478,8 +581,10 @@ public class ProfileManagerSAImpTest {
                     + ex.getMessage());
         }
   
-        assertTrue("The tag was previously removed",
-                    profileManager.getClubTags("c2").isEmpty());
+        assertTrue(
+            "The tag was previously removed",
+            profileManager.getClubTags("c2").isEmpty()
+        );
     }
 
     /**
@@ -487,10 +592,19 @@ public class ProfileManagerSAImpTest {
      */
     @Test
     public void testModifyUserNickname() {
+        
         // We add a valid new user, no exception should be thrown
         try {
-            profileManager.addNewUser(new UserPOJO("u1", "abc98", "Password1",
-                    "hola@gmail.com", "Alba Pecas", LocalDate.now()));
+            profileManager.addNewUser(
+                new UserPOJO(
+                    "u1", 
+                    "abc98", 
+                    "Password1",
+                    "hola@gmail.com", 
+                    "Alba Pecas", 
+                    LocalDate.now()
+                )
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -501,9 +615,13 @@ public class ProfileManagerSAImpTest {
             fail("The user was correctly set up but exception was thrown: "
                     + e.getMessage());
         }
+
         try {
-            profileManager.modifyUserData("u1", UserModifierHelper.NICKNAME,
-                    "morenito19");
+            profileManager.modifyUserData(
+                "u1", 
+                UserModifierHelper.NICKNAME,
+                "morenito19"
+            );
         } catch (NoSuchElementException ex) {
             // Should not enter here
             fail("The user nickname was correctly changed but exception was thrown: "
@@ -513,8 +631,11 @@ public class ProfileManagerSAImpTest {
             fail("The user nickname was correctly changed but exception was thrown: "
                     + ex.getMessage());
         }
-        assertTrue("The nickname of the user has changed",
-                "morenito19".equals(profileManager.getUserNickname("u1")));
+
+        assertTrue(
+            "The nickname of the user has changed",
+            "morenito19".equals(profileManager.getUserNickname("u1"))
+        );
     }
 
     /**
@@ -524,8 +645,16 @@ public class ProfileManagerSAImpTest {
     public void testModifyUserPassWord() {
         // We add a valid new user, no exception should be thrown
         try {
-            profileManager.addNewUser(new UserPOJO("u1", "abc98", "Password1",
-                    "hola@gmail.com", "Alba Bosque", LocalDate.now()));
+            profileManager.addNewUser(
+                new UserPOJO(
+                    "u1", 
+                    "abc98", 
+                    "Password1",
+                    "hola@gmail.com", 
+                    "Alba Bosque", 
+                    LocalDate.now()
+                )
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -536,9 +665,13 @@ public class ProfileManagerSAImpTest {
             fail("The user was correctly set up but exception was thrown: "
                     + e.getMessage());
         }
+
         try {
-            profileManager.modifyUserData("u1", UserModifierHelper.PASSWORD,
-                    "fghjkllkjJKfd9");
+            profileManager.modifyUserData(
+                "u1", 
+                UserModifierHelper.PASSWORD,
+                "fghjkllkjJKfd9"
+            );
         } catch (NoSuchElementException ex) {
             // Should not enter here
             fail("The user password was correctly changed but exception was thrown: "
@@ -549,10 +682,13 @@ public class ProfileManagerSAImpTest {
                     + ex.getMessage());
         }
 
-        assertTrue("The password of the user has changed",
-                BCrypt.checkpw("fghjkllkjJKfd9", 
-                        profileManager.getUserPassword("u1")));
-
+        assertTrue(
+            "The password of the user has changed",
+            BCrypt.checkpw(
+                "fghjkllkjJKfd9", 
+                profileManager.getUserPassword("u1")
+            )
+        );
     }
 
     /**
@@ -560,10 +696,19 @@ public class ProfileManagerSAImpTest {
      */
     @Test
     public void testModifyUserEmail() {
+        
         // We add a valid new user, no exception should be thrown
         try {
-            profileManager.addNewUser(new UserPOJO("u1", "abc98", "Password1",
-                    "hola@gmail.com", "Alba Boreal", LocalDate.now()));
+            profileManager.addNewUser(
+                new UserPOJO(
+                    "u1", 
+                    "abc98", 
+                    "Password1",
+                    "hola@gmail.com", 
+                    "Alba Boreal", 
+                    LocalDate.now()
+                )
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -575,8 +720,11 @@ public class ProfileManagerSAImpTest {
                     + e.getMessage());
         }
         try {
-             profileManager.modifyUserData("u1", UserModifierHelper.EMAIL,
-                    "qtal@gmail.com");
+            profileManager.modifyUserData(
+                "u1", 
+                UserModifierHelper.EMAIL,
+                "qtal@gmail.com"
+            );
         } catch (NoSuchElementException ex) {
             // Should not enter here
             fail("The user email was correctly changed but exception was thrown: "
@@ -586,8 +734,11 @@ public class ProfileManagerSAImpTest {
             fail("The user email was correctly changed but exception was thrown: "
                     + ex.getMessage());
         }
-        assertTrue("The email of the user has changed",
-                "qtal@gmail.com".equals(profileManager.getUserEmail("u1")));
+
+        assertTrue(
+            "The email of the user has changed",
+            "qtal@gmail.com".equals(profileManager.getUserEmail("u1"))
+        );
     }
 
     /**
@@ -597,8 +748,16 @@ public class ProfileManagerSAImpTest {
     public void testModifyUserName() {
         // We add a valid new user, no exception should be thrown
         try {
-            profileManager.addNewUser(new UserPOJO("u1", "abc98", "Password1",
-                    "hola@gmail.com", "Alba Haca", LocalDate.now()));
+            profileManager.addNewUser(
+                new UserPOJO(
+                    "u1", 
+                    "abc98", 
+                    "Password1",
+                    "hola@gmail.com", 
+                    "Alba Haca", 
+                    LocalDate.now()
+                )
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -609,9 +768,13 @@ public class ProfileManagerSAImpTest {
             fail("The user was correctly set up but exception was thrown: "
                     + e.getMessage());
         }
+
         try {
-            profileManager.modifyUserData("u1", UserModifierHelper.NAME,
-                    "John Bolton");
+            profileManager.modifyUserData(
+                "u1", 
+                UserModifierHelper.NAME,
+                "John Bolton"
+            );
         } catch (NoSuchElementException ex) {
             // Should not enter here
             fail("The user name was correctly changed but exception was thrown: "
@@ -621,8 +784,11 @@ public class ProfileManagerSAImpTest {
             fail("The user name was correctly changed but exception was thrown: "
                     + ex.getMessage());
         }
-        assertTrue("The name of the user has changed",
-                "John Bolton".equals(profileManager.getUserName("u1")));
+
+        assertTrue(
+            "The name of the user has changed",
+            "John Bolton".equals(profileManager.getUserName("u1"))
+        );
     }
 
     /**
@@ -632,8 +798,16 @@ public class ProfileManagerSAImpTest {
     public void testModifyUserBirthday() {
         // We add a valid new user, no exception should be thrown
         try {
-            profileManager.addNewUser(new UserPOJO("u1", "abc98", "Password1",
-                    "hola@gmail.com", "Alba Piso", LocalDate.now()));
+            profileManager.addNewUser(
+                new UserPOJO(
+                    "u1", 
+                    "abc98", 
+                    "Password1",
+                    "hola@gmail.com", 
+                    "Alba Piso", 
+                    LocalDate.now()
+                )
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -644,9 +818,13 @@ public class ProfileManagerSAImpTest {
             fail("The user was correctly set up but exception was thrown: "
                     + e.getMessage());
         }
+        
         try {
-            profileManager.modifyUserData("u1", UserModifierHelper.BIRTHDAY,
-                    LocalDate.parse("1998-04-02"));
+            profileManager.modifyUserData(
+                "u1", 
+                UserModifierHelper.BIRTHDAY,
+                LocalDate.parse("1998-04-02")
+            );
         } catch (NoSuchElementException ex) {
             // Should not enter here
             fail("The user birthday was correctly changed but exception was thrown: "
@@ -656,8 +834,11 @@ public class ProfileManagerSAImpTest {
             fail("The user birthday was correctly changed but exception was thrown: "
                     + ex.getMessage());
         }
-        assertTrue("The birthday of the user has changed",
-                LocalDate.parse("1998-04-02").equals(profileManager.getUserBirthday("u1")));
+
+        assertTrue(
+            "The birthday of the user has changed",
+            LocalDate.parse("1998-04-02").equals(profileManager.getUserBirthday("u1"))
+        );
     }
 
     /**
@@ -667,8 +848,15 @@ public class ProfileManagerSAImpTest {
     public void testRemoveClub() {
         try {
             // We change the club club location, no exception should be thrown
-            profileManager.addNewClub(new ClubPOJO("c2", "Pacha", 
-                    "C/ Barcelo 11", 20, new HashSet<TagPOJO>()));
+            profileManager.addNewClub(
+                new ClubPOJO(
+                    "c2", 
+                    "Pacha", 
+                    "C/ Barcelo 11", 
+                    20, 
+                    new HashSet<TagPOJO>()
+                )
+            );
         } catch (IllegalArgumentException ex) {
             // Should not enter here
             fail("The user was correctly set up but exception was thrown: "
@@ -678,6 +866,7 @@ public class ProfileManagerSAImpTest {
             fail("The user was correctly set up but exception was thrown: "
                     + ex.getMessage());
         }
+
         try {
             profileManager.removeClub("c2");
         } catch (NoSuchElementException ex) {
@@ -685,6 +874,7 @@ public class ProfileManagerSAImpTest {
             fail("The club was correctly removed but exception was thrown: "
                     + ex.getMessage());
         }
+
         try {
             profileManager.getClubPrice("c2");
             fail("Getter method called over non-existing club");
@@ -700,8 +890,16 @@ public class ProfileManagerSAImpTest {
     public void testRemoveUser() {
         // We add a valid new user, no exception should be thrown
         try {
-            profileManager.addNewUser(new UserPOJO("u1", "abc98", "Password1",
-                    "hola@gmail.com", "Alba Rosa", LocalDate.now()));
+            profileManager.addNewUser(
+                new UserPOJO(
+                    "u1", 
+                    "abc98", 
+                    "Password1",
+                    "hola@gmail.com", 
+                    "Alba Rosa", 
+                    LocalDate.now()
+                )
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -712,6 +910,7 @@ public class ProfileManagerSAImpTest {
             fail("The user was correctly set up but exception was thrown: "
                     + e.getMessage());
         }
+        
         try {
             profileManager.removeUser("u1");
         } catch (NoSuchElementException ex) {
@@ -719,6 +918,7 @@ public class ProfileManagerSAImpTest {
             fail("The usesr was correctly removed but exception was thrown: "
                     + ex.getMessage());
         }
+        
         try {
             profileManager.getUserName("u1");
             fail("Getter method called over non-existing user");
@@ -734,8 +934,16 @@ public class ProfileManagerSAImpTest {
     public void testAddReview() {
         // We add a valid new user, no exception should be thrown
         try {
-            profileManager.addNewUser(new UserPOJO("u1", "abc98", "Password1",
-                    "hola@gmail.com", "Alba Rosa", LocalDate.now()));
+            profileManager.addNewUser(
+                new UserPOJO(
+                    "u1", 
+                    "abc98", 
+                    "Password1",
+                    "hola@gmail.com", 
+                    "Alba Rosa", 
+                    LocalDate.now()
+                )
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -748,8 +956,15 @@ public class ProfileManagerSAImpTest {
         }
         // We add a valid new club, no exception should be thrown
         try {
-            profileManager.addNewClub(new ClubPOJO("c2", "Pacha", 
-                    "C/ Barcelo 11", 20, new HashSet<TagPOJO>()));
+            profileManager.addNewClub(
+                new ClubPOJO(
+                    "c2", 
+                    "Pacha", 
+                    "C/ Barcelo 11", 
+                    20, 
+                    new HashSet<TagPOJO>()
+                )
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -762,8 +977,14 @@ public class ProfileManagerSAImpTest {
         }
         try {
             // We add a valid new review, no exception should be thrown
-            profileManager.addReview("c2", new ReviewPOJO("Es un club con muy buen ambiente,"
-                    + "buena musica y buenas copas.", 8), "u1");
+            profileManager.addReview(
+                "c2", 
+                new ReviewPOJO(
+                    "Es un club con muy buen ambiente, buena musica y buenas copas.",
+                    8
+                ), 
+                "u1"
+            );
         } catch (DataFormatException e) {
             // Should not enter here
             fail("The review was correctly added but exception was thrown: "
@@ -773,9 +994,17 @@ public class ProfileManagerSAImpTest {
             fail("The review was correctly added but exception was thrown: "
                     + e.getMessage());
         }
+        
         try {
             // We add a non valid new review, exception should be thrown
-            profileManager.addReview("c2", new ReviewPOJO("#hfdj09$", 8.9F), "u1");
+            profileManager.addReview(
+                "c2", 
+                new ReviewPOJO(
+                    "#hfdj09$", 
+                    8.9F
+                ), 
+                "u1"
+            );
         } catch (DataFormatException e) {
             // Should not enter here
             fail("The review was correctly added but exception was thrown: "
@@ -792,8 +1021,16 @@ public class ProfileManagerSAImpTest {
     public void testRemoveReview() {
         // We add a valid new user, no exception should be thrown
         try {
-            profileManager.addNewUser(new UserPOJO("u1", "abc98", "Password1",
-                    "hola@gmail.com", "Alba Rosa", LocalDate.now()));
+            profileManager.addNewUser(
+                new UserPOJO(
+                    "u1", 
+                    "abc98", 
+                    "Password1",
+                    "hola@gmail.com", 
+                    "Alba Rosa", 
+                    LocalDate.now()
+                )
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -806,8 +1043,15 @@ public class ProfileManagerSAImpTest {
         }
         // We add a valid new club, no exception should be thrown
         try {
-            profileManager.addNewClub(new ClubPOJO("c2", "Pacha", 
-                    "C/ Barcelo 11", 20, new HashSet<TagPOJO>()));
+            profileManager.addNewClub(
+                new ClubPOJO(
+                    "c2", 
+                    "Pacha", 
+                    "C/ Barcelo 11", 
+                    20, 
+                    new HashSet<TagPOJO>()
+                )
+            );
             // Not catching multitple exception available (version 1.5)
         } catch (DataFormatException e) {
             // Should not enter here
@@ -818,10 +1062,17 @@ public class ProfileManagerSAImpTest {
             fail("The club was correctly set up but exception was thrown: "
                     + e.getMessage());
         }
+        
         try {
             // We add a valid new review, no exception should be thrown
-            profileManager.addReview("c2", new ReviewPOJO("Es un club con muy buen ambiente,"
-                    + "buena musica y buenas copas.", 8.0), "u1");
+            profileManager.addReview(
+                "c2", 
+                new ReviewPOJO(
+                    "Es un club con muy buen ambiente, buena musica y buenas copas.",
+                    8.0
+                ), 
+                "u1"
+            );
         } catch (DataFormatException e) {
             // Should not enter here
             fail("The review was correctly added but exception was thrown: "
@@ -831,6 +1082,7 @@ public class ProfileManagerSAImpTest {
             fail("The review was correctly added but exception was thrown: "
                     + e.getMessage());
         }
+        
         try {
             // We remove a review, no exception should be thrown
             profileManager.removeReview("c2", "u1");
@@ -839,13 +1091,16 @@ public class ProfileManagerSAImpTest {
             fail("The review was correctly added but exception was thrown: "
                     + e.getMessage());
         }
+        
         // Test if the user has the review in their inner review list
-        assertTrue("The review of the user has been removed",
-                profileManager.getClubsReviewed("u1").isEmpty());
+        assertTrue(
+            "The review of the user has been removed",
+            profileManager.getClubsReviewed("u1").isEmpty());
 
         // Test if the club has the review in its inner review list
-        assertTrue("The review of the club has been removed",
-                profileManager.getReviewsFromClub("c2").isEmpty());
-
+        assertTrue(
+            "The review of the club has been removed",
+            profileManager.getReviewsFromClub("c2").isEmpty()
+        );
     }
 }

@@ -104,14 +104,17 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 					+ "not a valid price -> " + price);
 		}
 
-		/*
-		 * if ( ! ParsingToolHelper.parseTags(tags) ) {
-		 * 
-		 * String tagsInfo = ""; for (String t : tags) { tagsInfo += t + " "; }
-		 * 
-		 * throw new DataFormatException( "In CLUB creation: " +
-		 * "not a set of tags -> " + tagsInfo ); }
-		 */
+		if (!ParsingToolHelper.parseTags(tags)) {
+			String tagsInfo = ""; 
+			
+			for (TagPOJO t : tags) { 
+				tagsInfo += t.getTag() + " "; 
+			}
+			
+			throw new DataFormatException("In CLUB creation: " +
+				"not a valid set of tags -> " + tagsInfo ); 
+		}
+		
 
 		// Club creation and addition to database.
 		ClubPOJO newClub = new ClubPOJO(clubID, name, address, price, tags);
@@ -153,6 +156,17 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 		if (!ParsingToolHelper.parsePrice(club.getPrice())) {
 			throw new DataFormatException("In CLUB creation: "
 					+ "not a valid price -> " + club.getPrice());
+		}
+
+		if ( ! ParsingToolHelper.parseTags(club.getTags()) ) {
+			String tagsInfo = ""; 
+			
+			for (TagPOJO t : club.getTags()) { 
+				tagsInfo += t.getTag() + " "; 
+			}
+			
+			throw new DataFormatException("In CLUB creation: " +
+				"not a valid set of tags -> " + tagsInfo ); 
 		}
 
 		// Addition to database.
@@ -648,7 +662,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 		}
 
 		List<ReviewPOJO> list = new ArrayList<ReviewPOJO>();
-		list.addAll(clubToManage.getReviews().entrySet());
+		list.addAll(clubToManage.getReviews().values());
 		return list;
 	}
 }

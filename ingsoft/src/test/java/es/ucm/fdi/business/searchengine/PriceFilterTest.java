@@ -12,12 +12,11 @@ import org.junit.Test;
 
 import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.business.data.FilterPOJO;
+import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
-import es.ucm.fdi.business.searchengine.filters.FilterBO;
 
-import es.ucm.fdi.integration.data.ClubPOJO;
-import es.ucm.fdi.integration.data.Location;
+import es.ucm.fdi.business.searchengine.filters.FilterStrategy;
 
 public class PriceFilterTest {
 	@Test
@@ -33,10 +32,10 @@ public class PriceFilterTest {
 
 		FilterPOJO fp = new FilterPOJO("PriceFilter", l2);
 		FilterMapper.addAll();
-		FilterBO f = FilterMapper.mapFilter(fp);
 
+		FilterStrategy f = FilterMapper.mapFilter(fp);
 		assertTrue("Error when filtering by price: club price lower "
-				+ "than threshold should yield true" + l2.get(0), f.filter(c));
+				+ "than threshold should yield true" + l2.get(0),f.filter(c));
 
 		c.setPrice(30.50F);
 		assertTrue(

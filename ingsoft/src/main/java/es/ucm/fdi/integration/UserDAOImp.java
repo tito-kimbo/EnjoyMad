@@ -2,8 +2,6 @@ package es.ucm.fdi.integration;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;

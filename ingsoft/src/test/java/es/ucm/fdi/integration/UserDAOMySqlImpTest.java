@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.Test;
@@ -31,42 +32,54 @@ public class UserDAOMySqlImpTest {
 		user = new UserPOJO("IDNumber1", "MyUser", "MyPsw",
 				"myname@domain.com", "myname", date);
 
-		
 		userDao = new UserDAOMySqlImp();
-
+		userDao.removeUser("IDNumber1");
+		
 		list = new ArrayList<UserPOJO>(Arrays.asList(user));
+
 		userDao.addUser(user);
 	}
 
-	//@Test
+	@Test
 	public void testExist() {
 		createTestUserDAOMySqlImp();
 		assertTrue("Error: User not properly added to UserDAO",
 				userDao.exists("IDNumber1"));
+		userDao.removeUser("Number1");
 	}
 
+	//THE FOLLOWING TWO TESTS FAIL
+	
 	//@Test
 	public void testGetUser() {
 		createTestUserDAOMySqlImp();
+		UserPOJO userChecked = userDao.getUser("IDNumber1");
 		assertEquals("Error: user data not properly transferred by UserDAO",
-				userDao.getUser("IDNumber1"), user);
+				user, userChecked);
+		userDao.removeUser("IDNumber1");
 	}
 
 	//@Test
 	public void testGetUsers() {
 		createTestUserDAOMySqlImp();
+		List<UserPOJO> users = userDao.getUsers();
 		assertEquals("Error: users added incorrectly to UserDAO",
-				userDao.getUsers(), list);
+				users, list);
+		
+		for(UserPOJO user : list)
+			userDao.removeUser(user.getID());
 	}
 
-	//@Test
+	@Test
 	public void testRemoveUser() {
+		createTestUserDAOMySqlImp();
 		userDao.removeUser("IDNumber1");
 		assertFalse("Error: indicated user should not exist in UserDAO.",
 				userDao.exists("IDNumber1"));
 	}
-
-	//@Test
+	
+	/*
+	@Test
 	public void concurrentReadTest() {
 		
 		
@@ -129,7 +142,7 @@ public class UserDAOMySqlImpTest {
 		}
 	}
 
-	//@Test
+	@Test
 	public void concurrentWriteTest() {
 		latch = new CountDownLatch(CONCURRENT_TESTS);
 		userDao = new UserDAOImp();
@@ -146,7 +159,7 @@ public class UserDAOMySqlImpTest {
 				userDao.getUser("id"), user);
 	}
 	
-	//@Test
+	@Test
 	public void concurrentReadWriteTest(){
 		//This is a timer that will make the program wait for the threads to execute
 		latch = new CountDownLatch(2*CONCURRENT_TESTS);
@@ -170,5 +183,5 @@ public class UserDAOMySqlImpTest {
 					+assertionError.getMessage());
 		}
 	}
-
+	*/
 }

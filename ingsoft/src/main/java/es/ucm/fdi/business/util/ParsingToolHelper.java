@@ -2,8 +2,10 @@ package es.ucm.fdi.business.util;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.regex.Pattern;
 
+import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 
 
@@ -293,22 +295,27 @@ public class ParsingToolHelper {
     
     
     /**
-     * Parses a <code>Tag</code> collection to ensure every <code>Tag</code> is
-     * correct.
+     * Parses a {@code TagPOJO} collection to ensure every {@code TagPOJO} 
+     * is correct.
      *
-     * @param tags <code>Collection<Strings></code> with <code>Tags</code> to be
-     * parsed
-     * @return if <code>tags</code> are valid
+     * @param tags 
+     *          - Collection of {@code TagPOJO}s to be parsed
+     * 
+     * @return if {@code tags} collection is valid
      */
-    public static boolean parseTags(Collection<String> tags) {
+    public static boolean parseTags(Collection<TagPOJO> tags) {
         boolean valid = true;
 
-        for (String tag : tags) {
-            if (!tagChecker.matcher(tag).matches()) {
+        Iterator<TagPOJO> iter = tags.iterator();
+
+        while (valid && iter.hasNext()) {
+            TagPOJO tag = iter.next();
+
+            if ( ! tagChecker.matcher(tag.getTag()).matches() ) {
                 valid = false;
             }
         }
-
+        
         return valid;
     }
 
@@ -354,7 +361,4 @@ public class ParsingToolHelper {
 
         return valid;
     }
-
-  
-    
 }

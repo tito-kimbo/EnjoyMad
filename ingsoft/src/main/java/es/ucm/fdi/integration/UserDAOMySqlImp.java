@@ -5,9 +5,18 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+
+import java.sql.PreparedStatement;
+
+import android.text.format.DateFormat;
+
 import java.util.ArrayList;
+import java.util.Date;
 
 import es.ucm.fdi.integration.data.UserPOJO;
 
@@ -29,7 +38,7 @@ public class UserDAOMySqlImp implements UserDAO {
 					"jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942",
 					"sql7235942", "ZuYxbPsXjH");
 		} catch (SQLException ex) {
-			System.exit(1);
+			ex.printStackTrace();
 		}
 	}
 
@@ -41,7 +50,7 @@ public class UserDAOMySqlImp implements UserDAO {
 		try {
 			con.close();
 		} catch (SQLException ex) {
-			System.exit(1);
+			ex.printStackTrace();
 		}
 	}
 
@@ -56,19 +65,20 @@ public class UserDAOMySqlImp implements UserDAO {
 			Statement st = con.createStatement();
 
 			ResultSet rs = st
-					.executeQuery("SELECT * FROM Users where id=" + id);
+					.executeQuery("SELECT * FROM Users where id=" + '\'' + id + '\'');
 
 			if (rs.next())
 				// String id, String user, String pass, String email, String
 				// name, LocalDate bday
 				user = new UserPOJO(rs.getString("id"),
-						rs.getString("nickname"), rs.getString("password"), //
-						rs.getString("address"), rs.getString("email"), rs
-								.getDate("birthday").toInstant()
-								.atZone(ZoneId.systemDefault()).toLocalDate());
+						rs.getString("username"),
+						rs.getString("password"), //
+						rs.getString("email"),
+						rs.getString("name"),
+						rs.getDate("birth_date").toLocalDate());
 			st.close();
 		} catch (SQLException ex) {
-			System.exit(1);
+			ex.printStackTrace();
 		}
 
 		finally {
@@ -90,19 +100,20 @@ public class UserDAOMySqlImp implements UserDAO {
 
 			ResultSet rs = st.executeQuery("SELECT * FROM Users");
 			while (rs.next()) {
+				//String id, String nickname, String pass, String email, String name, LocalDate bday
 				user = new UserPOJO(rs.getString("id"),
-						rs.getString("nickname"), rs.getString("password"), //
-						rs.getString("address"), rs.getString("email"), rs
-								.getDate("birthday").toInstant()
-								.atZone(ZoneId.systemDefault()).toLocalDate());
+						rs.getString("username"),
+						rs.getString("password"),
+						rs.getString("email"), 
+						rs.getString("name"), 
+						rs.getDate("birth_date").toLocalDate());
 
 				listUsers.add(user);
 			}
 			st.close();
 		} catch (SQLException ex) {
-			System.exit(1);
+			ex.printStackTrace();
 		}
-
 		finally {
 			closeConnection();
 		}
@@ -119,10 +130,10 @@ public class UserDAOMySqlImp implements UserDAO {
 		try {
 			Statement statement = con.createStatement();
 			ResultSet rs = statement
-					.executeQuery("select id from Users where id=" + id);
+					.executeQuery("select id from Users where id=" + '\'' + id + '\'');
 			return rs.next();
 		} catch (SQLException ex) {
-			System.exit(1);
+			ex.printStackTrace();
 		}
 
 		finally {
@@ -142,21 +153,43 @@ public class UserDAOMySqlImp implements UserDAO {
 		// LocalDate bday
 		try {
 			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery("insert into Users values ("
-					+ user.getID() + "," + user.getNickname() + ","
-					+ user.getPassword() + "," + user.getName() + ","
-					+ user.getBirthday().toString() + ")");
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date myDate;
+			try {
+				myDate = formatter.parse(user.getBirthday().toString());
+				java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+				/*
+				st.executeUpdate("insert into Users values (\'"
+						+ user.getID() + "\',\'" + user.getNickname() + "\',\'"
+						+ user.getEmail() + "\',\'" + user.getName() + "\',"
+						+ sqlDate + ",\'" + user.getPassword() + "\')");
+						*/
+				// the mysql insert statement
+			      String query = " insert into Users (id, username, email, name, birth_date, password)"
+			        + " values (?, ?, ?, ?, ?, ?)";
 
-			// Doesn't check if the other insertions went wrong, just the club
-			return rs.rowInserted();
+			      // create the mysql insert preparedstatement
+			      PreparedStatement preparedStmt = con.prepareStatement(query);
+			      preparedStmt.setString (1, user.getID());
+			      preparedStmt.setString (2, user.getNickname());
+			      preparedStmt.setString (3, user.getEmail());
+			      preparedStmt.setString (4, user.getName());
+			      preparedStmt.setDate   (5, sqlDate);
+			      preparedStmt.setString (6, user.getPassword());
+			      
+			      preparedStmt.executeUpdate();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		} catch (SQLException ex) {
-			System.exit(1);
+			ex.printStackTrace();
 		}
 
 		finally {
 			closeConnection();
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -169,17 +202,16 @@ public class UserDAOMySqlImp implements UserDAO {
 		try {
 			Statement st = con.createStatement();
 
-			ResultSet rs = st.executeQuery("delete from Users where id=" + id);
-			st.executeQuery("delete from Opinions where user_id=" + id);
+			st.executeUpdate("delete from Users where id =" + '\'' + id + '\'');
+			st.executeUpdate("delete from Opinion where user_id =" + '\'' + id + '\'');
 
-			return rs.rowDeleted();
 		} catch (SQLException ex) {
-			System.exit(1);
+			ex.printStackTrace();
 		}
 
 		finally {
 			closeConnection();
 		}
-		return false;
+		return true;
 	}
 }

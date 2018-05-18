@@ -13,17 +13,18 @@ import es.ucm.fdi.business.searchengine.filters.*;
  * @version 22.04.2018
  */
 public class FilterMapper {
-	static private HashMap<String, FilterBO> map = new HashMap<String, FilterBO>();
-
-	// Static initializer for the class
+	
+	static private HashMap<String, FilterStrategy> map = new HashMap<String, FilterStrategy>();
+	
+	//Static initializer for the class
 	/**
 	 * Adds all existing <code>Filters</code> to the map.
 	 */
 	public static void addAll() {
-		map.put("PriceFilter", new PriceFilterBO());
-		map.put("TagFilter", new TagFilterBO());
-		map.put("RatingFilter", new RatingFilterBO());
-		map.put("LocationFilter", new LocationFilterBO());
+		map.put("PriceFilter", new PriceFilterStrategy());
+		map.put("TagFilter", new TagFilterStrategy());
+		map.put("RatingFilter", new RatingFilterStrategy());
+		map.put("LocationFilter", new LocationFilterStrategy());
 	}
 
 	/**
@@ -34,7 +35,7 @@ public class FilterMapper {
 	 * @param prototype
 	 *            Prototype object for the <code>Filter</code>.
 	 */
-	public static void addFilter(String name, FilterBO prototype) {
+	public static void addFilter(String name, FilterStrategy prototype){
 		map.put(name, prototype);
 	}
 
@@ -61,7 +62,7 @@ public class FilterMapper {
 	 *            to create.
 	 * @return The newly built <code>Filter</code>.
 	 */
-	public static FilterBO mapFilter(FilterPOJO fp) {
-		return (FilterBO) map.get(fp.getID()).clone(fp);
+	public static FilterStrategy mapFilter(FilterPOJO fp){
+		return (FilterStrategy) map.get(fp.getID()).clone(fp);
 	}
 }

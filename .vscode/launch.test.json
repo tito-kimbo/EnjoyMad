@@ -1,0 +1,28 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "ingsoft",
+                "projectName": "ingsoft",
+                "workingDirectory": "c:\\Users\\Pablo\\Documents\\GitHub\\EnjoyMad",
+                "args": [],
+                "vmargs": [],
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "ingsoft",
+                "projectName": "ingsoft",
+                "workingDirectory": "c:\\Users\\Pablo\\Documents\\GitHub\\EnjoyMad",
+                "args": [],
+                "vmargs": [],
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

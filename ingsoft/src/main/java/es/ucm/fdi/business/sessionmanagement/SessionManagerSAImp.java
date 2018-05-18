@@ -63,7 +63,7 @@ public class SessionManagerSAImp implements SessionManagerSA {
 	}
 
 	public void accessSession(String sessionID) throws NoSuchElementException {
-		LocalDateTime time = null;
+		LocalDateTime time = LocalDateTime.now();
 		SessionPOJO sessionToAccess = sessionDAO.getSession(sessionID);
 
 		if (sessionToAccess == null) {

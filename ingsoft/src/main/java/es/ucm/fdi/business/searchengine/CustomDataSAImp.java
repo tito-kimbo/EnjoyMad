@@ -6,9 +6,7 @@ import java.util.List;
 
 import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.integration.ClubDAO;
-import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.UserDAO;
-import es.ucm.fdi.integration.UserDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 
@@ -42,7 +40,7 @@ public class CustomDataSAImp implements CustomDataSA {
 		this.club = club;
 	}
 
-	public void updateValues() {
+	public synchronized void updateValues() {
 		List<ObjectValue> clubsWithValue = new ArrayList<ObjectValue>();
 		int clubValue;
 		for (UserPOJO u : user.getUsers()) {
