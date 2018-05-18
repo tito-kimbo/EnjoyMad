@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.Test;
@@ -50,16 +51,18 @@ public class UserDAOMySqlImpTest {
 	@Test
 	public void testGetUser() {
 		createTestUserDAOMySqlImp();
+		UserPOJO userChecked = userDao.getUser("IDNumber1");
 		assertEquals("Error: user data not properly transferred by UserDAO",
-				userDao.getUser("IDNumber1"), user);
+				user, userChecked);
 		userDao.removeUser("IDNumber1");
 	}
 
 	@Test
 	public void testGetUsers() {
 		createTestUserDAOMySqlImp();
+		List users = userDao.getUsers();
 		assertEquals("Error: users added incorrectly to UserDAO",
-				userDao.getUsers(), list);
+				users, list);
 		
 		for(UserPOJO user : list)
 			userDao.removeUser(user.getID());

@@ -5,9 +5,18 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+
+import java.sql.PreparedStatement;
+
+import android.text.format.DateFormat;
+
 import java.util.ArrayList;
+import java.util.Date;
 
 import es.ucm.fdi.integration.data.UserPOJO;
 
@@ -56,16 +65,17 @@ public class UserDAOMySqlImp implements UserDAO {
 			Statement st = con.createStatement();
 
 			ResultSet rs = st
-					.executeQuery("SELECT * FROM Users where id=" + id);
+					.executeQuery("SELECT * FROM Users where id=" + '\'' + id + '\'');
 
 			if (rs.next())
 				// String id, String user, String pass, String email, String
 				// name, LocalDate bday
 				user = new UserPOJO(rs.getString("id"),
-						rs.getString("nickname"), rs.getString("password"), //
-						rs.getString("address"), rs.getString("email"), rs
-								.getDate("birthday").toInstant()
-								.atZone(ZoneId.systemDefault()).toLocalDate());
+						rs.getString("username"),
+						rs.getString("password"), //
+						rs.getString("email"),
+						rs.getString("name"),
+						rs.getDate("birth_date").toLocalDate());
 			st.close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -90,11 +100,13 @@ public class UserDAOMySqlImp implements UserDAO {
 
 			ResultSet rs = st.executeQuery("SELECT * FROM Users");
 			while (rs.next()) {
+				//String id, String nickname, String pass, String email, String name, LocalDate bday
 				user = new UserPOJO(rs.getString("id"),
-						rs.getString("nickname"), rs.getString("password"), //
-						rs.getString("address"), rs.getString("email"), rs
-								.getDate("birthday").toInstant()
-								.atZone(ZoneId.systemDefault()).toLocalDate());
+						rs.getString("username"),
+						rs.getString("password"),
+						rs.getString("email"), 
+						rs.getString("name"), 
+						rs.getDate("birth_date").toLocalDate());
 
 				listUsers.add(user);
 			}
@@ -102,7 +114,6 @@ public class UserDAOMySqlImp implements UserDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
-
 		finally {
 			closeConnection();
 		}
@@ -142,10 +153,35 @@ public class UserDAOMySqlImp implements UserDAO {
 		// LocalDate bday
 		try {
 			Statement st = con.createStatement();
-			st.executeUpdate("insert into Users values (\'"
-					+ user.getID() + "\',\'" + user.getNickname() + "\',\'"
-					+ user.getPassword() + "\',\'" + user.getName() + "\',"
-					+ user.getBirthday().toString() + ")");
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date myDate;
+			try {
+				myDate = formatter.parse(user.getBirthday().toString());
+				java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+				/*
+				st.executeUpdate("insert into Users values (\'"
+						+ user.getID() + "\',\'" + user.getNickname() + "\',\'"
+						+ user.getEmail() + "\',\'" + user.getName() + "\',"
+						+ sqlDate + ",\'" + user.getPassword() + "\')");
+						*/
+				// the mysql insert statement
+			      String query = " insert into Users (id, username, email, name, birth_date, password)"
+			        + " values (?, ?, ?, ?, ?, ?)";
+
+			      // create the mysql insert preparedstatement
+			      PreparedStatement preparedStmt = con.prepareStatement(query);
+			      preparedStmt.setString (1, user.getID());
+			      preparedStmt.setString (2, user.getNickname());
+			      preparedStmt.setString (3, user.getEmail());
+			      preparedStmt.setString (4, user.getName());
+			      preparedStmt.setDate   (5, sqlDate);
+			      preparedStmt.setString (6, user.getPassword());
+			      
+			      preparedStmt.executeUpdate();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
