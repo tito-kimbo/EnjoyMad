@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 /**
  * Class that contains representative information of a certain user.
  * 
@@ -199,5 +201,24 @@ public class UserPOJO extends DataPOJO implements Serializable{
 	 */
 	public void removeFromReviewed(String clubID) {
 		reviewedClubs.remove(clubID);
+	}
+	
+	/**
+	 * Compares the <code>User</code> to another <code>User</code>.
+	 * 
+	 * @param user <code>User</code> to be compared to.
+	 * @return whether or not the two <code>User</code> are the same.
+	 */
+	synchronized public boolean equals(UserPOJO user) {
+		return (getID().equals(user.getID()) &&
+				getName().equals(user.getName()) &&
+				getBirthday().equals(user.getBirthday()) &&
+				getEmail() == user.getEmail() &&
+				getNickname().equals(user.getNickname()) &&
+				getPassword() == user.getPassword() &&
+				getPreferencesList() == user.getPreferencesList() &&
+				CollectionUtils.isEqualCollection(getReviewedClubs(),user.getReviewedClubs()) &&
+				getPreferencesList().equals(user.getPreferencesList()) &&
+				getValueTags().equals(user.getValueTags()));
 	}
 }
