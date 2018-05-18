@@ -56,4 +56,11 @@ public final class Location {
 	public void setLng(double lng) {
 		this.lng = lng;
 	}
+	
+	public boolean equals(Location loc) {
+		return(getLat() == loc.getLat() &&
+		getLng() == loc.getLng());
+
+	}
+
 }

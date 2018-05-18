@@ -34,4 +34,14 @@ public abstract class DataPOJO {
 	public void setID(String id) {
 		this.id = id;
 	}
+	
+	/**
+	 * Compares two <code>DataPOJO</code>.
+	 * 
+	 * @param data <code>DataPOJO</code> to be compared to.
+	 * @return  whether or not the two data are the same.
+	 */
+	public boolean equals(DataPOJO data) {
+		return getID().equals(data.getID());
+	}
 }

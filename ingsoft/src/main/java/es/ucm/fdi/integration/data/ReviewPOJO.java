@@ -51,4 +51,15 @@ public class ReviewPOJO {
 
 		return review;
 	}
+	
+	/**
+	 * Compares the <code>ReviewPOJO</code> to another <code>ReviewPOJO</code>.
+	 * 
+	 * @param review <code>ReviewPOJO</code> to be compared to.
+	 * @return whether or not the two <code>Reviews</code> are the same.
+	 */
+	public boolean equals(ReviewPOJO review) {
+		return (getOpinion().equals(review.getOpinion()) &&
+				getRating() == review.getRating());
+	}
 }

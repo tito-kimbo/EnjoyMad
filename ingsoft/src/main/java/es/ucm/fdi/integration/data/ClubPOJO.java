@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import org.apache.commons.collections4.CollectionUtils;
+
 
 import es.ucm.fdi.business.data.TagPOJO;
 
@@ -331,5 +333,24 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 
 	public Map getReviews() {
 		return userReviews;
+	}
+	
+	/**
+	 * Compares the <code>Club</code> to another <code>Club</code>.
+	 * 
+	 * @param club <code>Club</code> to be compared to.
+	 * @return whether or not the two <code>Clubs</code> are the same.
+	 */
+	synchronized public boolean equals(ClubPOJO club) {
+		return (getID().equals(club.getID()) &&
+				getCommercialName().equals(club.getCommercialName()) &&
+				getAddress().equals(club.getAddress()) &&
+				getLatitude() == club.getLatitude() &&
+				getLocation().equals(club.getLocation()) &&
+				getLongitude() == club.getLongitude() &&
+				getPrice() == club.getPrice() &&
+				CollectionUtils.isEqualCollection(getReviewers(),club.getReviewers()) &&
+				getReviews().equals(club.getReviews()) &&
+				getTags().equals(club.getTags()));
 	}
 }
