@@ -14,6 +14,8 @@ import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
+import es.ucm.fdi.business.searchengine.SearchEngineSAImp;
+import es.ucm.fdi.business.util.ElementHelper;;
 
 public class SearchEngineSAImpTest {
 	private static ClubDAOImp cd;
@@ -42,10 +44,15 @@ public class SearchEngineSAImpTest {
 		return usr;
 	}
 
+	/**
+	 * TEST 1: Search without filters.
+	 */
 	@Test
 	public void noFilterSearchTest() {
 		List<FilterPOJO> filters = new ArrayList<FilterPOJO>(); // Filters
 																// (empty)
 		UserPOJO usr = readyToSearchUser("id", "frblazqu", "Francis");
+
+		//List<ElementHelper<ClubPOJO>> aux = search("", filters, usr);
 	}
 }
