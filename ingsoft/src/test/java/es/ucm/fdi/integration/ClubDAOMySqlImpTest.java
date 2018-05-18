@@ -6,6 +6,8 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.Test;
@@ -27,11 +29,17 @@ public class ClubDAOMySqlImpTest {
 	private static CountDownLatch latch; // Timer to allow multi-threading tests
 
 	private static void createTestClubDAOMySqlImp() {
+		Set<TagPOJO> tags = new HashSet<TagPOJO>();
+		
+		tags.add(new TagPOJO("Electronica"));
+		tags.add(new TagPOJO("Reggaeton"));
+		tags.add(new TagPOJO("Funky"));
+		tags.add(new TagPOJO("R&B"));
+		
 		club = new ClubPOJO("id", "Kapital", "Calle Atocha, 125, 28012 Madrid",
-				17.0f, new HashSet<TagPOJO>(Arrays.asList(new TagPOJO(
-						"Electronica"), new TagPOJO("Reggaeton"), new TagPOJO(
-						"Funky"), new TagPOJO("R&B"))));
-
+				17.0f, tags);
+		
+		
 		clubDao = new ClubDAOMySqlImp();
 		clubDao.removeClub("id");
 		
@@ -66,7 +74,8 @@ public class ClubDAOMySqlImpTest {
 	@Test
 	public void testGetClubs() {
 		createTestClubDAOMySqlImp();
-		assertEquals(clubDao.getClubs(), list);
+		List otherlist = clubDao.getClubs();
+		assertEquals(list, otherlist);
 		
 		for(ClubPOJO club : list)
 			clubDao.removeClub(club.getID());
@@ -78,7 +87,7 @@ public class ClubDAOMySqlImpTest {
 		clubDao.removeClub("id");
 		assertEquals(clubDao.exists("id"), false);
 	}
-
+	/*
 	@Test
 	public void concurrentReadTest() {
 		// This is a timer that will make the program wait for the threads to
@@ -170,4 +179,5 @@ public class ClubDAOMySqlImpTest {
 					+ assertionError.getMessage());
 		}
 	}
+	*/
 }

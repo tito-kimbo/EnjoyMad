@@ -119,7 +119,7 @@ public class UserDAOMySqlImp implements UserDAO {
 		try {
 			Statement statement = con.createStatement();
 			ResultSet rs = statement
-					.executeQuery("select id from Users where id=" + id);
+					.executeQuery("select id from Users where id=" + '\'' + id + '\'');
 			return rs.next();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -166,8 +166,8 @@ public class UserDAOMySqlImp implements UserDAO {
 		try {
 			Statement st = con.createStatement();
 
-			st.executeUpdate("delete from Users where id=" + id);
-			st.executeUpdate("delete from Opinions where user_id=" + id);
+			st.executeUpdate("delete from Users where id =" + '\'' + id + '\'');
+			st.executeUpdate("delete from Opinion where user_id =" + '\'' + id + '\'');
 
 		} catch (SQLException ex) {
 			ex.printStackTrace();

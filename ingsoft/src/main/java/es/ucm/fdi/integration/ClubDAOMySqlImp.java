@@ -63,15 +63,15 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	        			 rs.getString("commercial_name"), //
 	        			 rs.getString("address"), 
 	        			 rs.getFloat("price"), 
-		        		 new Location(rs.getDouble("latitude"), rs.getDouble("longitud")), 
+		        		 new Location(rs.getDouble("latitude"), rs.getDouble("longitude")), 
 		        		 rs.getFloat("average_rating"));
 	        
-	        rs = st.executeQuery("SELECT * FROM Tags where id="+id);
+	        rs = st.executeQuery("SELECT * FROM Tags where club_id ="+'\'' + id + '\'');
 	        while(rs.next()) {
 	        	club.addTag(new TagPOJO(rs.getString("tag")));
 	        }
 	        
-	        rs = st.executeQuery("Select * FROM Opinions where club_id ="+ id);
+	        rs = st.executeQuery("Select * FROM Opinion where club_id =" +'\'' + id + '\'');
 	        while(rs.next()) {
 	        	club.addUserReview(rs.getString("user_id"), new ReviewPOJO(rs.getString("opinion"), rs.getFloat("rating")));
 	        }
@@ -117,6 +117,8 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		        while(auxS.next()) {
 		        	club.addUserReview(auxS.getString("user_id"), new ReviewPOJO(auxS.getString("opinion"), auxS.getFloat("rating")));
 		        }
+		        
+		        listClubs.add(club);
 	        }
 	        st.close();
 	    }
