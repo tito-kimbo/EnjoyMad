@@ -33,7 +33,8 @@ public class ClubDAOMySqlImpTest {
 						"Funky"), new TagPOJO("R&B"))));
 
 		clubDao = new ClubDAOMySqlImp();
-
+		clubDao.removeClub("id");
+		
 		list = new ArrayList<ClubPOJO>(Arrays.asList(club));
 
 		clubDao.addClub(club);
@@ -52,18 +53,23 @@ public class ClubDAOMySqlImpTest {
 	public void testExist() {
 		createTestClubDAOMySqlImp();
 		assertEquals(clubDao.exists("id"), true);
+		clubDao.removeClub("id");
 	}
 
 	@Test
 	public void testGetClub() {
 		createTestClubDAOMySqlImp();
 		assertEquals(clubDao.getClub("id"), club);
+		clubDao.removeClub("id");
 	}
 
 	@Test
 	public void testGetClubs() {
 		createTestClubDAOMySqlImp();
 		assertEquals(clubDao.getClubs(), list);
+		
+		for(ClubPOJO club : list)
+			clubDao.removeClub(club.getID());
 	}
 
 	@Test

@@ -29,7 +29,7 @@ public class UserDAOMySqlImp implements UserDAO {
 					"jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942",
 					"sql7235942", "ZuYxbPsXjH");
 		} catch (SQLException ex) {
-			System.exit(1);
+			ex.printStackTrace();
 		}
 	}
 
@@ -41,7 +41,7 @@ public class UserDAOMySqlImp implements UserDAO {
 		try {
 			con.close();
 		} catch (SQLException ex) {
-			System.exit(1);
+			ex.printStackTrace();
 		}
 	}
 
@@ -68,7 +68,7 @@ public class UserDAOMySqlImp implements UserDAO {
 								.atZone(ZoneId.systemDefault()).toLocalDate());
 			st.close();
 		} catch (SQLException ex) {
-			System.exit(1);
+			ex.printStackTrace();
 		}
 
 		finally {
@@ -100,7 +100,7 @@ public class UserDAOMySqlImp implements UserDAO {
 			}
 			st.close();
 		} catch (SQLException ex) {
-			System.exit(1);
+			ex.printStackTrace();
 		}
 
 		finally {
@@ -122,7 +122,7 @@ public class UserDAOMySqlImp implements UserDAO {
 					.executeQuery("select id from Users where id=" + id);
 			return rs.next();
 		} catch (SQLException ex) {
-			System.exit(1);
+			ex.printStackTrace();
 		}
 
 		finally {
@@ -142,21 +142,18 @@ public class UserDAOMySqlImp implements UserDAO {
 		// LocalDate bday
 		try {
 			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery("insert into Users values ("
-					+ user.getID() + "," + user.getNickname() + ","
-					+ user.getPassword() + "," + user.getName() + ","
+			st.executeUpdate("insert into Users values (\'"
+					+ user.getID() + "\',\'" + user.getNickname() + "\',\'"
+					+ user.getPassword() + "\',\'" + user.getName() + "\',"
 					+ user.getBirthday().toString() + ")");
-
-			// Doesn't check if the other insertions went wrong, just the club
-			return rs.rowInserted();
 		} catch (SQLException ex) {
-			System.exit(1);
+			ex.printStackTrace();
 		}
 
 		finally {
 			closeConnection();
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -169,17 +166,16 @@ public class UserDAOMySqlImp implements UserDAO {
 		try {
 			Statement st = con.createStatement();
 
-			ResultSet rs = st.executeQuery("delete from Users where id=" + id);
-			st.executeQuery("delete from Opinions where user_id=" + id);
+			st.executeUpdate("delete from Users where id=" + id);
+			st.executeUpdate("delete from Opinions where user_id=" + id);
 
-			return rs.rowDeleted();
 		} catch (SQLException ex) {
-			System.exit(1);
+			ex.printStackTrace();
 		}
 
 		finally {
 			closeConnection();
 		}
-		return false;
+		return true;
 	}
 }

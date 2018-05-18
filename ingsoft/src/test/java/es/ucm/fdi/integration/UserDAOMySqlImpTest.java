@@ -32,7 +32,8 @@ public class UserDAOMySqlImpTest {
 				"myname@domain.com", "myname", date);
 
 		userDao = new UserDAOMySqlImp();
-
+		userDao.removeUser("IDNumber1");
+		
 		list = new ArrayList<UserPOJO>(Arrays.asList(user));
 
 		userDao.addUser(user);
@@ -43,6 +44,7 @@ public class UserDAOMySqlImpTest {
 		createTestUserDAOMySqlImp();
 		assertTrue("Error: User not properly added to UserDAO",
 				userDao.exists("IDNumber1"));
+		userDao.removeUser("Number1");
 	}
 
 	@Test
@@ -50,6 +52,7 @@ public class UserDAOMySqlImpTest {
 		createTestUserDAOMySqlImp();
 		assertEquals("Error: user data not properly transferred by UserDAO",
 				userDao.getUser("IDNumber1"), user);
+		userDao.removeUser("IDNumber1");
 	}
 
 	@Test
@@ -57,15 +60,20 @@ public class UserDAOMySqlImpTest {
 		createTestUserDAOMySqlImp();
 		assertEquals("Error: users added incorrectly to UserDAO",
 				userDao.getUsers(), list);
+		
+		for(UserPOJO user : list)
+			userDao.removeUser(user.getID());
 	}
 
 	@Test
 	public void testRemoveUser() {
+		createTestUserDAOMySqlImp();
 		userDao.removeUser("IDNumber1");
 		assertFalse("Error: indicated user should not exist in UserDAO.",
 				userDao.exists("IDNumber1"));
 	}
-
+	
+	/*
 	@Test
 	public void concurrentReadTest() {
 		
@@ -170,5 +178,5 @@ public class UserDAOMySqlImpTest {
 					+assertionError.getMessage());
 		}
 	}
-
+	*/
 }

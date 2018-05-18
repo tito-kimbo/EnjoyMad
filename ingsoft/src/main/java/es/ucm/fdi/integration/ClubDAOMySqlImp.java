@@ -3,11 +3,11 @@ package es.ucm.fdi.integration;
 import java.sql.*;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.Iterator;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.business.data.TagPOJO;
@@ -29,7 +29,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
 		}
 	    catch (SQLException ex) {
-	    	System.exit(1);
+	    	ex.printStackTrace();
 	    }
 	}
 	
@@ -42,7 +42,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
             con.close();
         }
         catch (SQLException ex) {
-        	System.exit(1);
+        	ex.printStackTrace();
         }
 	}
 	
@@ -78,7 +78,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	        st.close();
 	    }
 	    catch (SQLException ex) {
-	    	System.exit(1);
+	    	ex.printStackTrace();
 	    }
 		    
 	    finally{
@@ -96,22 +96,24 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		
 	    try {
 	        Statement st = con.createStatement();
+	        Statement aux = con.createStatement();
 	        
 	        ResultSet rs = st.executeQuery("SELECT * FROM Clubs");
 	        while(rs.next()) {	    
-	        	ClubPOJO club = new ClubPOJO(rs.getString("id"), //ID
+	        	String id = rs.getString("id");
+	        	ClubPOJO club = new ClubPOJO(id, //ID
 	        			 rs.getString("commercial_name"), //
 	        			 rs.getString("address"), 
 	        			 rs.getFloat("price"), 
-		        		 new Location(rs.getDouble("latitude"), rs.getDouble("longitud")), 
+		        		 new Location(rs.getDouble("latitude"), rs.getDouble("longitude")), 
 		        		 rs.getFloat("average_rating"));
 		        
-		        ResultSet auxS =st.executeQuery("SELECT * FROM Tags where id="+rs.getString("id"));
+		        ResultSet auxS = aux.executeQuery("SELECT * FROM Tags where club_id = \'"+id+"\'");
 		        while(auxS.next()) {
 		        	club.addTag(new TagPOJO(auxS.getString("tag")));
 		        }
 		        
-		        auxS = st.executeQuery("Select * FROM Opinions where club_id ="+ rs.getString("id"));
+		        auxS = aux.executeQuery("Select * FROM Opinion where club_id ="+ '\'' + id + '\'');
 		        while(auxS.next()) {
 		        	club.addUserReview(auxS.getString("user_id"), new ReviewPOJO(auxS.getString("opinion"), auxS.getFloat("rating")));
 		        }
@@ -119,7 +121,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	        st.close();
 	    }
 	    catch (SQLException ex) {
-	    	System.exit(1);
+	    	ex.printStackTrace();
 	    }finally{
 	    	closeConnection();
 	    }
@@ -136,14 +138,14 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		
 		try {
 	        Statement statement = con.createStatement();
-	        ResultSet rs = statement.executeQuery("select id from Clubs where id="+id);
+	        ResultSet rs = statement.executeQuery("select id from Clubs where id="+id+";");
 	        if(rs.next())
 	        	return true;
 	        else 
 	        	return false;
 	    }
 	    catch (SQLException ex) {
-	    	System.exit(1);
+	    	ex.printStackTrace();
 	    }
 		    
 	    finally{
@@ -161,31 +163,43 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		
 		try { // Unchecked queries
 	        Statement st = con.createStatement();
-	        ResultSet rs = st.executeQuery("insert into Clubs values ("+club.getID()+","
-	        		+club.getCommercialName()+","+club.getAddress()+","+club.getPrice()+","
-	        		+club.getLatitude()+","+club.getLongitude()+","+club.getRating()+","+club.getAddress() + ")");
+	        String str = "INSERT INTO Clubs VALUES"
+	        		+ " (\'"+club.getID()+"\',\'"
+	        		+club.getCommercialName()+"\',\'"
+	        		+club.getAddress()+"\',"
+	        		+club.getPrice()+","
+	        		+club.getLatitude()+","
+	        		+club.getLongitude()+","
+	        		+club.getRating()+")";
+	        st.executeUpdate(str);
 	        
 	        for(TagPOJO tp : club.getTags()) {
-	        	st.executeQuery("insert into Tags values (" + club.getID() + "," + tp.getTag() + ")");
+	        	st.executeUpdate("insert into Tags values (\'" + tp.getTag() + "\',\'" + club.getID() + "\')");
 	        }
 	        @SuppressWarnings("rawtypes")
 			Iterator it = club.getReviews().entrySet().iterator();
 	        while (it.hasNext()) {
 	            @SuppressWarnings("rawtypes")
 				Map.Entry pair = (Map.Entry)it.next();
-	            st.executeQuery("insert into Opinions values ("+ pair.getKey() +","+ club.getID() +"," +((ReviewPOJO) pair).getRating() +","+ ((ReviewPOJO) pair.getValue()).getOpinion() + ")");
+	            st.executeUpdate("insert into Opinions values (\'"+ pair.getKey() +"\',\'"+ club.getID() +"\'," +((ReviewPOJO) pair).getRating() +",\'"+ ((ReviewPOJO) pair.getValue()).getOpinion() + "\')");
 	            it.remove(); // avoids a ConcurrentModificationException
 	        }
-	        
-	        if(rs.rowInserted()) // Doesn't check if the other insertions went wrong, just the club
-	        	return true;
-	        else 
-	        	return false;
 	    }
+		catch(java.sql.SQLNonTransientConnectionException ex) {
+			final ClubPOJO Fclub = club;
+			ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+		    executorService.scheduleAtFixedRate(
+		    		new Runnable() {
+			    		public void run() {
+			    			addClub(Fclub);
+			    		}
+		    		}, 0, 1, TimeUnit.SECONDS);
+			addClub(club); // Retry
+		}
 	    catch (SQLException ex) {
-	    	System.exit(1);
+	    	ex.printStackTrace();
 	    }
-		    
+		   
 	    finally{
 	    	closeConnection();
 	    }
@@ -202,17 +216,12 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		try {
 	        Statement st = con.createStatement();
 	        
-	        ResultSet rs = st.executeQuery("delete from Clubs where id="+id);
-	        st.executeQuery("delete from Tags where club_id="+id);
-	        st.executeQuery("delete from Opinions where club_id="+id);
-	        
-	        if(rs.rowDeleted())
-	        	return true;
-	        else 
-	        	return false;
+	        st.executeUpdate("delete from Clubs where id ="+'\'' + id + '\'');
+	        st.executeUpdate("delete from Tags where club_id ="+'\'' + id + '\'');
+	        st.executeUpdate("delete from Opinion where club_id ="+'\'' + id + '\'');
 	    }
 	    catch (SQLException ex) {
-	    	System.exit(1);
+	    	ex.printStackTrace();
 	    }
 		    
 	    finally{
