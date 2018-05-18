@@ -34,12 +34,9 @@ public interface TagManagerSA {
 	public void removeTags(TagPOJO tp);
 	
 	/**
-	 * 
-	 * @param s
-	 * @return
+	 * @param tp POJO representing the tag to add.
+	 * @return true if the active list has the tag {@link tp}
 	 */
 	public boolean hasTag(TagPOJO tp);
-	
-	
 	
 }

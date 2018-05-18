@@ -205,9 +205,8 @@ public enum ClubModifierHelper {
     };
 
 
-
-
-
+	
+	
     private String type;
 
     private ClubModifierHelper(String type) {

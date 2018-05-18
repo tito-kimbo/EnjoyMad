@@ -39,10 +39,12 @@ public abstract class TicketManagerSAImp implements TicketManagerSA {
 		
 		/*
 		 *  Payment code
-		 *  Stripe seems the best API to do it easily, it is not for free, it takes a 1.4% for each transaction + 0.25�
+		 *  Stripe seems the best API to do it easily, it is not for free, 
+		 *  it takes a 1.4% for each transaction + 0.25�
 		 */
 		
-		EmailSenderHelper.send("enjoymad@gmail.com", email, psw, "Se ha completado la compra de una entrada de " + clubID, "Tramite EnjoyMad");
+		EmailSenderHelper.send("enjoymad@gmail.com", email, psw, 
+				"Se ha completado la compra de una entrada de " + clubID, "Tramite EnjoyMad");
 	}
 	
 }

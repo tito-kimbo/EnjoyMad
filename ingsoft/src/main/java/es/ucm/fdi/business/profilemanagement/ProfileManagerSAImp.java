@@ -27,8 +27,8 @@ import es.ucm.fdi.integration.data.UserPOJO;
  */
 public class ProfileManagerSAImp implements ProfileManagerSA {
 
-    private static ClubDAOImp clubDAO;
-    private static UserDAOImp userDAO;
+    private static ClubDAOImp clubDAO;	//Allows to access to the clubs
+    private static UserDAOImp userDAO;	//Allows to access to the users
 
     /**
      * <p>
@@ -49,9 +49,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         clubDAO = clubs;
         userDAO = users;
     }
-
-
-
 
 
 
@@ -86,7 +83,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
                 clubID
             );
         }
-
+        
         if ( ! ParsingToolHelper.parseCommercialName(name) ) {
             throw new DataFormatException(
                 "In CLUB creation: " + 
@@ -266,7 +263,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
         // Password protection
         String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-        // User creation and addition
+        // User creation and addition to dataBase
         UserPOJO newUser = new UserPOJO(userID, username, hashPassword, email, name, birthday);
         userDAO.addUser(newUser);
     }
