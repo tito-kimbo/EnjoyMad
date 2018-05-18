@@ -55,5 +55,4 @@ public class EmailSenderHelper {
             throw new RuntimeException(e);
         }
     }
->>>>>>> SearchEngine
 }
