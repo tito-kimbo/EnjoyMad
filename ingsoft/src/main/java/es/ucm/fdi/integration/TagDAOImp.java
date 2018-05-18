@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,16 +22,14 @@ public class TagDAOImp implements TagDAO{
 	 * Empty constructor for the set object of the DAO
 	 */
 	public TagDAOImp(){
-		tags = Collections.newSetFromMap(new ConcurrentHashMap<TagPOJO,
-                        Boolean>());
+		tags = Collections.newSetFromMap(new ConcurrentHashMap<TagPOJO, Boolean>());
 	}
 
 	/**
 	 * @param stream get out a copy of the object of this DAO
 	 * @throws IOException if I/O operations have an interruption
 	 */
-	synchronized private void writeObject(ObjectOutputStream stream) 
-                throws IOException{
+	synchronized private void writeObject(ObjectOutputStream stream) throws IOException{
 		stream.writeObject(tags);
 	}
 	

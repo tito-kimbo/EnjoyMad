@@ -14,7 +14,9 @@ import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
-import es.ucm.fdi.business.searchengine.filters.FilterBO;
+
+import es.ucm.fdi.business.searchengine.filters.FilterStrategy;
+import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.Location;
 
 public class RatingFilter {
@@ -25,7 +27,7 @@ public class RatingFilter {
 		l2.add("4.0");
 		FilterPOJO fp = new FilterPOJO("RatingFilter", l2);
 		FilterMapper.addAll();
-		FilterBO f = FilterMapper.mapFilter(fp);
+		FilterStrategy f = FilterMapper.mapFilter(fp);
 		
 		//The provisional ID in this test is the MD5 hash generated from the name
 		ClubPOJO c = new ClubPOJO("aae032dec67f8f572570597421ad4b7e", "Mitty", 

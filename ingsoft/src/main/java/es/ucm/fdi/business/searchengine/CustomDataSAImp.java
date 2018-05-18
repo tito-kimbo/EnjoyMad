@@ -42,7 +42,7 @@ public class CustomDataSAImp implements CustomDataSA {
 		this.club = club;
 	}
 
-	public void updateValues() {
+	public synchronized void updateValues() {
 		List<ObjectValue> clubsWithValue = new ArrayList<ObjectValue>();
 		int clubValue;
 		for (UserPOJO u : user.getUsers()) {
