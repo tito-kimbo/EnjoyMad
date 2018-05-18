@@ -58,7 +58,7 @@ public class SessionDAOImpTest {
 	 * simple
 	 */
 
-	//@Test
+	@Test
 	public void addRemoveAndExistsTest() {
 
 		createTestSessionDAOImp();
@@ -76,7 +76,7 @@ public class SessionDAOImpTest {
 	 * care
 	 */
 
-	//@Test
+	@Test
 	public void listOfSessionsTest() {
 
 		createTestSessionDAOImp();
@@ -89,7 +89,7 @@ public class SessionDAOImpTest {
 	 * Now we want to know if removes correctly
 	 */
 
-	//@Test
+	@Test
 	public void removeSessionTest() {
 
 		createTestSessionDAOImp();
@@ -128,7 +128,7 @@ public class SessionDAOImpTest {
 		}.start();
 	}
 
-	//@Test
+	@Test
 	public void concurrentReadTest() {
 
 		// This is a timer that will make the program wait for the threads to
@@ -162,7 +162,7 @@ public class SessionDAOImpTest {
 		}.start();
 	}
 
-	//@Test
+	@Test
 	public void concurrentWriteTest() {
 		latch = new CountDownLatch(CONCURRENT_TESTS);
 
@@ -178,7 +178,7 @@ public class SessionDAOImpTest {
 				new HashSet<SessionPOJO>(sessionDao.getSessions()));
 	}
 
-	//@Test
+	@Test
 	public void concurrentReadWriteTest() {
 		// This is a timer that will make the program wait for the threads to
 		// execute
