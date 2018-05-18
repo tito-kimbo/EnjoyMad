@@ -22,7 +22,7 @@ public interface UserDAO {
 	 * @param id the user's id
 	 * @return if the user is registered
 	 */
-	public boolean exist(String id);
+	public boolean exists(String id);
 
 	/**
 	 * Adds a new user to the user map.

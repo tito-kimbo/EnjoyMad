@@ -14,7 +14,7 @@ import java.util.Set;
  * @version 22.04.2018
  */
 public class UserPOJO extends DataPOJO implements Serializable{
-	String username, password, email, name; 
+	String nickname, password, email, name; 
 	LocalDate birthday;
 	
 	private List <ClubPOJO> preferencesList;
@@ -32,17 +32,16 @@ public class UserPOJO extends DataPOJO implements Serializable{
 
 	/**
 	 * User class normal constructor
-	 * @param id user id
-	 * @param pass user password
-	 * @param email user email
-	 * @param name user name
-	 * @param bday user birthday date
-	 * @param rates user rated clubs
-	 * @param reviews user reviewed clubs
+	 * @param id nickname id
+         * @param nickname
+	 * @param pass nickname password
+	 * @param email nickname email
+	 * @param name nickname name
+	 * @param bday nickname birthday date
 	 */
-	public UserPOJO(String id, String user, String pass, String email, String name, LocalDate bday) {
+	public UserPOJO(String id, String nickname, String pass, String email, String name, LocalDate bday) {
 		super(id);
-		this.username = user;
+		this.nickname = nickname;
 		this.password = pass;
 		this.email = email;
 		this.name = name;
@@ -74,17 +73,18 @@ public class UserPOJO extends DataPOJO implements Serializable{
 
 	/**
 	 * User class whole constructor (for testing).
-	 * @param id user id
-	 * @param pass user password
-	 * @param email user email
-	 * @param name user name
-	 * @param bday user birthday date
-	 * @param rates user rated clubs
-	 * @param reviews user reviewed clubs
+	 * @param id nickname id
+         * @param nickname
+	 * @param pass nickname password
+	 * @param email nickname email
+	 * @param name nickname name
+	 * @param bday nickname birthday date
+	 * @param reviews nickname reviewed clubs
 	 */
-	public UserPOJO(String id, String user, String pass, String email, String name, LocalDate bday, Set<String> reviews) {
+	public UserPOJO(String id, String nickname, String pass, String email, 
+                String name, LocalDate bday, Set<String> reviews) {
 		super(id);
-		this.username = user;
+		this.nickname = nickname;
 		this.password = pass;
 		this.email = email;
 		this.name = name;
@@ -93,21 +93,21 @@ public class UserPOJO extends DataPOJO implements Serializable{
 	}
 
 	/**
-	 * Returns the username.
+	 * Returns the nickname.
 	 * 
-	 * @return username
+	 * @return nickname
 	 */
-	public String getUsername() {
-		return username;
+	public String getNickname() {
+		return nickname;
 	}
 
 	/**
-	 * Sets the username.
+	 * Sets the nickname.
 	 * 
-	 * @param newUsername
+         * @param nickname
 	 */
-	public void setUsername(String user) {
-		username = user;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	
 	/**

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import es.ucm.fdi.integration.data.SessionPOJO;
 
@@ -13,17 +15,16 @@ import es.ucm.fdi.integration.data.SessionPOJO;
  * @version 08.05.2018
  */
 public class SessionDAOImp implements SessionDAO {
-
-    private Map<String, SessionPOJO> sessionMap;
+    private ConcurrentMap<String, SessionPOJO> sessionMap;
 
     public SessionDAOImp() {
-        sessionMap = new HashMap<String, SessionPOJO>();
+        sessionMap = new ConcurrentHashMap<String, SessionPOJO>();
     }
 
     /**
      * {@inheritDoc}
      */
-	public List<SessionPOJO> getSessions() {
+    synchronized public List<SessionPOJO> getSessions() {
 		List<SessionPOJO> aux = 
                 new ArrayList<SessionPOJO>( sessionMap.values() );
         
@@ -35,7 +36,7 @@ public class SessionDAOImp implements SessionDAO {
      * 
      * @param id {@inheritDoc}
      */
-	public boolean exist(String id) {
+    synchronized public boolean exist(String id) {
 		return sessionMap.containsKey(id);
 	}
 
@@ -44,7 +45,7 @@ public class SessionDAOImp implements SessionDAO {
      * 
      * @param session {@inheritDoc}
      */
-	public void addSession(SessionPOJO session) {
+    synchronized public void addSession(SessionPOJO session) {
 		sessionMap.put(session.getID(), session);
 	}
 
@@ -53,7 +54,7 @@ public class SessionDAOImp implements SessionDAO {
      * 
      * @param id {@inheritDoc}
      */
-	public void removeSession(String id) {
+    synchronized public void removeSession(String id) {
 		sessionMap.remove(id);
 	}
 
@@ -62,7 +63,7 @@ public class SessionDAOImp implements SessionDAO {
      * 
      * @param id {@inhertiDoc}
      */
-	public SessionPOJO getSession(String id) {
+    synchronized public SessionPOJO getSession(String id) {
 		return sessionMap.get(id);
 	}
 }

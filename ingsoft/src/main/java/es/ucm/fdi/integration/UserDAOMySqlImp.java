@@ -1,21 +1,14 @@
 package es.ucm.fdi.integration;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.sql.Statement;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.ArrayList;
 
-import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 /**
@@ -24,175 +17,169 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * @version 22.04.2018
  */
 public class UserDAOMySqlImp implements UserDAO {
-    Connection con = null;
-    PreparedStatement statement = null;
-	ResultSet result = null;	
-	
+	Connection con = null;
 
 	/**
 	 * Creates connection to the database.
 	 * 
 	 */
-	
 	private void createConnection() {
 		try {
-		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
-		    statement = null;
-			result = null;
+			con = DriverManager.getConnection(
+					"jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942",
+					"sql7235942", "ZuYxbPsXjH");
+		} catch (SQLException ex) {
+			System.exit(1);
 		}
-	    catch (SQLException ex) {
-	    	System.exit(1);
-	    }
 	}
-	
+
 	/**
 	 * Closes connection to the database.
 	 * 
 	 */
-	
 	private void closeConnection() {
-        try{
-            con.close();
-            statement.close();
-            result.close();
-        }
-        catch (SQLException ex) {
-        	System.exit(1);
-        }
+		try {
+			con.close();
+		} catch (SQLException ex) {
+			System.exit(1);
+		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public UserPOJO getUser(String id) {
 		createConnection();
-	
-		//Not recognizing LocalDate. Will figure out tomorrow.
-		LocalDate date = LocalDate.of(1980,Month.JANUARY,1);
-		UserPOJO user = new UserPOJO(id,"","","","", date);
-		user.setID(id);
-	    try {
-	        statement = con.prepareStatement("select * from Users where id="+id);
-	        result = statement.executeQuery();
-	        /* sin terminar. falta revisar constructor UserPOJO user = new UserPOJO(result.getString(1),
-	        result.getString(2),result.getString(3),result.getFloat(4),new Location(result.getDouble(5),
-	        result.getDouble(6)),result.getFloat(7),result.getString(8));*/
-	        result.next();
-	    }
-	    catch (SQLException ex) {
-	    	System.exit(1);
-	    }
-		    
-	    finally{
-	    	closeConnection();
-	    }
-	    return user;
-	}
-	
-  	/**
-	 * {@inheritDoc}
-	 */
-	public boolean addUser(UserPOJO user) {
-		createConnection();
-		
-		try {
-	    	//missing numbers of the columns in the db. Waiting for UserPOJO updates.
-	        statement = con.prepareStatement("insert into Users values ("+user.getID()+",");
-	        result = statement.executeQuery();
-	        if(result.rowInserted())
-	        	return true;
-	        else 
-	        	return false;
-	    }
-	    catch (SQLException ex) {
-	    	System.exit(1);
-	    }
-		    
-	    finally{
-	    	closeConnection();
-	    }
-		return false;
-	}
-	
- 	/**
-	 * {@inheritDoc}
-	 */
-	public boolean exist(String id) {
-		createConnection();
-		
-		try {
-	        statement = con.prepareStatement("select id from Users where id="+id);
-	        result = statement.executeQuery();
-	        if(result.getString(1) == id)
-	        	return true;
-	        else 
-	        	return false;
-	    }
-	    catch (SQLException ex) {
-	    	System.exit(1);
-	    }
-		    
-	    finally{
-	    	closeConnection();
-	    }
-		return false;
-	}
-	
- 	/**
-	 * {@inheritDoc}
-	 */
-	public boolean removeUser(String id) {
-		createConnection();
-		
-		try {
-	        statement = con.prepareStatement("delete from Users where id="+id);
-	        result = statement.executeQuery();
-	        if(result.rowDeleted())
-	        	return true;
-	        else 
-	        	return false;
-	    }
-	    catch (SQLException ex) {
-	    	System.exit(1);
-	    }
-		    
-	    finally{
-	    	closeConnection();
-	    }
-		return false;
-	}
+		UserPOJO user = null;
 
+		try {
+			Statement st = con.createStatement();
+
+			ResultSet rs = st
+					.executeQuery("SELECT * FROM Users where id=" + id);
+
+			if (rs.next())
+				// String id, String user, String pass, String email, String
+				// name, LocalDate bday
+				user = new UserPOJO(rs.getString("id"),
+						rs.getString("nickname"), rs.getString("password"), //
+						rs.getString("address"), rs.getString("email"), rs
+								.getDate("birthday").toInstant()
+								.atZone(ZoneId.systemDefault()).toLocalDate());
+			st.close();
+		} catch (SQLException ex) {
+			System.exit(1);
+		}
+
+		finally {
+			closeConnection();
+		}
+		return user;
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public List<UserPOJO> getUsers() {
-		List<UserPOJO> listUsers = new ArrayList<UserPOJO>();
-		
 		createConnection();
-		
-		//Not recognizing LocalDate. Will figure out tomorrow.
-		LocalDate date = LocalDate.of(1980,Month.JANUARY,1);
-		UserPOJO user = new UserPOJO("","","","","", date);
+		List<UserPOJO> listUsers = new ArrayList<UserPOJO>();
+		UserPOJO user;
+
 		try {
-	        statement = con.prepareStatement("select * from Users");
-	        result = statement.executeQuery();
-				while(!result.isAfterLast()) {
-					/* sin terminar. falta revisar constructor user = new UserPOJO
-					(result.getString(1),result.getString(2),result.getString(3),result.getFloat(4),
-							new Location(result.getDouble(5),result.getDouble(6)),result.getFloat(7),
-							result.getString(8));*/
-					listUsers.add(user);
-					result.next();
-				}
-		    }
-		    catch (SQLException ex) {
-		    	System.exit(1);
-		    }
-		    
-	    finally{
-	    	closeConnection();
-	    }
-	    return listUsers;
+			Statement st = con.createStatement();
+
+			ResultSet rs = st.executeQuery("SELECT * FROM Users");
+			while (rs.next()) {
+				user = new UserPOJO(rs.getString("id"),
+						rs.getString("nickname"), rs.getString("password"), //
+						rs.getString("address"), rs.getString("email"), rs
+								.getDate("birthday").toInstant()
+								.atZone(ZoneId.systemDefault()).toLocalDate());
+
+				listUsers.add(user);
+			}
+			st.close();
+		} catch (SQLException ex) {
+			System.exit(1);
+		}
+
+		finally {
+			closeConnection();
+		}
+		return listUsers;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+
+	public boolean exists(String id) {
+		createConnection();
+
+		try {
+			Statement statement = con.createStatement();
+			ResultSet rs = statement
+					.executeQuery("select id from Users where id=" + id);
+			return rs.next();
+		} catch (SQLException ex) {
+			System.exit(1);
+		}
+
+		finally {
+			closeConnection();
+		}
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+
+	public boolean addUser(UserPOJO user) {
+		createConnection();
+
+		// String id, String user, String pass, String email, String name,
+		// LocalDate bday
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery("insert into Users values ("
+					+ user.getID() + "," + user.getNickname() + ","
+					+ user.getPassword() + "," + user.getName() + ","
+					+ user.getBirthday().toString() + ")");
+
+			// Doesn't check if the other insertions went wrong, just the club
+			return rs.rowInserted();
+		} catch (SQLException ex) {
+			System.exit(1);
+		}
+
+		finally {
+			closeConnection();
+		}
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+
+	public boolean removeUser(String id) {
+		createConnection();
+
+		try {
+			Statement st = con.createStatement();
+
+			ResultSet rs = st.executeQuery("delete from Users where id=" + id);
+			st.executeQuery("delete from Opinions where user_id=" + id);
+
+			return rs.rowDeleted();
+		} catch (SQLException ex) {
+			System.exit(1);
+		}
+
+		finally {
+			closeConnection();
+		}
+		return false;
 	}
 }

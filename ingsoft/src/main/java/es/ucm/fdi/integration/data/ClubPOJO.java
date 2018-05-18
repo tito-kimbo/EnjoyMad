@@ -43,6 +43,7 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 	/**
 	 * Club class normal constructor
 	 * @param id identification
+         * @param name
 	 * @param address address string
 	 * @param price price
 	 * @param tags set of tags
@@ -60,18 +61,22 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 		rating = 0.0F;
 		userReviews = new HashMap<String, ReviewPOJO>();
 	}
-
+	
 	/**
 	 * Club class whole constructor (for testing)
 	 * @param id identification
+         * @param name
 	 * @param address address string
 	 * @param price price
+         * @param location
 	 * @param tags set of tags
 	 * @param rates map of user->rates
 	 * @param rating total rating
+         * @param opinions
 	 */
-	public ClubPOJO(String id, String name, String address, float price, Location location, Set<TagPOJO> tags, 
-			Map<String, Integer> rates, float rating, Map<String, ReviewPOJO> opinions) {
+	public ClubPOJO(String id, String name, String address, float price,
+                Location location, Set<TagPOJO> tags, Map<String, Integer> rates,
+                float rating, Map<String, ReviewPOJO> opinions) {
 		super(id);
 		this.commercialName = name;
 		this.address = address;
@@ -103,7 +108,17 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 		//FALTA COPIAR USERREVIEWS. LUEGO VEO COMO HACERLO. ME TENGO QUE IR.
 		userReviews = new HashMap<String, ReviewPOJO>();
 	}
-	
+
+	public ClubPOJO(String id, String commercialName, String address,  float price, Location location, float rating) {
+		super(id);
+		this.commercialName = commercialName;
+		this.address = address;
+		this.location = location;
+		this.price = price;
+		this.rating = rating;	
+		this.tags = new HashSet<TagPOJO>();
+		this.userReviews = new  HashMap<String, ReviewPOJO>();
+	}
 
 	/**
 	 * Returns the club commercial name.
@@ -297,7 +312,7 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 			userReviews.remove(userID);
 
 			// Now updates the current rating		
-			if (userReviews.size() == 0) {
+			if (userReviews.isEmpty()) {
 				rating = 0;
 			} else {
 				rating = (float) (((userReviews.size() + 1) * rating - removedReview.getRating())
@@ -312,5 +327,9 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 	 */
 	public Collection<String> getReviewers() {
 		return ( (Collection<String>) userReviews.keySet() );
+	}
+
+	public Map getReviews() {
+		return userReviews;
 	}
 }

@@ -1,4 +1,4 @@
-package es.ucm.fdi.bussines.searchengine;
+package es.ucm.fdi.business.searchengine;
 
 import static org.junit.Assert.*;
 import java.time.LocalDate;
@@ -11,12 +11,14 @@ import java.util.HashSet;
 import org.junit.Test;
 
 import es.ucm.fdi.business.data.FilterPOJO;
+import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.SearchEngineSA;
 import es.ucm.fdi.business.searchengine.SearchEngineSAImp;
 import es.ucm.fdi.business.util.ElementHelper;
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 public class SearchEngineSAImpTest {
@@ -39,7 +41,7 @@ public class SearchEngineSAImpTest {
 	@Test
 	public void noFilterSearchTest(){
 		List <FilterPOJO> filters = new ArrayList<FilterPOJO>(); //Filters     (empty)
-		Set <String> l1 = new HashSet<String>();				 //Club's tags (empty)
+		Set <TagPOJO> l1 = new HashSet<TagPOJO>();				 //Club's tags (empty)ranch 'master' of https://github.com/tito-kimbo/EnjoyMad.git
 		
 		//Clubs to search
 		ClubPOJO c = new ClubPOJO("a2868521eac27ed8c7c4d7a38051f912", 

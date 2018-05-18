@@ -4,7 +4,7 @@ package es.ucm.fdi.integration.data;
  * 
  * @version 22.04.2018
  */
-public class Location {
+public final class Location {
 	private double lat, lng;
 	
 	/**
@@ -27,7 +27,7 @@ public class Location {
 		setLat(40.452926F);
 		setLng(-3.733293F);
 	}
-
+        
 	/**
 	 * Returns the latitude.
 	 * @return latitude

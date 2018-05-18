@@ -12,7 +12,9 @@ public interface FilterBO extends Cloneable {
 	/**
 	 * Clones the filter with the relevant parameters.
 	 * 
-	 * @param fp Object containing the information required to build the filter.
+	 * @param fp
+	 *            Object containing the information required to build the
+	 *            filter.
 	 * @return The cloned object.
 	 */
 	public Object clone(FilterPOJO fp);
@@ -21,7 +23,8 @@ public interface FilterBO extends Cloneable {
 	 * Determines whether a specific <code>Club</code> matches certain criteria
 	 * (depending on the specific filter type).
 	 * 
-	 * @param c <code>Club</code> to check.
+	 * @param c
+	 *            <code>Club</code> to check.
 	 * @return Whether the <code>Club</code> meets the criteria.
 	 */
 	abstract boolean filter(ClubPOJO c);
