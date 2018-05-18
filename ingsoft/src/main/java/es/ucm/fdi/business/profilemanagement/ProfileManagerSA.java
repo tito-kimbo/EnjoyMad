@@ -28,6 +28,7 @@ public interface ProfileManagerSA {
 	// ** PROFILE CREATION **//
 
 	/**
+	 * XXX ¿Borrar si no se usa al final?
 	 * <p>
 	 * * DO NOT USE IN MAIN APP * Method is kept just in case for testing or
 	 * future implementations.
@@ -75,6 +76,7 @@ public interface ProfileManagerSA {
 			DataFormatException;
 
 	/**
+	 * XXX ¿Borrar si no se usa al final?
 	 * <p>
 	 * * DO NOT USE IN MAIN APP * Method is kept just in case for testing or
 	 * future implementations.

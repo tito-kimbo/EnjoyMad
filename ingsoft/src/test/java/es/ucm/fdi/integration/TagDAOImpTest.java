@@ -49,8 +49,10 @@ public class TagDAOImpTest {
 		 * the loadTags can return another order for the ArrayList
 		 */
 
-		assertEquals("error saving or loading events", new HashSet(tagList),
-				new HashSet(lista1));
+		assertEquals("error saving or loading events", 
+				new HashSet<TagPOJO>(tagList),
+				new HashSet<TagPOJO>(lista1)
+				);
 
 	}
 
@@ -69,8 +71,10 @@ public class TagDAOImpTest {
 				try {
 					assertEquals(
 					"Concurrent reading is not thread safe for TagDAOImp, "
-					+ "mismatched tag in DAO.", new HashSet(
-					tagList), new HashSet(tagDao.loadTags()));
+					+ "mismatched tag in DAO.", 
+					new HashSet<TagPOJO>(tagList), 
+					new HashSet<TagPOJO>(tagDao.loadTags())
+					);
 				} catch (AssertionError assError) {
 					assertionError = assError;
 				} finally {
@@ -123,8 +127,9 @@ public class TagDAOImpTest {
 		awaitForLatch();
 
 		assertEquals("Concurrent writing is not thread safe for TagDAOImp, "
-				+ "mismatched tag in DAO", new HashSet(tagList), new HashSet(
-				tagDao.loadTags()));
+				+ "mismatched tag in DAO", new HashSet<TagPOJO>(tagList), 
+				new HashSet<TagPOJO>(tagDao.loadTags())
+				);
 	}
 
 	@Test

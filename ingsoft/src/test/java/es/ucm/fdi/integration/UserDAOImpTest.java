@@ -8,13 +8,10 @@ import static org.junit.Assert.fail;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.Test;
 
-import es.ucm.fdi.business.data.TagPOJO;
-import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 /**

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,7 +14,7 @@ import es.ucm.fdi.business.data.TagPOJO;
  * 
  * @version 22.04.2018
  */
-public class ClubPOJO extends DataPOJO implements Serializable{
+public class ClubPOJO extends DataPOJO implements Serializable {
 	/**
 	 * Generated serial UID.
 	 */
@@ -330,7 +329,7 @@ public class ClubPOJO extends DataPOJO implements Serializable{
 		return ( (Collection<String>) userReviews.keySet() );
 	}
 
-	public Map getReviews() {
+	public Map<String, ReviewPOJO> getReviews() {
 		return userReviews;
 	}
 }

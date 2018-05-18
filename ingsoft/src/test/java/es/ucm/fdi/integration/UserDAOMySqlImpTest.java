@@ -62,7 +62,7 @@ public class UserDAOMySqlImpTest {
 	//@Test
 	public void testGetUsers() {
 		createTestUserDAOMySqlImp();
-		List users = userDao.getUsers();
+		List<UserPOJO> users = userDao.getUsers();
 		assertEquals("Error: users added incorrectly to UserDAO",
 				users, list);
 		

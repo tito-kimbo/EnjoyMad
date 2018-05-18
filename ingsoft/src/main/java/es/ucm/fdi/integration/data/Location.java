@@ -30,10 +30,6 @@ public class Location {
 		setLat(latitude);
 		setLng(longitude);
 	}
-
-	public static void main(String[] args){
-		Location l = new Location("Calle del Prof. José G! Santesmases, 9, 28040 Madrid");
-	}
 	
 	/**
 	 * Constructor of <code>Location</code> from an <code>Address</code>.
@@ -91,5 +87,21 @@ public class Location {
 	 */
 	public void setLng(double lng) {
 		this.lng = lng;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object o) {
+
+		if (! (o instanceof Location)) {
+			return false;
+		}
+
+		Location locToCompare = (Location) o;
+
+		return 	lat == locToCompare.lat
+					&& lng == locToCompare.lng;
 	}
 }

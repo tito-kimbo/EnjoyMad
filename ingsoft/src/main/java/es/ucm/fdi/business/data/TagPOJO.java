@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Container class for tags.
  * 
- * @version 04.05.2018
+ * @version 18.05.2018
  */
 public class TagPOJO implements Serializable{
 	
@@ -36,15 +36,23 @@ public class TagPOJO implements Serializable{
 	/**
 	 * {@inheritDoc}
 	 */
-	public int hashCode(){
-		return tag.hashCode();
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof TagPOJO)) {
+			return false;
+		}
+
+		TagPOJO tagToCompare = (TagPOJO) o;
+
+		return tag.equals(tagToCompare.getTag());
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean equals(Object o){
-		return (o instanceof TagPOJO && (tag == ((TagPOJO)o).getTag()));
+	@Override
+	public int hashCode() {
+		return tag.hashCode();
 	}
 	
 }
