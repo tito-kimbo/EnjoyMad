@@ -49,15 +49,21 @@ public class SearchEngineSAImpTest {
 	@Test
 	public void noFilterSearchTest() 
 	{
+		//To establish the clubs for the search 
 		initializeDAOTest1();
-		
+		//To establish the user who searchs
+		UserPOJO usr = readyToSearchUser("id", "frblazqu", "Francis");
+		//Search filters
 		List<FilterPOJO> filters = new ArrayList<FilterPOJO>(); // Filters (empty)
 		
-		UserPOJO usr = readyToSearchUser("id", "frblazqu", "Francis");
-
-		List<ElementHelper<ClubPOJO>> aux = searchMotor.search("", filters, usr);
+		//Search result (visible clubs are which verifies all conditions)
+		List<ElementHelper<ClubPOJO>> searchResult = searchMotor.search("", filters, usr);
 		
-		assertTrue("No filterSearch failed", aux.size()== 2);
+		assertTrue("No filterSearch failed", searchResult.size()== 2);
+		assertTrue("No filterSearch failed", searchResult.get(0).isVisible());
+		assertTrue("No filterSearch failed", searchResult.get(1).isVisible());
+		assertTrue("No filterSearch failed", searchResult.get(0).getElement().getID().equals("Club1"));
+		assertTrue("No filterSearch failed", searchResult.get(1).getElement().getID().equals("Club2"));
 	}
 	private void initializeDAOTest1()
 	{
@@ -73,6 +79,19 @@ public class SearchEngineSAImpTest {
 		cd.addClub(c2);
 		
 		searchMotor = new SearchEngineSAImp(cd);
+	}
+	
+	/**
+	 * TEST 2: One filter search.
+	 */
+	@Test
+	public void oneFilterTest1()
+	{
+		
+	}
+	private void initializeDAOTest2and3()
+	{
+		
 	}
 	
 	
