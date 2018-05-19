@@ -14,8 +14,6 @@ import es.ucm.fdi.integration.data.DataPOJO;
  * implementation that will handle the request.
  * 
  * @version 18.05.2018
- * 
- * @author PabloHdez [Pablo Hernández]
  */
 public class RequestPOJO extends DataPOJO {
     
