@@ -26,9 +26,6 @@ public class SearchEngineSAImp implements SearchEngineSA {
 	/**
 	 * {@inheritDoc}
 	 */
-	/**
-	 * {@inheritDoc}
-	 */
 	public synchronized List<ElementHelper<ClubPOJO>> search(String words,
 			List<FilterPOJO> filters, UserPOJO usr) {
 		ElementHelper<ClubPOJO> aux;
