@@ -14,17 +14,24 @@ import es.ucm.fdi.business.searchengine.filters.*;
  */
 public class FilterMapper {
 	
-	static private HashMap<String, FilterStrategy> map = new HashMap<String, FilterStrategy>();
+	private static HashMap<String, FilterStrategy> map = new HashMap<String, FilterStrategy>();
+
+	//Public access keys for the filters
+	public static String PRICE_FILTER    = "PriceFilter";
+	public static String TAG_FILTER      = "TagFilter";
+	public static String RATING_FILTER   = "RatingFilter";
+	public static String LOCATION_FILTER = "LocationFilter";
+	
 	
 	//Static initializer for the class
 	/**
 	 * Adds all existing <code>Filters</code> to the map.
 	 */
 	public static void addAll() {
-		map.put("PriceFilter", new PriceFilterStrategy());
-		map.put("TagFilter", new TagFilterStrategy());
-		map.put("RatingFilter", new RatingFilterStrategy());
-		map.put("LocationFilter", new LocationFilterStrategy());
+		map.put(PRICE_FILTER,    new PriceFilterStrategy());
+		map.put(TAG_FILTER,      new TagFilterStrategy());
+		map.put(RATING_FILTER,   new RatingFilterStrategy());
+		map.put(LOCATION_FILTER, new LocationFilterStrategy());
 	}
 
 	/**
