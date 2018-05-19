@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.HashSet;
 
 import org.junit.Test;
-import org.junit.Assert.*;
 
 import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.business.data.TagPOJO;
@@ -249,7 +248,9 @@ public class SearchEngineSAImpTest {
 	 * TEST 4: Two filter search. (tags and location)
 	 * 
 	 * Checks which of the clubs that were initialized upper are nearer than 7km from the
-	 * Universidad Complutense's Mathematics faculty.
+	 * Universidad Complutense's Mathematics faculty and plays pop and reggeton music.
+	 * 
+	 * @Test commented to avoid abusive use of the api key.
 	 */
 	//@Test
 	public void twoFilterTest2()
@@ -260,7 +261,7 @@ public class SearchEngineSAImpTest {
 		List<String> filter1Params = new ArrayList<String>(); 
 		filter1Params.add("pop"); //Pop music clubs
 		filter1Params.add("rgt"); //Electronic dance music clubs
-		FilterPOJO priceFilter = new FilterPOJO(FilterMapper.TAG_FILTER, filter1Params);
+		FilterPOJO tagFilter = new FilterPOJO(FilterMapper.TAG_FILTER, filter1Params);
 		
 		List<String> filter2Params = new ArrayList<String>();
 		filter2Params.add("7");						//Maximum distance 7km
@@ -269,7 +270,7 @@ public class SearchEngineSAImpTest {
 		FilterPOJO locationFilter = new FilterPOJO(FilterMapper.LOCATION_FILTER, filter2Params);
 		
 		FilterMapper.addAll();
-		filters.add(priceFilter);
+		filters.add(tagFilter);
 		filters.add(locationFilter);
 		
 		
@@ -280,6 +281,58 @@ public class SearchEngineSAImpTest {
 		assertTrue("One filter search failed", searchResult.size()== 4);
 		assertTrue("One filter search failed", isVisibleElemWithId("Club2",searchResult));
 		assertTrue("One filter search failed", isVisibleElemWithId("Club3",searchResult));
+		assertFalse("One filter search failed", isVisibleElemWithId("Club4",searchResult));
+		assertFalse("One filter search failed", isVisibleElemWithId("Club1",searchResult));
+	}
+	
+	/**
+	 * TEST 5: All filter search.
+	 * 
+	 * @Test commented to avoid abusive use of the api key.
+	 */
+	//@Test
+	public void allFilterTest2()
+	{
+		//Search filters (tag filter)
+		List<FilterPOJO> filters = new ArrayList<FilterPOJO>();
+		
+		List<String> filter1Params = new ArrayList<String>(); 
+		filter1Params.add("pop"); //Pop music clubs
+		filter1Params.add("rgt"); //Electronic dance music clubs
+		FilterPOJO tagFilter = new FilterPOJO(FilterMapper.TAG_FILTER, filter1Params);
+		//All clubs verifies this two tags
+		
+		List<String> filter2Params = new ArrayList<String>(); 
+		filter2Params.add("7"); //Higher rating than 7 points
+		FilterPOJO ratingFilter = new FilterPOJO(FilterMapper.RATING_FILTER, filter2Params);
+		//Fabrik doesn't verifies this condition
+		
+		List<String> filter3Params = new ArrayList<String>(); 
+		filter3Params.add("19"); //Lower price than 19€
+		FilterPOJO priceFilter = new FilterPOJO(FilterMapper.PRICE_FILTER, filter3Params);
+		//Kapital is excluded too
+		
+		List<String> filter4Params = new ArrayList<String>();
+		filter4Params.add("5");						//Maximum distance 5km
+		filter4Params.add("40.4494588");			//Maths faculty latitude
+		filter4Params.add("-3.725856799999974");	//Maths faculty longitude
+		FilterPOJO locationFilter = new FilterPOJO(FilterMapper.LOCATION_FILTER, filter4Params);
+		//Pachá is excluded, so Mitty is the only one that verifies all the filters
+		
+		FilterMapper.addAll();
+		filters.add(tagFilter);
+		filters.add(ratingFilter);
+		filters.add(priceFilter);
+		filters.add(locationFilter);
+		
+		
+		//Search result (visible clubs are which verifies all conditions)
+		List<ElementHelper<ClubPOJO>> searchResult = searchMotor.search("", filters, user);
+
+		//We check if the result is what we expected!
+		assertTrue("One filter search failed", searchResult.size()== 4);
+		assertTrue("One filter search failed", isVisibleElemWithId("Club2",searchResult));
+		assertFalse("One filter search failed", isVisibleElemWithId("Club3",searchResult));
 		assertFalse("One filter search failed", isVisibleElemWithId("Club4",searchResult));
 		assertFalse("One filter search failed", isVisibleElemWithId("Club1",searchResult));
 	}
