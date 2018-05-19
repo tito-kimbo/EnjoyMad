@@ -44,6 +44,7 @@ public class SearchEngineSAImp implements SearchEngineSA {
 			FilterStrategy currentFilter = FilterMapper.mapFilter(f);
 
 			for (ElementHelper<ClubPOJO> c : searchResults) {
+				if(c.isVisible())
 				c.setVisible(currentFilter.filter(c.getElement()));
 			}
 		}
