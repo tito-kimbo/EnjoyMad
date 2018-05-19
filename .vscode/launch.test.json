@@ -8,7 +8,7 @@
                 "workingDirectory": "c:\\Users\\Pablo\\Documents\\GitHub\\EnjoyMad",
                 "args": [],
                 "vmargs": [],
-                "preLaunchTask": ""
+                "preLaunchTask": "pff"
             }
         ]
     },
