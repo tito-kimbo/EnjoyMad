@@ -28,11 +28,11 @@ public interface SessionManagerSA {
 			throws IllegalArgumentException;
 
 	/**
-	 * Accesses an existing {@code SessionPOJO} and modifies its atribute
+	 * Accesses an existing {@code SessionPOJO} and modifies its attribute
 	 * {@code lastAccessedTime} to actual time.
 	 * 
 	 * @param sessionID
-	 *            - id of {@code SessionPOJO} to be accesseds
+	 *            - id of {@code SessionPOJO} to be accessed
 	 * 
 	 * @throws NoSuchElementException
 	 *             if {@code sessionID} not found in {@code sessionDAO} database
