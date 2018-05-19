@@ -69,12 +69,13 @@ public class ParsingToolHelper {
     
     /**
      * A <code>Pattern</code> that matches alphanumeric sequences [A-Za-z0-9_].
-     * Used for alphanumeric <code>Strings</code> with no whitespaces.
+     * Used for alphanumeric <code>Strings</code> with no whitespaces and at least
+     * one character. And some chars as '_', '/', '[', ...
      * 
      * @see #parseID(String)
      * @see #parseUsername(String)
      */
-    public static Pattern alphaNumKeyChecker = Pattern.compile("^[a-zA-Z0-9]+$");
+    public static Pattern alphaNumKeyChecker = Pattern.compile("^([A-z0-9]{1,})$");
     
        
      /**
@@ -84,9 +85,10 @@ public class ParsingToolHelper {
      * @see #parseName(String)
      */
     public static Pattern nameChecker = Pattern.compile(
-            "^([a-zA-Z]{2,}\\s[a-zA-z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)");
+            "^([a-zA-Záéíóúüñ]{2,}\\s[a-zA-záéíóúüñ]{1,}'?-?[a-zA-Záéíóúüñ]{2,}\\s?([a-zA-Záéíóúüñ]{1,})?)");
     
      /**
+     * XXX ¿No usar este Pattern?
      * A <code>Pattern</code> that matches an <code>Address</code>>. Characters
      * typically used in an address allowed.
      */
@@ -94,16 +96,17 @@ public class ParsingToolHelper {
 
     /**
      * <p>
-     * A <code>Pattern</code> that matches a valid <code>Tag</code>:
-     * <code>#</code>-preceded and less than <code>25</code> chars long.
+     * A <code>Pattern</code> that matches a valid <code>Tag</code>: and 
+     * less than <code>25</code> chars long.
      * </p>
      * <p>
      * The <code>Pattern</code> groups the <code>Tag</code> without the
      * <code>#</code>.
      */
-    public static Pattern tagChecker = Pattern.compile("^([A-z0-9_]+)$");
+    public static Pattern tagChecker = Pattern.compile("^[A-z0-9_]{0,30}$");
 
     /**
+     * XXX ¿No usar?
      * A <code>Pattern</code> that matches a valid <code>Opinion</code>:
      * printable characters and less than <code>280</code> characters long.
      */
@@ -196,7 +199,7 @@ public class ParsingToolHelper {
         boolean valid = true;
 
         LocalDate allowedDate = LocalDate.now();
-        allowedDate.minusYears(18);
+        allowedDate = allowedDate.minusYears(18);
 
         if (birthday.isAfter(allowedDate)) {
             valid = false;
@@ -233,13 +236,7 @@ public class ParsingToolHelper {
      * @return if <code>address</code> is valid
      */
     public static boolean parseAddress(String address) {
-        boolean valid = true;
-
-        if (!addressChecker.matcher(address).matches()) {
-            valid = false;
-        }
-
-        return valid;
+        return true;
     }
     
 
@@ -334,10 +331,6 @@ public class ParsingToolHelper {
         if ( RATE_LOW_LIMIT > review.getRating() 
                 || RATE_UP_LIMIT < review.getRating() ) {
 
-            valid = false;
-        }
-
-        if ( ! opinionChecker.matcher( review.getOpinion() ).matches() ) {
             valid = false;
         }
 

@@ -12,9 +12,8 @@ import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.business.profilemanagement.tools.ClubModifierHelper;
 import es.ucm.fdi.business.profilemanagement.tools.UserModifierHelper;
 import es.ucm.fdi.business.util.ParsingToolHelper;
-
-import es.ucm.fdi.integration.ClubDAOImp;
-import es.ucm.fdi.integration.UserDAOImp;
+import es.ucm.fdi.integration.ClubDAO;
+import es.ucm.fdi.integration.UserDAO;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.Location;
@@ -30,8 +29,8 @@ import java.util.List;
  */
 public class ProfileManagerSAImp implements ProfileManagerSA {
 
-	private static ClubDAOImp clubDAO;
-	private static UserDAOImp userDAO;
+	private static ClubDAO clubDAO;
+	private static UserDAO userDAO;
 
 	/**
 	 * <p>
@@ -53,7 +52,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 	 * @param users
 	 *            - the app {@code UserDAO} database
 	 */
-	public ProfileManagerSAImp(ClubDAOImp clubs, UserDAOImp users) {
+	public ProfileManagerSAImp(ClubDAO clubs, UserDAO users) {
 		clubDAO = clubs;
 		userDAO = users;
 	}
