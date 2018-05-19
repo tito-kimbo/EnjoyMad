@@ -22,32 +22,17 @@ import es.ucm.fdi.business.util.ElementHelper;;
 
 
 public class SearchEngineSAImpTest {
-	private static ClubDAOImp cd;
-	private static SearchEngineSAImp searchMotor;
-	
-	/**
-	 * This initializes the ClubDao the first time the class is created.
-	 */
-	static 
-	{
-		cd = new ClubDAOImp();
-
-		Set<TagPOJO> l1 = new HashSet<TagPOJO>(); // Club1's tags (empty)
-		Set<TagPOJO> l2 = new HashSet<TagPOJO>(); // Club2's tags (empty)
-		
-		ClubPOJO c1 = new ClubPOJO("Club1", "Teatro Kapital", "C/Falsa 1", 20.30F, l1);
-		ClubPOJO c2 = new ClubPOJO("Club2", "Mitty", "C/Falsa 2", 15.00F, l2);
-		
-		cd.addClub(c1);
-		cd.addClub(c2);
-		
-		searchMotor = new SearchEngineSAImp(cd);
-	}
+	private ClubDAOImp cd;
+	private SearchEngineSAImp searchMotor;
 
 	/**
-	 * This method returns an user ready to execute searchs.
+	 * @param id New user's id
+	 * @param user New user's application name
+	 * @param name New user's name
+	 * 
+	 * @return An user ready to be used for searching clubs.
 	 */
-	public static UserPOJO readyToSearchUser(String id, String user, String name) 
+	public UserPOJO readyToSearchUser(String id, String user, String name) 
 	{
 		LocalDate birthday = LocalDate.of(2018, Month.JANUARY, 1);
 		
@@ -64,6 +49,8 @@ public class SearchEngineSAImpTest {
 	@Test
 	public void noFilterSearchTest() 
 	{
+		initializeDAOTest1();
+		
 		List<FilterPOJO> filters = new ArrayList<FilterPOJO>(); // Filters (empty)
 		
 		UserPOJO usr = readyToSearchUser("id", "frblazqu", "Francis");
@@ -72,4 +59,21 @@ public class SearchEngineSAImpTest {
 		
 		assertTrue("No filterSearch failed", aux.size()== 2);
 	}
+	private void initializeDAOTest1()
+	{
+		cd = new ClubDAOImp();
+
+		Set<TagPOJO> l1 = new HashSet<TagPOJO>(); // Club1's tags (empty)
+		Set<TagPOJO> l2 = new HashSet<TagPOJO>(); // Club2's tags (empty)
+		
+		ClubPOJO c1 = new ClubPOJO("Club1", "Teatro Kapital", "C/Falsa 1", 20.30F, l1);
+		ClubPOJO c2 = new ClubPOJO("Club2", "Mitty", "C/Falsa 2", 15.00F, l2);
+		
+		cd.addClub(c1);
+		cd.addClub(c2);
+		
+		searchMotor = new SearchEngineSAImp(cd);
+	}
+	
+	
 }
