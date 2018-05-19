@@ -49,6 +49,9 @@ public class SearchEngineSAImpTest {
 		
 		ClubPOJO c1 = new ClubPOJO("Club1", "Teatro Kapital", "C/Falsa 1", 20.00F, l1);
 		c1.setRating(9.5F);
+		c1.setLatitude(40.40977609999999);
+		c1.setLongitude(-3.6931690999999773);
+		//Distance from maths faculty: 7km
 		
 		//Club2
 		Set<TagPOJO> l2 = new HashSet<TagPOJO>(); // Club2's tags (empty)
@@ -57,6 +60,9 @@ public class SearchEngineSAImpTest {
 		
 		ClubPOJO c2 = new ClubPOJO("Club2", "Mitty", "C/Falsa 2", 15.00F, l2);
 		c2.setRating(8.37F);
+		c2.setLatitude(40.4427815);
+		c2.setLongitude(-3.7133863000000247);
+		//Distance from maths faculty: 2km
 		
 		//Club3
 		Set<TagPOJO> l3 = new HashSet<TagPOJO>();
@@ -65,6 +71,9 @@ public class SearchEngineSAImpTest {
 		
 		ClubPOJO c3 = new ClubPOJO("Club3", "Pachá", "C/Falsa 3", 17.00F, l3);
 		c3.setRating(7.4F);
+		c3.setLatitude(40.42692900000001);
+		c3.setLongitude(-3.69982200000004);
+		//Distance from maths faculty: 4,6km
 		
 		//Club4
 		Set<TagPOJO> l4 = new HashSet<TagPOJO>();
@@ -74,6 +83,9 @@ public class SearchEngineSAImpTest {
 		
 		ClubPOJO c4 = new ClubPOJO("Club4", "Fabrik", "C/Falsa 4", 10.00F, l4);
 		c4.setRating(6.4F);
+		c4.setLatitude(40.265579);
+		c4.setLongitude(-3.840562099999943);
+		//Distance from maths faculty: 27,4km
 		
 		//Add the clubs to the system
 		cd.addClub(c1);
@@ -205,7 +217,7 @@ public class SearchEngineSAImpTest {
 	 * TEST 3: Two filter search. (price and rating)
 	 */
 	@Test
-	public void twoFilterTest2()
+	public void twoFilterTest1()
 	{
 		//Search filters (price filter)
 		List<FilterPOJO> filters = new ArrayList<FilterPOJO>();
@@ -230,6 +242,45 @@ public class SearchEngineSAImpTest {
 		assertTrue("One filter search failed", isVisibleElemWithId("Club2",searchResult));
 		assertFalse("One filter search failed", isVisibleElemWithId("Club4",searchResult));
 		assertFalse("One filter search failed", isVisibleElemWithId("Club3",searchResult));
+		assertFalse("One filter search failed", isVisibleElemWithId("Club1",searchResult));
+	}
+	
+	/**
+	 * TEST 4: Two filter search. (tags and location)
+	 * 
+	 * Checks which of the clubs that were initialized upper are nearer than 7km from the
+	 * Universidad Complutense's Mathematics faculty.
+	 */
+	//@Test
+	public void twoFilterTest2()
+	{
+		//Search filters (tag filter)
+		List<FilterPOJO> filters = new ArrayList<FilterPOJO>();
+		
+		List<String> filter1Params = new ArrayList<String>(); 
+		filter1Params.add("pop"); //Pop music clubs
+		filter1Params.add("rgt"); //Electronic dance music clubs
+		FilterPOJO priceFilter = new FilterPOJO(FilterMapper.TAG_FILTER, filter1Params);
+		
+		List<String> filter2Params = new ArrayList<String>();
+		filter2Params.add("7");						//Maximum distance 7km
+		filter2Params.add("40.4494588");			//Maths faculty latitude
+		filter2Params.add("-3.725856799999974");	//Maths faculty longitude
+		FilterPOJO locationFilter = new FilterPOJO(FilterMapper.LOCATION_FILTER, filter2Params);
+		
+		FilterMapper.addAll();
+		filters.add(priceFilter);
+		filters.add(locationFilter);
+		
+		
+		//Search result (visible clubs are which verifies all conditions)
+		List<ElementHelper<ClubPOJO>> searchResult = searchMotor.search("", filters, user);
+
+		//We check if the result is what we expected!
+		assertTrue("One filter search failed", searchResult.size()== 4);
+		assertTrue("One filter search failed", isVisibleElemWithId("Club2",searchResult));
+		assertTrue("One filter search failed", isVisibleElemWithId("Club3",searchResult));
+		assertFalse("One filter search failed", isVisibleElemWithId("Club4",searchResult));
 		assertFalse("One filter search failed", isVisibleElemWithId("Club1",searchResult));
 	}
 }
