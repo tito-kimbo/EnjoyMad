@@ -18,6 +18,7 @@ import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.integration.ClubDAOImp;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
+import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.SearchEngineSAImp;
 import es.ucm.fdi.business.util.ElementHelper;;
 
@@ -82,6 +83,7 @@ public class SearchEngineSAImpTest {
 		/* Initialize the user who is going to search whith concrete preferences */
 		user = readyToSearchUser("id", "frblazqu", "Francis");
 	}
+	
 	/**
 	 * @param id New user's id
 	 * @param user New user's application name
@@ -99,6 +101,27 @@ public class SearchEngineSAImpTest {
 		return usr;
 	}
 
+	
+	/**
+	 * Useful for checking search result.
+	 * 
+	 * @return true Iff element with the id is visible in searchResult list
+	 * @throws InvalidParameterException Iff there is no element whith that id in
+	 * searchResult list.
+	 */
+	private boolean isVisibleElemWithId(String id, List<ElementHelper<ClubPOJO>> searchResult)
+	{
+		for(ElementHelper<ClubPOJO> elem: searchResult)
+		{
+			if(elem.getElement().getID().equals(id))
+				return elem.isVisible();
+		}
+		
+		//There is no element whith that id in the search result
+		throw new InvalidParameterException("There is no element whith id " + id + " in the search result.");
+	}
+	
+	
 	/**
 	 * TEST 1: Search without filters.
 	 */
@@ -131,8 +154,9 @@ public class SearchEngineSAImpTest {
 		
 		List<String> filterParams = new ArrayList<String>(); 
 		filterParams.add("15");
-		FilterPOJO priceFilter = new FilterPOJO("PriceFilter", filterParams);
+		FilterPOJO priceFilter = new FilterPOJO(FilterMapper.PRICE_FILTER, filterParams);
 		
+		FilterMapper.addAll();
 		filters.add(priceFilter);
 		
 		//Search result (visible clubs are which verifies all conditions)
@@ -145,24 +169,4 @@ public class SearchEngineSAImpTest {
 		assertFalse("One filter search failed", isVisibleElemWithId("Club1",searchResult));
 		assertFalse("One filter search failed", isVisibleElemWithId("Club3",searchResult));
 	}
-
-	/**
-	 * Useful for checking search result.
-	 * 
-	 * @return true Iff element with the id is visible in searchResult list
-	 * @throws InvalidParameterException Iff there is no element whith that id in
-	 * searchResult list.
-	 */
-	private boolean isVisibleElemWithId(String id, List<ElementHelper<ClubPOJO>> searchResult)
-	{
-		for(ElementHelper<ClubPOJO> elem: searchResult)
-		{
-			if(elem.getElement().getID().equals(id))
-				return elem.isVisible();
-		}
-		
-		//There is no element whith that id in the search result
-		throw new InvalidParameterException("There is no element whith id " + id + " in the search result.");
-	}
-	
 }
