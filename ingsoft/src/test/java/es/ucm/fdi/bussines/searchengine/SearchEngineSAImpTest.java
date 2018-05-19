@@ -33,21 +33,22 @@ public class SearchEngineSAImpTest {
 		/* We set the allowed tags we are going to use*/
 		
 		TagPOJO pop  = new TagPOJO("pop");
-		TagPOJO rock = new TagPOJO("pop");
-		TagPOJO edm  = new TagPOJO("pop");
-		TagPOJO rgt  = new TagPOJO("pop");
+		TagPOJO rock = new TagPOJO("rock");
+		TagPOJO edm  = new TagPOJO("edm");
+		TagPOJO rgt  = new TagPOJO("rgt");
 
 		/* Initialize the DAO whith all the clubs */
 		cd = new ClubDAOImp();
 
 		//Club1
 		Set<TagPOJO> l1 = new HashSet<TagPOJO>(); 	
-		l1.add(pop); 
+		l1.add(pop);
 		l1.add(rock); 
 		l1.add(edm); 
 		l1.add(rgt);
 		
 		ClubPOJO c1 = new ClubPOJO("Club1", "Teatro Kapital", "C/Falsa 1", 20.00F, l1);
+		c1.setRating(9.5F);
 		
 		//Club2
 		Set<TagPOJO> l2 = new HashSet<TagPOJO>(); // Club2's tags (empty)
@@ -55,6 +56,7 @@ public class SearchEngineSAImpTest {
 		l2.add(pop);
 		
 		ClubPOJO c2 = new ClubPOJO("Club2", "Mitty", "C/Falsa 2", 15.00F, l2);
+		c2.setRating(8.37F);
 		
 		//Club3
 		Set<TagPOJO> l3 = new HashSet<TagPOJO>();
@@ -62,6 +64,7 @@ public class SearchEngineSAImpTest {
 		l3.add(pop);
 		
 		ClubPOJO c3 = new ClubPOJO("Club3", "Pachá", "C/Falsa 3", 17.00F, l3);
+		c3.setRating(7.4F);
 		
 		//Club4
 		Set<TagPOJO> l4 = new HashSet<TagPOJO>();
@@ -70,6 +73,7 @@ public class SearchEngineSAImpTest {
 		l4.add(pop);
 		
 		ClubPOJO c4 = new ClubPOJO("Club4", "Fabrik", "C/Falsa 4", 10.00F, l4);
+		c4.setRating(6.4F);
 		
 		//Add the clubs to the system
 		cd.addClub(c1);
@@ -134,8 +138,6 @@ public class SearchEngineSAImpTest {
 		//Search result (visible clubs are which verifies all conditions)
 		List<ElementHelper<ClubPOJO>> searchResult = searchMotor.search("", filters, user);
 		
-		
-		
 		//We check if the result is what we expected!
 		assertTrue("No filterSearch failed", searchResult.size()== 4);
 		
@@ -144,7 +146,7 @@ public class SearchEngineSAImpTest {
 	}
 	
 	/**
-	 * TEST 2: One filter search.
+	 * TEST 2: One filter search. (price)
 	 */
 	@Test
 	public void oneFilterTest1()
@@ -168,5 +170,66 @@ public class SearchEngineSAImpTest {
 		assertTrue("One filter search failed", isVisibleElemWithId("Club4",searchResult));
 		assertFalse("One filter search failed", isVisibleElemWithId("Club1",searchResult));
 		assertFalse("One filter search failed", isVisibleElemWithId("Club3",searchResult));
+	}
+	
+	/**
+	 * TEST 3: One filter search. (tags)
+	 */
+	@Test
+	public void oneFilterTest2()
+	{
+		//Search filters (tag filter)
+		List<FilterPOJO> filters = new ArrayList<FilterPOJO>();
+		
+		List<String> filterParams = new ArrayList<String>(); 
+		filterParams.add("pop"); //Discotecas de música pop
+		filterParams.add("rgt"); //Discotecas de música regeton
+		filterParams.add("edm"); //Discotecas de electronic dance music
+		FilterPOJO priceFilter = new FilterPOJO(FilterMapper.TAG_FILTER, filterParams);
+		
+		FilterMapper.addAll();
+		filters.add(priceFilter);
+		
+		//Search result (visible clubs are which verifies all conditions)
+		List<ElementHelper<ClubPOJO>> searchResult = searchMotor.search("", filters, user);
+
+		//We check if the result is what we expected!
+		assertTrue("One filter search failed", searchResult.size()== 4);
+		assertTrue("One filter search failed", isVisibleElemWithId("Club1",searchResult));
+		assertTrue("One filter search failed", isVisibleElemWithId("Club4",searchResult));
+		assertFalse("One filter search failed", isVisibleElemWithId("Club3",searchResult));
+		assertFalse("One filter search failed", isVisibleElemWithId("Club2",searchResult));
+	}
+	
+	/**
+	 * TEST 3: Two filter search. (price and rating)
+	 */
+	@Test
+	public void twoFilterTest2()
+	{
+		//Search filters (price filter)
+		List<FilterPOJO> filters = new ArrayList<FilterPOJO>();
+		List<String> filter1Params = new ArrayList<String>(); 
+		List<String> filter2Params = new ArrayList<String>(); 
+		
+		filter1Params.add("19.35");
+		FilterPOJO priceFilter = new FilterPOJO(FilterMapper.PRICE_FILTER, filter1Params);
+		
+		filter2Params.add("7.5");
+		FilterPOJO ratingFilter = new FilterPOJO(FilterMapper.RATING_FILTER, filter2Params);
+		
+		FilterMapper.addAll();
+		filters.add(priceFilter);
+		filters.add(ratingFilter);
+		
+		//Search result (visible clubs are which verifies all conditions)
+		List<ElementHelper<ClubPOJO>> searchResult = searchMotor.search("", filters, user);
+
+		//We check if the result is what we expected!
+		assertTrue("One filter search failed", searchResult.size()== 4);
+		assertTrue("One filter search failed", isVisibleElemWithId("Club2",searchResult));
+		assertFalse("One filter search failed", isVisibleElemWithId("Club4",searchResult));
+		assertFalse("One filter search failed", isVisibleElemWithId("Club3",searchResult));
+		assertFalse("One filter search failed", isVisibleElemWithId("Club1",searchResult));
 	}
 }
