@@ -22,7 +22,7 @@ import es.ucm.fdi.integration.data.ClubPOJO;
  * Tests the correct addition of new {@code ClubPOJO}s to the app
  * corresponding {@code ClubDAO}.
  */
-public class NewClubTest {
+public class AddClubTest {
 
     ProfileManagerSA profileManager;
     ClubDAO clubDAO;
@@ -67,7 +67,7 @@ public class NewClubTest {
     }
 
     /**
-     * A series of invalid {@code ClubPOJO}s are tried to be added to the
+     * Attemp to add a series of invalid {@code ClubPOJO}s to the
      * {@code clubDAO} via the Profile Manager, unsuccessfully. 
      * An exception must be caught for each club.
      */
@@ -110,10 +110,11 @@ public class NewClubTest {
 
     /**
      * A series of valid {@code ClubPOJO}s are added to the
-     * {@code clubDAO} via the Profile Manager. Next, a series of valid
-     * {@code ClubPOJO}s with already existing IDs are tried to be added
-     * unsuccessfully. No exception must be caught for new IDs. An exception
-     * must be caught for each club with an already existing ID.
+     * {@code clubDAO} via the Profile Manager. Next, we attempt 
+     * to add a series of valid {@code ClubPOJO}s with already 
+     * existing IDs unsuccessfully. No exception must be caught 
+     * for new IDs. An exception must be caught for each club 
+     * with an already existing ID.
      */
     @Test
     public void conflictClubsTest() {

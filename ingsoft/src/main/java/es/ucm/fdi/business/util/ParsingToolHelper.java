@@ -18,7 +18,7 @@ import es.ucm.fdi.integration.data.ReviewPOJO;
 public class ParsingToolHelper {
     
     private final static int RATE_LOW_LIMIT = 0;
-    private final static int RATE_UP_LIMIT = 10;
+    private final static int RATE_UP_LIMIT = 5;
     
     /**
      * <p>
@@ -104,13 +104,6 @@ public class ParsingToolHelper {
      * <code>#</code>.
      */
     public static Pattern tagChecker = Pattern.compile("^[A-z0-9_]{0,30}$");
-
-    /**
-     * XXX ¿No usar?
-     * A <code>Pattern</code> that matches a valid <code>Opinion</code>:
-     * printable characters and less than <code>280</code> characters long.
-     */
-    public static Pattern opinionChecker = Pattern.compile("^(?:[ -~\\n\\r]{1,280})$");
 
     /**
      * Parses <code>Username</code> so it must be an alphanumerical sequence
@@ -340,7 +333,7 @@ public class ParsingToolHelper {
 
     /**
      * Parses a club <code>Rating</code> to ensure it is a <code>Float</code>
-     * between <code>0-10</code>.
+     * between <code>0-5</code>.
      *
      * @param rating <code>Float</code> with <code>Rating</code> to be parsed
      * @return if <code>rating</code> is between bounds
@@ -348,7 +341,9 @@ public class ParsingToolHelper {
     public static boolean parseRating(Float rating) {
         boolean valid = true;
 
-        if (rating < 0.0F || 10.0F < rating) {
+        if ( RATE_LOW_LIMIT > rating 
+                || RATE_UP_LIMIT < rating) {
+
             valid = false;
         }
 

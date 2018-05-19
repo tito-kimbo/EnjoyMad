@@ -4,7 +4,6 @@ import static org.junit.Assert.fail;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.zip.DataFormatException;
 
@@ -18,10 +17,10 @@ import es.ucm.fdi.integration.UserDAOImp;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 /**
- * Tests the correct addition of new {@code ClubPOJO}s to the app
- * corresponding {@code ClubDAO}.
+ * Tests the correct addition of new {@code UserPOJO}s to the app
+ * corresponding {@code UserDAO}.
  */
-public class NewUserTest {
+public class AddUserTest {
 
     ProfileManagerSA profileManager;
     ClubDAO clubDAO;
@@ -68,7 +67,7 @@ public class NewUserTest {
     }
 
     /**
-     * A series of invalid {@code UserPOJO}s are tried to be added to the
+     * Attemp to add a series of invalid {@code UserPOJO}s to the
      * {@code userDAO} via the Profile Manager, unsuccessfully. 
      * An exception must be caught for each user.
      */
@@ -116,10 +115,10 @@ public class NewUserTest {
 
     /**
      * A series of valid {@code UserPOJO}s are added to the
-     * {@code userDAO} via the Profile Manager. Next, a series of valid
-     * {@code UserPOJO}s with already existing IDs are tried to be added
-     * unsuccessfully. No exception must be caught for new IDs. An exception
-     * must be caught for each user with an already existing ID.
+     * {@code userDAO} via the Profile Manager. Next, we attemp to add 
+     * a series of valid {@code UserPOJO}s with already existing IDs 
+     * unsuccessfully. No exception must be caught for new IDs. An 
+     * exception must be caught for each user with an already existing ID.
      */
     @Test
     public void conflictUsersTest() {
