@@ -14,7 +14,7 @@ import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 /**
- * This class is a Club data access object that implements {@link ClubDAOMySql}.
+ * This class is a Club data access object that implements {@link ClubDAOMySqñ}.
  * 
  * @version 03.05.2018
  */

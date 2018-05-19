@@ -19,9 +19,6 @@ import java.util.List;
  * extends to an implemented class with necessary attributes.
  * 
  * @version 08.05.2018
- * 
- * @author behergue [Beatriz Herguedas]
- * @author PabloHdez [Pablo Hernández]
  */
 public interface ProfileManagerSA {
 

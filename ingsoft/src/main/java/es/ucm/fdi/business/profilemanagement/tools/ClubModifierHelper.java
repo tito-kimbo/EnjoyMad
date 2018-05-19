@@ -10,230 +10,209 @@ import es.ucm.fdi.integration.data.Location;
 /**
  * Enum class representing the attributes of a ClubPOJO.
  * 
- * @version 19.05.2018
+ * @version 08.05.2018
  */
-public enum ClubModifierHelper { 
+public enum ClubModifierHelper {
 
-    COMMERCIAL_NAME("COMMERCIAL_NAME") {
-        @Override
-        public void modify(ClubPOJO clubToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
-            
-            // Instance of...
-            if ( ! ( newData instanceof String ) ) {
-                throw new IllegalArgumentException(
-                    "In COMMERCIAL NAME modification: " + 
-                    "not a String type argument."
-                );
-            }
+	COMMERCIAL_NAME("COMMERCIAL_NAME") {
+		@Override
+		public void modify(ClubPOJO clubToManage, Object newData)
+				throws IllegalArgumentException, DataFormatException {
 
-            // Valid?
-            String newCommercialName = (String) newData;
+			// Instance of...
+			if (!(newData instanceof String)) {
+				throw new IllegalArgumentException(
+						"In COMMERCIAL NAME modification: "
+								+ "not a String type argument.");
+			}
 
-            if ( ! ParsingToolHelper.parseCommercialName(newCommercialName) ) {
-                throw new DataFormatException(
-                    "In COMMERCIAL NAME modification: " + 
-                    "not a valid commercial name format -> " + 
-                    newCommercialName
-                );
-            }
+			// Valid?
+			String newCommercialName = (String) newData;
 
-            // Modification.
-            clubToManage.setCommercialName(newCommercialName);
-        }
-    }, 
+			if (!ParsingToolHelper.parseCommercialName(newCommercialName)) {
+				throw new DataFormatException(
+						"In COMMERCIAL NAME modification: "
+								+ "not a valid commercial name format -> "
+								+ newCommercialName);
+			}
 
-    LOCATION("LOCATION") {
-        @Override
-        public void modify(ClubPOJO clubToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
+			// Modification.
+			clubToManage.setCommercialName(newCommercialName);
+		}
+	},
 
-            if ( ! (newData instanceof Location ) ) { 
-            throw new IllegalArgumentException(
-                "In LOCATION modification: " +
-                "not a Location type argument."
-            ); 
-        } 
-        
-        // Valid?
-        Location newLocation = (Location) newData; 
-        
-        clubToManage.setLocation(newLocation);
-        }
-    },
+	LOCATION("LOCATION") {
+		@Override
+		public void modify(ClubPOJO clubToManage, Object newData)
+				throws IllegalArgumentException, DataFormatException {
 
-    ADDRESS("ADDRESS") {
-        @Override
-        public void modify(ClubPOJO clubToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
+			if (!(newData instanceof Location)) {
+				throw new IllegalArgumentException("In LOCATION modification: "
+						+ "not a Location type argument.");
+			}
 
-            // Instance of...
-            if ( ! ( newData instanceof String ) ) {
-                throw new IllegalArgumentException(
-                    "In ADDRESS modification: " + 
-                    "not a String type argument."
-                );
-            }
+			// Valid?
+			Location newLocation = (Location) newData;
 
-            // Valid?
-            String newAddress = (String) newData;
+			clubToManage.setLocation(newLocation);
+		}
+	},
 
-            if ( ! ParsingToolHelper.parseAddress(newAddress) ) {
-                throw new DataFormatException(
-                    "In ADDRESS modification: " + 
-                    "not a valid address format -> " + 
-                    newAddress
-                );
-            }
+	ADDRESS("ADDRESS") {
+		@Override
+		public void modify(ClubPOJO clubToManage, Object newData)
+				throws IllegalArgumentException, DataFormatException {
 
-            // Modification.
-            clubToManage.setAddress(newAddress);
-        }
-    },
+			// Instance of...
+			if (!(newData instanceof String)) {
+				throw new IllegalArgumentException("In ADDRESS modification: "
+						+ "not a String type argument.");
+			}
 
-    PRICE("PRICE") {
-        @Override
-        public void modify(ClubPOJO clubToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
-            
-            if ( ! (newData instanceof Float ) ) {
-            throw new IllegalArgumentException(
-                    "In PRICE modification: " + 
-                    "not a Float type argument."
-                );
-            }
+			// Valid?
+			String newAddress = (String) newData;
 
-            // Valid?
-            float newPrice = (Float) newData;
+			if (!ParsingToolHelper.parseAddress(newAddress)) {
+				throw new DataFormatException("In ADDRESS modification: "
+						+ "not a valid address format -> " + newAddress);
+			}
 
-            if ( ! ParsingToolHelper.parsePrice(newPrice) ) {
-                throw new DataFormatException(
-                    "In PRICE modification: " + 
-                    "not a valid price -> " + 
-                    newPrice
-                );
-            }
+			// Modification.
+			clubToManage.setAddress(newAddress);
+		}
+	},
 
-            // Modification.
-            clubToManage.setPrice(newPrice);
-        }
-    },
+	PRICE("PRICE") {
+		@Override
+		public void modify(ClubPOJO clubToManage, Object newData)
+				throws IllegalArgumentException, DataFormatException {
 
-    RATING("RATING") {
-        @Override
-        public void modify(ClubPOJO clubToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
-            
-            // Instance of
-            if ( ! ( newData instanceof Float ) ) {
-                throw new IllegalArgumentException(
-                    "In RATING modification: " + 
-                    "not a Float type argument."
-                );
-            }
+			if (!(newData instanceof Float)) {
+				throw new IllegalArgumentException("In PRICE modification: "
+						+ "not a Float type argument.");
+			}
 
-            // Valid?
-            float newRating = (Float) newData;
+			// Valid?
+			float newPrice = (Float) newData;
 
-            if ( ! ParsingToolHelper.parseRating(newRating) ) {
-                throw new DataFormatException(
-                    "In RATING modification: " + 
-                    "not a valid rating -> " + 
-                    newRating
-                );
-            }
+			if (!ParsingToolHelper.parsePrice(newPrice)) {
+				throw new DataFormatException("In PRICE modification: "
+						+ "not a valid price -> " + newPrice);
+			}
 
-            // Modification.
-            clubToManage.setRating(newRating);
-        }
-    },
+			// Modification.
+			clubToManage.setPrice(newPrice);
+		}
+	},
 
-    ADD_TAG("ADD_TAG") {
-        @Override
-        public void modify(ClubPOJO clubToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
-            
-            // Instance of...
-            if ( ! ( newData instanceof TagPOJO ) ) {
-                throw new IllegalArgumentException(
-                    "In TAG adding: " + 
-                    "not a TagPOJO type argument."
-                );
-            }
+	RATING("RATING") {
+		@Override
+		public void modify(ClubPOJO clubToManage, Object newData)
+				throws IllegalArgumentException, DataFormatException {
 
-            // Valid?
-            TagPOJO newTag = (TagPOJO) newData;
+			// Instance of
+			if (!(newData instanceof Float)) {
+				throw new IllegalArgumentException("In RATING modification: "
+						+ "not a Float type argument.");
+			}
 
-            /*
-            if (!ParsingToolHelper.tagChecker.matcher(newTag).matches()) {
-                throw new DataFormatException("In TAG adding: not a valid tag format -> " + newTag);
-            }
-            */
+			// Valid?
+			float newRating = (Float) newData;
 
-            // Adding.
-            clubToManage.addTag(newTag);
-        }
-    },
+			if (!ParsingToolHelper.parseRating(newRating)) {
+				throw new DataFormatException("In RATING modification: "
+						+ "not a valid rating -> " + newRating);
+			}
 
-    REMOVE_TAG("REMOVE_TAG") {
-        @Override
-        public void modify(ClubPOJO clubToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
-            
-            // Instance of...
-            if ( ! ( newData instanceof String ) ) {
-                throw new IllegalArgumentException(
-                    "In TAG removal: " + 
-                    "not a String type argument."
-                );
-            }
+			// Modification.
+			clubToManage.setRating(newRating);
+		}
+	},
 
-            TagPOJO tagToRemove = (TagPOJO) newData;
+	ADD_TAG("ADD_TAG") {
+		@Override
+		public void modify(ClubPOJO clubToManage, Object newData)
+				throws IllegalArgumentException, DataFormatException {
 
-            // Removal
-            clubToManage.removeTag(tagToRemove);
-        }
-    },
+			// Instance of...
+			if (!(newData instanceof TagPOJO)) {
+				throw new IllegalArgumentException("In TAG adding: "
+						+ "not a TagPOJO type argument.");
+			}
 
-    CLEAR_TAGS("CLEAR_TAGS") {
-        @Override
-        public void modify(ClubPOJO clubToManage, Object newData) throws
-                IllegalArgumentException, DataFormatException {
-            
-            clubToManage.clearTags();
-        }
-    };
+			// Valid?
+			TagPOJO newTag = (TagPOJO) newData;
 
+			/*
+			 * if (!ParsingToolHelper.tagChecker.matcher(newTag).matches()) {
+			 * throw new
+			 * DataFormatException("In TAG adding: not a valid tag format -> " +
+			 * newTag); }
+			 */
 
-	
-	
-    private String type;
+			// Adding.
+			clubToManage.addTag(newTag);
+		}
+	},
 
-    private ClubModifierHelper(String type) {
-        this.type = type;
-    }
+	REMOVE_TAG("REMOVE_TAG") {
+		@Override
+		public void modify(ClubPOJO clubToManage, Object newData)
+				throws IllegalArgumentException, DataFormatException {
 
-    /**
-     * Returns the enum type in {@code String} form.
-     * 
-     * @return type as {@code String}
-     */
-    public String toString() {
-        return type;
-    }
+			// Instance of...
+			if (!(newData instanceof TagPOJO)) {
+				throw new IllegalArgumentException("In TAG removal: "
+						+ "not a TagPOJO type argument.");
+			}
 
-    /**
-     * Tries to carry out the modification indicated by the 
-     * {@code ClubModifierBO} itself.
-     * 
-     * @param clubToManage - club to be modified
-     * @param newData      - club new data
-     * 
-     * @throws IllegalArgumentException if {@code newData} is not an instance 
-     *                                  of the correct class
-     * @throws DataFormatException      if {@code newData} parsing failed
-     *                                  
-     */
-    public abstract void modify(ClubPOJO clubToManage, Object newData) throws
-            IllegalArgumentException, DataFormatException;
+			TagPOJO tagToRemove = (TagPOJO) newData;
+
+			// Removal
+			clubToManage.removeTag(tagToRemove);
+		}
+	},
+
+	CLEAR_TAGS("CLEAR_TAGS") {
+		@Override
+		public void modify(ClubPOJO clubToManage, Object newData)
+				throws IllegalArgumentException, DataFormatException {
+
+			clubToManage.clearTags();
+		}
+	};
+
+	private String type;
+
+	private ClubModifierHelper(String type) {
+		this.type = type;
+	}
+
+	/**
+	 * Returns the enum type in {@code String} form.
+	 * 
+	 * @return type as {@code String}
+	 */
+	@Override
+	public String toString() {
+		return type;
+	}
+
+	/**
+	 * Tries to carry out the modification indicated by the
+	 * {@code ClubModifierBO} itself.
+	 * 
+	 * @param clubToManage
+	 *            - club to be modified
+	 * @param newData
+	 *            - club new data
+	 * 
+	 * @throws IllegalArgumentException
+	 *             if {@code newData} is not an instance of the correct class
+	 * @throws DataFormatException
+	 *             if {@code newData} parsing failed
+	 * 
+	 */
+	public abstract void modify(ClubPOJO clubToManage, Object newData)
+			throws IllegalArgumentException, DataFormatException;
 }
