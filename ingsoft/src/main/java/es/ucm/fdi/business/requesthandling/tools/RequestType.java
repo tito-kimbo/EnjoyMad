@@ -8,13 +8,13 @@ import es.ucm.fdi.business.FrontController;
  */
 public enum RequestType {
     REGISTER_ACCOUNT,
-    REMOVE_ACCOUNT,
+    DELETE_ACCOUNT,
 
     ADD_REVIEW,
-    REMOVE_REVIEW,
+    DELETE_REVIEW,
     MODIFY_CLUB,
     MODIFY_USER,
 
-    SEARCH,
-    BUY;
+    SEARCH_CLUB,
+    BUY_TICKET;
 }

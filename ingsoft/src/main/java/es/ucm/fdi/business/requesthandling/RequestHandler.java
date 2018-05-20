@@ -1,5 +1,6 @@
 package es.ucm.fdi.business.requesthandling;
 
+import es.ucm.fdi.business.data.AnswerPOJO;
 import es.ucm.fdi.business.data.RequestPOJO;
 
 /**
@@ -16,7 +17,7 @@ public interface RequestHandler extends Cloneable {
      * 
 	 * @return
 	 */
-	public Object clone(RequestPOJO request);
+	public Object clone(RequestPOJO rp);
 
     /**
      * Method that handles a request.

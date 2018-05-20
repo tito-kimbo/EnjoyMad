@@ -30,7 +30,8 @@ public class FrontController {
 		//Provisional
 		new Thread(){
 			public void run(){
-				HandlerMapper.mapRequest(rp.getType(), rp).handle();	
+				HandlerMapper.mapRequest(rp.getType(), rp).handle();
+				
 			}
 		};
 		
@@ -41,5 +42,9 @@ public class FrontController {
 		AnswerPOJO answer = data.get(id);
 		data.remove(id);	
 		return answer;
+	}
+	
+	public void addAnswer(String id, AnswerPOJO answer){
+		data.put(id, answer);
 	}
 }
