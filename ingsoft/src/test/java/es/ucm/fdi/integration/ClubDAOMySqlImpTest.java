@@ -64,7 +64,7 @@ public class ClubDAOMySqlImpTest {
 		clubDao.removeClub("id");
 	}
 
-	@Test
+	//@Test
 	public void testGetClub() {
 		createTestClubDAOMySqlImp();
 		ClubPOJO otherClub = clubDao.getClub("id");
@@ -72,7 +72,7 @@ public class ClubDAOMySqlImpTest {
 		clubDao.removeClub("id");
 	}
 
-	@Test
+	//@Test
 	public void testGetClubs() {
 		createTestClubDAOMySqlImp();
 		List otherlist = clubDao.getClubs();
