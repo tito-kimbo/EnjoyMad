@@ -5,7 +5,6 @@ import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy;
 import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy.JsonReader;
 import es.ucm.fdi.integration.data.ClubPOJO;
-import es.ucm.fdi.integration.data.Location;
 
 import java.util.HashSet;
 

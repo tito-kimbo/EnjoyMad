@@ -49,7 +49,7 @@ public abstract class TicketManagerSAImp implements TicketManagerSA {
 		boolean isSuccessful = performTransaction(price);
 		
 		EmailSenderHelper.send("enjoymad@gmail.com", email, psw, 
-				"Se ha completado la compra de una entrada de " + clubID, "Tramite EnjoyMad");
+				(isSuccessful ? "Se" : "No se") + " ha completado la compra de una entrada de " + clubID, "Tramite EnjoyMad");
 	}
 
 	public boolean performTransaction(double price) {

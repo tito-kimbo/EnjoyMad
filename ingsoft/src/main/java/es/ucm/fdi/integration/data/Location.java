@@ -7,7 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.code.geocoder.Geocoder;
 
 import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy.JsonReader;
 
