@@ -19,11 +19,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.mindrot.jbcrypt.BCrypt;
 
-/**
- *
- * @author behergue [Beatriz Herguedas]
- * @author PabloHdez [Pablo HernÃ¡ndez]
- */
 public class ProfileManagerSAImpTest {
 
     ProfileManagerSA profileManager;

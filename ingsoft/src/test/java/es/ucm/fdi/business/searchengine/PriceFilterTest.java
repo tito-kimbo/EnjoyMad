@@ -3,9 +3,7 @@ package es.ucm.fdi.business.searchengine;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
-import java.util.Set;
 import java.util.List;
-import java.util.HashSet;
 import java.util.ArrayList;
 
 import org.junit.Test;

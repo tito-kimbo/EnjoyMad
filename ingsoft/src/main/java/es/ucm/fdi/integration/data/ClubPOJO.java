@@ -332,4 +332,19 @@ public class ClubPOJO extends DataPOJO implements Serializable {
 	public Map<String, ReviewPOJO> getReviews() {
 		return userReviews;
 	}
+	
+	@Override
+	public boolean equals(Object club) {
+		
+		if(!(club instanceof ClubPOJO))
+			return false;
+		
+		return this.location.equals(((ClubPOJO)club).location)
+			&& this.address.equals(((ClubPOJO)club).address)
+			&& this.commercialName.equals(((ClubPOJO)club).commercialName)
+			&& this.price == ((ClubPOJO)club).price
+			&& this.getID().equals(((ClubPOJO)club).getID())
+			&& this.tags.equals(((ClubPOJO)club).tags)
+			&& this.userReviews.equals(((ClubPOJO)club).userReviews);
+	}
 }

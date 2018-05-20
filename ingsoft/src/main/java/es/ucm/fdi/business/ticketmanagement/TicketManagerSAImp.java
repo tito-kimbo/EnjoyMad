@@ -42,14 +42,14 @@ public abstract class TicketManagerSAImp implements TicketManagerSA {
 		String psw = user.getPassword();
 
 		/*
-		 * Payment code Stripe seems the best API to do it easily, it is not for
-		 * free, it takes a 1.4% for each transaction + 0.25�
+		 *  Payment code
+		 *  Stripe seems the best API to do it easily, it is not for free, 
+		 *  it takes a 1.4% for each transaction + 0.25�
 		 */
 		boolean isSuccessful = performTransaction(price);
 		
-		EmailSenderHelper.send("enjoymad@gmail.com", email, psw,
-				(isSuccessful ? "Se ha completado la compra de una entrada de "  : "No se ha podido completar la transacción de la compra de una entrada de ") + clubID,
-				"Tramite EnjoyMad");
+		EmailSenderHelper.send("enjoymad@gmail.com", email, psw, 
+				(isSuccessful ? "Se" : "No se") + " ha completado la compra de una entrada de " + clubID, "Tramite EnjoyMad");
 	}
 
 	public boolean performTransaction(double price) {

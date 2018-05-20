@@ -64,14 +64,15 @@ public class ClubDAOMySqlImpTest {
 		clubDao.removeClub("id");
 	}
 
-	//@Test
+	@Test
 	public void testGetClub() {
 		createTestClubDAOMySqlImp();
-		assertEquals(clubDao.getClub("id"), club);
+		ClubPOJO otherClub = clubDao.getClub("id");
+		assertEquals(club, otherClub);
 		clubDao.removeClub("id");
 	}
 
-	//@Test
+	@Test
 	public void testGetClubs() {
 		createTestClubDAOMySqlImp();
 		List otherlist = clubDao.getClubs();

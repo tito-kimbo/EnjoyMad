@@ -18,45 +18,39 @@ import org.json.JSONArray;
  * This class is responsible of deciding whether a Club is near enough to
  * satisfy the client search filter or not.
  * 
+ * @author Francisco Javier Blázquez [frblazqu]
  * @version 22.04.2018
  */
-public class LocationFilterStrategy implements FilterStrategy{
-	
-	public  final static String API_KEY = "AIzaSyDCASxz1lerrq1zkYhhbO7FAKDrcmNx9xo";
+public class LocationFilterStrategy implements FilterStrategy {
+
+	public final static String API_KEY = "AIzaSyDCASxz1lerrq1zkYhhbO7FAKDrcmNx9xo";
 	private final static double MILES_TO_KM = 1.60934;
 
 	private double maxDistance;
 	private double deviceLatitude;
 	private double deviceLongitude;
-				
-	
-	public LocationFilterStrategy()	{}
-	
+
+	public LocationFilterStrategy() {
+	}
+
 	/**
 	 * Creates a LocationFilter given the maximum distance selected an the GPS
 	 * coordinates of the person.
 	 * 
-	 * @param maxDist
-	 *            Maximum distance the person wants to travel to go party.
-	 * @param devLati
-	 *            GPS latitude coordinates.
-	 * @param devLong
-	 *            GPS longitude coordinates.
+	 * @param maxDist Maximum distance the person wants to travel to go party.
+	 * @param devLati GPS latitude coordinates.
+	 * @param devLong GPS longitude coordinates.
 	 */
-	public LocationFilterStrategy(String maxDist, String devLati, String devLong)
-	{
-		maxDistance     = Double.valueOf(maxDist).doubleValue();
-		deviceLatitude  = Double.valueOf(devLati).doubleValue();
+	public LocationFilterStrategy(String maxDist, String devLati, String devLong) {
+		maxDistance = Double.valueOf(maxDist).doubleValue();
+		deviceLatitude = Double.valueOf(devLati).doubleValue();
 		deviceLongitude = Double.valueOf(devLong).doubleValue();
 	}
-
 	/**
 	 * Decides whether a club is near enough to the person or not.
 	 * 
-	 * @param club
-	 *            The club we are considering to filter.
-	 * @return True if the distance to the club is smaller than
-	 *         {@link maxDistance}
+	 * @param club The club we are considering to filter.
+	 * @return True if the distance to the club is smaller than {@link maxDistance}
 	 */
 	public boolean filter(ClubPOJO club) {
 		try {
@@ -79,48 +73,34 @@ public class LocationFilterStrategy implements FilterStrategy{
 
 		return false;
 	}
-
 	/**
 	 * This method presuppose that the Filter has three attributes. Maximum
 	 * distance to travel, person latitude and person longitude in this order.
 	 * 
-	 * @param fp
-	 *            Filter object with the information the user gave us.
+	 * @param fp Filter object with the information the user gave us.
 	 * @return A new LocationFilter with the information of the user.
 	 */
-	public Object clone(FilterPOJO fp) {		
-		return new LocationFilterStrategy(fp.getParams().get(0), fp.getParams().get(1), fp.getParams().get(2));
-	}	
-	
+	public Object clone(FilterPOJO fp) {
+
+		return new LocationFilterStrategy(fp.getParams().get(0), fp.getParams().get(1),
+				fp.getParams().get(2));
+	}
 	/**
 	 * Method to get the distance from the device to a club.
 	 * 
-	 * @param club
-	 *            Club to get distance to.
+	 * @param club Club to get distance to.
 	 * @return Distance from the device to the club.
-	 * @throws MalformedURLException
-	 *             Really strange case related to invalid GPS coordinates or
-	 *             abusive use of the API_KEY.
-	 * @throws IOException
-	 *             If the request to the URL fails during the connection
-	 *             process.
-	 * @throws JSONException
-	 *             If it's not possible to parse the JSON section from the URL.
+	 * @throws MalformedURLException Really strange case related to invalid GPS coordinates or
+	 *         abusive use of the API_KEY.
+	 * @throws IOException If the request to the URL fails during the connection process.
+	 * @throws JSONException If it's not possible to parse the JSON section from the URL.
 	 */
-	private double getNavigableDistance(ClubPOJO club) throws IOException,
-			JSONException {
+	private double getNavigableDistance(ClubPOJO club) throws IOException, JSONException {
 		/* -> We have the device coordinates an the club coordinates */
 
 		String requestURL = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="
-				+ +deviceLatitude
-				+ ","
-				+ deviceLongitude
-				+ "&destinations="
-				+ +club.getLatitude()
-				+ ","
-				+ club.getLongitude()
-				+ "&key="
-				+ API_KEY;
+				+ +deviceLatitude + "," + deviceLongitude + "&destinations="
+				+ +club.getLatitude() + "," + club.getLongitude() + "&key=" + API_KEY;
 
 		JSONObject json = JsonReader.readJsonFromUrl(requestURL);
 
@@ -140,8 +120,8 @@ public class LocationFilterStrategy implements FilterStrategy{
 
 		return MILES_TO_KM * Double.valueOf(aux).doubleValue();
 
-		// throw new
-		// IllegalStateException("Unable to get the distance from the JSON object.");
+		// throw new IllegalStateException("Unable to get the distance from the
+		// JSON object.");
 	}
 
 	/**
@@ -165,13 +145,11 @@ public class LocationFilterStrategy implements FilterStrategy{
 
 		public static JSONObject readJsonFromUrl(String url)
 				throws IOException, JSONException {
-			InputStream is = new URL(url).openStream(); /*
-														 * !! Usa URL no
-														 * URLConnection !!
-														 */
+			InputStream is = new URL(url)
+					.openStream(); /* !! Usa URL no URLConnection !! */
 			try {
-				BufferedReader rd = new BufferedReader(new InputStreamReader(
-						is, Charset.forName("UTF-8")));
+				BufferedReader rd = new BufferedReader(
+						new InputStreamReader(is, Charset.forName("UTF-8")));
 				String jsonText = readAll(rd);
 				JSONObject json = new JSONObject(jsonText);
 				return json;
@@ -184,10 +162,13 @@ public class LocationFilterStrategy implements FilterStrategy{
 	/*
 	 * PENDING: -> Exceptions in getNavigableDistance?
 	 * 
-	 * OBSERVATIONS: -> We suppose correct latitude/longitude in ClubPOJO. But
-	 * there is no initialization. -> We can get the distance between two gps
-	 * coordinates of between two addresses. We have to decide which one we are
-	 * going to use definitely.
+	 * OBSERVATIONS: 
+	 * -> We suppose correct latitude/longitude in ClubPOJO. But
+	 *    there is no initialization. 
+	 * 
+	 * -> We can get the distance between two gps coordinates of between two addresses.
+	 *    We have to decide which one we are going to use definitely.
+	 * 
 	 */
 
 }

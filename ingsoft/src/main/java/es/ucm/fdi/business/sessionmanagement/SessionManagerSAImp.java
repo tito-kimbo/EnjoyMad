@@ -18,7 +18,7 @@ public class SessionManagerSAImp implements SessionManagerSA {
 
 	/**
 	 * <p>
-	 * Builds a {@link SessionManagerSAImp} whose funcionality is:
+	 * Builds a {@link SessionManagerSAImp} whose functionality is:
 	 * </p>
 	 * <p>
 	 * 1) To add and remove {@code SessionPOJO}s.
