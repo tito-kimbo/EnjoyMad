@@ -68,6 +68,19 @@ public class ClubDAOMySqlImpTest {
 	public void testGetClub() {
 		createTestClubDAOMySqlImp();
 		ClubPOJO otherClub = clubDao.getClub("id");
+		
+		/*System.out.println(club.getTags());
+		System.out.println(otherClub.getTags());
+		
+		System.out.println("TAGS1");
+		for(TagPOJO t : club.getTags()){
+			System.out.println(t.getTag());
+		}
+		System.out.println("TAGS2");
+		for(TagPOJO t : otherClub.getTags()){
+			System.out.println(t.getTag());
+		}*/
+		
 		assertEquals(club, otherClub);
 		clubDao.removeClub("id");
 	}
@@ -77,6 +90,7 @@ public class ClubDAOMySqlImpTest {
 		createTestClubDAOMySqlImp();
 		List otherlist = clubDao.getClubs();
 		assertEquals(list, otherlist);
+	
 		
 		for(ClubPOJO club : list)
 			clubDao.removeClub(club.getID());
