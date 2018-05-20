@@ -7,13 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 
 import java.sql.PreparedStatement;
 
-import android.text.format.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -152,8 +149,6 @@ public class UserDAOMySqlImp implements UserDAO {
 		// String id, String user, String pass, String email, String name,
 		// LocalDate bday
 		try {
-			Statement st = con.createStatement();
-			
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Date myDate;
 			try {

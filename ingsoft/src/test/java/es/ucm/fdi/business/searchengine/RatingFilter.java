@@ -5,8 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
 
 import org.junit.Test;
 
@@ -16,7 +14,6 @@ import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 
 import es.ucm.fdi.business.searchengine.filters.FilterStrategy;
-import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.Location;
 
 public class RatingFilter {

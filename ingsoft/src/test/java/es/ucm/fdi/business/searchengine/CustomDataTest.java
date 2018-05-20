@@ -1,7 +1,6 @@
 package es.ucm.fdi.business.searchengine;
 import static org.junit.Assert.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
