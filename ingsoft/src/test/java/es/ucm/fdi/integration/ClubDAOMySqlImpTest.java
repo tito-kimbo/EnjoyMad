@@ -12,6 +12,7 @@ import java.util.concurrent.CountDownLatch;
 
 import org.junit.Test;
 
+import android.database.SQLException;
 import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
