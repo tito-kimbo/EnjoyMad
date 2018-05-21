@@ -3,6 +3,7 @@ package es.ucm.fdi.business.sessionmanagement;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
+import es.ucm.fdi.integration.SessionDAO;
 import es.ucm.fdi.integration.SessionDAOImp;
 import es.ucm.fdi.integration.data.SessionPOJO;
 
@@ -14,7 +15,7 @@ import es.ucm.fdi.integration.data.SessionPOJO;
  */
 public class SessionManagerSAImp implements SessionManagerSA {
 
-	private static SessionDAOImp sessionDAO;
+	private static SessionDAO sessionDAO;
 
 	/**
 	 * <p>
@@ -30,7 +31,7 @@ public class SessionManagerSAImp implements SessionManagerSA {
 	 * @param sessions
 	 *            - the app {@code SessionDAOImp} database
 	 */
-	public SessionManagerSAImp(SessionDAOImp sessions) {
+	public SessionManagerSAImp(SessionDAO sessions) {
 		sessionDAO = sessions;
 	}
 

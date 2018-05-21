@@ -11,7 +11,7 @@ import es.ucm.fdi.integration.data.UserPOJO;
 /**
  * Class implementing the TicketManager interface.
  */
-public abstract class TicketManagerSAImp implements TicketManagerSA {
+public class TicketManagerSAImp implements TicketManagerSA {
 	private UserDAO users;
 	private ClubDAO clubs;
 
@@ -21,7 +21,7 @@ public abstract class TicketManagerSAImp implements TicketManagerSA {
 	 * @param users users
 	 * @param clubs clubs
 	 */
-	TicketManagerSAImp(UserDAO users, ClubDAO clubs) {
+	public TicketManagerSAImp(ClubDAO clubs, UserDAO users) {
 		this.users = users;
 		this.clubs = clubs;
 	}
