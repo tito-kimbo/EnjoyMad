@@ -5,6 +5,10 @@ import es.ucm.fdi.business.profilemanagement.ProfileManagerSAImp;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.SearchEngineSA;
 import es.ucm.fdi.business.searchengine.SearchEngineSAImp;
+import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy;
+import es.ucm.fdi.business.searchengine.filters.PriceFilterStrategy;
+import es.ucm.fdi.business.searchengine.filters.RatingFilterStrategy;
+import es.ucm.fdi.business.searchengine.filters.TagFilterStrategy;
 import es.ucm.fdi.business.sessionmanagement.SessionManagerSA;
 import es.ucm.fdi.business.sessionmanagement.SessionManagerSAImp;
 import es.ucm.fdi.business.tagmanagement.TagManagerSA;
@@ -31,6 +35,12 @@ public class ProductionConfig {
 	private static FrontController fc;
 	private static FilterMapper filters;
 	
+	//Public access keys for the filters
+	public static String PRICE_FILTER    = "PriceFilter";
+	public static String TAG_FILTER      = "TagFilter";
+	public static String RATING_FILTER   = "RatingFilter";
+	public static String LOCATION_FILTER = "LocationFilter";
+	
 	private static void initDAOs(){
 		users = new UserDAOImp();
 		clubs = new ClubDAOImp();
@@ -38,15 +48,19 @@ public class ProductionConfig {
 		sessions = new SessionDAOImp();
 	}
 	
-	private static void initDAOsSQL(){
+	private static void initSQLDAOs(){
 		users = new UserDAOMySqlImp();
 		clubs = new ClubDAOMySqlImp();
 		//Tag DAO SQL imp
 		//tags = new TagDAOMySqlImp();
 	}
 	
-	private static void addFilters(){
+	public static void addFilters(){
 		//Here goes the equivalent to addFilters from FilterMapper
+		FilterMapper.addFilter(PRICE_FILTER,    new PriceFilterStrategy());
+		FilterMapper.addFilter(TAG_FILTER,      new TagFilterStrategy());
+		FilterMapper.addFilter(RATING_FILTER,   new RatingFilterStrategy());
+		FilterMapper.addFilter(LOCATION_FILTER, new LocationFilterStrategy());
 	}
 	
 	private static void init(){

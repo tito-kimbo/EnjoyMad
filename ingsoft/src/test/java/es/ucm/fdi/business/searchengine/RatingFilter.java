@@ -8,11 +8,11 @@ import java.util.List;
 
 import org.junit.Test;
 
+import es.ucm.fdi.business.ProductionConfig;
 import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
-
 import es.ucm.fdi.business.searchengine.filters.FilterStrategy;
 import es.ucm.fdi.integration.data.Location;
 
@@ -23,7 +23,7 @@ public class RatingFilter {
 		List <String> l2 = new ArrayList<String>();
 		l2.add("4.0");
 		FilterPOJO fp = new FilterPOJO("RatingFilter", l2);
-		FilterMapper.addAll();
+		ProductionConfig.addFilters();
 		FilterStrategy f = FilterMapper.mapFilter(fp);
 		
 		//The provisional ID in this test is the MD5 hash generated from the name

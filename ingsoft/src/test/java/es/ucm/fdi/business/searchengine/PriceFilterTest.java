@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import es.ucm.fdi.business.ProductionConfig;
 import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
-
 import es.ucm.fdi.business.searchengine.filters.FilterStrategy;
 
 public class PriceFilterTest {
@@ -29,7 +29,7 @@ public class PriceFilterTest {
 		l2.add("30.50");
 
 		FilterPOJO fp = new FilterPOJO("PriceFilter", l2);
-		FilterMapper.addAll();
+		ProductionConfig.addFilters();
 
 		FilterStrategy f = FilterMapper.mapFilter(fp);
 		assertTrue("Error when filtering by price: club price lower "

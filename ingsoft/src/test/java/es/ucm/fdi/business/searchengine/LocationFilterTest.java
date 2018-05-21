@@ -1,5 +1,6 @@
 package es.ucm.fdi.business.searchengine;
 
+import es.ucm.fdi.business.ProductionConfig;
 import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy;
@@ -39,7 +40,7 @@ public class LocationFilterTest {
 	 */
 	@Test
 	public void getDistanceFrom2GpsPoints() {
-		FilterMapper.addAll();
+		ProductionConfig.addFilters();
 		
 		ClubPOJO club = new ClubPOJO("id","name", "calle", 0, new HashSet<TagPOJO>());
 		LocationFilterStrategy filter = new LocationFilterStrategy("5", "38.948706", "-2.544259");
