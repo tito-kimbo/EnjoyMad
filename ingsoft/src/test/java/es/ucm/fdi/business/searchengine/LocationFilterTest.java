@@ -2,7 +2,6 @@ package es.ucm.fdi.business.searchengine;
 
 import es.ucm.fdi.business.ProductionConfig;
 import es.ucm.fdi.business.data.TagPOJO;
-import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy;
 import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy.JsonReader;
 import es.ucm.fdi.integration.data.ClubPOJO;

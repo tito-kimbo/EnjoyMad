@@ -27,13 +27,13 @@ import es.ucm.fdi.integration.UserDAOImp;
 import es.ucm.fdi.integration.UserDAOMySqlImp;
 
 public class ProductionConfig {
+	private static boolean useSQL = false;
 	private static UserDAO users;
 	private static ClubDAO clubs;
 	private static TagDAO tags;
 	private static SessionDAO sessions;
 	
 	private static FrontController fc;
-	private static FilterMapper filters;
 	
 	//Public access keys for the filters
 	public static String PRICE_FILTER    = "PriceFilter";
@@ -64,10 +64,13 @@ public class ProductionConfig {
 	}
 	
 	private static void init(){
-		initDAOs();
-		//initDAOsSQL();
+		if(useSQL){
+			initSQLDAOs();	
+		}else{
+			initDAOs();	
+		}
 		addFilters();
-		SearchEngineSA sesa = new SearchEngineSAImp(clubs);
+		SearchEngineSA sesa = new SearchEngineSAImp();
 		ProfileManagerSA pmsa = new ProfileManagerSAImp(clubs, users);
 		TicketManagerSA ticketmsa = new TicketManagerSAImp(clubs, users);
 		SessionManagerSA smsa = new SessionManagerSAImp(sessions);

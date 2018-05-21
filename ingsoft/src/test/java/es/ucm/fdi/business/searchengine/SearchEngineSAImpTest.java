@@ -97,7 +97,7 @@ public class SearchEngineSAImpTest {
 		 * Initialize the searchMotor, responsible of searching through the
 		 * clubs
 		 */
-		searchMotor = new SearchEngineSAImp(cd);
+		searchMotor = new SearchEngineSAImp();
 
 		/* Initialize the user who is going to search whith concrete preferences */
 		user = readyToSearchUser("id", "frblazqu", "Francis");
