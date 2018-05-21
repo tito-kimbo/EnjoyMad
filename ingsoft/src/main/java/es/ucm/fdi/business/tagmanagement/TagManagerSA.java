@@ -1,6 +1,6 @@
 package es.ucm.fdi.business.tagmanagement;
 
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 
 /**
  * Interface that provides the main functionality for tag system management.

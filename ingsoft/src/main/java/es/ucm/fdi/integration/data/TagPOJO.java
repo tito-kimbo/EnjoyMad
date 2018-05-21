@@ -1,4 +1,4 @@
-package es.ucm.fdi.business.data;
+package es.ucm.fdi.integration.data;
 
 import java.io.Serializable;
 

@@ -1,6 +1,6 @@
 package es.ucm.fdi.business.profilemanagement;
 
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.business.profilemanagement.tools.ClubModifierHelper;
 import es.ucm.fdi.business.profilemanagement.tools.UserModifierHelper;
 import es.ucm.fdi.integration.ClubDAOImp;

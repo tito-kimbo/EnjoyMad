@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 import es.ucm.fdi.integration.data.Location;
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 /**

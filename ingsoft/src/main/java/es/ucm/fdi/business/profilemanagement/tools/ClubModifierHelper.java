@@ -2,7 +2,7 @@ package es.ucm.fdi.business.profilemanagement.tools;
 
 import java.util.zip.DataFormatException;
 
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.business.util.ParsingToolHelper;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.Location;

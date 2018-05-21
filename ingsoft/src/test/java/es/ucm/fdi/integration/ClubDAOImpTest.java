@@ -10,7 +10,7 @@ import java.util.concurrent.CountDownLatch;
 
 import org.junit.Test;
 
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
 /**

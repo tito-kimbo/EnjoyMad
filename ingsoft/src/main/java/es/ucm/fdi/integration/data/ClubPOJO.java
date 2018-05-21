@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 
 /**
  * Class that represents a club.
@@ -339,12 +339,16 @@ public class ClubPOJO extends DataPOJO implements Serializable {
 		if(!(club instanceof ClubPOJO))
 			return false;
 		
+		boolean equalTags, equalReviews;
+		equalTags = tags.equals(((ClubPOJO)club).tags);
+		equalReviews = userReviews.equals(((ClubPOJO)club).userReviews);
+		
 		return this.location.equals(((ClubPOJO)club).location)
 			&& this.address.equals(((ClubPOJO)club).address)
 			&& this.commercialName.equals(((ClubPOJO)club).commercialName)
 			&& this.price == ((ClubPOJO)club).price
 			&& this.getID().equals(((ClubPOJO)club).getID())
-			&& this.tags.equals(((ClubPOJO)club).tags)
-			&& this.userReviews.equals(((ClubPOJO)club).userReviews);
+			&& equalTags
+			&& equalReviews;
 	}
 }

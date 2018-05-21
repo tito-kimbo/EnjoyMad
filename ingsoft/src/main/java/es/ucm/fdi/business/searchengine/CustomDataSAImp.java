@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.integration.ClubDAO;
 import es.ucm.fdi.integration.UserDAO;
 import es.ucm.fdi.integration.data.ClubPOJO;
@@ -61,7 +61,7 @@ public class CustomDataSAImp implements CustomDataSA {
 	public int assignValue(UserPOJO user, ClubPOJO club) {
 		int valueOfClub = 0;
 		for (TagPOJO tp : club.getTags()) {
-			valueOfClub += user.getValueTags().get(tp.getTag());
+			valueOfClub += user.getValueTags().get(tp);
 		}
 		return valueOfClub;
 	}

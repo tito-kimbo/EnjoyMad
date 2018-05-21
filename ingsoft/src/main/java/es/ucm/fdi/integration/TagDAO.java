@@ -2,7 +2,8 @@ package es.ucm.fdi.integration;
 
 import java.util.List;
 
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
+
 
 /**
  * Class in charge of accessing to <code>Tag</code>-related data.

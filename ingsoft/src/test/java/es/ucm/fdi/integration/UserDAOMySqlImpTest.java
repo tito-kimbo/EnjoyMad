@@ -47,10 +47,8 @@ public class UserDAOMySqlImpTest {
 				userDao.exists("IDNumber1"));
 		userDao.removeUser("Number1");
 	}
-
-	//THE FOLLOWING TWO TESTS FAIL
 	
-	//@Test
+	@Test
 	public void testGetUser() {
 		createTestUserDAOMySqlImp();
 		UserPOJO userChecked = userDao.getUser("IDNumber1");
@@ -59,7 +57,7 @@ public class UserDAOMySqlImpTest {
 		userDao.removeUser("IDNumber1");
 	}
 
-	//@Test
+	@Test
 	public void testGetUsers() {
 		createTestUserDAOMySqlImp();
 		List<UserPOJO> users = userDao.getUsers();

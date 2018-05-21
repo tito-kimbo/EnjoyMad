@@ -2,7 +2,9 @@ package es.ucm.fdi.integration.data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -14,16 +16,11 @@ import java.util.Set;
  * @version 22.04.2018
  */
 public class UserPOJO extends DataPOJO implements Serializable{
-	String nickname, password, email, name; 
-	LocalDate birthday;
+	private String nickname, password, email, name; 
+	private LocalDate birthday;
 	
 	private List <ClubPOJO> preferencesList;
-	private Map<String, Integer> valueTags;
-	/**
-	 * Set of rated clubs IDs.
-	 */
-	Set<String> ratedClubs;
-
+	private Map<TagPOJO, Integer> valueTags;
 
 	/**
 	 * Set of reviewed clubs IDs.
@@ -48,29 +45,10 @@ public class UserPOJO extends DataPOJO implements Serializable{
 		this.birthday = bday;
 
 		reviewedClubs = new HashSet<String>();
+		valueTags = new HashMap<TagPOJO, Integer>();
+		preferencesList = new ArrayList<ClubPOJO>();
 	}
 	
-	
-	public List<ClubPOJO> getPreferencesList() {
-		return preferencesList;
-	}
-
-
-	public void setPreferencesList(List<ClubPOJO> preferencesList) {
-		this.preferencesList = preferencesList;
-	}
-
-
-	public Map<String, Integer> getValueTags() {
-		return valueTags;
-	}
-
-
-	public void setValueTags(Map<String, Integer> valueTags) {
-		this.valueTags = valueTags;
-	}
-
-
 	/**
 	 * User class whole constructor (for testing).
 	 * @param id nickname id
@@ -90,7 +68,28 @@ public class UserPOJO extends DataPOJO implements Serializable{
 		this.name = name;
 		this.birthday = bday;
 		this.reviewedClubs = new HashSet<String>(reviews);
+		valueTags = new HashMap<TagPOJO, Integer>();
+		preferencesList = new ArrayList<ClubPOJO>();
 	}
+	
+	public List<ClubPOJO> getPreferencesList() {
+		return preferencesList;
+	}
+
+
+	public void setPreferencesList(List<ClubPOJO> preferencesList) {
+		this.preferencesList = preferencesList;
+	}
+
+
+	public Map<TagPOJO, Integer> getValueTags() {
+		return valueTags;
+	}
+
+
+	public void setValueTags(Map<TagPOJO, Integer> valueTags) {
+		this.valueTags = valueTags;
+	}	
 
 	/**
 	 * Returns the nickname.
@@ -199,5 +198,25 @@ public class UserPOJO extends DataPOJO implements Serializable{
 	 */
 	public void removeFromReviewed(String clubID) {
 		reviewedClubs.remove(clubID);
+	}
+	
+	public boolean equals(Object obj) {
+		if(!(obj instanceof UserPOJO))
+			return false;
+		
+		boolean equalTags, equalReviews, equalPreferences;
+		
+		equalTags = valueTags.equals(((UserPOJO) obj).valueTags);
+		equalPreferences = preferencesList.equals(((UserPOJO) obj).preferencesList);
+		equalReviews = reviewedClubs.equals(((UserPOJO) obj).reviewedClubs);
+		
+		return birthday.equals(((UserPOJO) obj).birthday)
+				&& name.equals(((UserPOJO) obj).name)
+				&& password.equals(((UserPOJO) obj).password)
+				&& getID().equals(((UserPOJO) obj).getID())
+				&& nickname.equals(((UserPOJO) obj).nickname)
+				&& equalTags
+				&& equalPreferences
+				&& equalReviews;
 	}
 }

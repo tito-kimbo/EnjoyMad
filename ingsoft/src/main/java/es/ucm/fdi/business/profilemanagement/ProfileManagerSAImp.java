@@ -8,7 +8,7 @@ import java.util.zip.DataFormatException;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.business.profilemanagement.tools.ClubModifierHelper;
 import es.ucm.fdi.business.profilemanagement.tools.UserModifierHelper;
 import es.ucm.fdi.business.util.ParsingToolHelper;
