@@ -121,7 +121,7 @@ public class SearchEngineSAImpTest {
 	 * Useful for checking search result.
 	 * 
 	 * @return true Iff element with the id is visible in searchResult list
-	 * @throws InvalidParameterException Iff there is no element whith that id in
+	 * @throws InvalidParameterException Iff there is no element with that id in
 	 * searchResult list.
 	 */
 	private boolean isVisibleElemWithId(String id, List<ElementHelper<ClubPOJO>> searchResult)
@@ -132,7 +132,7 @@ public class SearchEngineSAImpTest {
 				return elem.isVisible();
 		}
 		
-		//There is no element whith that id in the search result
+		//There is no element with that id in the search result
 		throw new InvalidParameterException("There is no element whith id " + id + " in the search result.");
 	}
 	
@@ -193,9 +193,9 @@ public class SearchEngineSAImpTest {
 		List<FilterPOJO> filters = new ArrayList<FilterPOJO>();
 		
 		List<String> filterParams = new ArrayList<String>(); 
-		filterParams.add("pop"); //Discotecas de música pop
-		filterParams.add("rgt"); //Discotecas de música regeton
-		filterParams.add("edm"); //Discotecas de electronic dance music
+		filterParams.add("pop"); //Pop music discos
+		filterParams.add("rgt"); //Reggeton music discos
+		filterParams.add("edm"); //Electronic dance music discos
 		FilterPOJO priceFilter = new FilterPOJO(FilterMapper.TAG_FILTER, filterParams);
 		
 		FilterMapper.addAll();
