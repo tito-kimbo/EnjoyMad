@@ -51,7 +51,7 @@ public enum ClubModifierHelper {
 						+ "not a Location type argument.");
 			}
 
-			// Valid?
+			// XXX ¿Qué es valido para la localización?
 			Location newLocation = (Location) newData;
 
 			clubToManage.setLocation(newLocation);
@@ -140,16 +140,14 @@ public enum ClubModifierHelper {
 						+ "not a TagPOJO type argument.");
 			}
 
-			// Valid?
+			// Checking if is active tag.
 			TagPOJO newTag = (TagPOJO) newData;
-
 			/*
-			 * if (!ParsingToolHelper.tagChecker.matcher(newTag).matches()) {
-			 * throw new
-			 * DataFormatException("In TAG adding: not a valid tag format -> " +
-			 * newTag); }
+			 * XXX ¿Cómo implementar con TagManagerSA if (!TagManagerSA.hasTag(newTag)) {
+			 * throw new DataFormatException("In TAG adding: " +
+			 * "tag not found in valid tags list -> " + newTag.getTag()); }
 			 */
-
+			
 			// Adding.
 			clubToManage.addTag(newTag);
 		}

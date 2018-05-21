@@ -14,27 +14,27 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * @version 08.05.2018
  */
 public enum UserModifierHelper {
-	NICKNAME("NICKNAME") {
+	NICKNAME("USERNAME") {
 		@Override
 		public void modify(UserPOJO userToManage, Object newData)
 				throws IllegalArgumentException, DataFormatException {
 
 			// Instance of...
 			if (!(newData instanceof String)) {
-				throw new IllegalArgumentException("In NICKNAME modification: "
+				throw new IllegalArgumentException("In USERNAME modification: "
 						+ "not a String type argument.");
 			}
 
 			// Valid?
-			String newNickname = (String) newData;
+			String newUsername = (String) newData;
 
-			if (!ParsingToolHelper.parseUsername(newNickname)) {
-				throw new DataFormatException("In NICKNAME modification: "
-						+ "not a valid username format -> " + newNickname);
+			if (!ParsingToolHelper.parseUsername(newUsername)) {
+				throw new DataFormatException("In USERNAME modification: "
+						+ "not a valid username format -> " + newUsername);
 			}
 
 			// Modification.
-			userToManage.setNickname(newNickname);
+			userToManage.setUsername(newUsername);
 		}
 	},
 
@@ -58,10 +58,10 @@ public enum UserModifierHelper {
 			}
 
 			// Password protection.
-			String hashPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+			String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
 
 			// Modification.
-			userToManage.setPassword(hashPassword);
+			userToManage.setHashedPassword(hashedPassword);
 		}
 	},
 

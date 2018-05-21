@@ -8,22 +8,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import es.ucm.fdi.business.profilemanagement.ProfileManagerSA;
+
 /**
  * Class that contains representative information of a certain user.
  * 
- * @version 22.04.2018
+ * @version 21.05.2018
  */
-public class UserPOJO extends DataPOJO implements Serializable{
-	String nickname, password, email, name; 
-	LocalDate birthday;
-	
-	private List <ClubPOJO> preferencesList;
-	private Map<String, Integer> valueTags;
-	/**
-	 * Set of rated clubs IDs.
-	 */
-	Set<String> ratedClubs;
+public class UserPOJO extends DataPOJO implements Serializable {
 
+	String username, hashedPassword, email, name; 
+	LocalDate birthday;
 
 	/**
 	 * Set of reviewed clubs IDs.
@@ -31,61 +26,53 @@ public class UserPOJO extends DataPOJO implements Serializable{
 	private Set<String> reviewedClubs;
 
 	/**
-	 * User class normal constructor
-	 * @param id nickname id
-         * @param nickname
-	 * @param pass nickname password
-	 * @param email nickname email
-	 * @param name nickname name
-	 * @param bday nickname birthday date
+	 * List of favorite clubs.
+	 * XXX ¿Debería ser una List<String> con los IDs?
 	 */
-	public UserPOJO(String id, String nickname, String pass, String email, String name, LocalDate bday) {
+	private List<ClubPOJO> preferencesList;
+
+	/**
+	 * TODO Comentar
+	 */
+	private Map<String, Integer> valueTags;
+
+	/**
+	 * User class normal constructor
+	 * 
+	 * @param id       user id
+	 * @param username user username (login)
+	 * @param pass     user password (login)
+	 * @param email    user email
+	 * @param name     user name
+	 * @param bday     user birthday date
+	 */
+	public UserPOJO(String id, String username, String pass, String email, String name, LocalDate bday) {
 		super(id);
-		this.nickname = nickname;
-		this.password = pass;
+		this.username = username;
+		this.hashedPassword = pass;
 		this.email = email;
 		this.name = name;
 		this.birthday = bday;
 
 		reviewedClubs = new HashSet<String>();
 	}
-	
-	
-	public List<ClubPOJO> getPreferencesList() {
-		return preferencesList;
-	}
-
-
-	public void setPreferencesList(List<ClubPOJO> preferencesList) {
-		this.preferencesList = preferencesList;
-	}
-
-
-	public Map<String, Integer> getValueTags() {
-		return valueTags;
-	}
-
-
-	public void setValueTags(Map<String, Integer> valueTags) {
-		this.valueTags = valueTags;
-	}
-
 
 	/**
 	 * User class whole constructor (for testing).
-	 * @param id nickname id
-         * @param nickname
-	 * @param pass nickname password
-	 * @param email nickname email
-	 * @param name nickname name
-	 * @param bday nickname birthday date
-	 * @param reviews nickname reviewed clubs
+	 * 
+	 * @param id       user id
+	 * @param username user username (login)
+	 * @param pass     user password (login)
+	 * @param email    user email
+	 * @param name     user name
+	 * @param bday     user birthday date
+	 * @param reviews  user reviewed clubs
 	 */
-	public UserPOJO(String id, String nickname, String pass, String email, 
-                String name, LocalDate bday, Set<String> reviews) {
+	public UserPOJO(String id, String username, String pass, String email, String name, LocalDate bday,
+			Set<String> reviews) {
 		super(id);
-		this.nickname = nickname;
-		this.password = pass;
+		this.username = username;
+		this.hashedPassword = pass;
 		this.email = email;
 		this.name = name;
 		this.birthday = bday;
@@ -93,81 +80,89 @@ public class UserPOJO extends DataPOJO implements Serializable{
 	}
 
 	/**
-	 * Returns the nickname.
+	 * Returns the username.
 	 * 
-	 * @return nickname
+	 * @return username (login)
 	 */
-	public String getNickname() {
-		return nickname;
+	public String getUsername() {
+		return username;
 	}
 
 	/**
-	 * Sets the nickname.
+	 * Sets the username.
 	 * 
-         * @param nickname
+	 * @param username
 	 */
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	
+
 	/**
-	 * Returns the password.
+	 * Returns a {@code String} hashed from the user login password.
+	 * 
 	 * @return password
 	 */
-	public String getPassword() {
-		return password;
+	public String getHashedPassword() {
+		return hashedPassword;
 	}
-	
+
 	/**
-	 * Sets the password.
-	 * @param password password
+	 * Sets the hashed password for user login.
+	 * 
+	 * @param hashedPassword {@code String} hashed from password used in login
 	 */
-	public void setPassword(String password) {
-		this.password = password;
+	public void setHashedPassword(String password) {
+		this.hashedPassword = password;
 	}
-	
+
 	/**
 	 * Returns the email.
+	 * 
 	 * @return email
 	 */
 	public String getEmail() {
 		return email;
 	}
-	
+
 	/**
 	 * Sets the email.
+	 * 
 	 * @param email email
 	 */
-	public void setEmail(String email){
-		this.email = email;		
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	
+
 	/**
 	 * Returns the name.
+	 * 
 	 * @return name
 	 */
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * Sets the name
+	 * 
 	 * @param name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	/**
 	 * Returns the birthday
+	 * 
 	 * @return birthday
 	 */
 	public LocalDate getBirthday() {
 		return birthday;
 	}
-	
+
 	/**
 	 * Sets the birthday
+	 * 
 	 * @param birthday
 	 */
 	public void setBirthday(LocalDate birthday) {
@@ -176,8 +171,11 @@ public class UserPOJO extends DataPOJO implements Serializable{
 
 	/**
 	 * Returns a Collection of reviewed clubs IDs.
-	 * @see ProfileManagerSAImp.removeUser(String) 
-	 * @return Collection of String
+	 * 
+	 * @return 	{@code Collection<String>} with IDs of clubs 
+	 * 			reviewed by the user
+	 * 
+	 * @see ProfileManagerSA#removeUser(String)
 	 */
 	public Collection<String> getReviewedClubs() {
 		return (Collection<String>) reviewedClubs;
@@ -199,5 +197,33 @@ public class UserPOJO extends DataPOJO implements Serializable{
 	 */
 	public void removeFromReviewed(String clubID) {
 		reviewedClubs.remove(clubID);
+	}
+	
+	/**
+	 * TODO Comentar
+	 */
+	public List<ClubPOJO> getPreferencesList() {
+		return preferencesList;
+	}
+
+	/**
+	 * TODO Comentar
+	 */
+	public void setPreferencesList(List<ClubPOJO> preferencesList) {
+		this.preferencesList = preferencesList;
+	}
+
+	/**
+	 * TODO Comentar
+	 */
+	public Map<String, Integer> getValueTags() {
+		return valueTags;
+	}
+
+	/**
+	 * TODO Comentar
+	 */
+	public void setValueTags(Map<String, Integer> valueTags) {
+		this.valueTags = valueTags;
 	}
 }

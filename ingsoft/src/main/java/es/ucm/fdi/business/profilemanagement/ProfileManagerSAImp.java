@@ -103,17 +103,15 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 					+ "not a valid price -> " + price);
 		}
 
-		if (!ParsingToolHelper.parseTags(tags)) {
-			String tagsInfo = ""; 
-			
-			for (TagPOJO t : tags) { 
-				tagsInfo += t.getTag() + " "; 
+		/*
+		XXX ¿Cómo implementar con TagManager?
+		for (TagPOJO tp : tags) {
+			if (!tagManager.hasTag(tp)) {
+				throw new DataFormatException("In CLUB creation: " +
+				"tag not found in valid tags list -> " + tp.getTag()); 
 			}
-			
-			throw new DataFormatException("In CLUB creation: " +
-				"not a valid set of tags -> " + tagsInfo ); 
 		}
-		
+		*/
 
 		// Club creation and addition to database.
 		ClubPOJO newClub = new ClubPOJO(clubID, name, address, price, tags);
@@ -157,16 +155,15 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 					+ "not a valid price -> " + club.getPrice());
 		}
 
-		if ( ! ParsingToolHelper.parseTags(club.getTags()) ) {
-			String tagsInfo = ""; 
-			
-			for (TagPOJO t : club.getTags()) { 
-				tagsInfo += t.getTag() + " "; 
+		/*
+		XXX ¿Cómo implementar con TagManager?
+		for (TagPOJO tp : club.getTags()) {
+			if (!tagManager.hasTag(tp)) {
+				throw new DataFormatException("In CLUB creation: " +
+				"tag not found in valid tags list -> " + tp.getTag()); 
 			}
-			
-			throw new DataFormatException("In CLUB creation: " +
-				"not a valid set of tags -> " + tagsInfo ); 
 		}
+		*/
 
 		// Addition to database.
 		clubDAO.addClub(club);
@@ -259,9 +256,9 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 					+ "not a valid ID format -> " + user.getID());
 		}
 
-		if (!ParsingToolHelper.parseUsername(user.getNickname())) {
+		if (!ParsingToolHelper.parseUsername(user.getUsername())) {
 			throw new DataFormatException("In USER creation: "
-					+ "not a valid username format -> " + user.getNickname());
+					+ "not a valid username format -> " + user.getUsername());
 		}
 
 		if (!ParsingToolHelper.parseEmail(user.getEmail())) {
@@ -566,7 +563,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 			throw new NoSuchElementException("In USER modification: "
 					+ "user not found in database. ID -> " + userID);
 		}
-		return userToManage.getNickname();
+		return userToManage.getUsername();
 	}
 
 	/**
@@ -581,7 +578,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 			throw new NoSuchElementException("In USER modification: "
 					+ "user not found in database. ID -> " + userID);
 		}
-		return userToManage.getPassword();
+		return userToManage.getHashedPassword();
 	}
 
 	/**
