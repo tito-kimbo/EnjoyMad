@@ -7,14 +7,23 @@ import es.ucm.fdi.business.FrontController;
  * the {@link FrontController} can handle.
  */
 public enum RequestType {
-    REGISTER_ACCOUNT,
-    DELETE_ACCOUNT,
+    REGISTER_ACCOUNT("Register Account"),
+    DELETE_ACCOUNT("Delete Account"),
 
-    ADD_REVIEW,
-    DELETE_REVIEW,
-    MODIFY_CLUB,
-    MODIFY_USER,
+    ADD_REVIEW("Add Review"),
+    DELETE_REVIEW("Delete Review"),
+    MODIFY_CLUB("Modify Club"),
+    MODIFY_USER("Modify User"),
 
-    SEARCH_CLUB,
-    BUY_TICKET;
+    SEARCH_CLUB("Search Club"),
+    BUY_TICKET("Buy Ticket");
+    
+    String str;
+    private RequestType(String s){
+    	str = s;
+    }
+    
+    public String toString(){
+    	return str;
+    }
 }

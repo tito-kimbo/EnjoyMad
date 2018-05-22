@@ -27,6 +27,10 @@ import es.ucm.fdi.integration.UserDAOImp;
 import es.ucm.fdi.integration.UserDAOMySqlImp;
 
 public class ProductionConfig {
+	//Experimental optimal value
+	private static int THREAD_LIMIT = 15;
+	
+	private static boolean exit = false;
 	private static boolean useSQL = false;
 	private static UserDAO users;
 	private static ClubDAO clubs;
@@ -63,7 +67,7 @@ public class ProductionConfig {
 		FilterMapper.addFilter(LOCATION_FILTER, new LocationFilterStrategy());
 	}
 	
-	private static void init(){
+	public static void init(){
 		if(useSQL){
 			initSQLDAOs();	
 		}else{
@@ -77,12 +81,18 @@ public class ProductionConfig {
 		TagManagerSA tagmsa = new TagManagerSAImp(tags);
 		
 		//Create frontController
-		fc = new FrontController(sesa, pmsa, ticketmsa,smsa, tagmsa);
+		fc = new FrontController(sesa, pmsa, ticketmsa,smsa, tagmsa, THREAD_LIMIT);
 	}
 	
+	public static void exit(){
+		exit = true;
+	}
 	
-	public static void main(String[] args){
-		ProductionConfig.init();
-		//Now wait while exit() message is not thrown
+	public static FrontController getFrontController(){
+		return fc;
+	}
+	
+	public static boolean getExit(){
+		return exit;
 	}
 }

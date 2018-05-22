@@ -17,7 +17,7 @@ public class SearchClubHandler implements RequestHandler {
 		this.rp = rp;
 	}
 	
-	public void handle(){
+	public void run(){
 		//Parse request data
 		
 		//	Parse words

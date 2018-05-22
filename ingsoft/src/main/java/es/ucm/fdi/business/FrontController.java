@@ -2,6 +2,8 @@ package es.ucm.fdi.business;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import es.ucm.fdi.business.data.AnswerPOJO;
 import es.ucm.fdi.business.data.RequestPOJO;
@@ -18,6 +20,7 @@ import es.ucm.fdi.business.ticketmanagement.TicketManagerSA;
  */
 public class FrontController {
 	private static Map<String, AnswerPOJO> data;
+	private static ExecutorService executor;
 
 	private static SearchEngineSA sesa;
 	private static ProfileManagerSA pmsa;
@@ -27,7 +30,7 @@ public class FrontController {
 
 	public FrontController(SearchEngineSA searchEngine,
 			ProfileManagerSA profileManager, TicketManagerSA ticketManager,
-			SessionManagerSA sessionManager, TagManagerSA tagManager) {
+			SessionManagerSA sessionManager, TagManagerSA tagManager, int maxThreads) {
 		data = new ConcurrentHashMap<String, AnswerPOJO>();
 
 		sesa = searchEngine;
@@ -35,23 +38,18 @@ public class FrontController {
 		tmsa = ticketManager;
 		smsa = sessionManager;
 		tagmsa = tagManager;
+		executor = Executors.newFixedThreadPool(maxThreads);
 	}
 
-	// need sync?
 	public synchronized String request(final RequestPOJO rp) {
 		String id;
 		StringBuilder sb = new StringBuilder();
-
+		//Here we build the id 
+		
 		id = sb.toString();
 		data.put(id, null);
 		// Provisional
-		new Thread() {
-			public void run() {
-				HandlerMapper.mapRequest(rp.getType(), rp).handle();
-
-			}
-		};
-
+		executor.execute(HandlerMapper.mapRequest(rp.getType(), rp));
 		return id;
 	}
 

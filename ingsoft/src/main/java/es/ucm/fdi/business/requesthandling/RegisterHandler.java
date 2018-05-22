@@ -18,7 +18,7 @@ public class RegisterHandler implements RequestHandler {
 		this.rp = rp;
 	}
 	
-	public void handle(){
+	public void run(){
 		//Parse rp data
 		
 		//Call methods from pmsa
