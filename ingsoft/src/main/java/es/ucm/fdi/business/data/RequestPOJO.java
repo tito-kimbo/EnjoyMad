@@ -4,6 +4,7 @@ import java.util.List;
 
 import es.ucm.fdi.business.requesthandling.RequestHandler;
 import es.ucm.fdi.business.requesthandling.tools.RequestType;
+import es.ucm.fdi.integration.data.DataPOJO;
 
 /**
  * Class that represents a request to be handled by the app. It contains
@@ -12,7 +13,7 @@ import es.ucm.fdi.business.requesthandling.tools.RequestType;
  * 
  * @version 18.05.2018
  */
-public class RequestPOJO {
+public class RequestPOJO extends DataPOJO {
 	
     /**
      * Type of request;
@@ -29,8 +30,15 @@ public class RequestPOJO {
      * Builds a new unprocessed request.
      */
     public RequestPOJO(RequestType t, List<String> params) {
-        type = t;
+    	super("");
+    	type = t;
         parameters = params;
+    }
+    
+    public RequestPOJO(String id, RequestPOJO rp){
+    	super(id);
+    	type = rp.type;
+    	parameters = rp.parameters;
     }
 
     public List<String> getParameters() {

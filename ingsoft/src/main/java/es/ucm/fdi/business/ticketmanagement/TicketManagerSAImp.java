@@ -29,7 +29,7 @@ public class TicketManagerSAImp implements TicketManagerSA {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void buyTicket(String clubID, String userID)
+	public boolean buyTicket(String clubID, String userID)
 			throws NoSuchElementException {
 		ClubPOJO club = clubs.getClub(clubID);
 		UserPOJO user = users.getUser(userID);
@@ -50,6 +50,8 @@ public class TicketManagerSAImp implements TicketManagerSA {
 		
 		EmailSenderHelper.send("enjoymad@gmail.com", email, psw, 
 				(isSuccessful ? "Se" : "No se") + " ha completado la compra de una entrada de " + clubID, "Tramite EnjoyMad");
+		
+		return isSuccessful;
 	}
 
 	public boolean performTransaction(double price) {

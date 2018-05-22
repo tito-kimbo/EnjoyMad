@@ -12,5 +12,5 @@ public interface TicketManagerSA {
 	 * @param user_id
 	 *            user identification
 	 */
-	public abstract void buyTicket(String clubID, String userID);
+	public abstract boolean buyTicket(String clubID, String userID);
 }

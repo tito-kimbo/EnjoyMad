@@ -22,11 +22,11 @@ public class FrontController {
 	private static Map<String, AnswerPOJO> data;
 	private static ExecutorService executor;
 
-	private static SearchEngineSA sesa;
-	private static ProfileManagerSA pmsa;
-	private static TicketManagerSA tmsa;
-	private static SessionManagerSA smsa;
-	private static TagManagerSA tagmsa;
+	private SearchEngineSA sesa;
+	private ProfileManagerSA pmsa;
+	private TicketManagerSA tmsa;
+	private SessionManagerSA smsa;
+	private TagManagerSA tagmsa;
 
 	public FrontController(SearchEngineSA searchEngine,
 			ProfileManagerSA profileManager, TicketManagerSA ticketManager,
@@ -66,35 +66,35 @@ public class FrontController {
 	/**
 	 * @return the sesa
 	 */
-	public static SearchEngineSA getSearchEngineSA() {
+	public SearchEngineSA getSearchEngineSA() {
 		return sesa;
 	}
 
 	/**
 	 * @return the pmsa
 	 */
-	public static ProfileManagerSA getProfileManagerSA() {
+	public ProfileManagerSA getProfileManagerSA() {
 		return pmsa;
 	}
 
 	/**
 	 * @return the tmsa
 	 */
-	public static TicketManagerSA getTicketManagerSA() {
+	public TicketManagerSA getTicketManagerSA() {
 		return tmsa;
 	}
 
 	/**
 	 * @return the smsa
 	 */
-	public static SessionManagerSA getSessionManagerSA() {
+	public SessionManagerSA getSessionManagerSA() {
 		return smsa;
 	}
 
 	/**
 	 * @return the tagmsa
 	 */
-	public static TagManagerSA getTagManagerSA() {
+	public TagManagerSA getTagManagerSA() {
 		return tagmsa;
 	}
 }
