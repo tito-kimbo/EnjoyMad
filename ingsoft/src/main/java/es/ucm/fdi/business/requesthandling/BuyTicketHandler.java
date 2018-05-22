@@ -8,6 +8,10 @@ import es.ucm.fdi.business.FrontController;
 import es.ucm.fdi.business.data.AnswerPOJO;
 import es.ucm.fdi.business.data.RequestPOJO;
 
+/**
+ * Given a <code>RequestPOJO</code> of type BuyTicket, it tries to purchase
+ * the ticket for the given user via the <code>TicketManagerSA</code>.
+ */
 public class BuyTicketHandler implements RequestHandler {
 
 	private FrontController fc;
@@ -33,8 +37,8 @@ public class BuyTicketHandler implements RequestHandler {
 		String userID, clubID;
 		List<Object> answerData;
 		
-		userID = rp.getParameters().get(0);
-		clubID = rp.getParameters().get(1);
+		userID = (String)rp.getParameters().get(0);
+		clubID = (String)rp.getParameters().get(1);
 		
 		answerData = new ArrayList<Object>();
 		//	Call relevant TicketManagerSA methods

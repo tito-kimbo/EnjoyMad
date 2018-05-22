@@ -10,8 +10,8 @@ import es.ucm.fdi.business.data.RequestPOJO;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 
 /**
- * Given a RequestPOJO of type AddReview, it tries to add the review to the 
- * current handler.
+ * Given a <code>RequestPOJO</code> of type AddReview, it tries to add the review via 
+ * the <code>ProfileManagerSA</code>.
  */
 public class AddReviewHandler implements RequestHandler {
 
@@ -41,10 +41,10 @@ public class AddReviewHandler implements RequestHandler {
 		String opinion, clubID, userID;
 		
 		
-		rating = Double.parseDouble(rp.getParameters().get(0));
-		opinion = rp.getParameters().get(1);
-		clubID = rp.getParameters().get(2);
-		userID = rp.getParameters().get(3);
+		rating = (Double)rp.getParameters().get(0);
+		opinion = (String)rp.getParameters().get(1);
+		clubID = (String)rp.getParameters().get(2);
+		userID = (String)rp.getParameters().get(3);
 		
 		review = new ReviewPOJO(opinion, rating);
 		answerData = new ArrayList<Object>();

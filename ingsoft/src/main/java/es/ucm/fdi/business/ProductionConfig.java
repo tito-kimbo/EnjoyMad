@@ -40,10 +40,10 @@ public class ProductionConfig {
 	private static FrontController fc;
 	
 	//Public access keys for the filters
-	public static String PRICE_FILTER    = "PriceFilter";
-	public static String TAG_FILTER      = "TagFilter";
-	public static String RATING_FILTER   = "RatingFilter";
-	public static String LOCATION_FILTER = "LocationFilter";
+	public static final String PRICE_FILTER    = "PriceFilter";
+	public static final String TAG_FILTER      = "TagFilter";
+	public static final String RATING_FILTER   = "RatingFilter";
+	public static final String LOCATION_FILTER = "LocationFilter";
 	
 	private static void initDAOs(){
 		users = new UserDAOImp();

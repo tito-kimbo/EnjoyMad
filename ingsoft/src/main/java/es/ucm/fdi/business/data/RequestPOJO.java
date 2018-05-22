@@ -24,12 +24,12 @@ public class RequestPOJO extends DataPOJO {
      * List of {@code String}s containing the necessary information
      * to handle the request.
      */
-    private List<String> parameters;
+    private List<Object> parameters;
 
     /**
      * Builds a new unprocessed request.
      */
-    public RequestPOJO(RequestType t, List<String> params) {
+    public RequestPOJO(RequestType t, List<Object> params) {
     	super("");
     	type = t;
         parameters = params;
@@ -41,7 +41,7 @@ public class RequestPOJO extends DataPOJO {
     	parameters = rp.parameters;
     }
 
-    public List<String> getParameters() {
+    public List<Object> getParameters() {
         return parameters;
     }
 

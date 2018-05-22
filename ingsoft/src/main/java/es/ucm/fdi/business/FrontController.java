@@ -44,12 +44,17 @@ public class FrontController {
 	public synchronized String request(final RequestPOJO rp) {
 		String id;
 		StringBuilder sb = new StringBuilder();
+		//OBS: rp initially has user's ID as id
 		//Here we build the id 
+		//id= userID+requestType+SystemTime in ns
+		sb.append(rp.getID());
+		sb.append(rp.getType());
+		sb.append(System.nanoTime());
 		
 		id = sb.toString();
 		data.put(id, null);
 		// Provisional
-		executor.execute(HandlerMapper.mapRequest(rp.getType(), rp));
+		executor.execute(HandlerMapper.mapRequest(rp.getType(), new RequestPOJO(id,rp)));
 		return id;
 	}
 
