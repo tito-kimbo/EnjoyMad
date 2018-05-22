@@ -66,7 +66,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		        		 new Location(rs.getDouble("latitude"), rs.getDouble("longitude")), 
 		        		 rs.getFloat("average_rating"));
 	        
-	        rs = st.executeQuery("SELECT * FROM Tags where club_id ="+'\'' + id + '\'');
+	        rs = st.executeQuery("SELECT * FROM ClubTags where club_id ="+'\'' + id + '\'');
 	        while(rs.next()) {
 	        	club.addTag(new TagPOJO(rs.getString("tag")));
 	        }
@@ -108,7 +108,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		        		 new Location(rs.getDouble("latitude"), rs.getDouble("longitude")), 
 		        		 rs.getFloat("average_rating"));
 		        
-		        ResultSet auxS = aux.executeQuery("SELECT * FROM Tags where club_id = \'"+id+"\'");
+		        ResultSet auxS = aux.executeQuery("SELECT * FROM ClubTags where club_id = \'"+id+"\'");
 		        while(auxS.next()) {
 		        	club.addTag(new TagPOJO(auxS.getString("tag")));
 		        }
@@ -176,7 +176,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	        st.executeUpdate(str);
 	        
 	        for(TagPOJO tp : club.getTags()) {
-	        	st.executeUpdate("insert into Tags values (\'" + tp.getTag() + "\',\'" + club.getID() + "\')");
+	        	st.executeUpdate("insert into ClubTags values (\'" + tp.getTag() + "\',\'" + club.getID() + "\')");
 	        }
 	        @SuppressWarnings("rawtypes")
 			Iterator it = club.getReviews().entrySet().iterator();
@@ -219,7 +219,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	        Statement st = con.createStatement();
 	        
 	        st.executeUpdate("delete from Clubs where id ="+'\'' + id + '\'');
-	        st.executeUpdate("delete from Tags where club_id ="+'\'' + id + '\'');
+	        st.executeUpdate("delete from ClubTags where club_id ="+'\'' + id + '\'');
 	        st.executeUpdate("delete from Opinion where club_id ="+'\'' + id + '\'');
 	    }
 	    catch (SQLException ex) {
