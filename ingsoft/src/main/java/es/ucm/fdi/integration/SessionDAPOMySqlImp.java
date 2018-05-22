@@ -38,14 +38,11 @@ public class SessionDAPOMySqlImp implements SessionDAO {
 	public List<SessionPOJO> getSessions() {
 		createConnection();
 		List<SessionPOJO> listSessions = new ArrayList<SessionPOJO>();
-		SessionPOJO user;
-
 		try {
 			Statement st = con.createStatement();
 
 			ResultSet rs = st.executeQuery("SELECT * FROM Users");
 			while(rs.next()){
-				// String id, String user, String pass, String email, String, name, LocalDate bday
 				java.util.Date date;
 				Timestamp timestamp = rs.getTimestamp("creation");
 				date = new java.util.Date(timestamp.getTime());
