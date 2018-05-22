@@ -38,7 +38,7 @@ public class FrontController {
 	}
 
 	// need sync?
-	public String request(final RequestPOJO rp) {
+	public synchronized String request(final RequestPOJO rp) {
 		String id;
 		StringBuilder sb = new StringBuilder();
 
@@ -61,7 +61,7 @@ public class FrontController {
 		return answer;
 	}
 
-	public void addAnswer(String id, AnswerPOJO answer) {
+	public synchronized void addAnswer(String id, AnswerPOJO answer) {
 		data.put(id, answer);
 	}
 

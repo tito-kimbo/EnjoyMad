@@ -4,9 +4,6 @@ import java.util.List;
 
 import es.ucm.fdi.business.requesthandling.RequestHandler;
 import es.ucm.fdi.business.requesthandling.tools.RequestType;
-import es.ucm.fdi.integration.data.DataPOJO;
-
-
 
 /**
  * Class that represents a request to be handled by the app. It contains
@@ -15,14 +12,8 @@ import es.ucm.fdi.integration.data.DataPOJO;
  * 
  * @version 18.05.2018
  */
-public class RequestPOJO extends DataPOJO {
-    
-    static public enum RequestState {
-        NOT_PROCESSED,
-        IN_PROCESS,
-        PROCESSED;
-    }
-
+public class RequestPOJO {
+	
     /**
      * Type of request;
      */
@@ -35,31 +26,15 @@ public class RequestPOJO extends DataPOJO {
     private List<String> parameters;
 
     /**
-     * State of the request.
-     */
-    private RequestState state;
-
-    /**
      * Builds a new unprocessed request.
      */
-    public RequestPOJO(String id, RequestType t, List<String> params) {
-        super(id);
+    public RequestPOJO(RequestType t, List<String> params) {
         type = t;
         parameters = params;
-
-        state = RequestState.NOT_PROCESSED;
     }
 
     public List<String> getParameters() {
         return parameters;
-    }
-
-    public RequestState getState() {
-        return state;
-    }
-
-    public void setState(RequestState newState) {
-        state = newState;
     }
 
     public RequestType getType() {
