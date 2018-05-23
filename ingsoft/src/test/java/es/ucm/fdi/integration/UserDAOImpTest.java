@@ -45,28 +45,14 @@ public class UserDAOImpTest {
 				userDao.exists("IDNumber1"));
 	}
 
-	//@Test
+	@Test
 	public void testGetUser() {
 		createTestUserDAOImp();
-		UserPOJO gotten = userDao.getUser("IDNumber1");
 		assertEquals("Error: user data not properly transferred by UserDAO",
-				user.getEmail(), gotten.getEmail());
-		assertEquals("Error: user id not properly transferred by UserDAO",
-				user.getID(), gotten.getID() );
-		assertEquals("Error: user name not properly transferred by UserDAO",
-				user.getName(), gotten.getName());
-		assertEquals("Error: user nickname not properly transferred by UserDAO",
-				user.getNickname(), gotten.getNickname());
-		assertEquals("Error: user password not properly transferred by UserDAO",
-				user.getPassword(), gotten.getPassword());
-		assertEquals("Error: user birthday not properly transferred by UserDAO",
-				user.getBirthday(), gotten.getBirthday());
-		
-		//assertEquals("Error: user data not properly transferred by UserDAO",
-		//		user, gotten);
+				userDao.getUser("IDNumber1"), user);
 	}
 
-	//@Test
+	@Test
 	public void testGetUsers() {
 		createTestUserDAOImp();
 		assertEquals("Error: users added incorrectly to UserDAO",
@@ -79,7 +65,7 @@ public class UserDAOImpTest {
 		assertFalse("Error: indicated user should not exist in UserDAO.",
 				userDao.exists("IDNumber1"));
 	}
-	/*
+
 	@Test
 	public void concurrentReadTest() {
 		
@@ -184,5 +170,5 @@ public class UserDAOImpTest {
 					+assertionError.getMessage());
 		}
 	}
-*/
+
 }
