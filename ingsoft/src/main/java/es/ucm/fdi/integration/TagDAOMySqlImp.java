@@ -44,8 +44,18 @@ public class TagDAOMySqlImp implements TagDAO {
 	 * {@inheritDoc}
 	 */
 	public void saveTags(List<TagPOJO> list) {
-	for(TagPOJO tag : list)
-		addTag(tag);
+		try {
+			createConnection();
+			Statement statement = con.createStatement();
+			statement.executeUpdate("DELETE FROM Tags");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally{
+			closeConnection();
+		}
+		 
+		for(TagPOJO tag : list)
+			addTag(tag);
 	}
 	
  	/**

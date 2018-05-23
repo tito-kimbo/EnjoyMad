@@ -1,6 +1,7 @@
 package es.ucm.fdi.integration;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import es.ucm.fdi.integration.data.SessionPOJO;
 
-public class SessionDAPOMySqlImp implements SessionDAO {
+public class SessionDAOMySqlImp implements SessionDAO {
 	Connection con = null;
 
 	private void createConnection() {
@@ -38,17 +39,22 @@ public class SessionDAPOMySqlImp implements SessionDAO {
 	public List<SessionPOJO> getSessions() {
 		createConnection();
 		List<SessionPOJO> listSessions = new ArrayList<SessionPOJO>();
+		
 		try {
 			Statement st = con.createStatement();
 
-			ResultSet rs = st.executeQuery("SELECT * FROM Users");
+			ResultSet rs = st.executeQuery("SELECT * FROM Sessions");
 			while(rs.next()){
 				java.util.Date date;
-				Timestamp timestamp = rs.getTimestamp("creation");
+				Timestamp timestamp = rs.getTimestamp("creation_time");
 				date = new java.util.Date(timestamp.getTime());
 				LocalDateTime ldt = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
 				
-				listSessions.add( new SessionPOJO(rs.getString("id"), ldt));
+				SessionPOJO session = new SessionPOJO(rs.getString("id"), ldt);
+				Timestamp last = rs.getTimestamp("last_accessed_time");
+				if(last != null)
+					session.setLastAccessedTime(LocalDateTime.ofInstant(new java.util.Date(last.getTime()).toInstant(), ZoneId.systemDefault()));
+				listSessions.add(session);
 			} 
 			
 			st.close();
@@ -79,31 +85,43 @@ public class SessionDAPOMySqlImp implements SessionDAO {
 	}
 
 	public void addSession(SessionPOJO session) {
+		if(exist(session.getID()))
+			return;
+		
 		createConnection();
-
+		
 		try {
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			try {
-				java.sql.Date creation = new java.sql.Date(formatter.parse(session.getCreationTime().toString()).getTime());
-				java.sql.Date last = new java.sql.Date(formatter.parse(session.getLastAccessedTime().toString()).getTime());
-				
-				// the mysql insert statement
-			      String query = " insert into Sessions (id, creation_time, last_used)"
-			        + " values (?, ?, ?)";
+			java.sql.Timestamp creation = java.sql.Timestamp.valueOf(session.getCreationTime());
+			
+			java.sql.Timestamp last = null;
+			if(session.getLastAccessedTime() != null)
+				last = java.sql.Timestamp.valueOf(session.getLastAccessedTime());
+			
+			// the mysql insert statement
+			if(last == null) {
+		      String query = " insert into Sessions (id, creation_time, last_accessed_time)"
+		        + " values (?, ?, ?)";
 
-			      // create the mysql insert preparedstatement
-			      PreparedStatement preparedStmt = con.prepareStatement(query);
-			      preparedStmt.setString (1, session.getID());
-			      preparedStmt.setDate (2, creation);
-			      preparedStmt.setDate (3, last);
-			      
-			      preparedStmt.executeUpdate();
-					
-			} catch (ParseException e) {
-				e.printStackTrace();
+		      // create the mysql insert preparedstatement
+		      PreparedStatement preparedStmt = con.prepareStatement(query);
+		      preparedStmt.setString (1, session.getID());
+		      preparedStmt.setTimestamp(2, creation);
+		      preparedStmt.setTimestamp(3, last);
+		      
+		      preparedStmt.executeUpdate();
+			}else {
+				String query = " insert into Sessions (id, creation_time)"
+				        + " values (?, ?)";
+
+		      // create the mysql insert preparedstatement
+		      PreparedStatement preparedStmt = con.prepareStatement(query);
+		      preparedStmt.setString (1, session.getID());
+		      preparedStmt.setTimestamp (2, creation);
+		      
+		      preparedStmt.executeUpdate();
 			}
-		} catch (SQLException ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		finally {
@@ -141,11 +159,12 @@ public class SessionDAPOMySqlImp implements SessionDAO {
 				return null;
 			
 			java.util.Date date;
-			Timestamp timestamp = rs.getTimestamp("creation");
+			Timestamp timestamp = rs.getTimestamp("creation_time");
 			date = new java.util.Date(timestamp.getTime());
 			LocalDateTime ldt = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
 			
 			session = new SessionPOJO(id, ldt);
+			session.setLastAccessedTime(LocalDateTime.ofInstant(new java.util.Date(rs.getTimestamp("last_accessed_time").getTime()).toInstant(), ZoneId.systemDefault()));
 			
 			st.close();
 		} catch (SQLException ex) {

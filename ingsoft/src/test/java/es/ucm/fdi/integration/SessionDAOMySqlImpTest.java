@@ -3,7 +3,9 @@ package es.ucm.fdi.integration;
 import static org.junit.Assert.*;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
@@ -23,36 +25,31 @@ public class SessionDAOMySqlImpTest {
 
 	private static void createTestSessionDAOImp() {
 
-		sessionDao = new SessionDAPOMySqlImp();
+		sessionDao = new SessionDAOMySqlImp();
 		sessionsSet = new HashSet<SessionPOJO>();
 
 		SessionPOJO sPOJO1 = new SessionPOJO("session 1", LocalDateTime.of(
-				2018, 5, 15, 16, 56));
+				2018, 5, 15, 16, 56, 0));
 		SessionPOJO sPOJO2 = new SessionPOJO("session 2", LocalDateTime.of(
-				2018, 5, 15, 16, 55));
+				2018, 5, 15, 16, 55, 0));
 		SessionPOJO sPOJO3 = new SessionPOJO("session 3", LocalDateTime.of(
-				2018, 5, 15, 16, 57));
+				2018, 5, 15, 16, 57, 0));
 		SessionPOJO sPOJO4 = new SessionPOJO("session 4", LocalDateTime.of(
-				2018, 5, 15, 16, 57));
-
+				2018, 5, 15, 16, 57, 0));
+		
+		
 		sessionsSet.add(sPOJO1);
 		sessionsSet.add(sPOJO2);
 		sessionsSet.add(sPOJO3);
 		sessionsSet.add(sPOJO4);
-
-		writeInDAO();
-	}
-
-	/**
-	 * We separate this method for the test of concurrent writing
-	 */
-
-	private static void writeInDAO() {
-		for (SessionPOJO sp : sessionsSet) {
+		
+		
+		for(SessionPOJO s : sessionsSet)
+			sessionDao.removeSession(s.getID());
+		
+		for (SessionPOJO sp : sessionsSet) 
 			sessionDao.addSession(sp);
-		}
 	}
-
 	/**
 	 * All functionality of the DAO is in this Test because actually is very
 	 * simple
@@ -78,11 +75,18 @@ public class SessionDAOMySqlImpTest {
 
 	@Test
 	public void listOfSessionsTest() {
-
 		createTestSessionDAOImp();
-
-		assertEquals("The DAO has not the correct sessions", sessionsSet,
-				new HashSet<SessionPOJO>(sessionDao.getSessions()));
+		Set<SessionPOJO> set = new HashSet<SessionPOJO>(sessionDao.getSessions());
+		
+		int i = 0;
+		for(SessionPOJO sx : set)
+			for(SessionPOJO sy : sessionsSet)
+				if(sx.equals(sy)) {
+					i++;
+					break;
+				}
+		
+		assertEquals("The DAO has not the correct sessions", set.size(), i);
 	}
 
 	/**

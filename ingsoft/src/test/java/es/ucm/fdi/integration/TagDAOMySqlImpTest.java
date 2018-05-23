@@ -39,7 +39,8 @@ public class TagDAOMySqlImpTest {
 		tagList.add(new TagPOJO("copas gratis"));
 		tagList.add(new TagPOJO("artistas famosos"));
 		tagList.add(new TagPOJO("grande"));
-
+		
+		tagDao.saveTags(new ArrayList<TagPOJO>());
 	}
 
 	@Test

@@ -181,7 +181,7 @@ public class UserDAOMySqlImp implements UserDAO {
 	 * {@inheritDoc}
 	 */
 
-	public boolean addUser(UserPOJO user) {
+	public void addUser(UserPOJO user) {
 		createConnection();
 
 		// String id, String user, String pass, String email, String name,
@@ -247,14 +247,13 @@ public class UserDAOMySqlImp implements UserDAO {
 		finally {
 			closeConnection();
 		}
-		return true;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 
-	public boolean removeUser(String id) {
+	public void removeUser(String id) {
 		createConnection();
 
 		try {
@@ -272,6 +271,5 @@ public class UserDAOMySqlImp implements UserDAO {
 		finally {
 			closeConnection();
 		}
-		return true;
 	}
 }

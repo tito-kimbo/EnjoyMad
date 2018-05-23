@@ -44,13 +44,12 @@ public class ClubDAOMySqlImpTest {
 		clubDao.removeClub("id");
 		
 		list = new ArrayList<ClubPOJO>(Arrays.asList(club));
-
-		clubDao.addClub(club);
 	}
 
 	@Test
 	public void testExist() {
 		createTestClubDAOMySqlImp();
+		clubDao.addClub(club);
 		assertEquals(clubDao.exists("id"), true);
 		clubDao.removeClub("id");
 	}
@@ -58,6 +57,7 @@ public class ClubDAOMySqlImpTest {
 	@Test
 	public void testGetClub() {
 		createTestClubDAOMySqlImp();
+		clubDao.addClub(club);
 		ClubPOJO otherClub = clubDao.getClub("id");
 		assertEquals(club, otherClub);
 		clubDao.removeClub("id");
@@ -66,6 +66,8 @@ public class ClubDAOMySqlImpTest {
 	@Test
 	public void testGetClubs() {
 		createTestClubDAOMySqlImp();
+		clubDao.addClub(club);
+		
 		List otherlist = clubDao.getClubs();
 		assertEquals(list, otherlist);
 		
@@ -76,8 +78,10 @@ public class ClubDAOMySqlImpTest {
 	@Test
 	public void testRemoveClub() {
 		createTestClubDAOMySqlImp();
+		clubDao.addClub(club);
 		clubDao.removeClub("id");
 		assertEquals(clubDao.exists("id"), false);
+		clubDao.removeClub(club.getID());
 	}
 	/*
 	private void awaitForLatch() {

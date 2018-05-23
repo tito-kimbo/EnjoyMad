@@ -160,7 +160,10 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	 * {@inheritDoc}
 	 */
 	
-	public boolean addClub(ClubPOJO club) {
+	public void addClub(ClubPOJO club) {
+		if(exists(club.getID()))
+			return;
+		
 		createConnection();
 		
 		try { // Unchecked queries
@@ -176,7 +179,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	        st.executeUpdate(str);
 	        
 	        for(TagPOJO tp : club.getTags()) {
-	        	st.executeUpdate("insert into ClubTags values (\'" + tp.getTag() + "\',\'" + club.getID() + "\')");
+	        	st.executeUpdate("insert into ClubTags values (\'" + club.getID() + "\',\'" + tp.getTag() + "\')");
 	        }
 	        @SuppressWarnings("rawtypes")
 			Iterator it = club.getReviews().entrySet().iterator();
@@ -205,14 +208,13 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	    finally{
 	    	closeConnection();
 	    }
-		return false;
 	}
 
   	/**
 	 * {@inheritDoc}
 	 */
 	
-	public boolean removeClub(String id) {
+	public void removeClub(String id) {
 		createConnection();
 		
 		try {
@@ -229,6 +231,5 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	    finally{
 	    	closeConnection();
 	    }
-		return false;
 	}
 }
