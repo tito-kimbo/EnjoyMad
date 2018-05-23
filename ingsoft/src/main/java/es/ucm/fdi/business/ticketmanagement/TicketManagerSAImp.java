@@ -11,7 +11,7 @@ import es.ucm.fdi.integration.data.UserPOJO;
 /**
  * Class implementing the TicketManager interface.
  */
-public abstract class TicketManagerSAImp implements TicketManagerSA {
+public class TicketManagerSAImp implements TicketManagerSA {
 	private UserDAO users;
 	private ClubDAO clubs;
 
@@ -21,7 +21,7 @@ public abstract class TicketManagerSAImp implements TicketManagerSA {
 	 * @param users users
 	 * @param clubs clubs
 	 */
-	TicketManagerSAImp(UserDAO users, ClubDAO clubs) {
+	public TicketManagerSAImp(ClubDAO clubs, UserDAO users) {
 		this.users = users;
 		this.clubs = clubs;
 	}
@@ -29,7 +29,7 @@ public abstract class TicketManagerSAImp implements TicketManagerSA {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void buyTicket(String clubID, String userID)
+	public boolean buyTicket(String clubID, String userID)
 			throws NoSuchElementException {
 		ClubPOJO club = clubs.getClub(clubID);
 		UserPOJO user = users.getUser(userID);
@@ -50,6 +50,8 @@ public abstract class TicketManagerSAImp implements TicketManagerSA {
 		
 		EmailSenderHelper.send("enjoymad@gmail.com", email, psw, 
 				(isSuccessful ? "Se" : "No se") + " ha completado la compra de una entrada de " + clubID, "Tramite EnjoyMad");
+		
+		return isSuccessful;
 	}
 
 	public boolean performTransaction(double price) {

@@ -2,7 +2,6 @@ package es.ucm.fdi.business.profilemanagement;
 
 import java.time.LocalDate;
 import java.util.Set;
-
 import java.util.NoSuchElementException;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -46,6 +45,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 	private static UserDAO userDAO;
 	private static TagManagerSA tagManager;
 
+
 	/**
 	 * <p>
 	 * Builds a {@link ProfileManagerSAImp ProfileManager} whose funcionality
@@ -67,6 +67,7 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 	 *            - the app {@code UserDAO} database
 	 */
 	public ProfileManagerSAImp(ClubDAO clubs, UserDAO users, TagManagerSA tags) {
+
 		clubDAO = clubs;
 		userDAO = users;
 		tagManager = tags;

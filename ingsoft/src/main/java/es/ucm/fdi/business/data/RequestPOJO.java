@@ -6,8 +6,6 @@ import es.ucm.fdi.business.requesthandling.RequestHandler;
 import es.ucm.fdi.business.requesthandling.tools.RequestType;
 import es.ucm.fdi.integration.data.DataPOJO;
 
-
-
 /**
  * Class that represents a request to be handled by the app. It contains
  * the information needed to build a certain {@link RequestHandler} 
@@ -16,13 +14,7 @@ import es.ucm.fdi.integration.data.DataPOJO;
  * @version 18.05.2018
  */
 public class RequestPOJO extends DataPOJO {
-    
-    static public enum RequestState {
-        NOT_PROCESSED,
-        IN_PROCESS,
-        PROCESSED;
-    }
-
+	
     /**
      * Type of request;
      */
@@ -32,34 +24,25 @@ public class RequestPOJO extends DataPOJO {
      * List of {@code String}s containing the necessary information
      * to handle the request.
      */
-    private List<String> parameters;
-
-    /**
-     * State of the request.
-     */
-    private RequestState state;
+    private List<Object> parameters;
 
     /**
      * Builds a new unprocessed request.
      */
-    public RequestPOJO(String id, RequestType t, List<String> params) {
-        super(id);
-        type = t;
+    public RequestPOJO(RequestType t, List<Object> params) {
+    	super("");
+    	type = t;
         parameters = params;
-
-        state = RequestState.NOT_PROCESSED;
+    }
+    
+    public RequestPOJO(String id, RequestPOJO rp){
+    	super(id);
+    	type = rp.type;
+    	parameters = rp.parameters;
     }
 
-    public List<String> getParameters() {
+    public List<Object> getParameters() {
         return parameters;
-    }
-
-    public RequestState getState() {
-        return state;
-    }
-
-    public void setState(RequestState newState) {
-        state = newState;
     }
 
     public RequestType getType() {

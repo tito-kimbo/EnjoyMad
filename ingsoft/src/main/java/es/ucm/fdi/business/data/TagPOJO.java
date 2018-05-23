@@ -43,7 +43,7 @@ public class TagPOJO implements Serializable{
 		}
 
 		TagPOJO tagToCompare = (TagPOJO) o;
-
+		
 		return tag.equals(tagToCompare.getTag());
 	}
 

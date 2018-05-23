@@ -1,5 +1,7 @@
 package es.ucm.fdi.integration.data;
 
+
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
@@ -333,18 +335,19 @@ public class ClubPOJO extends DataPOJO implements Serializable {
 		return userReviews;
 	}
 	
+	
 	@Override
 	public boolean equals(Object club) {
-		
+
 		if(!(club instanceof ClubPOJO))
 			return false;
 		
-		return this.location.equals(((ClubPOJO)club).location)
-			&& this.address.equals(((ClubPOJO)club).address)
-			&& this.commercialName.equals(((ClubPOJO)club).commercialName)
-			&& this.price == ((ClubPOJO)club).price
-			&& this.getID().equals(((ClubPOJO)club).getID())
-			&& this.tags.equals(((ClubPOJO)club).tags)
-			&& this.userReviews.equals(((ClubPOJO)club).userReviews);
+		return location.equals(((ClubPOJO)club).location)
+			&& address.equals(((ClubPOJO)club).address)
+			&& commercialName.equals(((ClubPOJO)club).commercialName)
+			&& price == ((ClubPOJO)club).price
+			&& getID().equals(((ClubPOJO)club).getID())
+			&& tags.equals(((ClubPOJO)club).tags)
+			&& userReviews.equals(((ClubPOJO)club).userReviews);
 	}
 }
