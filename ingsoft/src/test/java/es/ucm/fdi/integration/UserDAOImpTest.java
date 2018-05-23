@@ -49,13 +49,21 @@ public class UserDAOImpTest {
 	public void testGetUser() {
 		createTestUserDAOImp();
 		UserPOJO gotten = userDao.getUser("IDNumber1");
-		assertEquals("Error: user data not properly transferred by UserDAO"+
-				user.getEmail().toString() + gotten.getEmail().toString() +
-				user.getID().toString() + gotten.getID().toString()  +
-				user.getName().toString() + gotten.getName().toString() +
-				user.getNickname().toString() + gotten.getNickname().toString()  +
-				user.getPassword().toString() + gotten.getPassword().toString()  +
-				user.getBirthday().toString() + gotten.getBirthday().toString(),
+		assertEquals("Error: user data not properly transferred by UserDAO",
+				user.getEmail(), gotten.getEmail());
+		
+		assertEquals("Error: user id not properly transferred by UserDAO",
+				user.getID(), gotten.getID() );
+		assertEquals("Error: user name not properly transferred by UserDAO",
+				user.getName(), gotten.getName());
+		assertEquals("Error: user nickname not properly transferred by UserDAO",
+				user.getNickname(), gotten.getNickname());
+		assertEquals("Error: user password not properly transferred by UserDAO",
+				user.getPassword(), gotten.getPassword());
+		assertEquals("Error: user birthday not properly transferred by UserDAO",
+				user.getBirthday(), gotten.getBirthday());
+		
+		assertEquals("Error: user data not properly transferred by UserDAO",
 				user, gotten);
 	}
 
