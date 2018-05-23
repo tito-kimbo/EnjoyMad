@@ -94,7 +94,7 @@ public class TagDAOMySqlImp implements TagDAO {
 	        String str = "INSERT INTO Tags VALUES"
 	        		+ " (\'"+tag.getTag()+"\')";
 	        st.executeUpdate(str);
-	    }
+	    }/*
 		catch(java.sql.SQLNonTransientConnectionException ex) {
 			final TagPOJO tagF = tag;
 			ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
@@ -105,7 +105,7 @@ public class TagDAOMySqlImp implements TagDAO {
 			    		}
 		    		}, 0, 1, TimeUnit.SECONDS);
 		    tag = tagF;
-		}
+		}*/
 	    catch (SQLException ex) {
 	    	ex.printStackTrace();
 	    }
