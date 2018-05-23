@@ -3,16 +3,11 @@ package es.ucm.fdi.business.profilemanagement;
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.zip.DataFormatException;
 
 import es.ucm.fdi.business.data.TagPOJO;
-import es.ucm.fdi.business.profilemanagement.tools.ClubModifierHelper;
-import es.ucm.fdi.business.profilemanagement.tools.UserModifierHelper;
 import es.ucm.fdi.integration.data.ClubPOJO;
-import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
-import java.util.List;
 
 /**
  * Interface defining the functionalities to be used in profile management. It
@@ -47,13 +42,13 @@ public interface ProfileManagerSA {
 	 *            - {@code Set<String>} with list of the new club {@code Tags}
 	 * 
 	 * @throws IllegalArgumentException
-	 *             if {@code clubID} already stored in {@code ClubDAO} database
-	 * @throws DataFormatException
-	 *             if parsing failed while checking the new club attributes
+	 *             	if {@code clubID} already stored in {@code ClubDAO} 
+	 * 				database or...
+	 * @throws IllegalArgumentException
+	 *             	if parsing failed while checking the new club attributes
 	 */
 	public void addNewClub(String clubID, String name, String address,
-			float price, Set<TagPOJO> tags) throws IllegalArgumentException,
-			DataFormatException;
+			float price, Set<TagPOJO> tags) throws IllegalArgumentException;
 
 	/**
 	 * Adds a given {@code ClubPOJO} to the app {@code ClubDAO} database,
@@ -64,13 +59,13 @@ public interface ProfileManagerSA {
 	 *            - new {@code ClubPOJO} to be added
 	 * 
 	 * @throws IllegalArgumentException
-	 *             if {@code club} id already stored in {@code ClubDAO} database
-	 * @throws DataFormatException
-	 *             if parsing failed while checking the new club attributes
+	 *             	if {@code club} id already stored in {@code ClubDAO} 
+	 * 				database or...
+	 * @throws IllegalArgumentException
+	 *             	if parsing failed while checking the new club attributes
 	 * 
 	 */
-	public void addNewClub(ClubPOJO club) throws IllegalArgumentException,
-			DataFormatException;
+	public void addNewClub(ClubPOJO club) throws IllegalArgumentException;
 
 	/**
 	 * XXX ¿Borrar si no se usa al final?
@@ -97,13 +92,14 @@ public interface ProfileManagerSA {
 	 *            - {@code Set<String>} with list of the new user {@code Tags}
 	 * 
 	 * @throws IllegalArgumentException
-	 *             if {@code userID} already stored in {@code UserDAO} database
-	 * @throws DataFormatException
-	 *             if parsing failed while checking the new user attributes
+	 *             	if {@code userID} already stored in {@code UserDAO} 
+	 * 				database or...
+	 * @throws IllegalArgumentException
+	 *             	if parsing failed while checking the new club attributes
 	 */
 	public void addNewUser(String userID, String username, String password,
 			String email, String name, LocalDate birthday)
-			throws IllegalArgumentException, DataFormatException;
+			throws IllegalArgumentException;
 
 	/**
 	 * <p>
@@ -120,12 +116,12 @@ public interface ProfileManagerSA {
 	 *            - new {@code UserPOJO} to be added
 	 *
 	 * @throws IllegalArgumentException
-	 *             if {@code user} id already stored in {@code userDAO} database
-	 * @throws DataFormatException
-	 *             if parsing failed while checking the new user attributes
+	 *             	if {@code user} id already stored in {@code userDAO} 
+	 * 				database or...
+	 * @throws IllegalArgumentException
+	 *             	if parsing failed while checking the new user attributes
 	 */
-	public void addNewUser(UserPOJO user) throws IllegalArgumentException,
-			DataFormatException;
+	public void addNewUser(UserPOJO user) throws IllegalArgumentException;
 
 	// ** CLUB MODIFICATION **//
 
@@ -135,22 +131,17 @@ public interface ProfileManagerSA {
 	 * 
 	 * @param clubID
 	 *            - id of {@code ClubPOJO} to be modified
-	 * @param dataType
-	 *            - {@code ClubModifierBO} indicating the specific modification
-	 * @param newData
-	 *            - new data to replace the old one in the modification
+	 * @param clubChanges
+	 *            - new data encapsulated in a {@code ClubPOJO} to replace the 
+	 * 				old one in the modification
 	 * 
 	 * @throws NoSuchElementException
 	 *             if {@code clubID} not found in {@code clubDAO} database
 	 * @throws IllegalArgumentException
-	 *             if {@code newData} class does not match that needed for the
-	 *             modification
-	 * @throws DataFormatException
 	 *             if {@code newData} parsing failed
 	 */
-	public void modifyClubData(String clubID, ClubModifierHelper dataType,
-			Object newData) throws NoSuchElementException,
-			IllegalArgumentException, DataFormatException;
+	public void modifyClubData(String clubID, ClubPOJO clubChanges) 
+			throws NoSuchElementException, IllegalArgumentException;
 
 	// ** USER MODIFICATION **//
 
@@ -160,22 +151,17 @@ public interface ProfileManagerSA {
 	 * 
 	 * @param userID
 	 *            - id of {@code UserPOJO} to be modified
-	 * @param dataType
-	 *            - {@code UserModifierBO} indicating the specific modification
-	 * @param newData
-	 *            - new data to replace the old one in the modification
+	 * @param userChanges
+	 *            - new data encapsulated in a {@code UserPOJO} to replace the 
+	 * 				old one in the modification
 	 * 
 	 * @throws NoSuchElementException
 	 *             if {@code userID} not found in {@code userDAO} database
 	 * @throws IllegalArgumentException
-	 *             if {@code newData} class does not match that needed for the
-	 *             modification
-	 * @throws DataFormatException
 	 *             if {@code newData} parsing failed
 	 */
-	public void modifyUserData(String userID, UserModifierHelper dataType,
-			Object newData) throws IllegalArgumentException,
-			DataFormatException;
+	public void modifyUserData(String userID, UserPOJO userChanges) 
+			throws NoSuchElementException, IllegalArgumentException;
 
 	// ** PROFILE REMOVAL **//
 
@@ -222,11 +208,11 @@ public interface ProfileManagerSA {
 	 * @throws NoSuchElementException
 	 *             if {@code userID, clubID} not found in
 	 *             {@code userDAO, clubDAO} databases
-	 * @throws DataFormatException
+	 * @throws IllegalArgumentException
 	 *             if {@code review} parsing failed
 	 */
 	public void addReview(String clubID, ReviewPOJO review, String userID)
-			throws NoSuchElementException, DataFormatException;
+			throws NoSuchElementException, IllegalArgumentException;
 
 	/**
 	 * Removes a user {@code ReviewPOJO}.
@@ -242,96 +228,5 @@ public interface ProfileManagerSA {
 	 */
 	public void removeReview(String clubID, String userID)
 			throws NoSuchElementException;
-
-	/**
-	 * 
-	 * @param clubID
-	 * @return
-	 */
-	public String getCommercialName(String clubID);
-
-	/**
-	 * 
-	 * @param clubID
-	 * @return
-	 */
-	public String getClubAdress(String clubID);
-
-	/**
-	 * 
-	 * @param clubID
-	 * @return
-	 */
-	public float getClubPrice(String clubID);
-
-	/**
-	 * 
-	 * @param clubID
-	 * @return
-	 */
-	public Location getClubLocation(String clubID);
-
-	/**
-	 * 
-	 * @param clubID
-	 * @return
-	 */
-	public float getClubRating(String clubID);
-
-	/**
-	 * 
-	 * @param clubID
-	 * @return
-	 */
-	public List<TagPOJO> getClubTags(String clubID);
-
-	/**
-	 * 
-	 * @param userID
-	 * @return
-	 */
-	public String getUserNickname(String userID);
-
-	/**
-	 * 
-	 * @param userID
-	 * @return
-	 */
-	public String getUserPassword(String userID);
-
-	/**
-	 * 
-	 * @param userID
-	 * @return
-	 */
-	public String getUserEmail(String userID);
-
-	/**
-	 * 
-	 * @param userID
-	 * @return
-	 */
-	public String getUserName(String userID);
-
-	/**
-	 * 
-	 * @param userID
-	 * @return
-	 */
-	public LocalDate getUserBirthday(String userID);
-
-	/**
-	 * 
-	 * @param userID
-	 * @return
-	 */
-	public List<String> getClubsReviewed(String userID);
-
-	/**
-	 * 
-	 * @param clubID
-	 * @return
-	 */
-	public List<ReviewPOJO> getReviewsFromClub(String clubID);
 
 }
