@@ -1,5 +1,7 @@
 package es.ucm.fdi.business;
 
+import java.util.TimeZone;
+
 import es.ucm.fdi.business.profilemanagement.ProfileManagerSA;
 import es.ucm.fdi.business.profilemanagement.ProfileManagerSAImp;
 import es.ucm.fdi.business.searchengine.FilterMapper;
@@ -69,6 +71,7 @@ public class ProductionConfig {
 	}
 	
 	public static void init(){
+		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
 		if(useSQL){
 			initSQLDAOs();	
 		}else{

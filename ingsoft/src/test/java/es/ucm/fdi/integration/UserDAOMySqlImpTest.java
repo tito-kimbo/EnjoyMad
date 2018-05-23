@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.Test;
@@ -27,6 +28,11 @@ public class UserDAOMySqlImpTest {
 	private static AssertionError assertionError;
 	private static CountDownLatch latch; // Timer to allow multi-threading tests
 
+	//This is done for timezone sensitive comparisons (of users)
+	static{
+		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
+	}
+	
 	private static void createTestUserDAOMySqlImp() {
 		LocalDate date = LocalDate.of(1980, 1, 1);
 		user = new UserPOJO("IDNumber1", "MyUser", "MyPsw",
