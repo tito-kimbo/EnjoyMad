@@ -6,7 +6,7 @@ import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.business.tagmanagement.TagManagerSA;
 import es.ucm.fdi.business.util.ParsingToolHelper;
 import es.ucm.fdi.integration.data.ClubPOJO;
-import es.ucm.fdi.integration.data.Location;
+
 
 /**
  * Enum class representing the attributes of a ClubPOJO.
@@ -48,7 +48,7 @@ public enum ClubModifierHelper {
 			
 			if (clubChanges.getLocation() != null) {
 				// XXX ¿Qué es valido para la localización?
-				Location newLocation = clubChanges.getLocation();	
+				// Location newLocation = clubChanges.getLocation();	
 			}
 		}
 

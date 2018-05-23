@@ -2,8 +2,6 @@ package es.ucm.fdi.business.profilemanagement.tools;
 
 import java.time.LocalDate;
 
-import org.mindrot.jbcrypt.BCrypt;
-
 import es.ucm.fdi.business.util.ParsingToolHelper;
 import es.ucm.fdi.integration.data.UserPOJO;
 

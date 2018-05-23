@@ -34,6 +34,7 @@ public class ProductionConfig {
 	private static boolean useSQL = false;
 	private static UserDAO users;
 	private static ClubDAO clubs;
+	private static TagManagerSA tagManager;
 	private static TagDAO tags;
 	private static SessionDAO sessions;
 	
@@ -75,7 +76,7 @@ public class ProductionConfig {
 		}
 		addFilters();
 		SearchEngineSA sesa = new SearchEngineSAImp();
-		ProfileManagerSA pmsa = new ProfileManagerSAImp(clubs, users);
+		ProfileManagerSA pmsa = new ProfileManagerSAImp(clubs, users, tagManager);
 		TicketManagerSA ticketmsa = new TicketManagerSAImp(clubs, users);
 		SessionManagerSA smsa = new SessionManagerSAImp(sessions);
 		TagManagerSA tagmsa = new TagManagerSAImp(tags);
