@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import es.ucm.fdi.integration.data.ClubPOJO;
-import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 

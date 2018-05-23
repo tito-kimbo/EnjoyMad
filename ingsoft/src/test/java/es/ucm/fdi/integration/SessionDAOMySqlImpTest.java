@@ -101,7 +101,7 @@ public class SessionDAOMySqlImpTest {
 		assertFalse("session 1 must be removed but it is not",
 				sessionDao.exist("session 1"));
 	}
-
+	/*
 	private void awaitForLatch() {
 		try {
 			latch.await();
@@ -201,5 +201,5 @@ public class SessionDAOMySqlImpTest {
 					+ assertionError.getMessage());
 		}
 	}
-
+	*/
 }

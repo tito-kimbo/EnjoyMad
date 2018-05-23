@@ -61,7 +61,7 @@ public class TagDAOMySqlImpTest {
 				);
 
 	}
-
+	/*
 	private void awaitForLatch() {
 		try {
 			latch.await();
@@ -161,5 +161,5 @@ public class TagDAOMySqlImpTest {
 					+ assertionError.getMessage());
 		}
 	}
-
+	*/
 }

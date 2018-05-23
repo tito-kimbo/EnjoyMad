@@ -48,15 +48,6 @@ public class ClubDAOMySqlImpTest {
 		clubDao.addClub(club);
 	}
 
-	private void awaitForLatch() {
-		try {
-			latch.await();
-		} catch (InterruptedException ie) {
-			fail("Await interrupted, test could not finish properly.");
-		}
-
-	}
-
 	@Test
 	public void testExist() {
 		createTestClubDAOMySqlImp();
@@ -89,6 +80,14 @@ public class ClubDAOMySqlImpTest {
 		assertEquals(clubDao.exists("id"), false);
 	}
 	/*
+	private void awaitForLatch() {
+		try {
+			latch.await();
+		} catch (InterruptedException ie) {
+			fail("Await interrupted, test could not finish properly.");
+		}
+
+	}
 	@Test
 	public void concurrentReadTest() {
 		// This is a timer that will make the program wait for the threads to
