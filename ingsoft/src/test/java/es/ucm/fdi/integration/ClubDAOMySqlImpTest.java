@@ -41,7 +41,7 @@ public class ClubDAOMySqlImpTest {
 		
 		
 		clubDao = new ClubDAOMySqlImp();
-		clubDao.removeClub("id");
+		clubDao.addClub(club);
 		
 		list = new ArrayList<ClubPOJO>(Arrays.asList(club));
 	}
@@ -97,6 +97,7 @@ public class ClubDAOMySqlImpTest {
 		assertEquals(clubDao.exists("id"), false);
 		clubDao.removeClub(club.getID());
 	}
+	
 	/*
 	private void awaitForLatch() {
 		try {

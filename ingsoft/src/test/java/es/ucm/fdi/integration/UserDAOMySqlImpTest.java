@@ -51,17 +51,17 @@ public class UserDAOMySqlImpTest {
 	@Test
 	public void testGetUser() {
 		createTestUserDAOMySqlImp();
-		UserPOJO gotten = userDao.getUser("IDNumber1");
+		UserPOJO got = userDao.getUser("IDNumber1");
 		assertEquals("Error: user data not properly transferred by UserDAO",
-				user.getEmail(), gotten.getEmail());
+				user.getEmail(), got.getEmail());
 		assertEquals("Error: user id not properly transferred by UserDAO",
-				user.getID(), gotten.getID() );
+				user.getID(), got.getID() );
 		assertEquals("Error: user name not properly transferred by UserDAO",
-				user.getName(), gotten.getName());
+				user.getName(), got.getName());
 		assertEquals("Error: user nickname not properly transferred by UserDAO",
-				user.getNickname(), gotten.getNickname());
+				user.getUsername(), got.getUsername());
 		assertEquals("Error: user password not properly transferred by UserDAO",
-				user.getPassword(), gotten.getPassword());
+				user.getHashedPassword(), got.getHashedPassword());
 		//assertEquals("Error: user birthday not properly transferred by UserDAO",
 		//		user.getBirthday(), gotten.getBirthday());
 		//assertEquals("Error: user data not properly transferred by UserDAO",

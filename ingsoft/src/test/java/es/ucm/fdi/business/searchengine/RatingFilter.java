@@ -9,9 +9,9 @@ import java.util.List;
 import org.junit.Test;
 
 import es.ucm.fdi.business.ProductionConfig;
-import es.ucm.fdi.business.data.TagPOJO;
 
 import es.ucm.fdi.business.data.FilterPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.filters.FilterStrategy;

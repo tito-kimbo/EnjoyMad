@@ -2,10 +2,10 @@ package es.ucm.fdi.business.profilemanagement.tools;
 
 import java.util.Set;
 
-import es.ucm.fdi.business.data.TagPOJO;
 import es.ucm.fdi.business.tagmanagement.TagManagerSA;
 import es.ucm.fdi.business.util.ParsingToolHelper;
 import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 
 
 /**
