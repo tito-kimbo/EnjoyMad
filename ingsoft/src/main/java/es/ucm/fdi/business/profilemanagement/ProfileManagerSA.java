@@ -4,7 +4,10 @@ import java.time.LocalDate;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
+import es.ucm.fdi.business.profilemanagement.tools.ClubModifierHelper;
+import es.ucm.fdi.business.profilemanagement.tools.UserModifierHelper;
+
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;

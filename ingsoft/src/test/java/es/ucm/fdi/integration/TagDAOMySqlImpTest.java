@@ -1,11 +1,13 @@
 package es.ucm.fdi.integration;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.Test;
@@ -13,7 +15,11 @@ import org.junit.Test;
 import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
-public class TagDAOImpTest {
+/**
+ * This class tests the functionality of ClubDAOImp.
+ */
+
+public class TagDAOMySqlImpTest {
 
 	private static int CONCURRENT_TESTS = 100;
 	private static TagPOJO tag;
@@ -26,14 +32,15 @@ public class TagDAOImpTest {
 	private static void createTestTagDAOImp() {
 
 		tag = new TagPOJO("tag prueba");
-		tagDao = new TagDAOImp();
+		tagDao = new TagDAOMySqlImp();
 		tagList = new ArrayList<TagPOJO>();
 
 		tagList.add(new TagPOJO("buena musica"));
 		tagList.add(new TagPOJO("copas gratis"));
 		tagList.add(new TagPOJO("artistas famosos"));
 		tagList.add(new TagPOJO("grande"));
-
+		
+		tagDao.saveTags(new ArrayList<TagPOJO>());
 	}
 
 	@Test
@@ -55,7 +62,7 @@ public class TagDAOImpTest {
 				);
 
 	}
-
+	/*
 	private void awaitForLatch() {
 		try {
 			latch.await();
@@ -155,5 +162,5 @@ public class TagDAOImpTest {
 					+ assertionError.getMessage());
 		}
 	}
-
+	*/
 }

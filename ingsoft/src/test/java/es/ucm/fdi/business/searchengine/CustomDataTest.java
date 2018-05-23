@@ -10,7 +10,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.business.searchengine.CustomDataSA;
 import es.ucm.fdi.business.searchengine.CustomDataSAImp;
 import es.ucm.fdi.integration.ClubDAO;
@@ -27,11 +27,11 @@ public class CustomDataTest {
 	UserPOJO uPOJO = new UserPOJO("Pepe", "pepe1", "constrasena", "pepe@gamil.com", "Pepe Dominguez", null);
 		
 		
-		Map<String, Integer> valueTags = new HashMap<String, Integer>();
-		valueTags.put("barato", 10);
-		valueTags.put("buena musica", 20);
-		valueTags.put("marchoso", 35);
-		valueTags.put("divertido", 5);
+		Map<TagPOJO, Integer> valueTags = new HashMap<TagPOJO, Integer>();
+		valueTags.put(new TagPOJO("barato"), 10);
+		valueTags.put(new TagPOJO("buena musica"), 20);
+		valueTags.put(new TagPOJO("marchoso"), 35);
+		valueTags.put(new TagPOJO("divertido"), 5);
 		
 		Set<TagPOJO> tags1 = new HashSet<TagPOJO>();		
 		
@@ -76,11 +76,11 @@ public class CustomDataTest {
 		UserPOJO uPOJO = new UserPOJO("Pepe", "pepe1", "constrasena", "pepe@gamil.com", "Pepe Dominguez", null);
 		
 		
-		Map<String, Integer> valueTags = new HashMap<String, Integer>();
-		valueTags.put("barato", 10);
-		valueTags.put("buena musica", 20);
-		valueTags.put("marchoso", 35);
-		valueTags.put("divertido", 5);
+		Map<TagPOJO, Integer> valueTags = new HashMap<TagPOJO, Integer>();
+		valueTags.put(new TagPOJO("barato"), 10);
+		valueTags.put(new TagPOJO("buena musica"), 20);
+		valueTags.put(new TagPOJO("marchoso"), 35);
+		valueTags.put(new TagPOJO("divertido"), 5);
 		
 		Set<TagPOJO> tags1 = new HashSet<TagPOJO>();
 		tags1.add(new TagPOJO("marchoso"));

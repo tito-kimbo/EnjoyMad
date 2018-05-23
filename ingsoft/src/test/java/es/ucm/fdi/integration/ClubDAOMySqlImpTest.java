@@ -12,8 +12,7 @@ import java.util.concurrent.CountDownLatch;
 
 import org.junit.Test;
 
-import android.database.SQLException;
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 
 /**
@@ -45,22 +44,12 @@ public class ClubDAOMySqlImpTest {
 		clubDao.removeClub("id");
 		
 		list = new ArrayList<ClubPOJO>(Arrays.asList(club));
-
-		clubDao.addClub(club);
-	}
-
-	private void awaitForLatch() {
-		try {
-			latch.await();
-		} catch (InterruptedException ie) {
-			fail("Await interrupted, test could not finish properly.");
-		}
-
 	}
 
 	@Test
 	public void testExist() {
 		createTestClubDAOMySqlImp();
+		clubDao.addClub(club);
 		assertEquals(clubDao.exists("id"), true);
 		clubDao.removeClub("id");
 	}
@@ -68,6 +57,7 @@ public class ClubDAOMySqlImpTest {
 	//@Test
 	public void testGetClub() {
 		createTestClubDAOMySqlImp();
+		clubDao.addClub(club);
 		ClubPOJO otherClub = clubDao.getClub("id");
 		
 		/*System.out.println(club.getTags());
@@ -89,6 +79,8 @@ public class ClubDAOMySqlImpTest {
 	//@Test
 	public void testGetClubs() {
 		createTestClubDAOMySqlImp();
+		clubDao.addClub(club);
+		
 		List otherlist = clubDao.getClubs();
 		assertEquals(list, otherlist);
 	
@@ -100,10 +92,20 @@ public class ClubDAOMySqlImpTest {
 	@Test
 	public void testRemoveClub() {
 		createTestClubDAOMySqlImp();
+		clubDao.addClub(club);
 		clubDao.removeClub("id");
 		assertEquals(clubDao.exists("id"), false);
+		clubDao.removeClub(club.getID());
 	}
 	/*
+	private void awaitForLatch() {
+		try {
+			latch.await();
+		} catch (InterruptedException ie) {
+			fail("Await interrupted, test could not finish properly.");
+		}
+
+	}
 	@Test
 	public void concurrentReadTest() {
 		// This is a timer that will make the program wait for the threads to

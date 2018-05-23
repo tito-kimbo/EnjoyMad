@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 import es.ucm.fdi.integration.data.Location;
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 /**
@@ -66,7 +66,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		        		 new Location(rs.getDouble("latitude"), rs.getDouble("longitude")), 
 		        		 rs.getFloat("average_rating"));
 	        
-	        rs = st.executeQuery("SELECT * FROM Tags where club_id ="+'\'' + id + '\'');
+	        rs = st.executeQuery("SELECT * FROM ClubTags where club_id ="+'\'' + id + '\'');
 	        while(rs.next()) {
 	        	club.addTag(new TagPOJO(rs.getString("tag")));
 	        }
@@ -108,7 +108,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		        		 new Location(rs.getDouble("latitude"), rs.getDouble("longitude")), 
 		        		 rs.getFloat("average_rating"));
 		        
-		        ResultSet auxS = aux.executeQuery("SELECT * FROM Tags where club_id = \'"+id+"\'");
+		        ResultSet auxS = aux.executeQuery("SELECT * FROM ClubTags where club_id = \'"+id+"\'");
 		        while(auxS.next()) {
 		        	club.addTag(new TagPOJO(auxS.getString("tag")));
 		        }
@@ -160,7 +160,10 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	 * {@inheritDoc}
 	 */
 	
-	public boolean addClub(ClubPOJO club) {
+	public void addClub(ClubPOJO club) {
+		if(exists(club.getID()))
+			return;
+		
 		createConnection();
 		
 		try { // Unchecked queries
@@ -176,7 +179,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	        st.executeUpdate(str);
 	        
 	        for(TagPOJO tp : club.getTags()) {
-	        	st.executeUpdate("insert into Tags values (\'" + tp.getTag() + "\',\'" + club.getID() + "\')");
+	        	st.executeUpdate("insert into ClubTags values (\'" + club.getID() + "\',\'" + tp.getTag() + "\')");
 	        }
 	        @SuppressWarnings("rawtypes")
 			Iterator it = club.getReviews().entrySet().iterator();
@@ -205,21 +208,20 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	    finally{
 	    	closeConnection();
 	    }
-		return false;
 	}
 
   	/**
 	 * {@inheritDoc}
 	 */
 	
-	public boolean removeClub(String id) {
+	public void removeClub(String id) {
 		createConnection();
 		
 		try {
 	        Statement st = con.createStatement();
 	        
 	        st.executeUpdate("delete from Clubs where id ="+'\'' + id + '\'');
-	        st.executeUpdate("delete from Tags where club_id ="+'\'' + id + '\'');
+	        st.executeUpdate("delete from ClubTags where club_id ="+'\'' + id + '\'');
 	        st.executeUpdate("delete from Opinion where club_id ="+'\'' + id + '\'');
 	    }
 	    catch (SQLException ex) {
@@ -229,6 +231,5 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	    finally{
 	    	closeConnection();
 	    }
-		return false;
 	}
 }

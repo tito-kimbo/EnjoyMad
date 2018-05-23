@@ -301,8 +301,7 @@
 //             // Should not enter here
 //             fail("The club was correctly set up but exception was thrown: "
 //                     + e.getMessage());
-//         }
-        
+//         }        
 //         // We add a valid new club tag, no exception should be thrown
 //         try {
 //             profileManager.modifyClubData(
