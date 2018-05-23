@@ -244,7 +244,11 @@ public class UserPOJO extends DataPOJO implements Serializable {
 		equalPreferences = preferencesList.equals(((UserPOJO) obj).preferencesList);
 		equalReviews = reviewedClubs.equals(((UserPOJO) obj).reviewedClubs);
 		
-		return birthday.equals(((UserPOJO) obj).birthday)
+		System.out.println("TAGS: " + equalTags + " PREFERENCES: " + equalPreferences);
+		System.out.println("REVIEWS: " + equalReviews);
+		System.out.println("PASSWORDS: " + hashedPassword.equals(((UserPOJO) obj).hashedPassword));
+		
+		return	birthday.equals(((UserPOJO) obj).birthday)
 				&& name.equals(((UserPOJO) obj).name)
 				&& hashedPassword.equals(((UserPOJO) obj).hashedPassword)
 				&& getID().equals(((UserPOJO) obj).getID())

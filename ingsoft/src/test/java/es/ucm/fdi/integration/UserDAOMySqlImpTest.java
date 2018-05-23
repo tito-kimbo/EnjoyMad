@@ -63,7 +63,7 @@ public class UserDAOMySqlImpTest {
 		//assertEquals("Error: user birthday not properly transferred by UserDAO",
 		//		user.getBirthday(), gotten.getBirthday());
 		//assertEquals("Error: user data not properly transferred by UserDAO",
-		//		user, gotten);
+		//		user, gotten); 
 		
 		userDao.removeUser("IDNumber1");
 	}
@@ -72,7 +72,8 @@ public class UserDAOMySqlImpTest {
 	public void testGetUsers() {
 		createTestUserDAOMySqlImp();
 		List<UserPOJO> users = userDao.getUsers();
-		assertEquals("Error: users added incorrectly to UserDAO",
+		System.out.println(" testGetUsers() ");
+		assertEquals("Error: multiple users added incorrectly to UserDAO",
 				users, list);
 		
 		for(UserPOJO user : list)
