@@ -41,7 +41,7 @@ public class ClubDAOMySqlImpTest {
 		
 		
 		clubDao = new ClubDAOMySqlImp();
-		clubDao.addClub(club);
+		clubDao.removeClub("id");
 		
 		list = new ArrayList<ClubPOJO>(Arrays.asList(club));
 	}
@@ -54,36 +54,22 @@ public class ClubDAOMySqlImpTest {
 		clubDao.removeClub("id");
 	}
 
-	//@Test
+	@Test
 	public void testGetClub() {
 		createTestClubDAOMySqlImp();
 		clubDao.addClub(club);
 		ClubPOJO otherClub = clubDao.getClub("id");
-		
-		/*System.out.println(club.getTags());
-		System.out.println(otherClub.getTags());
-		
-		System.out.println("TAGS1");
-		for(TagPOJO t : club.getTags()){
-			System.out.println(t.getTag());
-		}
-		System.out.println("TAGS2");
-		for(TagPOJO t : otherClub.getTags()){
-			System.out.println(t.getTag());
-		}*/
-		
 		assertEquals(club, otherClub);
 		clubDao.removeClub("id");
 	}
 
-	//@Test
+	@Test
 	public void testGetClubs() {
 		createTestClubDAOMySqlImp();
 		clubDao.addClub(club);
 		
-		List otherlist = clubDao.getClubs();
+		List<ClubPOJO> otherlist = clubDao.getClubs();
 		assertEquals(list, otherlist);
-	
 		
 		for(ClubPOJO club : list)
 			clubDao.removeClub(club.getID());
@@ -97,7 +83,6 @@ public class ClubDAOMySqlImpTest {
 		assertEquals(clubDao.exists("id"), false);
 		clubDao.removeClub(club.getID());
 	}
-	
 	/*
 	private void awaitForLatch() {
 		try {

@@ -2,7 +2,9 @@ package es.ucm.fdi.integration.data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -33,12 +35,12 @@ public class UserPOJO extends DataPOJO implements Serializable {
 	 * List of favorite clubs.
 	 * XXX ¿Debería ser una List<String> con los IDs?
 	 */
-	private List<ClubPOJO> preferencesList;
+	private List<ClubPOJO> preferencesList = new ArrayList<ClubPOJO>();
 
 	/**
 	 * TODO Comentar
 	 */
-	private Map<TagPOJO, Integer> valueTags;
+	private Map<TagPOJO, Integer> valueTags = new HashMap<TagPOJO, Integer>();
 
 	/**
 	 * User class normal constructor
@@ -229,5 +231,26 @@ public class UserPOJO extends DataPOJO implements Serializable {
 	 */
 	public void setValueTags(Map<TagPOJO, Integer> valueTags) {
 		this.valueTags = valueTags;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof UserPOJO))
+			return false;
+		
+		boolean equalTags, equalReviews, equalPreferences;
+		
+		equalTags = valueTags.equals(((UserPOJO) obj).valueTags);
+		equalPreferences = preferencesList.equals(((UserPOJO) obj).preferencesList);
+		equalReviews = reviewedClubs.equals(((UserPOJO) obj).reviewedClubs);
+		
+		return birthday.equals(((UserPOJO) obj).birthday)
+				&& name.equals(((UserPOJO) obj).name)
+				&& hashedPassword.equals(((UserPOJO) obj).hashedPassword)
+				&& getID().equals(((UserPOJO) obj).getID())
+				&& username.equals(((UserPOJO) obj).username)
+				&& equalTags
+				&& equalPreferences
+				&& equalReviews;
 	}
 }

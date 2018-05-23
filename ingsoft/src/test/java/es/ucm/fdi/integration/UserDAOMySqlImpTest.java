@@ -22,7 +22,7 @@ public class UserDAOMySqlImpTest {
 	private static int CONCURRENT_TESTS = 100;
 	private static UserPOJO user;
 	private static UserDAO userDao;
-	private static ArrayList<UserPOJO> list = new ArrayList<UserPOJO>();
+	private static List<UserPOJO> list = new ArrayList<UserPOJO>();
 
 	private static AssertionError assertionError;
 	private static CountDownLatch latch; // Timer to allow multi-threading tests
@@ -31,12 +31,10 @@ public class UserDAOMySqlImpTest {
 		LocalDate date = LocalDate.of(1980, 1, 1);
 		user = new UserPOJO("IDNumber1", "MyUser", "MyPsw",
 				"myname@domain.com", "myname", date);
-
+		
 		userDao = new UserDAOMySqlImp();
 		userDao.removeUser("IDNumber1");
-		
 		list = new ArrayList<UserPOJO>(Arrays.asList(user));
-
 		userDao.addUser(user);
 	}
 
@@ -51,17 +49,17 @@ public class UserDAOMySqlImpTest {
 	@Test
 	public void testGetUser() {
 		createTestUserDAOMySqlImp();
-		UserPOJO got = userDao.getUser("IDNumber1");
+		UserPOJO gotten = userDao.getUser("IDNumber1");
 		assertEquals("Error: user data not properly transferred by UserDAO",
-				user.getEmail(), got.getEmail());
+				user.getEmail(), gotten.getEmail());
 		assertEquals("Error: user id not properly transferred by UserDAO",
-				user.getID(), got.getID() );
+				user.getID(), gotten.getID() );
 		assertEquals("Error: user name not properly transferred by UserDAO",
-				user.getName(), got.getName());
+				user.getName(), gotten.getName());
 		assertEquals("Error: user nickname not properly transferred by UserDAO",
-				user.getUsername(), got.getUsername());
+				user.getUsername(), gotten.getUsername());
 		assertEquals("Error: user password not properly transferred by UserDAO",
-				user.getHashedPassword(), got.getHashedPassword());
+				user.getHashedPassword(), gotten.getHashedPassword());
 		//assertEquals("Error: user birthday not properly transferred by UserDAO",
 		//		user.getBirthday(), gotten.getBirthday());
 		//assertEquals("Error: user data not properly transferred by UserDAO",
@@ -70,7 +68,7 @@ public class UserDAOMySqlImpTest {
 		userDao.removeUser("IDNumber1");
 	}
 
-	//@Test
+	@Test
 	public void testGetUsers() {
 		createTestUserDAOMySqlImp();
 		List<UserPOJO> users = userDao.getUsers();

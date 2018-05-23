@@ -189,7 +189,7 @@ public class UserDAOMySqlImp implements UserDAO {
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Date myDate;
-			try {
+			try {				
 				myDate = formatter.parse(user.getBirthday().toString());
 				java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
 				/*
@@ -225,6 +225,7 @@ public class UserDAOMySqlImp implements UserDAO {
 			      }
 			      
 			      
+
 			      // Insert club preferences (supposes the clubs exist)
 			      query = " insert into Preferences (user_id, club_id)"
 					        + " values (?, ?)";
