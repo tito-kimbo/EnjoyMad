@@ -167,11 +167,11 @@ public class UserDAOMySqlImp implements UserDAO {
 			      // create the mysql insert preparedstatement
 			      PreparedStatement preparedStmt = con.prepareStatement(query);
 			      preparedStmt.setString (1, user.getID());
-			      preparedStmt.setString (2, user.getNickname());
+			      preparedStmt.setString (2, user.getUsername());
 			      preparedStmt.setString (3, user.getEmail());
 			      preparedStmt.setString (4, user.getName());
 			      preparedStmt.setDate   (5, sqlDate);
-			      preparedStmt.setString (6, user.getPassword());
+			      preparedStmt.setString (6, user.getHashedPassword());
 			      
 			      preparedStmt.executeUpdate();
 			} catch (ParseException e) {

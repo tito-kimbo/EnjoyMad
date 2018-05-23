@@ -51,4 +51,27 @@ public class ReviewPOJO {
 
 		return review;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		return opinion.hashCode() * (int) (rate * 100);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if(! (o instanceof ReviewPOJO)) {
+			return false;
+		}
+
+		ReviewPOJO reviewToCompare = (ReviewPOJO) o;
+
+		return opinion.equals(reviewToCompare.opinion)
+				&& rate == reviewToCompare.rate;
+	}
 }

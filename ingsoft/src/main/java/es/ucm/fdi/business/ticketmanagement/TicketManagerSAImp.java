@@ -39,7 +39,7 @@ public class TicketManagerSAImp implements TicketManagerSA {
 
 		float price = club.getPrice();
 		String email = user.getEmail();
-		String psw = user.getPassword();
+		String psw = user.getHashedPassword();
 
 		/*
 		 *  Payment code
