@@ -16,7 +16,7 @@ import es.ucm.fdi.integration.data.SessionPOJO;
 
 public class SessionDAOMySqlImpTest {
 
-	private static int CONCURRENT_TESTS = 100;
+	private static int CONCURRENT_TESTS = 10;
 	private static SessionDAO sessionDao;
 
 	private static Set<SessionPOJO> sessionsSet;
@@ -110,7 +110,7 @@ public class SessionDAOMySqlImpTest {
 		assertFalse("session 1 must be removed but it is not",
 				sessionDao.exist("session 1"));
 	}
-	/*
+	
 	private void awaitForLatch() {
 		try {
 			latch.await();
@@ -137,7 +137,7 @@ public class SessionDAOMySqlImpTest {
 		}.start();
 	}
 
-	@Test
+	//@Test
 	public void concurrentReadTest() {
 
 		// This is a timer that will make the program wait for the threads to
@@ -164,14 +164,15 @@ public class SessionDAOMySqlImpTest {
 		// Write thread
 		new Thread() {
 			public void run() {
-				writeInDAO();
+				for (SessionPOJO sp : sessionsSet) 
+					sessionDao.addSession(sp);
 				latch.countDown();
 			}
 
 		}.start();
 	}
 
-	@Test
+	//@Test
 	public void concurrentWriteTest() {
 		latch = new CountDownLatch(CONCURRENT_TESTS);
 
@@ -186,8 +187,8 @@ public class SessionDAOMySqlImpTest {
 				+ "mismatched tag in DAO", sessionsSet,
 				new HashSet<SessionPOJO>(sessionDao.getSessions()));
 	}
-
-	@Test
+	
+	//@Test
 	public void concurrentReadWriteTest() {
 		// This is a timer that will make the program wait for the threads to
 		// execute
@@ -210,5 +211,4 @@ public class SessionDAOMySqlImpTest {
 					+ assertionError.getMessage());
 		}
 	}
-	*/
 }

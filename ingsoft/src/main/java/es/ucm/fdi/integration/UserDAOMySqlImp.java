@@ -26,13 +26,13 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * @version 22.04.2018
  */
 public class UserDAOMySqlImp implements UserDAO {
-	Connection con = null;
 
 	/**
 	 * Creates connection to the database.
 	 * 
 	 */
-	private void createConnection() {
+	private Connection createConnection() {
+		Connection con = null;
 		try {
 			con = DriverManager.getConnection(
 					"jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942",
@@ -40,13 +40,14 @@ public class UserDAOMySqlImp implements UserDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+		return con;
 	}
 
 	/**
 	 * Closes connection to the database.
 	 * 
 	 */
-	private void closeConnection() {
+	private void closeConnection(Connection con) {
 		try {
 			con.close();
 		} catch (SQLException ex) {
@@ -58,7 +59,7 @@ public class UserDAOMySqlImp implements UserDAO {
 	 * {@inheritDoc}
 	 */
 	public UserPOJO getUser(String id) {
-		createConnection();
+		Connection con = createConnection();
 		UserPOJO user = null;
 
 		try {
@@ -101,7 +102,7 @@ public class UserDAOMySqlImp implements UserDAO {
 		}
 
 		finally {
-			closeConnection();
+			closeConnection(con);
 		}
 		return user;
 	}
@@ -110,7 +111,7 @@ public class UserDAOMySqlImp implements UserDAO {
 	 * {@inheritDoc}
 	 */
 	public List<UserPOJO> getUsers() {
-		createConnection();
+		Connection con = createConnection();
 		List<UserPOJO> listUsers = new ArrayList<UserPOJO>();
 		UserPOJO user;
 
@@ -151,7 +152,7 @@ public class UserDAOMySqlImp implements UserDAO {
 			ex.printStackTrace();
 		}
 		finally {
-			closeConnection();
+			closeConnection(con);
 		}
 		return listUsers;
 	}
@@ -161,7 +162,7 @@ public class UserDAOMySqlImp implements UserDAO {
 	 */
 
 	public boolean exists(String id) {
-		createConnection();
+		Connection con = createConnection();
 
 		try {
 			Statement statement = con.createStatement();
@@ -173,7 +174,7 @@ public class UserDAOMySqlImp implements UserDAO {
 		}
 
 		finally {
-			closeConnection();
+			closeConnection(con);
 		}
 		return false;
 	}
@@ -182,8 +183,8 @@ public class UserDAOMySqlImp implements UserDAO {
 	 * {@inheritDoc}
 	 */
 
-	public void addUser(UserPOJO user) {
-		createConnection();
+	public synchronized void addUser(UserPOJO user) {
+		Connection con = createConnection();
 
 		// String id, String user, String pass, String email, String name,
 		// LocalDate bday
@@ -247,7 +248,7 @@ public class UserDAOMySqlImp implements UserDAO {
 		}
 
 		finally {
-			closeConnection();
+			closeConnection(con);
 		}
 	}
 
@@ -256,7 +257,7 @@ public class UserDAOMySqlImp implements UserDAO {
 	 */
 
 	public void removeUser(String id) {
-		createConnection();
+		Connection con = createConnection();
 
 		try {
 			Statement st = con.createStatement();
@@ -271,7 +272,7 @@ public class UserDAOMySqlImp implements UserDAO {
 		}
 
 		finally {
-			closeConnection();
+			closeConnection(con);
 		}
 	}
 }

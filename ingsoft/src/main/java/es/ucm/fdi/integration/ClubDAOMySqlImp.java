@@ -19,25 +19,26 @@ import es.ucm.fdi.integration.data.ClubPOJO;
  * @version 03.05.2018
  */
 public class ClubDAOMySqlImp implements ClubDAO {
-    Connection con = null;
 	/**
 	 * Creates connection to the database.
 	 * 
 	 */
-	private void createConnection() {
+	private Connection createConnection() {
+		Connection con = null;
 		try {
 		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
 		}
 	    catch (SQLException ex) {
 	    	ex.printStackTrace();
 	    }
+		return con;
 	}
 	
 	/**
 	 * Closes connection to the database.
 	 * 
 	 */
-	private void closeConnection() {
+	private void closeConnection(Connection con) {
         try{
             con.close();
         }
@@ -50,7 +51,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	 * {@inheritDoc}
 	 */
 	public ClubPOJO getClub(String id) {
-		createConnection();
+		Connection con = createConnection();
 		ClubPOJO club = null;
 
 	    try {
@@ -58,7 +59,8 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	        
 	        ResultSet rs = st.executeQuery("SELECT * FROM Clubs where id="+id);
 	        
-	        if(rs.next())
+	        if(rs.next()) {
+	        	
 	        	club = new ClubPOJO(rs.getString("id"), //ID
 	        			 rs.getString("commercial_name"), //
 	        			 rs.getString("address"), 
@@ -66,14 +68,16 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		        		 new Location(rs.getDouble("latitude"), rs.getDouble("longitude")), 
 		        		 rs.getFloat("average_rating"));
 	        
-	        rs = st.executeQuery("SELECT * FROM ClubTags where club_id ="+'\'' + id + '\'');
-	        while(rs.next()) {
-	        	club.addTag(new TagPOJO(rs.getString("tag")));
-	        }
-	        
-	        rs = st.executeQuery("Select * FROM Opinion where club_id =" +'\'' + id + '\'');
-	        while(rs.next()) {
-	        	club.addUserReview(rs.getString("user_id"), new ReviewPOJO(rs.getString("opinion"), rs.getFloat("rating")));
+		        rs = st.executeQuery("SELECT * FROM ClubTags where club_id ="+'\'' + id + '\'');
+		      
+		        while(rs.next()) {
+		        	club.addTag(new TagPOJO(rs.getString("tag")));
+		        }
+		        
+		        rs = st.executeQuery("Select * FROM Opinion where club_id =" +'\'' + id + '\'');
+		        while(rs.next()) {
+		        	club.addUserReview(rs.getString("user_id"), new ReviewPOJO(rs.getString("opinion"), rs.getFloat("rating")));
+		        }
 	        }
 	        st.close();
 	    }
@@ -82,7 +86,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	    }
 		    
 	    finally{
-	    	closeConnection();
+	    	closeConnection(con);
 	    }
 	    return club;
 	}
@@ -91,7 +95,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	 * {@inheritDoc}
 	 */
 	public List<ClubPOJO> getClubs(){
-		createConnection();
+		Connection con = createConnection();
 		List<ClubPOJO> listClubs = new ArrayList<ClubPOJO>();
 		
 	    try {
@@ -125,7 +129,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	    catch (SQLException ex) {
 	    	ex.printStackTrace();
 	    }finally{
-	    	closeConnection();
+	    	closeConnection(con);
 	    }
 	    
 	    return listClubs;
@@ -136,7 +140,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	 */
 	
 	public boolean exists(String id) {
-		createConnection();
+		Connection con = createConnection();
 		
 		try {
 	        Statement statement = con.createStatement();
@@ -151,7 +155,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	    }
 		    
 	    finally{
-	    	closeConnection();
+	    	closeConnection(con);
 	    }
 		return false;
 	}
@@ -160,11 +164,11 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	 * {@inheritDoc}
 	 */
 	
-	public void addClub(ClubPOJO club) {
+	public synchronized void addClub(ClubPOJO club) {
 		if(exists(club.getID()))
 			return;
 		
-		createConnection();
+		Connection con = createConnection();
 		
 		try { // Unchecked queries
 	        Statement st = con.createStatement();
@@ -206,7 +210,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	    }
 		   
 	    finally{
-	    	closeConnection();
+	    	closeConnection(con);
 	    }
 	}
 
@@ -215,7 +219,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	 */
 	
 	public void removeClub(String id) {
-		createConnection();
+		Connection con = createConnection();
 		
 		try {
 	        Statement st = con.createStatement();
@@ -229,7 +233,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	    }
 		    
 	    finally{
-	    	closeConnection();
+	    	closeConnection(con);
 	    }
 	}
 }

@@ -20,7 +20,7 @@ import es.ucm.fdi.integration.data.ClubPOJO;
  */
 
 public class ClubDAOMySqlImpTest {
-	private static int CONCURRENT_TESTS = 100;
+	private static int CONCURRENT_TESTS = 10;
 	private static ClubPOJO club;
 	private static ClubDAO clubDao;
 	private static ArrayList<ClubPOJO> list = new ArrayList<ClubPOJO>();
@@ -83,7 +83,6 @@ public class ClubDAOMySqlImpTest {
 		assertEquals(clubDao.exists("id"), false);
 		clubDao.removeClub(club.getID());
 	}
-	/*
 	private void awaitForLatch() {
 		try {
 			latch.await();
@@ -92,7 +91,7 @@ public class ClubDAOMySqlImpTest {
 		}
 
 	}
-	@Test
+	//@Test
 	public void concurrentReadTest() {
 		// This is a timer that will make the program wait for the threads to
 		// execute
@@ -156,7 +155,7 @@ public class ClubDAOMySqlImpTest {
 			}
 		}.start();
 	}
-
+	/*
 	@Test
 	public void concurrentReadWriteTest() {
 		// This is a timer that will make the program wait for the threads to
