@@ -239,4 +239,20 @@ public interface ProfileManagerSA {
 	 * @return user	with indicated id or null
 	 */
 	public UserPOJO getUser(String id);
+	
+	/**
+	 * Returns whether the system has a user registered with the given id
+	 * 
+	 * @param id of the user
+	 * @return	whether the system has a user with the indicated id
+	 */
+	public boolean hasUser(String id);
+	
+	/**
+	 * Returns whether the system has a club registered with the given id
+	 * 
+	 * @param id of the club
+	 * @return	whether the system has a club with the indicated id
+	 */
+	public boolean hasClub(String id);
 }

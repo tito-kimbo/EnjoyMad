@@ -490,4 +490,18 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 		if(userDAO.exists(id)) return userDAO.getUser(id);
 		else return null;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean hasUser(String id){
+		return userDAO.exists(id);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean hasClub(String id){
+		return clubDAO.exists(id);
+	}
 }
