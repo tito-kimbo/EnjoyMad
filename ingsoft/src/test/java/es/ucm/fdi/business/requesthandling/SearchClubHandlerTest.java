@@ -83,16 +83,17 @@ public class SearchClubHandlerTest {
 		fullInitialization();
 		FrontController fc = Initializer.getFrontController();
 		// Build and add user and club
-		fc.getProfileManagerSA().addNewUser(users.get(0));
-		fc.getProfileManagerSA().addNewClub(clubs.get(0));
 
 		RequestPOJO rp = buildRP(users.get(0).getID(), users.get(0).getID(),
 				"club", new ArrayList<FilterPOJO>());
+		fc.getProfileManagerSA().addNewUser(users.get(0));
+		fc.getProfileManagerSA().addNewClub(clubs.get(0));
 		// Assign custom values to user
 		Map<TagPOJO, Integer> vals = new HashMap<TagPOJO, Integer>();
 		vals.put(new TagPOJO("pop"), 5);
 		vals.put(new TagPOJO("rock"), 2);
 		vals.put(new TagPOJO("hardstyle"), 1);
+
 		fc.getProfileManagerSA().getUser(users.get(0).getID())
 				.setValueTags(vals);
 		fc.getCustomDataSA().updateValues();
@@ -107,8 +108,7 @@ public class SearchClubHandlerTest {
 				.get(0));
 		List<ElementHelper<ClubPOJO>> searchResults = (List<ElementHelper<ClubPOJO>>) answer
 				.getAnswer().get(1);
-		assertTrue("List size different than expected", searchResults.get(0)
-				.isVisible());
+		assertTrue("List size different than expected", searchResults.size() == 1);
 		assertEquals("Output club different from inserted", searchResults
 				.get(0).getElement(), clubs.get(0));
 
@@ -129,14 +129,82 @@ public class SearchClubHandlerTest {
 				.get(0).isVisible());
 	}
 
+	@SuppressWarnings("unchecked")
+	@Test
 	public void multiClubSearch() {
 		fullInitialization();
 		FrontController fc = Initializer.getFrontController();
 		addAll(clubs, users, fc.getProfileManagerSA());
 
-		// Assign custom values to users
+		Map<TagPOJO, Integer> vals = new HashMap<TagPOJO, Integer>();
+		vals.put(new TagPOJO("pop"), 5);
+		vals.put(new TagPOJO("rock"), 2);
+		vals.put(new TagPOJO("hardstyle"), 1);
+		fc.getProfileManagerSA().getUser(users.get(0).getID())
+				.setValueTags(vals);
 
-		// Test
+		vals = new HashMap<TagPOJO, Integer>();
+		vals.put(new TagPOJO("pop"), 1);
+		vals.put(new TagPOJO("rock"), 6);
+		vals.put(new TagPOJO("hardstyle"), 0);
+		fc.getProfileManagerSA().getUser(users.get(1).getID())
+				.setValueTags(vals);
+
+		vals = new HashMap<TagPOJO, Integer>();
+		vals.put(new TagPOJO("pop"), 1);
+		vals.put(new TagPOJO("rock"), 6);
+		vals.put(new TagPOJO("hardstyle"), 0);
+		fc.getProfileManagerSA().getUser(users.get(2).getID())
+				.setValueTags(vals);
+		// Assign custom values to users
+		fc.getCustomDataSA().updateValues();
+		
+		// Actual search and testing
+		RequestPOJO rp1, rp2, rp3;
+		AnswerPOJO ans1, ans2, ans3;
+		List<FilterPOJO> filters;
+		SearchClubHandler handler;
+		List<ElementHelper<ClubPOJO>> searchResults;
+
+		filters = Arrays.asList(new FilterPOJO(ProductionConfig.TAG_FILTER,
+				Arrays.asList("hardstyle")));
+		rp1 = buildRP(users.get(0).getID(), users.get(0).getID(), "club", filters);
+		handler = new SearchClubHandler(fc, rp1);
+		handler.run();
+		ans1 = fc.poll(users.get(0).getID());
+		searchResults = (List<ElementHelper<ClubPOJO>>) ans1.getAnswer().get(1);
+		for(ElementHelper<ClubPOJO> eh : searchResults){
+			System.out.println("CLUB " + eh.getElement().getCommercialName());
+		}
+		assertTrue("Search operation not successful", (Boolean) ans1
+				.getAnswer().get(0));
+		assertTrue("Incorrect filtering operation or answer ordering", searchResults
+				.get(0).isVisible());
+		assertEquals(
+				"Incorrect answer ordering for user 1 on multiclub search",
+				clubs.get(0), searchResults.get(1).getElement());
+
+		filters = new ArrayList<FilterPOJO>();
+		rp2 = buildRP(users.get(1).getID(), users.get(1).getID(), "1", filters);
+		handler = new SearchClubHandler(fc, rp2);
+		handler.run();
+		ans2 = fc.poll(users.get(1).getID());
+		searchResults = (List<ElementHelper<ClubPOJO>>) ans2.getAnswer().get(1);
+		assertTrue("Incorrect search by words for user 2 on multiclub search",
+				searchResults.get(2).isVisible());
+		assertEquals(
+				"Incorrect answer ordering for user 2 on multiclub search",
+				clubs.get(1), searchResults.get(1).getElement());
+
+		rp3 = buildRP(users.get(2).getID(), users.get(2).getID(), "", filters);
+		handler = new SearchClubHandler(fc, rp3);
+		handler.run();
+		ans3 = fc.poll(users.get(2).getID());
+		searchResults = (List<ElementHelper<ClubPOJO>>) ans3.getAnswer().get(1);
+		for (int i = 0; i < 3; ++i) {
+			assertTrue("Search not performed correctly with empty words",
+					searchResults.get(i).isVisible());
+		}
 	}
 
 	public void concurrentMultiClubSearch() {

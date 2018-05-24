@@ -11,7 +11,7 @@ public class Initializer extends ProductionConfig {
 
 	public static void initialize() {
 		// Without SQL
-		ProductionConfig.init();
+		ProductionConfig.init(false);
 	}
 
 	// We assume this list is valid

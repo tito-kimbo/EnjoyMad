@@ -54,7 +54,7 @@ public class CustomDataSAImp implements CustomDataSA {
 				orderedListOfClubs.add(ob.club);
 			}
 			u.setPreferencesList(orderedListOfClubs);
-
+			clubsWithValue.clear();
 		}
 	}
 
