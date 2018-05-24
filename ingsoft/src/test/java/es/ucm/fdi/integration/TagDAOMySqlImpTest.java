@@ -84,6 +84,7 @@ public class TagDAOMySqlImpTest {
 
 		createTestTagDAOImp();
 		tagDao.saveTags(tagList);
+		
 		for (int i = 0; i < CONCURRENT_TESTS; ++i) {
 			// Creates a new thread and runs it
 			newReadThread();
@@ -112,7 +113,7 @@ public class TagDAOMySqlImpTest {
 				new HashSet<TagPOJO>(tagDao.loadTags()));
 	}
 
-	//@Test
+	@Test
 	public void concurrentReadWriteTest() {
 		// This is a timer that will make the program wait for the threads to
 		// execute
@@ -120,7 +121,9 @@ public class TagDAOMySqlImpTest {
 		assertionError = null;
 
 		createTestTagDAOImp();
+		
 		tagDao.saveTags(tagList);
+		
 		for (int i = 0; i < CONCURRENT_TESTS / 2; ++i) {
 			// Write thread
 			newWriteThread();
@@ -128,7 +131,9 @@ public class TagDAOMySqlImpTest {
 			newReadThread();
 		}
 		awaitForLatch();
-
+		
+		tagDao.saveTags(new ArrayList<TagPOJO>());
+		
 		if (assertionError != null) {
 			fail("Read/write interaction is not thread safe in TagDAOImp.\n"
 					+ assertionError.getMessage());
@@ -138,8 +143,18 @@ public class TagDAOMySqlImpTest {
 		// Write thread
 		new Thread() {
 			public void run() {
+				try {
 				tagDao.saveTags(tagList);
-				latch.countDown();
+				List list = tagDao.loadTags(); 
+				assertEquals(
+						"Concurrent reading is not thread safe for TagDAOImp, "
+								+ "mismatched tag in DAO.",
+						tagList, list);
+				} catch (AssertionError assError) {
+					assertionError = assError;
+				} finally {
+					latch.countDown();
+				}
 			}
 
 		}.start();
@@ -148,14 +163,11 @@ public class TagDAOMySqlImpTest {
 		new Thread() {
 			public void run() {
 				try {
-					HashSet<TagPOJO> set = new HashSet<TagPOJO>(tagDao.loadTags());
-					//boolean b=set.equals(new HashSet<TagPOJO>(tagList));
-					//if(!b)
-					//	System.err.println("Shouldnt happen");
+					List list = tagDao.loadTags(); 
 					assertEquals(
 							"Concurrent reading is not thread safe for TagDAOImp, "
 									+ "mismatched tag in DAO.",
-							new HashSet<TagPOJO>(tagList),set);
+							tagList, list);
 				} catch (AssertionError assError) {
 					assertionError = assError;
 				} finally {

@@ -91,14 +91,16 @@ public class ClubDAOMySqlImpTest {
 		}
 
 	}
-	//@Test
+	@Test
 	public void concurrentReadTest() {
 		// This is a timer that will make the program wait for the threads to
 		// execute
 		latch = new CountDownLatch(CONCURRENT_TESTS);
 		assertionError = null;
-
+		
 		createTestClubDAOMySqlImp();
+		clubDao.addClub(club);
+		
 		for (int i = 0; i < CONCURRENT_TESTS; ++i) {
 			// Creates a new thread and runs it
 			newReadThread();
@@ -143,10 +145,12 @@ public class ClubDAOMySqlImpTest {
 		new Thread() {
 			public void run() {
 				try {
+					ClubPOJO c = clubDao.getClub("id");
+					boolean b = c.equals(club);
 					assertEquals(
 							"Concurrent reading is not thread safe for ClubDAOImp, "
 									+ "mismatched club in DAO.",
-							clubDao.getClub("id"), club);
+							c, club);
 				} catch (AssertionError assError) {
 					assertionError = assError;
 				} finally {
@@ -155,7 +159,6 @@ public class ClubDAOMySqlImpTest {
 			}
 		}.start();
 	}
-	/*
 	@Test
 	public void concurrentReadWriteTest() {
 		// This is a timer that will make the program wait for the threads to
@@ -182,5 +185,4 @@ public class ClubDAOMySqlImpTest {
 					+ assertionError.getMessage());
 		}
 	}
-	*/
 }

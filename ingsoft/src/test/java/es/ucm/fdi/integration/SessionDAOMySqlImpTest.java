@@ -124,10 +124,17 @@ public class SessionDAOMySqlImpTest {
 		new Thread() {
 			public void run() {
 				try {
+					Set<SessionPOJO> set = new HashSet<SessionPOJO>(sessionDao.getSessions());
+					int i = 0;
+					for(SessionPOJO sx : set)
+						for(SessionPOJO sy : sessionsSet)
+							if(sx.equals(sy)) {
+								i++;
+								break;
+							}
 					assertEquals(
 							"Concurrent reading is not thread safe for TagDAOImp, "
-									+ "mismatched tag in DAO.", sessionsSet,
-							new HashSet<SessionPOJO>(sessionDao.getSessions()));
+									+ "mismatched tag in DAO.", i, sessionsSet.size());
 				} catch (AssertionError assError) {
 					assertionError = assError;
 				} finally {
@@ -137,7 +144,7 @@ public class SessionDAOMySqlImpTest {
 		}.start();
 	}
 
-	//@Test
+	@Test
 	public void concurrentReadTest() {
 
 		// This is a timer that will make the program wait for the threads to
@@ -152,11 +159,16 @@ public class SessionDAOMySqlImpTest {
 			// Creates a new thread and runs it
 			newReadThread();
 		}
+		
 		awaitForLatch();
 
+		for(SessionPOJO s : sessionsSet)
+			sessionDao.removeSession(s.getID());
+		
 		if (assertionError != null) {
 			fail(assertionError.getMessage());
 		}
+		
 	}
 
 	private void newWriteThread() {
@@ -172,7 +184,7 @@ public class SessionDAOMySqlImpTest {
 		}.start();
 	}
 
-	//@Test
+	@Test
 	public void concurrentWriteTest() {
 		latch = new CountDownLatch(CONCURRENT_TESTS);
 
@@ -182,13 +194,17 @@ public class SessionDAOMySqlImpTest {
 			newWriteThread();
 		}
 		awaitForLatch();
-
+		int i = 0;
+		for(SessionPOJO s : sessionDao.getSessions())
+			for(SessionPOJO s1: sessionsSet)
+				if(s.equals(s1))
+					i++;
 		assertEquals("Concurrent writing is not thread safe for TagDAOImp, "
-				+ "mismatched tag in DAO", sessionsSet,
-				new HashSet<SessionPOJO>(sessionDao.getSessions()));
+				+ "mismatched tag in DAO", sessionsSet.size(),
+				i);
 	}
 	
-	//@Test
+	@Test
 	public void concurrentReadWriteTest() {
 		// This is a timer that will make the program wait for the threads to
 		// execute

@@ -49,15 +49,19 @@ public class TagDAOMySqlImp implements TagDAO {
 		Connection con = createConnection();
 		try {
 			Statement statement = con.createStatement();
-			statement.executeUpdate("DELETE FROM Tags");
+			List<TagPOJO> tags = loadTags();
+			for(TagPOJO tag : tags)
+				if(!list.contains(tag))
+					statement.executeUpdate("DELETE FROM Tags where tag=\'" + tag.getTag() + '\'');
+				
+			for(TagPOJO tag : list)
+				addTag(tag);
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally{
 			closeConnection(con);
 		}
-		 
-		for(TagPOJO tag : list)
-			addTag(tag);
 	}
 	
  	/**
