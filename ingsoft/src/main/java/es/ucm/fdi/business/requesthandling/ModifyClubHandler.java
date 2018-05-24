@@ -3,13 +3,12 @@ package es.ucm.fdi.business.requesthandling;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.zip.DataFormatException;
 
 import es.ucm.fdi.business.FrontController;
 import es.ucm.fdi.business.data.AnswerPOJO;
 import es.ucm.fdi.business.data.RequestPOJO;
-import es.ucm.fdi.business.profilemanagement.tools.ClubModifierHelper;
-import es.ucm.fdi.integration.ClubDAOImp;
+import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.Location;
 
 public class ModifyClubHandler implements RequestHandler {
 
@@ -33,14 +32,17 @@ public class ModifyClubHandler implements RequestHandler {
 		
 		answerData = new ArrayList<Object>();
 		
-		//Waiting for news info on modifyClubData; 
+		//Waiting for news info on requestPOJO; 
 		
-		ClubModifierHelper dataType = null; 
-
+		ClubPOJO clubChanges = new ClubPOJO(clubID,
+				(String)rp.getParameters().get(1), (String)rp.getParameters().get(2),
+				(float)rp.getParameters().get(3), (Location)rp.getParameters().get(4),
+				(float)rp.getParameters().get(5)); 
+		
 		//	Call relevant ProfileManagerSA methods
 		
 		try{
-			fc.getProfileManagerSA().modifyClubData(clubID, dataType, rp.getParameters().get(1));
+			fc.getProfileManagerSA().modifyClubData(clubID, clubChanges);
 			answerData.add(true);
 		}catch(NoSuchElementException nsee){
 			System.out.println("Invalid club ID or type to be modified" + nsee.getMessage());
@@ -48,10 +50,6 @@ public class ModifyClubHandler implements RequestHandler {
 		}
 		catch(IllegalArgumentException iae) {
 			System.out.println("The new data class does not match that needed for the modification" + iae.getMessage());
-			answerData.add(false);
-		}
-		catch(DataFormatException dfe) {
-			System.out.println("The new data parsing failed" + dfe.getMessage());
 			answerData.add(false);
 		}
 		
