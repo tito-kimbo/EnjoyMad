@@ -30,4 +30,23 @@ public class SessionPOJO extends DataPOJO implements Serializable {
     public void setLastAccessedTime(LocalDateTime newTime) {
         lastAccessedTime = newTime;
     }
+    
+    public boolean equals(SessionPOJO s) {
+    	boolean isCr = creationTime.equals(s.creationTime), isLast;
+    	
+    	if(lastAccessedTime == null)
+    		if(s.lastAccessedTime == null)
+    			isLast = true;
+    		else
+    			isLast = false;
+    	else
+    		if(s.lastAccessedTime == null)
+    			isLast = false;
+    		else 
+    			isLast = lastAccessedTime.equals(s.lastAccessedTime);
+    	
+    	return getID().equals(s.getID())
+    			&& isCr
+    			&& isLast;
+    }
 }

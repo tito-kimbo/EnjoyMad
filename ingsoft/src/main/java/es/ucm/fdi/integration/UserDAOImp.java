@@ -44,9 +44,8 @@ public class UserDAOImp implements UserDAO {
   	/**
 	 * {@inheritDoc}
 	 */
-	synchronized public boolean addUser(UserPOJO user) {
+	synchronized public void addUser(UserPOJO user) {
 		userMap.put(user.getID(), user);
-		return true;
 	}
 	
  	/**
@@ -59,13 +58,9 @@ public class UserDAOImp implements UserDAO {
  	/**
 	 * {@inheritDoc}
 	 */
-	public boolean removeUser(String id){
-		if(exists(id)) {
+	public void removeUser(String id){
+		if(exists(id))
 			userMap.remove(id);
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	/**

@@ -2,7 +2,6 @@ package es.ucm.fdi.business.requesthandling;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.DataFormatException;
 
 import es.ucm.fdi.business.FrontController;
 import es.ucm.fdi.business.data.AnswerPOJO;
@@ -55,7 +54,7 @@ public class AddReviewHandler implements RequestHandler {
 			//Indicate operation success
 			answerData.add(true);
 			
-		}catch(DataFormatException dfe){
+		}catch(IllegalArgumentException dfe){
 			System.out.print("Error handling AddReview request " + dfe.getMessage());
 			//Indicate operation failure
 			answerData.add(false);

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.integration.TagDAO;
 
 /**

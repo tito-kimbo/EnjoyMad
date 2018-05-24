@@ -1,9 +1,6 @@
 package es.ucm.fdi.business.profilemanagement.tools;
 
 import java.time.LocalDate;
-import java.util.zip.DataFormatException;
-
-import org.mindrot.jbcrypt.BCrypt;
 
 import es.ucm.fdi.business.util.ParsingToolHelper;
 import es.ucm.fdi.integration.data.UserPOJO;
@@ -14,126 +11,122 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * @version 08.05.2018
  */
 public enum UserModifierHelper {
-	NICKNAME("NICKNAME") {
+	USERNAME("USERNAME") {
 		@Override
-		public void modify(UserPOJO userToManage, Object newData)
-				throws IllegalArgumentException, DataFormatException {
+		public void parse(UserPOJO userToManage, UserPOJO userChanges)
+				throws IllegalArgumentException {
 
-			// Instance of...
-			if (!(newData instanceof String)) {
-				throw new IllegalArgumentException("In NICKNAME modification: "
-						+ "not a String type argument.");
+			if (userChanges.getUsername() != null) {
+				// Valid?
+				String newUsername = userChanges.getUsername();
+
+				if (!ParsingToolHelper.parseUsername(newUsername)) {
+					throw new IllegalArgumentException("In USERNAME modification: "
+							+ "not a valid username format -> " + newUsername);
+				}
 			}
+		}
 
-			// Valid?
-			String newNickname = (String) newData;
-
-			if (!ParsingToolHelper.parseUsername(newNickname)) {
-				throw new DataFormatException("In NICKNAME modification: "
-						+ "not a valid username format -> " + newNickname);
-			}
-
+		@Override
+		public void modify(UserPOJO userToManage, UserPOJO userChanges) {
 			// Modification.
-			userToManage.setNickname(newNickname);
+			if (userChanges.getUsername() != null) {
+				userToManage.setUsername(userChanges.getUsername());
+			}
 		}
 	},
 
 	PASSWORD("PASSWORD") {
 		@Override
-		public void modify(UserPOJO userToManage, Object newData)
-				throws IllegalArgumentException, DataFormatException {
+		public void parse(UserPOJO userToManage, UserPOJO userChanges)
+				throws IllegalArgumentException {
 
-			// Instance of...
-			if (!(newData instanceof String)) {
-				throw new IllegalArgumentException("In PASSWORD modification: "
-						+ "not a String type argument.");
+			if (userChanges.getHashedPassword() != null) {
+				// Always valid
 			}
+		}
 
-			// Valid?
-			String newPassword = (String) newData;
-
-			if (!ParsingToolHelper.parsePassword(newPassword)) {
-				throw new DataFormatException("In PASSWORD modification: "
-						+ "not a valid password format -> " + newPassword);
-			}
-
-			// Password protection.
-			String hashPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
-
+		@Override
+		public void modify(UserPOJO userToManage, UserPOJO userChanges) {
 			// Modification.
-			userToManage.setPassword(hashPassword);
+			if (userChanges.getHashedPassword() != null) {
+				userToManage.setHashedPassword(userChanges.getHashedPassword());
+			}
 		}
 	},
 
 	EMAIL("EMAIL") {
 		@Override
-		public void modify(UserPOJO userToManage, Object newData)
-				throws IllegalArgumentException, DataFormatException {
+		public void parse(UserPOJO userToManage, UserPOJO userChanges)
+				throws IllegalArgumentException {
 
-			// Instance of...
-			if (!(newData instanceof String)) {
-				throw new IllegalArgumentException("In EMAIL modification: "
-						+ "not a String type argument.");
+			if (userChanges.getEmail() != null) {
+				// Valid?
+				String newEmail = userChanges.getEmail();
+
+				if (!ParsingToolHelper.parseEmail(newEmail)) {
+					throw new IllegalArgumentException("In EMAIL modification: "
+							+ "not a valid email format -> " + newEmail);
+				}
 			}
+		}
 
-			// Valid?
-			String newEmail = (String) newData;
-
-			if (!ParsingToolHelper.parseEmail(newEmail)) {
-				throw new DataFormatException("In EMAIL modification: "
-						+ "not a valid email format -> " + newEmail);
-			}
-
+		@Override
+		public void modify(UserPOJO userToManage, UserPOJO userChanges) {
 			// Modification.
-			userToManage.setEmail(newEmail);
+			if (userChanges.getEmail() != null) {
+				userToManage.setEmail(userChanges.getEmail());
+			}
 		}
 	},
 
 	NAME("NAME") {
 		@Override
-		public void modify(UserPOJO userToManage, Object newData)
-				throws IllegalArgumentException, DataFormatException {
+		public void parse(UserPOJO userToManage, UserPOJO userChanges)
+				throws IllegalArgumentException {
 
-			// Instance of...
-			if (!(newData instanceof String)) {
-				throw new IllegalArgumentException("In NAME modification: "
-						+ "not a String type argument.");
+			if (userChanges.getName() != null) {
+				// Valid?
+				String newName = userChanges.getName();
+
+				if (!ParsingToolHelper.parseName(newName)) {
+					throw new IllegalArgumentException("In NAME modification: "
+							+ "not a valid name format -> " + newName);
+				}
 			}
+		}
 
-			// Valid?
-			String newName = (String) newData;
-
-			if (!ParsingToolHelper.parseName(newName)) {
-				throw new DataFormatException("In NAME modification: "
-						+ "not a valid name format -> " + newName);
-			}
-
+		@Override
+		public void modify(UserPOJO userToManage, UserPOJO userChanges) {
 			// Modification.
-			userToManage.setName(newName);
+			if (userChanges.getName() != null) {
+				userToManage.setName(userChanges.getName());
+			}
 		}
 	},
 
 	BIRTHDAY("BIRHTDAY") {
 		@Override
-		public void modify(UserPOJO userToManage, Object newData)
-				throws IllegalArgumentException, DataFormatException {
+		public void parse(UserPOJO userToManage, UserPOJO userChanges)
+				throws IllegalArgumentException {
 
-			// Instance of...
-			if (!(newData instanceof LocalDate)) {
-				throw new IllegalArgumentException("In BIRTHDAY modification: "
-						+ "not a LocalDate type argument.");
+			if (userChanges.getBirthday() != null) {
+				// Valid?
+				LocalDate newBirthday = userChanges.getBirthday();
+
+				if (!ParsingToolHelper.parseBirthday(newBirthday)) {
+					throw new IllegalArgumentException("In NAME modification: "
+							+ "not a valid name format -> " + newBirthday);
+				}
 			}
+		}
 
-			// Valid?
-			LocalDate newBirthday = (LocalDate) newData;
-
-			if (!ParsingToolHelper.parseBirthday(newBirthday)) {
-				throw new DataFormatException("In BIRTHDAY modification: "
-						+ "not a valid birth date -> " + newBirthday);
-			}
-
+		@Override
+		public void modify(UserPOJO userToManage, UserPOJO userChanges) {
 			// Modification.
-			userToManage.setBirthday(newBirthday);
+			if (userChanges.getBirthday() != null) {
+				userToManage.setBirthday(userChanges.getBirthday());
+			}
 		}
 	};
 
@@ -154,20 +147,22 @@ public enum UserModifierHelper {
 	}
 
 	/**
-	 * Tries to carry out the modification indicated by the
-	 * {@code UserModifierBO} itself.
+	 * Parses if the data to be modified is valid. If it is not, it throws
+	 * an exception, does nothing otherwise.
 	 * 
-	 * @param userToManage
-	 *            - user to be modified
-	 * @param newData
-	 *            - user new data
+	 * @param userToManage - user to be modified
+	 * @param userChanges  - user new data
 	 * 
-	 * @throws IllegalArgumentException
-	 *             if {@code newData} is not an instance of the correct class
-	 * @throws DataFormatException
-	 *             if {@code newData} parsing failed
-	 * 
+	 * @throws IllegalArgumentException if {@code userChanges} parsing failed 
 	 */
-	public abstract void modify(UserPOJO userToManage, Object newData)
-			throws IllegalArgumentException, DataFormatException;
+	public abstract void parse(UserPOJO userToManage, UserPOJO userChanges) 
+			throws IllegalArgumentException;
+
+	/**
+	 * Modifies a specific attribute of a user, asumming the new data is valid.
+	 * 
+	 * @param userToManage - user to be modified
+	 * @param userChanges  - user new data
+	 */
+	public abstract void modify(UserPOJO userToManage, UserPOJO userChanges);
 }

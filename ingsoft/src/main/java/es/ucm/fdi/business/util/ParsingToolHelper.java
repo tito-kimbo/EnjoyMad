@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 
 
@@ -18,7 +18,7 @@ import es.ucm.fdi.integration.data.ReviewPOJO;
 public class ParsingToolHelper {
     
     private final static int RATE_LOW_LIMIT = 0;
-    private final static int RATE_UP_LIMIT = 10;
+    private final static int RATE_UP_LIMIT = 5;
     
     /**
      * <p>
@@ -69,12 +69,13 @@ public class ParsingToolHelper {
     
     /**
      * A <code>Pattern</code> that matches alphanumeric sequences [A-Za-z0-9_].
-     * Used for alphanumeric <code>Strings</code> with no whitespaces.
+     * Used for alphanumeric <code>Strings</code> with no whitespaces and at least
+     * one character. And some chars as '_', '/', '[', ...
      * 
      * @see #parseID(String)
      * @see #parseUsername(String)
      */
-    public static Pattern alphaNumKeyChecker = Pattern.compile("^[a-zA-Z0-9]+$");
+    public static Pattern alphaNumKeyChecker = Pattern.compile("^([A-z0-9]{1,})$");
     
        
      /**
@@ -84,9 +85,10 @@ public class ParsingToolHelper {
      * @see #parseName(String)
      */
     public static Pattern nameChecker = Pattern.compile(
-            "^([a-zA-Z]{2,}\\s[a-zA-z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)");
+            "^([a-zA-Záéíóúüñ]{2,}\\s[a-zA-záéíóúüñ]{1,}'?-?[a-zA-Záéíóúüñ]{2,}\\s?([a-zA-Záéíóúüñ]{1,})?)");
     
      /**
+     * XXX ¿No usar este Pattern?
      * A <code>Pattern</code> that matches an <code>Address</code>>. Characters
      * typically used in an address allowed.
      */
@@ -94,20 +96,14 @@ public class ParsingToolHelper {
 
     /**
      * <p>
-     * A <code>Pattern</code> that matches a valid <code>Tag</code>:
-     * <code>#</code>-preceded and less than <code>25</code> chars long.
+     * A <code>Pattern</code> that matches a valid <code>Tag</code>: and 
+     * less than <code>25</code> chars long.
      * </p>
      * <p>
      * The <code>Pattern</code> groups the <code>Tag</code> without the
      * <code>#</code>.
      */
-    public static Pattern tagChecker = Pattern.compile("^([A-z0-9_]+)$");
-
-    /**
-     * A <code>Pattern</code> that matches a valid <code>Opinion</code>:
-     * printable characters and less than <code>280</code> characters long.
-     */
-    public static Pattern opinionChecker = Pattern.compile("^(?:[ -~\\n\\r]{1,280})$");
+    public static Pattern tagChecker = Pattern.compile("^[A-z0-9_]{0,30}$");
 
     /**
      * Parses <code>Username</code> so it must be an alphanumerical sequence
@@ -196,7 +192,7 @@ public class ParsingToolHelper {
         boolean valid = true;
 
         LocalDate allowedDate = LocalDate.now();
-        allowedDate.minusYears(18);
+        allowedDate = allowedDate.minusYears(18);
 
         if (birthday.isAfter(allowedDate)) {
             valid = false;
@@ -233,13 +229,7 @@ public class ParsingToolHelper {
      * @return if <code>address</code> is valid
      */
     public static boolean parseAddress(String address) {
-        boolean valid = true;
-
-        if (!addressChecker.matcher(address).matches()) {
-            valid = false;
-        }
-
-        return valid;
+        return true;
     }
     
 
@@ -337,17 +327,13 @@ public class ParsingToolHelper {
             valid = false;
         }
 
-        if ( ! opinionChecker.matcher( review.getOpinion() ).matches() ) {
-            valid = false;
-        }
-
         return valid;
     }
     
 
     /**
      * Parses a club <code>Rating</code> to ensure it is a <code>Float</code>
-     * between <code>0-10</code>.
+     * between <code>0-5</code>.
      *
      * @param rating <code>Float</code> with <code>Rating</code> to be parsed
      * @return if <code>rating</code> is between bounds
@@ -355,7 +341,9 @@ public class ParsingToolHelper {
     public static boolean parseRating(Float rating) {
         boolean valid = true;
 
-        if (rating < 0.0F || 10.0F < rating) {
+        if ( RATE_LOW_LIMIT > rating 
+                || RATE_UP_LIMIT < rating) {
+
             valid = false;
         }
 

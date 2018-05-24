@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import es.ucm.fdi.business.data.TagPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 
 /**
  * Class that represents a club.

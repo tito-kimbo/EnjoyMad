@@ -7,14 +7,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.List;
-
+import java.util.Map;
 import java.sql.PreparedStatement;
 
 
 import java.util.ArrayList;
 import java.util.Date;
 
+import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 /**
@@ -61,18 +64,37 @@ public class UserDAOMySqlImp implements UserDAO {
 		try {
 			Statement st = con.createStatement();
 
-			ResultSet rs = st
-					.executeQuery("SELECT * FROM Users where id=" + '\'' + id + '\'');
+			ResultSet rs = st.executeQuery("SELECT * FROM Users where id=" + '\'' + id + '\'');
 
-			if (rs.next())
-				// String id, String user, String pass, String email, String
-				// name, LocalDate bday
-				user = new UserPOJO(rs.getString("id"),
-						rs.getString("username"),
-						rs.getString("password"), //
-						rs.getString("email"),
-						rs.getString("name"),
-						rs.getDate("birth_date").toLocalDate());
+			if (!rs.next())
+				return null;
+			
+			// String id, String user, String pass, String email, String
+			// name, LocalDate bday
+			user = new UserPOJO(rs.getString("id"),
+					rs.getString("username"),
+					rs.getString("password"), //
+					rs.getString("email"),
+					rs.getString("name"),
+					rs.getDate("birth_date").toLocalDate());
+			
+			rs = st.executeQuery("SELECT * FROM Preferences where user_id=" + '\'' + id + '\'');
+			
+			ClubDAOMySqlImp users = new ClubDAOMySqlImp();
+			while(rs.next()) {
+				user.getPreferencesList().add(users.getClub(rs.getString("id")));
+			}
+			
+			rs = st.executeQuery("SELECT * FROM TagPreferences where user_id=" + '\'' + id + '\'');
+			while(rs.next()) {
+				user.getValueTags().put(new TagPOJO(rs.getString("tag")), rs.getInt("value"));
+			}
+			
+			rs = st.executeQuery("SELECT * FROM Opinion where user_id=" + '\'' + id + '\'');
+			while(rs.next()) {
+				user.getReviewedClubs().add(rs.getString("club_id"));
+			}
+			
 			st.close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -96,17 +118,34 @@ public class UserDAOMySqlImp implements UserDAO {
 			Statement st = con.createStatement();
 
 			ResultSet rs = st.executeQuery("SELECT * FROM Users");
-			while (rs.next()) {
-				//String id, String nickname, String pass, String email, String name, LocalDate bday
-				user = new UserPOJO(rs.getString("id"),
+			while(rs.next()){
+				// String id, String user, String pass, String email, String, name, LocalDate bday
+				String id = rs.getString("id");
+				user = new UserPOJO(id,
 						rs.getString("username"),
-						rs.getString("password"),
-						rs.getString("email"), 
-						rs.getString("name"), 
+						rs.getString("password"), 
+						rs.getString("email"),
+						rs.getString("name"),
 						rs.getDate("birth_date").toLocalDate());
-
+				
+				ResultSet aux = con.createStatement().executeQuery("SELECT * FROM Preferences where user_id=" + '\'' + id + '\'');
+				ClubDAOMySqlImp users = new ClubDAOMySqlImp();
+				while(aux.next()) {
+					user.getPreferencesList().add(users.getClub(rs.getString("id")));
+				}
+				
+				aux = con.createStatement().executeQuery("SELECT * FROM TagPreferences where user_id=" + '\'' + id + '\'');
+				while(aux.next()) {
+					user.getValueTags().put(new TagPOJO(rs.getString("tag")), rs.getInt("value"));
+				}
+				
+				aux = con.createStatement().executeQuery("SELECT * FROM Opinion where user_id=" + '\'' + id + '\'');
+				while(aux.next()){
+					user.getReviewedClubs().add(rs.getString("club_id"));
+				}
 				listUsers.add(user);
-			}
+			} 
+			
 			st.close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -143,7 +182,7 @@ public class UserDAOMySqlImp implements UserDAO {
 	 * {@inheritDoc}
 	 */
 
-	public boolean addUser(UserPOJO user) {
+	public void addUser(UserPOJO user) {
 		createConnection();
 
 		// String id, String user, String pass, String email, String name,
@@ -151,7 +190,7 @@ public class UserDAOMySqlImp implements UserDAO {
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Date myDate;
-			try {
+			try {				
 				myDate = formatter.parse(user.getBirthday().toString());
 				java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
 				/*
@@ -167,13 +206,39 @@ public class UserDAOMySqlImp implements UserDAO {
 			      // create the mysql insert preparedstatement
 			      PreparedStatement preparedStmt = con.prepareStatement(query);
 			      preparedStmt.setString (1, user.getID());
-			      preparedStmt.setString (2, user.getNickname());
+			      preparedStmt.setString (2, user.getUsername());
 			      preparedStmt.setString (3, user.getEmail());
 			      preparedStmt.setString (4, user.getName());
 			      preparedStmt.setDate   (5, sqlDate);
-			      preparedStmt.setString (6, user.getPassword());
+			      preparedStmt.setString (6, user.getHashedPassword());
 			      
 			      preparedStmt.executeUpdate();
+			      
+			      // Insert tag preferences
+			      query = " insert into TagPreferences (user_id, tag, value)"
+					        + " values (?, ?, ?)";
+			      preparedStmt = con.prepareStatement(query);
+			      for(Map.Entry<TagPOJO,Integer> e : user.getValueTags().entrySet()) {
+			    	  preparedStmt.setString (1, user.getID());
+				      preparedStmt.setString (2, e.getKey().getTag());
+				      preparedStmt.setInt (3, e.getValue());
+				      preparedStmt.executeUpdate();
+			      }
+			      
+			      
+
+			      // Insert club preferences (supposes the clubs exist)
+			      query = " insert into Preferences (user_id, club_id)"
+					        + " values (?, ?)";
+			      preparedStmt = con.prepareStatement(query);
+			      for(ClubPOJO c : user.getPreferencesList()) {
+			    	  preparedStmt.setString (1, user.getID());
+				      preparedStmt.setString (2, c.getID());
+				      preparedStmt.executeUpdate();
+			      }
+			      
+			      // (Reviews should be already inserted)
+					
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -184,14 +249,13 @@ public class UserDAOMySqlImp implements UserDAO {
 		finally {
 			closeConnection();
 		}
-		return true;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 
-	public boolean removeUser(String id) {
+	public void removeUser(String id) {
 		createConnection();
 
 		try {
@@ -199,6 +263,8 @@ public class UserDAOMySqlImp implements UserDAO {
 
 			st.executeUpdate("delete from Users where id =" + '\'' + id + '\'');
 			st.executeUpdate("delete from Opinion where user_id =" + '\'' + id + '\'');
+			st.executeUpdate("delete from TagPreferences where user_id =" + '\'' + id + '\'');
+			st.executeUpdate("delete from Preferences where user_id =" + '\'' + id + '\'');
 
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -207,6 +273,5 @@ public class UserDAOMySqlImp implements UserDAO {
 		finally {
 			closeConnection();
 		}
-		return true;
 	}
 }
