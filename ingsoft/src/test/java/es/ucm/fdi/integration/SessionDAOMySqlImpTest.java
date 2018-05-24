@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.Test;
@@ -23,6 +24,10 @@ public class SessionDAOMySqlImpTest {
 	private static AssertionError assertionError;
 	private static CountDownLatch latch; // Timer to allow multi-threading tests
 
+	static{
+		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
+	}
+	
 	private static void createTestSessionDAOImp() {
 
 		sessionDao = new SessionDAOMySqlImp();
