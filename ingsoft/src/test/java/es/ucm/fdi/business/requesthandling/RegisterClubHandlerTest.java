@@ -33,7 +33,7 @@ public class RegisterClubHandlerTest {
 
 	@Test
 	public void validUserTest() {
-		Initializator.initialize();
+		Initializer.initialize();
 		FrontController fc = ProductionConfig.getFrontController();
 		ClubPOJO club = new ClubPOJO("id", "Disco", "C/Falsa, 123", 10.0f,
 				new HashSet<TagPOJO>());
@@ -43,13 +43,13 @@ public class RegisterClubHandlerTest {
 		rch.run();
 		assertTrue("Adding new club was not successful",
 				(Boolean) fc.poll(customID).getAnswer().get(0));
-		assertEquals("Club data wrongfully inserted", club, Initializator
+		assertEquals("Club data wrongfully inserted", club, Initializer
 				.getClubDAO().getClub("id"));
 	}
 
 	@Test
 	public void invalidUserTest() {
-		Initializator.initialize();
+		Initializer.initialize();
 		FrontController fc = ProductionConfig.getFrontController();
 
 		// INVALID ID
@@ -83,7 +83,7 @@ public class RegisterClubHandlerTest {
 
 	@Test
 	public void concurrentTest() {
-		Initializator.initialize();
+		Initializer.initialize();
 		FrontController fc = ProductionConfig.getFrontController();
 		ClubPOJO club;
 		int estimatedDelay = 100; // Estimated time it will take for the op in
@@ -104,7 +104,7 @@ public class RegisterClubHandlerTest {
 				club = new ClubPOJO("id" + i, "Disco", "C/Falsa, 123", 10.0f,
 						new HashSet<TagPOJO>());
 				assertEquals("User number " + i + " not inserted properly", club,
-						Initializator.getClubDAO().getClub("id" + i));
+						Initializer.getClubDAO().getClub("id" + i));
 			}
 
 		} catch (InterruptedException ie) {

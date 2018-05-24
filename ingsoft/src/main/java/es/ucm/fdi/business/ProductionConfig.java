@@ -4,6 +4,8 @@ import java.util.TimeZone;
 
 import es.ucm.fdi.business.profilemanagement.ProfileManagerSA;
 import es.ucm.fdi.business.profilemanagement.ProfileManagerSAImp;
+import es.ucm.fdi.business.searchengine.CustomDataSA;
+import es.ucm.fdi.business.searchengine.CustomDataSAImp;
 import es.ucm.fdi.business.searchengine.FilterMapper;
 import es.ucm.fdi.business.searchengine.SearchEngineSA;
 import es.ucm.fdi.business.searchengine.SearchEngineSAImp;
@@ -78,6 +80,7 @@ public class ProductionConfig {
 			initDAOs();	
 		}
 		addFilters();
+		CustomDataSA cdsa = new CustomDataSAImp(users, clubs);
 		SearchEngineSA sesa = new SearchEngineSAImp();
 		TicketManagerSA ticketmsa = new TicketManagerSAImp(clubs, users);
 		SessionManagerSA smsa = new SessionManagerSAImp(sessions);
@@ -85,7 +88,7 @@ public class ProductionConfig {
 		ProfileManagerSA pmsa = new ProfileManagerSAImp(clubs, users, tagmsa);
 		
 		//Create frontController
-		fc = new FrontController(sesa, pmsa, ticketmsa,smsa, tagmsa, THREAD_LIMIT);
+		fc = new FrontController(sesa, pmsa, ticketmsa,smsa, tagmsa, cdsa, THREAD_LIMIT);
 	}
 	
 	public static void init(boolean sql){

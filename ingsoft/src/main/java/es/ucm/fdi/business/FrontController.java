@@ -9,6 +9,7 @@ import es.ucm.fdi.business.data.AnswerPOJO;
 import es.ucm.fdi.business.data.RequestPOJO;
 import es.ucm.fdi.business.profilemanagement.ProfileManagerSA;
 import es.ucm.fdi.business.requesthandling.HandlerMapper;
+import es.ucm.fdi.business.searchengine.CustomDataSA;
 import es.ucm.fdi.business.searchengine.SearchEngineSA;
 import es.ucm.fdi.business.sessionmanagement.SessionManagerSA;
 import es.ucm.fdi.business.tagmanagement.TagManagerSA;
@@ -27,10 +28,12 @@ public class FrontController {
 	private TicketManagerSA tmsa;
 	private SessionManagerSA smsa;
 	private TagManagerSA tagmsa;
+	private CustomDataSA cdsa;
 
 	public FrontController(SearchEngineSA searchEngine,
 			ProfileManagerSA profileManager, TicketManagerSA ticketManager,
-			SessionManagerSA sessionManager, TagManagerSA tagManager, int maxThreads) {
+			SessionManagerSA sessionManager, TagManagerSA tagManager,
+			CustomDataSA customData, int maxThreads) {
 		data = new ConcurrentHashMap<String, AnswerPOJO>();
 
 		sesa = searchEngine;
@@ -38,23 +41,25 @@ public class FrontController {
 		tmsa = ticketManager;
 		smsa = sessionManager;
 		tagmsa = tagManager;
+		cdsa = customData;
 		executor = Executors.newFixedThreadPool(maxThreads);
 	}
 
 	public synchronized String request(final RequestPOJO rp) {
 		String id;
 		StringBuilder sb = new StringBuilder();
-		//OBS: rp initially has user's ID as id
-		//Here we build the id 
-		//id= userID+requestType+SystemTime in ns
+		// OBS: rp initially has user's ID as id
+		// Here we build the id
+		// id= userID+requestType+SystemTime in ns
 		sb.append(rp.getID());
 		sb.append(rp.getType());
 		sb.append(System.nanoTime());
-		
+
 		id = sb.toString();
 		data.put(id, null);
 		// Provisional
-		executor.execute(HandlerMapper.mapRequest(rp.getType(), new RequestPOJO(id,rp)));
+		executor.execute(HandlerMapper.mapRequest(rp.getType(),
+				new RequestPOJO(id, rp)));
 		return id;
 	}
 
@@ -101,5 +106,13 @@ public class FrontController {
 	 */
 	public TagManagerSA getTagManagerSA() {
 		return tagmsa;
+	}
+	
+	/**
+	 * @return the cdsa
+	 * @return
+	 */
+	public CustomDataSA getCustomDataSA(){
+		return cdsa;
 	}
 }

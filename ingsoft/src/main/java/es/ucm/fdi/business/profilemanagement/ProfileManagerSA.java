@@ -232,4 +232,11 @@ public interface ProfileManagerSA {
 	public void removeReview(String clubID, String userID)
 			throws NoSuchElementException;
 
+	/**
+	 * Gets the user with the indicated id if it exists or returns null
+	 * 
+	 * @param id	
+	 * @return user	with indicated id or null
+	 */
+	public UserPOJO getUser(String id);
 }

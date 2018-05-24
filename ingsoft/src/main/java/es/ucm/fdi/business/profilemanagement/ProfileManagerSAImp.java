@@ -482,4 +482,12 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 		unreviewedClub.removeUserReview(userID);
 		unreviewingUser.removeFromReviewed(clubID);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public UserPOJO getUser(String id){
+		if(userDAO.exists(id)) return userDAO.getUser(id);
+		else return null;
+	}
 }

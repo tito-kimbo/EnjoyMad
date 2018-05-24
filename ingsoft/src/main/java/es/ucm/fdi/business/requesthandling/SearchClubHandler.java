@@ -36,7 +36,10 @@ public class SearchClubHandler implements RequestHandler {
 	public void run() {
 		// Parse request data
 		/*
-		 * Data format 1. words (String) 2. filters (List<FilterPOJO>) 3. UserID
+		 * Data format 
+		 * 1. UserID
+		 * 2. words (String) 
+		 * 3. filters (List<FilterPOJO>) 
 		 * (String)
 		 */
 		UserPOJO user;
@@ -44,13 +47,13 @@ public class SearchClubHandler implements RequestHandler {
 		List<Object> answerData;
 		List<FilterPOJO> filters;
 
-		words = (String) rp.getParameters().get(0);
-		filters = (List<FilterPOJO>) rp.getParameters().get(1);
-		userID = (String) rp.getParameters().get(2);
+		userID = (String) rp.getParameters().get(0);
+		words = (String) rp.getParameters().get(1);
+		filters = (List<FilterPOJO>) rp.getParameters().get(2);
 
 		answerData = new ArrayList<Object>();
 		//get user from db
-		user = null; //PROVISIONAL - Needs to get from pmsa
+		user = fc.getProfileManagerSA().getUser(userID);
 		
 		if(user == null){
 			answerData.add(false);

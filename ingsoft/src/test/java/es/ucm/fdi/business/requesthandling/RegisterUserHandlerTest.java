@@ -15,7 +15,7 @@ import org.junit.Test;
 import es.ucm.fdi.business.FrontController;
 import es.ucm.fdi.business.ProductionConfig;
 import es.ucm.fdi.business.data.RequestPOJO;
-import es.ucm.fdi.business.requesthandling.Initializator;
+import es.ucm.fdi.business.requesthandling.Initializer;
 import es.ucm.fdi.business.requesthandling.tools.RequestType;
 import es.ucm.fdi.integration.data.UserPOJO;
 
@@ -33,7 +33,7 @@ public class RegisterUserHandlerTest {
 
 	@Test
 	public void validUserTest() {
-		Initializator.initialize();
+		Initializer.initialize();
 		FrontController fc = ProductionConfig.getFrontController();
 		UserPOJO user = new UserPOJO("id", "user", "1234", "user@gmail.com",
 				"Manuel García Pérez", LocalDate.of(1996, Month.AUGUST, 13));
@@ -43,13 +43,13 @@ public class RegisterUserHandlerTest {
 		ruh.run();
 		assertTrue("Adding new user was not successful",
 				(Boolean) fc.poll(customID).getAnswer().get(0));
-		assertEquals("User data wrongfully inserted", user, Initializator
+		assertEquals("User data wrongfully inserted", user, Initializer
 				.getUserDAO().getUser("id"));
 	}
 
 	@Test
 	public void invalidUserTest() {
-		Initializator.initialize();
+		Initializer.initialize();
 		FrontController fc = ProductionConfig.getFrontController();
 
 		// INVALID ID
@@ -97,7 +97,7 @@ public class RegisterUserHandlerTest {
 
 	@Test
 	public void concurrentTest() {
-		Initializator.initialize();
+		Initializer.initialize();
 		FrontController fc = ProductionConfig.getFrontController();
 		UserPOJO user;
 		int estimatedDelay = 100; //Estimated time it will take for the op in ms
@@ -119,7 +119,7 @@ public class RegisterUserHandlerTest {
 						"user@gmail.com", "María Fernández Gómez", LocalDate.of(1990,
 								Month.JANUARY, 6));
 				assertEquals(i + "th user not inserted properly", user,
-						Initializator.getUserDAO().getUser("id" + i));
+						Initializer.getUserDAO().getUser("id" + i));
 			}
 
 		} catch (InterruptedException ie) {

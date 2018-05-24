@@ -10,6 +10,9 @@ import es.ucm.fdi.business.searchengine.filters.FilterStrategy;
 import es.ucm.fdi.business.util.ElementHelper;
 import es.ucm.fdi.business.data.FilterPOJO;
 
+/**
+ * Implementation of the <code>SearchEngineSA</code> interface.
+ */
 public class SearchEngineSAImp implements SearchEngineSA {
 	
 	/**
@@ -24,7 +27,7 @@ public class SearchEngineSAImp implements SearchEngineSA {
 		
 		//To store the search result
 		List<ElementHelper<ClubPOJO>> searchResults = new ArrayList<ElementHelper<ClubPOJO>>();
-		//All the clubs in the sistem (where we will search)
+		//All the clubs in the system (where we will search)
 		List<ClubPOJO> clubs = usr.getPreferencesList();
 		ElementHelper<ClubPOJO> aux;
 		
@@ -35,7 +38,7 @@ public class SearchEngineSAImp implements SearchEngineSA {
 			searchResults.add(aux);
 		}
 		
-		//Then whe check which clubs are a match for the given filters
+		//Then we check which clubs are a match for the given filters
 		for (FilterPOJO f : filters) {
 			FilterStrategy currentFilter = FilterMapper.mapFilter(f);
 
