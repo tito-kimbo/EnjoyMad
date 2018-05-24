@@ -36,7 +36,7 @@ public class RegisterUserHandler implements RequestHandler {
 			fc.getProfileManagerSA().addNewUser(user);
 			answerData.add(true);
 		} catch (IllegalArgumentException iae) {
-			System.out.println("Illegal argument on user modification: "
+			System.out.println("Illegal argument on user creation: "
 					+ iae.getMessage());
 			answerData.add(false);
 		}finally{

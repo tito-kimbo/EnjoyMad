@@ -88,6 +88,11 @@ public class ProductionConfig {
 		fc = new FrontController(sesa, pmsa, ticketmsa,smsa, tagmsa, THREAD_LIMIT);
 	}
 	
+	public static void init(boolean sql){
+		useSQL = sql;
+		init();
+	}
+	
 	public static void exit(){
 		exit = true;
 	}
@@ -98,5 +103,14 @@ public class ProductionConfig {
 	
 	public static boolean getExit(){
 		return exit;
+	}
+	
+	//THE FOLLOWING METHODS ARE FOR TESTING PURPOSES
+	protected static UserDAO getUserDAO(){
+		return users;
+	}
+	
+	protected static ClubDAO getClubDAO(){
+		return clubs;
 	}
 }
