@@ -37,9 +37,9 @@ public class ModifyUserHandler implements RequestHandler {
 		//whatever doesn't changes with the info of the user and comes through as parameters.
 		
 		UserPOJO userChanges = new UserPOJO(userID,
-				(String)rp.getParameters().get(2), (String)rp.getParameters().get(3),
-				(String)rp.getParameters().get(4), (String)rp.getParameters().get(5),
-				(LocalDate)rp.getParameters().get(6)); 
+				(String)rp.getParameters().get(1), (String)rp.getParameters().get(2),
+				(String)rp.getParameters().get(3), (String)rp.getParameters().get(4),
+				(LocalDate)rp.getParameters().get(5)); 
 
 		//	Call relevant ProfileManagerSA methods
 		
