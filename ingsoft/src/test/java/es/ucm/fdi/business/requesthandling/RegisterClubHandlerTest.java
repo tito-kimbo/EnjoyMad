@@ -103,8 +103,11 @@ public class RegisterClubHandlerTest {
 			for (int i = 0; i < THREAD_LIMIT; ++i) {
 				club = new ClubPOJO("id" + i, "Disco", "C/Falsa, 123", 10.0f,
 						new HashSet<TagPOJO>());
-				assertEquals("User number " + i + " not inserted properly", club,
-						Initializator.getClubDAO().getClub("id" + i));
+				ClubPOJO c = Initializator.getClubDAO().getClub("id" + i);
+				boolean b = club.equals(c);
+				if(!b)
+					System.err.print("");
+				assertEquals("User number " + i + " not inserted properly", club, c);
 			}
 
 		} catch (InterruptedException ie) {
