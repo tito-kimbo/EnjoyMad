@@ -14,25 +14,27 @@ import java.util.concurrent.TimeUnit;
 import es.ucm.fdi.integration.data.TagPOJO;
 
 public class TagDAOMySqlImp implements TagDAO {
-	Connection con = null;
 	/**
 	 * Creates connection to the database.
 	 * 
 	 */
-	private void createConnection() {
+	private Connection createConnection() {
+		Connection con = null;
 		try {
-		    con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
+			con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942", "sql7235942", "ZuYxbPsXjH");
 		}
 	    catch (SQLException ex) {
 	    	ex.printStackTrace();
 	    }
+		
+		return con;
 	}
 	
 	/**
 	 * Closes connection to the database.
 	 * 
 	 */
-	private void closeConnection() {
+	private synchronized void closeConnection(Connection con) {
         try{
             con.close();
         }
@@ -44,14 +46,14 @@ public class TagDAOMySqlImp implements TagDAO {
 	 * {@inheritDoc}
 	 */
 	public void saveTags(List<TagPOJO> list) {
+		Connection con = createConnection();
 		try {
-			createConnection();
 			Statement statement = con.createStatement();
 			statement.executeUpdate("DELETE FROM Tags");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally{
-			closeConnection();
+			closeConnection(con);
 		}
 		 
 		for(TagPOJO tag : list)
@@ -62,7 +64,7 @@ public class TagDAOMySqlImp implements TagDAO {
 	 * {@inheritDoc}
 	 */
 	public List<TagPOJO> loadTags() {
-		createConnection();
+		Connection con = createConnection();
 		List<TagPOJO> listTags = new ArrayList<TagPOJO>();
 		
 	    try {
@@ -77,7 +79,7 @@ public class TagDAOMySqlImp implements TagDAO {
 	    catch (SQLException ex) {
 	    	ex.printStackTrace();
 	    }finally{
-	    	closeConnection();
+	    	closeConnection(con);
 	    }
 	    
 	    return listTags;
@@ -87,7 +89,7 @@ public class TagDAOMySqlImp implements TagDAO {
 	 * {@inheritDoc}
 	 */
 	private boolean addTag(TagPOJO tag) {
-		createConnection();
+		Connection con = createConnection();
 		
 		try { // Unchecked queries
 	        Statement st = con.createStatement();
@@ -111,7 +113,7 @@ public class TagDAOMySqlImp implements TagDAO {
 	    }
 		   
 	    finally{
-	    	closeConnection();
+	    	closeConnection(con);
 	    }
 		return false;
 	}
