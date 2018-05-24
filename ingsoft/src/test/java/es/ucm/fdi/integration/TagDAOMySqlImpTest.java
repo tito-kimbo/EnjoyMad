@@ -143,13 +143,18 @@ public class TagDAOMySqlImpTest {
 		// Write thread
 		new Thread() {
 			public void run() {
+				try {
 				tagDao.saveTags(tagList);
-				latch.countDown();
 				List list = tagDao.loadTags(); 
 				assertEquals(
 						"Concurrent reading is not thread safe for TagDAOImp, "
 								+ "mismatched tag in DAO.",
 						tagList, list);
+				} catch (AssertionError assError) {
+					assertionError = assError;
+				} finally {
+					latch.countDown();
+				}
 			}
 
 		}.start();

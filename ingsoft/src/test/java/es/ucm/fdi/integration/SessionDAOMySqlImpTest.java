@@ -194,13 +194,17 @@ public class SessionDAOMySqlImpTest {
 			newWriteThread();
 		}
 		awaitForLatch();
-
+		int i = 0;
+		for(SessionPOJO s : sessionDao.getSessions())
+			for(SessionPOJO s1: sessionsSet)
+				if(s.equals(s1))
+					i++;
 		assertEquals("Concurrent writing is not thread safe for TagDAOImp, "
-				+ "mismatched tag in DAO", sessionsSet,
-				new HashSet<SessionPOJO>(sessionDao.getSessions()));
+				+ "mismatched tag in DAO", sessionsSet.size(),
+				i);
 	}
 	
-	//@Test
+	@Test
 	public void concurrentReadWriteTest() {
 		// This is a timer that will make the program wait for the threads to
 		// execute
