@@ -46,10 +46,8 @@ public enum ClubModifierHelper {
 		public void parse(ClubPOJO clubToManage, TagManagerSA tagManager, 
 				ClubPOJO clubChanges) throws IllegalArgumentException {
 			
-			if (clubChanges.getLocation() != null) {
-				// XXX ¿Qué es valido para la localización?
-				// Location newLocation = clubChanges.getLocation();	
-			}
+			//We can assume given location valid for simplicity purposes
+			if (clubChanges.getLocation() != null) {}
 		}
 
 		@Override
