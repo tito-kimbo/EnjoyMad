@@ -36,8 +36,8 @@ public class ModifyClubHandler implements RequestHandler {
 		
 		ClubPOJO clubChanges = new ClubPOJO(clubID,
 				(String)rp.getParameters().get(1), (String)rp.getParameters().get(2),
-				(float)rp.getParameters().get(3), (Location)rp.getParameters().get(4),
-				(float)rp.getParameters().get(5)); 
+				(Float)rp.getParameters().get(3), (Location)rp.getParameters().get(4),
+				(Float)rp.getParameters().get(5)); 
 		
 		//	Call relevant ProfileManagerSA methods
 		
