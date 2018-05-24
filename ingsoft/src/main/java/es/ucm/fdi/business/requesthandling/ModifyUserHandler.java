@@ -9,6 +9,7 @@ import es.ucm.fdi.business.FrontController;
 import es.ucm.fdi.business.data.AnswerPOJO;
 import es.ucm.fdi.business.data.RequestPOJO;
 import es.ucm.fdi.business.profilemanagement.tools.UserModifierHelper;
+import es.ucm.fdi.integration.data.UserPOJO;
 
 public class ModifyUserHandler implements RequestHandler {
 
@@ -34,12 +35,12 @@ public class ModifyUserHandler implements RequestHandler {
 		
 		//Waiting for news info on modifyClubData; 
 		
-		UserModifierHelper dataType = null; 
+		UserPOJO userChanges = new UserPOJO(null, null, null, null, null, null); 
 
 		//	Call relevant ProfileManagerSA methods
 		
 		try{
-			fc.getProfileManagerSA().modifyUserData(userID, dataType, rp.getParameters().get(1));
+			fc.getProfileManagerSA().modifyUserData(userID, userChanges);
 			answerData.add(true);
 		}catch(NoSuchElementException nsee){
 			System.out.println("Invalid club ID or type to be modified" + nsee.getMessage());
@@ -47,10 +48,6 @@ public class ModifyUserHandler implements RequestHandler {
 		}
 		catch(IllegalArgumentException iae) {
 			System.out.println("The new data class does not match that needed for the modification" + iae.getMessage());
-			answerData.add(false);
-		}
-		catch(DataFormatException dfe) {
-			System.out.println("The new data parsing failed" + dfe.getMessage());
 			answerData.add(false);
 		}
 		
