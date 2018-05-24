@@ -173,9 +173,7 @@ public class SearchClubHandlerTest {
 		handler.run();
 		ans1 = fc.poll(users.get(0).getID());
 		searchResults = (List<ElementHelper<ClubPOJO>>) ans1.getAnswer().get(1);
-		for(ElementHelper<ClubPOJO> eh : searchResults){
-			System.out.println("CLUB " + eh.getElement().getCommercialName());
-		}
+
 		assertTrue("Search operation not successful", (Boolean) ans1
 				.getAnswer().get(0));
 		assertTrue("Incorrect filtering operation or answer ordering", searchResults
