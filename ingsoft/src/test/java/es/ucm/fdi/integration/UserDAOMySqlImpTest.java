@@ -20,7 +20,7 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * This class tests the functionality of UserDAOImp.
  */
 public class UserDAOMySqlImpTest {
-	private static int CONCURRENT_TESTS = 100;
+	private static int CONCURRENT_TESTS = 10;
 	private static UserPOJO user;
 	private static UserDAO userDao;
 	private static List<UserPOJO> list = new ArrayList<UserPOJO>();
@@ -93,7 +93,6 @@ public class UserDAOMySqlImpTest {
 				userDao.exists("IDNumber1"));
 	}
 	
-	/*
 	@Test
 	public void concurrentReadTest() {
 		
@@ -173,7 +172,7 @@ public class UserDAOMySqlImpTest {
 				+ "mismatched club in DAO", 
 				userDao.getUser("id"), user);
 	}
-	
+	/*
 	@Test
 	public void concurrentReadWriteTest(){
 		//This is a timer that will make the program wait for the threads to execute

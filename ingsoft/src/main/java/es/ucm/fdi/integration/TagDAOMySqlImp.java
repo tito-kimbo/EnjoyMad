@@ -88,7 +88,9 @@ public class TagDAOMySqlImp implements TagDAO {
  	/**
 	 * {@inheritDoc}
 	 */
-	private boolean addTag(TagPOJO tag) {
+	synchronized private void addTag(TagPOJO tag) {
+		if(exists(tag.getTag()))
+			return;
 		Connection con = createConnection();
 		
 		try { // Unchecked queries
@@ -96,18 +98,7 @@ public class TagDAOMySqlImp implements TagDAO {
 	        String str = "INSERT INTO Tags VALUES"
 	        		+ " (\'"+tag.getTag()+"\')";
 	        st.executeUpdate(str);
-	    }/*
-		catch(java.sql.SQLNonTransientConnectionException ex) {
-			final TagPOJO tagF = tag;
-			ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-		    executorService.scheduleAtFixedRate(
-		    		new Runnable() {
-			    		public void run() {
-			    			addTag(tagF);
-			    		}
-		    		}, 0, 1, TimeUnit.SECONDS);
-		    tag = tagF;
-		}*/
+	    }
 	    catch (SQLException ex) {
 	    	ex.printStackTrace();
 	    }
@@ -115,7 +106,24 @@ public class TagDAOMySqlImp implements TagDAO {
 	    finally{
 	    	closeConnection(con);
 	    }
-		return false;
+	}
+
+	private boolean exists(String tag) {
+		Connection con = createConnection();
+		boolean hasNext = true;
+		try {
+	        Statement st = con.createStatement();
+	        
+	        ResultSet rs = st.executeQuery("SELECT * FROM Tags where tag=\'" + tag + '\'');
+	        hasNext = rs.next();
+	        st.close();
+	    }
+	    catch (SQLException ex) {
+	    	ex.printStackTrace();
+	    }finally{
+	    	closeConnection(con);
+	    }
+	    return hasNext;
 	}
 
 }

@@ -17,9 +17,8 @@ import java.util.List;
 import es.ucm.fdi.integration.data.SessionPOJO;
 
 public class SessionDAOMySqlImp implements SessionDAO {
-	Connection con = null;
-
-	private void createConnection() {
+	private Connection createConnection() {
+		Connection con = null;
 		try {
 			con = DriverManager.getConnection(
 					"jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7235942",
@@ -27,9 +26,10 @@ public class SessionDAOMySqlImp implements SessionDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+		return con;
 	}
 
-	private void closeConnection() {
+	private void closeConnection(Connection con) {
 		try {
 			con.close();
 		} catch (SQLException ex) {
@@ -37,7 +37,7 @@ public class SessionDAOMySqlImp implements SessionDAO {
 		}
 	}
 	public List<SessionPOJO> getSessions() {
-		createConnection();
+		Connection con = createConnection();
 		List<SessionPOJO> listSessions = new ArrayList<SessionPOJO>();
 		
 		try {
@@ -62,12 +62,12 @@ public class SessionDAOMySqlImp implements SessionDAO {
 			ex.printStackTrace();
 		}
 		finally {
-			closeConnection();
+			closeConnection(con);
 		}
 		return listSessions;
 	}
 	public boolean exist(String id) {
-		createConnection();
+		Connection con = createConnection();
 
 		try {
 			Statement statement = con.createStatement();
@@ -79,16 +79,16 @@ public class SessionDAOMySqlImp implements SessionDAO {
 		}
 
 		finally {
-			closeConnection();
+			closeConnection(con);
 		}
 		return false;
 	}
 
-	public void addSession(SessionPOJO session) {
+	public synchronized void addSession(SessionPOJO session) {
 		if(exist(session.getID()))
 			return;
 		
-		createConnection();
+		Connection con = createConnection();
 		
 		try {
 			java.sql.Timestamp creation = java.sql.Timestamp.valueOf(session.getCreationTime());
@@ -125,12 +125,12 @@ public class SessionDAOMySqlImp implements SessionDAO {
 		}
 
 		finally {
-			closeConnection();
+			closeConnection(con);
 		}
 	}
 
 	public void removeSession(String id) {
-		createConnection();
+		Connection con = createConnection();
 
 		try {
 			Statement st = con.createStatement();
@@ -142,12 +142,12 @@ public class SessionDAOMySqlImp implements SessionDAO {
 		}
 
 		finally {
-			closeConnection();
+			closeConnection(con);
 		}
 	}
 
 	public SessionPOJO getSession(String id) {
-		createConnection();
+		Connection con = createConnection();
 		SessionPOJO session = null;
 
 		try {
@@ -171,7 +171,7 @@ public class SessionDAOMySqlImp implements SessionDAO {
 			ex.printStackTrace();
 		}
 		finally {
-			closeConnection();
+			closeConnection(con);
 		}
 		return session;
 	}
