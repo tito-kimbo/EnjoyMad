@@ -103,6 +103,7 @@ public class RegisterClubHandlerTest {
 			for (int i = 0; i < THREAD_LIMIT; ++i) {
 				club = new ClubPOJO("id" + i, "Disco", "C/Falsa, 123", 10.0f,
 						new HashSet<TagPOJO>());
+
 				assertEquals("User number " + i + " not inserted properly", club,
 						Initializer.getClubDAO().getClub("id" + i));
 			}
