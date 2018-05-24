@@ -1,5 +1,6 @@
 package es.ucm.fdi.business.requesthandling;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -33,9 +34,14 @@ public class ModifyUserHandler implements RequestHandler {
 		
 		answerData = new ArrayList<Object>();
 		
-		//Waiting for news info on modifyClubData; 
+		//Waiting for news info on requestPOJO; 
+		//What doesn't changes comes through as null or requestPOJO completes
+		//whatever doesn't changes with the info of the user and comes through as parameters.
 		
-		UserPOJO userChanges = new UserPOJO(null, null, null, null, null, null); 
+		UserPOJO userChanges = new UserPOJO(userID,
+				(String)rp.getParameters().get(2), (String)rp.getParameters().get(3),
+				(String)rp.getParameters().get(4), (String)rp.getParameters().get(5),
+				(LocalDate)rp.getParameters().get(6)); 
 
 		//	Call relevant ProfileManagerSA methods
 		
