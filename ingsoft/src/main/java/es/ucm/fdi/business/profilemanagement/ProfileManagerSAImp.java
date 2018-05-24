@@ -67,7 +67,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 	 *            - the app {@code UserDAO} database
 	 */
 	public ProfileManagerSAImp(ClubDAO clubs, UserDAO users, TagManagerSA tags) {
-
 		clubDAO = clubs;
 		userDAO = users;
 		tagManager = tags;

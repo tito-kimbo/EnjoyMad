@@ -24,25 +24,20 @@ public class DeleteAccountHandler implements RequestHandler {
 	
 	public void run(){
 		//Parse request data
-		
 		String userID;
 		List<Object> answerData;
 		
 		userID = (String)rp.getParameters().get(0);
 				
 		answerData = new ArrayList<Object>();
-
 		//	Call relevant ProfileManagerSA methods
-		
 		try{
 			fc.getProfileManagerSA().removeUser(userID);
 			answerData.add(true);
 		}catch(NoSuchElementException nsee){
 			System.out.println("Invalid user on delete account" + nsee.getMessage());
 			answerData.add(false);
-		}
-		
-		finally{
+		}finally{
 			//	Answer
 			fc.addAnswer(rp.getID(), new AnswerPOJO(answerData));
 		}

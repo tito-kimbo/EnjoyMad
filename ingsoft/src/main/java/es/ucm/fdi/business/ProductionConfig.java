@@ -24,6 +24,7 @@ import es.ucm.fdi.integration.SessionDAO;
 import es.ucm.fdi.integration.SessionDAOImp;
 import es.ucm.fdi.integration.TagDAO;
 import es.ucm.fdi.integration.TagDAOImp;
+import es.ucm.fdi.integration.TagDAOMySqlImp;
 import es.ucm.fdi.integration.UserDAO;
 import es.ucm.fdi.integration.UserDAOImp;
 import es.ucm.fdi.integration.UserDAOMySqlImp;
@@ -36,7 +37,6 @@ public class ProductionConfig {
 	private static boolean useSQL = false;
 	private static UserDAO users;
 	private static ClubDAO clubs;
-	private static TagManagerSA tagManager;
 	private static TagDAO tags;
 	private static SessionDAO sessions;
 	
@@ -59,7 +59,7 @@ public class ProductionConfig {
 		users = new UserDAOMySqlImp();
 		clubs = new ClubDAOMySqlImp();
 		//Tag DAO SQL imp
-		//tags = new TagDAOMySqlImp();
+		tags = new TagDAOMySqlImp();
 	}
 	
 	public static void addFilters(){
@@ -79,13 +79,18 @@ public class ProductionConfig {
 		}
 		addFilters();
 		SearchEngineSA sesa = new SearchEngineSAImp();
-		ProfileManagerSA pmsa = new ProfileManagerSAImp(clubs, users, tagManager);
 		TicketManagerSA ticketmsa = new TicketManagerSAImp(clubs, users);
 		SessionManagerSA smsa = new SessionManagerSAImp(sessions);
 		TagManagerSA tagmsa = new TagManagerSAImp(tags);
+		ProfileManagerSA pmsa = new ProfileManagerSAImp(clubs, users, tagmsa);
 		
 		//Create frontController
 		fc = new FrontController(sesa, pmsa, ticketmsa,smsa, tagmsa, THREAD_LIMIT);
+	}
+	
+	public static void init(boolean sql){
+		useSQL = sql;
+		init();
 	}
 	
 	public static void exit(){
@@ -98,5 +103,14 @@ public class ProductionConfig {
 	
 	public static boolean getExit(){
 		return exit;
+	}
+	
+	//THE FOLLOWING METHODS ARE FOR TESTING PURPOSES
+	protected static UserDAO getUserDAO(){
+		return users;
+	}
+	
+	protected static ClubDAO getClubDAO(){
+		return clubs;
 	}
 }

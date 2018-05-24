@@ -1,6 +1,5 @@
 package es.ucm.fdi.business.requesthandling;
 
-import es.ucm.fdi.business.data.AnswerPOJO;
 import es.ucm.fdi.business.data.RequestPOJO;
 
 /**

@@ -33,13 +33,11 @@ public class ModifyUserHandler implements RequestHandler {
 		answerData = new ArrayList<Object>();
 		
 		//Waiting for news info on requestPOJO; 
-		//What doesn't changes comes through as null or requestPOJO completes
-		//whatever doesn't changes with the info of the user and comes through as parameters.
-		
-		UserPOJO userChanges = new UserPOJO(userID,
-				(String)rp.getParameters().get(1), (String)rp.getParameters().get(2),
-				(String)rp.getParameters().get(3), (String)rp.getParameters().get(4),
-				(LocalDate)rp.getParameters().get(5)); 
+		/*
+		 * 	Data Format
+		 * 	1. UserPOJO
+		 */
+		UserPOJO userChanges = (UserPOJO)rp.getParameters().get(0); 
 
 		//	Call relevant ProfileManagerSA methods
 		
@@ -53,9 +51,7 @@ public class ModifyUserHandler implements RequestHandler {
 		catch(IllegalArgumentException iae) {
 			System.out.println("The new data class does not match that needed for the modification" + iae.getMessage());
 			answerData.add(false);
-		}
-		
-		finally{
+		}finally{
 			//	Answer
 			fc.addAnswer(rp.getID(), new AnswerPOJO(answerData));
 		}

@@ -17,7 +17,7 @@ import es.ucm.fdi.integration.data.ReviewPOJO;
  */
 public class ParsingToolHelper {
     
-    private final static int RATE_LOW_LIMIT = 0;
+    private final static int RATE_LOW_LIMIT = 1;
     private final static int RATE_UP_LIMIT = 5;
     
     /**

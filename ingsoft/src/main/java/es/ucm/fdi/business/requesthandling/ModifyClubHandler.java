@@ -26,19 +26,12 @@ public class ModifyClubHandler implements RequestHandler {
 	
 	public void run(){
 		String clubID;
-		List<Object> answerData;
+		List<Object> answerData = new ArrayList<Object>();;
 		
 		clubID = (String)rp.getParameters().get(0);
-		
-		answerData = new ArrayList<Object>();
-		
 		//Waiting for news info on requestPOJO; 
 		
-		ClubPOJO clubChanges = new ClubPOJO(clubID,
-				(String)rp.getParameters().get(1), (String)rp.getParameters().get(2),
-				(Float)rp.getParameters().get(3), (Location)rp.getParameters().get(4),
-				(Float)rp.getParameters().get(5)); 
-		
+		ClubPOJO clubChanges = (ClubPOJO)rp.getParameters().get(0); 
 		//	Call relevant ProfileManagerSA methods
 		
 		try{
@@ -51,9 +44,7 @@ public class ModifyClubHandler implements RequestHandler {
 		catch(IllegalArgumentException iae) {
 			System.out.println("The new data class does not match that needed for the modification" + iae.getMessage());
 			answerData.add(false);
-		}
-		
-		finally{
+		}finally{
 			//	Answer
 			fc.addAnswer(rp.getID(), new AnswerPOJO(answerData));
 		}

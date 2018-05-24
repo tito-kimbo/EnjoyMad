@@ -7,7 +7,8 @@ import es.ucm.fdi.business.FrontController;
  * the {@link FrontController} can handle.
  */
 public enum RequestType {
-    REGISTER_ACCOUNT("Register Account"),
+    REGISTER_CLUB("Register Club"),
+    REGISTER_USER("Register User"),
     DELETE_ACCOUNT("Delete Account"),
 
     ADD_REVIEW("Add Review"),
