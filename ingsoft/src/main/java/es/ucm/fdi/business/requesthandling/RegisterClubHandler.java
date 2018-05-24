@@ -29,7 +29,7 @@ public class RegisterClubHandler implements RequestHandler {
 		 */
 		List<Object> answerData = new ArrayList<Object>();
 		ClubPOJO club = (ClubPOJO)rp.getParameters().get(0);
-		
+	
 		//Call methods from pmsa
 		try{
 			fc.getProfileManagerSA().addNewClub(club);
