@@ -172,15 +172,11 @@ public class UserDAOMySqlImpTest {
 				+ "mismatched club in DAO", 
 				userDao.getUser("id"), user);
 	}
-	/*
 	@Test
 	public void concurrentReadWriteTest(){
 		//This is a timer that will make the program wait for the threads to execute
 		latch = new CountDownLatch(2*CONCURRENT_TESTS);
 		assertionError = null;
-		
-		
-		
 		userDao.addUser(user);
 		for(int i = 0; i < CONCURRENT_TESTS; ++i){	
 			
@@ -197,5 +193,4 @@ public class UserDAOMySqlImpTest {
 					+assertionError.getMessage());
 		}
 	}
-	*/
 }
