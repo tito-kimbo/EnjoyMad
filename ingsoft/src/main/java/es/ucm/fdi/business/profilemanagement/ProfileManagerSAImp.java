@@ -156,6 +156,11 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 					+ club.getCommercialName());
 		}
 
+		if (!ParsingToolHelper.parseLocation(club.getLocation())) {
+			throw new IllegalArgumentException("In CLUB creation: "
+					+ "not a valid location format -> " + club.getAddress());
+		}
+
 		if (!ParsingToolHelper.parseAddress(club.getAddress())) {
 			throw new IllegalArgumentException("In CLUB creation: "
 					+ "not a valid address format -> " + club.getAddress());
@@ -165,7 +170,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 			throw new IllegalArgumentException("In CLUB creation: "
 					+ "not a valid price -> " + club.getPrice());
 		}
-
 		
 		for (TagPOJO tp : club.getTags()) {
 			if (!tagManager.hasTag(tp)) {
@@ -174,7 +178,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 			}
 		}
 		
-
 		// Addition to database.
 		clubDAO.addClub(club);
 	}
