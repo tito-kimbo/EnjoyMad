@@ -29,12 +29,12 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * The use case executes as follows
  * 
  * 1.   request() method from FrontController is called with respective
- *      requests of Club and User registration.
+ *      requests of Club and User modification.
  * 		    * FrontController handles request internally on separate thread.
  * 2.   While there is no answer, polling (calls poll()) at fixed time intervals.
  * 3.   Valid answer is given at some point.
  */
-public class CreateProfile {
+public class ModifyProfile {
     public static final int POLLING_DELAY = 100;
     private static String customClubID = "idRegister Club240520189229";
     private static String customUserID = "idRegister User245920780023";
@@ -46,17 +46,30 @@ public class CreateProfile {
             new TagPOJO("barato"), new TagPOJO("salsa"), new TagPOJO("chill")
         };
 
-    public static ClubPOJO newClub = 
+    public static ClubPOJO existingClub = 
             new ClubPOJO(
                     "club08", "Barceló", "C/ Barceló, 11", 14.00f,
                     new HashSet<TagPOJO>(Arrays.asList(tags[7], tags[8], tags[0]))
                 );
 
-    public static UserPOJO newUser = 
+    public static ClubPOJO clubChanges =
+            new ClubPOJO(
+                    "club08", "El fresquito", null, 7.50f,
+                    new HashSet<TagPOJO>(Arrays.asList(tags[0], tags[2], tags[4]))
+                );
+
+    public static UserPOJO existingUser = 
             new UserPOJO(
-                    "user02", "alfonrom2", hashedPassword, 
+                    "user02", "alfonrom2", "dfsd653;^34;dqwe", 
                     "alf.rom15@mail.es", "Alfonso Romo", 
                     LocalDate.parse("1997-05-14")
+            );
+
+    public static UserPOJO userChanges = 
+            new UserPOJO(
+                    "user02", "alfonbest3", hashedPassword, 
+                    "alfonsoromo@gmail.com", "Alfonso Romo Hernán", 
+                    null
             );
 
     FrontController fc;
@@ -74,6 +87,13 @@ public class CreateProfile {
                 .newTag(tag);
         }
 
+        // Existing profiles
+        ProductionConfig.getFrontController()
+            .getProfileManagerSA().addNewClub(existingClub);
+        ProductionConfig.getFrontController()
+            .getProfileManagerSA().addNewUser(existingUser);
+
+        // Update cdsa
         ProductionConfig.getFrontController().getCustomDataSA().updateValues();
 
         // Initialize FrontController
@@ -90,21 +110,21 @@ public class CreateProfile {
     private RequestPOJO buildOneClubRP(ClubPOJO club) {
         List<Object> l = new ArrayList<Object>();
         l.add(club);
-        return new RequestPOJO(customClubID, new RequestPOJO("", RequestType.REGISTER_CLUB, l));
+        return new RequestPOJO(customClubID, new RequestPOJO("", RequestType.MODIFY_CLUB, l));
     }
 
     // Uses customID
     private RequestPOJO buildOneUserRP(UserPOJO user) {
         List<Object> l = new ArrayList<Object>();
         l.add(user);
-        return new RequestPOJO(customUserID, new RequestPOJO("", RequestType.REGISTER_USER, l));
+        return new RequestPOJO(customUserID, new RequestPOJO("", RequestType.MODIFY_USER, l));
     }
 
     @Test
     public void createUserProfileTest() {
         // Build Request
         AnswerPOJO ans;        
-        RequestPOJO rp = buildOneUserRP(newUser);
+        RequestPOJO rp = buildOneUserRP(userChanges);
         
         // Do request to sv
         String id = fc.request(rp);
@@ -125,22 +145,50 @@ public class CreateProfile {
             (Boolean) ans.getAnswer().get(0)
         );
 
-        // Check integrity
-        UserPOJO registeredUser = fc.getProfileManagerSA().getUser(newClub.getID());
+        // Check integrity of changes
+        UserPOJO modifiedUser = fc.getProfileManagerSA().getUser(userChanges.getID());
         assertNotNull(
             "ERROR -> User not found in DAO.", 
-            registeredUser
+            modifiedUser
         );
-        assertEquals(
-            "ERROR -> User attributes not conserved in registration.", 
-            registeredUser, newUser
-        );
+
+        if (userChanges.getUsername() != null) {
+            assertEquals(
+                "ERROR -> Unchanged username.",
+                modifiedUser.getUsername(), userChanges.getUsername()
+            );
+        }
+        if (userChanges.getHashedPassword() != null) {
+            assertEquals(
+                "ERROR -> Unchanged password.",
+                modifiedUser.getHashedPassword(), userChanges.getHashedPassword()
+            );
+        }
+        if (userChanges.getEmail() != null) {
+            assertEquals(
+                "ERROR -> Unchanged email.",
+                modifiedUser.getEmail(), userChanges.getEmail()
+            );
+        }
+        if (userChanges.getName() != null) {
+            assertEquals(
+                "ERROR -> Unchanged name.",
+                modifiedUser.getName(), userChanges.getName()
+            );
+        }
+        if (userChanges.getBirthday() != null) {
+            assertEquals(
+                "ERROR -> Unchanged birthday.",
+                modifiedUser.getBirthday(), userChanges.getBirthday()
+            );
+        }
     }
 
+    @Test
     public void createClubProfileTest() {
         // Build Request
         AnswerPOJO ans;        
-        RequestPOJO rp = buildOneClubRP(newClub);
+        RequestPOJO rp = buildOneClubRP(clubChanges);
         
         // Do request to sv
         String id = fc.request(rp);
@@ -151,7 +199,7 @@ public class CreateProfile {
 				Thread.sleep(POLLING_DELAY);
 				ans = fc.poll(id);
 			}
-		} catch (InterruptedException ie) { // should not reach
+		} catch (InterruptedException ie) {
 			fail("Unknown interruption to main thread: " + ie.getMessage());
 		}
 
@@ -161,15 +209,37 @@ public class CreateProfile {
             (Boolean) ans.getAnswer().get(0)
         );
 
-        // Check integrity
-        ClubPOJO registeredClub = fc.getProfileManagerSA().getClub(newClub.getID());
+        // Check integrity of changes
+        ClubPOJO modifiedClub = fc.getProfileManagerSA().getClub(clubChanges.getID());
         assertNotNull(
             "ERROR -> Club not found in DAO.", 
-            registeredClub
+            modifiedClub
         );
-        assertEquals(
-            "ERROR -> Club attributes not conserved in registration.", 
-            registeredClub, newClub
-        );
+
+        if (clubChanges.getCommercialName() != null) {
+            assertEquals(
+                "ERROR -> Unchanged commercial name.",
+                modifiedClub.getCommercialName(), clubChanges.getCommercialName()
+            );
+        }
+        if (clubChanges.getAddress() != null) {
+            assertEquals(
+                "ERROR -> Unchanged address.",
+                modifiedClub.getAddress(), clubChanges.getAddress()
+            );
+        }
+        if (clubChanges.getPrice() != ClubPOJO.PRICE_NULL) {
+            assertEquals(
+                "ERROR -> Unchanged price.",
+                modifiedClub.getPrice(), clubChanges.getPrice(),
+                0.010f
+            );
+        }
+        if (clubChanges.getTags() != null) {
+            assertEquals(
+                "ERROR -> Unchanged tags.",
+                modifiedClub.getTags(), clubChanges.getTags()
+            );
+        }
     }
 }
