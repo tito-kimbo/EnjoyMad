@@ -104,7 +104,7 @@ public class ParsingToolHelper {
      * <p>  '@' -> Matches an at sign.                          </p>
      * <p>  '(([\\w-][^_])+)' -> Matches sequence of alphanum
      *      and hyphen.                                         </p>
-     * <p>  '(\\.([\\w][^_])+)*' -> (Optional) After dot, matches
+     * <p>  '(\\.([\\w][^_])+)?' -> (Optional) After dot, matches
      *      possible sequence of alphanum.                      </p>
      * <p>  '(\\.[A-Za-z]{2,})' -> After dot, matches sequence
      *      of alphabetic, at least 2 characters long.          </p>
@@ -116,7 +116,7 @@ public class ParsingToolHelper {
      * @see #parseEmail(String)
      */
     public static Pattern emailChecker = Pattern.compile(
-            "^([\\w-\\+]+)(\\.[\\w-]+)*@(([\\w-][^_])+)(\\.([\\w][^_])+)*(\\.[A-Za-z]{2,})$");
+            "^([\\w-\\+]+)(\\.[\\w-]+)*@(([\\w-][^_])+)(\\.([A-z0-9])+)?(\\.[A-Za-z]{2,})$");
 
     /**
      * <p>  A {@code Pattern} to match a valid name.            </p>

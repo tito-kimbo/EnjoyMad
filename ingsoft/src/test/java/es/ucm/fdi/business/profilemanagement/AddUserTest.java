@@ -53,7 +53,7 @@ public class AddUserTest {
             new UserPOJO("user01", "julesp786", "sdfa56,.4", "jul_esp@mail.com", "Julia Espín-García", LocalDate.parse("1998-03-27")),
             new UserPOJO("user02", "alfonrom2", "456asdf", "alf.rom15@mail.es", "Alfonso Romo", LocalDate.parse("1997-05-14")),
             new UserPOJO("user03", "hugo_alsin", ".ñ5bh*y", "h+alsina@mail.gob", "Hugo Alsina", LocalDate.parse("1999-02-05")),
-            new UserPOJO("user04", "yolimed_23", "!*yi89", "yol_medina@mail.org", "Yolanda Medina", LocalDate.parse("1996-11-19")),
+            new UserPOJO("user04", "yolimed_23", "!*yi89", "yol_medina@mail.org.es", "Yolanda Medina", LocalDate.parse("1996-11-19")),
             new UserPOJO("user05", "90sofiyust3", "45%ghp", "so.yuste@mail.es", "Sofía Yuste", LocalDate.parse("2000-04-16")),
             new UserPOJO("user06", "n3r3a_samp", "fg414$·s", "nere8samp@mail.com", "Nerea Samper", LocalDate.parse("1999-08-25")),
             new UserPOJO("user07", "tonis4lg_do", "hju5/&as", "antosalg@mail.gb", "Antonio Salgado", LocalDate.parse("1993-07-13")),
@@ -91,7 +91,7 @@ public class AddUserTest {
             // Invalid Emails
             new UserPOJO("user07", "tonis4lg_do", "hju5/&as", "antosalgmail.com", "Antonio Salgado", LocalDate.parse("1993-07-13")),
             new UserPOJO("user08", "ana_duq", "^*bgui596$", "anad@uque@mail.com", "Ana Duque", LocalDate.parse("1998-12-07")),
-            new UserPOJO("user12", "yolimed_23", "!*yi89", "yolmedina@mail.org.es", "Yolanda Medina", LocalDate.parse("1996-11-19")),
+            new UserPOJO("user12", "yolimed_23", "!*yi89", "yolmedina@mail.or?g.es", "Yolanda Medina", LocalDate.parse("1996-11-19")),
 
             // Invalid Names
             new UserPOJO("user09", "julesp786", "sdfa56,.4", "julesp@mail.com", "J", LocalDate.parse("1998-03-27")),

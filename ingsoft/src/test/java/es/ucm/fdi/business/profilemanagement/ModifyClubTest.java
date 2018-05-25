@@ -11,7 +11,6 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.ucm.fdi.business.profilemanagement.tools.ClubModifierHelper;
 import es.ucm.fdi.business.tagmanagement.TagManagerSA;
 import es.ucm.fdi.business.tagmanagement.TagManagerSAImp;
 import es.ucm.fdi.integration.ClubDAO;
@@ -38,25 +37,6 @@ public class ModifyClubTest {
     ClubDAO clubDAO;
     UserDAO userDAO;
 
-    public class ModificationInfo {
-        String clubID;
-        ClubModifierHelper type;
-        Object data;
-
-        ModificationInfo(String id, ClubModifierHelper t, Object d) {
-            clubID = id;
-            type = t;
-            data = d;
-        }
-
-        @Override
-        public String toString() {
-            return  "Club: " + clubID + 
-                    " Modification: " + type.toString() +
-                    " Data: " + data.toString();
-        }
-    }
-
     @Before
     public void setUp() {
         clubDAO = new ClubDAOImp();
@@ -82,6 +62,64 @@ public class ModifyClubTest {
             }
         } catch (IllegalArgumentException e) { // unreachable
             fail("Not expected error: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void validMultipleTest() {
+        List<ClubPOJO> modifications = Arrays.asList(
+            new ClubPOJO("club01", null, null, ClubPOJO.PRICE_NULL, null, null, null),
+            new ClubPOJO("club02", null, "C/ Nueva, 7", 5.00f, null, null, null),
+            new ClubPOJO("club03", "Puente Aéreo", "C/ Aeródromo, 185", 45.00f, new Location(23.2, 5.4),
+                    new HashSet<TagPOJO>(Arrays.asList(tags[6])), null)
+        );
+
+        // Valid modification
+        try {
+            for (ClubPOJO clubChanges : modifications) {
+                profileManager.modifyClubData(clubChanges.getID(), clubChanges);
+
+                // must reach
+            }
+        } catch (IllegalArgumentException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        } catch (NoSuchElementException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        }
+
+        // Check integrity
+        for (ClubPOJO clubChanges : modifications) {
+            ClubPOJO unchanged = clubDAO.getClub(clubChanges.getID());
+
+            if (clubChanges.getCommercialName() != null) {
+                if (!unchanged.getCommercialName().equals(clubChanges.getCommercialName())) {
+                    fail("Expected equal");
+                }
+            }
+
+            if (clubChanges.getAddress() != null) {
+                if (!unchanged.getAddress().equals(clubChanges.getAddress())) {
+                    fail("Expected equal");
+                }
+            }
+
+            if (clubChanges.getPrice() != ClubPOJO.PRICE_NULL) {
+                if (! (unchanged.getPrice() == clubChanges.getPrice())) {
+                    fail("Expected equal");
+                }
+            }
+
+            if (clubChanges.getLocation() != null) {
+                if (!unchanged.getLocation().equals(clubChanges.getLocation())) {
+                    fail("Expected equal");
+                }
+            }
+
+            if (clubChanges.getTags() != null) {
+                if (!unchanged.getTags().equals(clubChanges.getTags())) {
+                    fail("Expected equal");
+                }
+            }
         }
     }
 

@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
 import es.ucm.fdi.integration.SessionDAO;
-import es.ucm.fdi.integration.SessionDAOImp;
 import es.ucm.fdi.integration.data.SessionPOJO;
 
 /**
