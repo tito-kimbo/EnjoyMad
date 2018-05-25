@@ -108,9 +108,8 @@ public class CustomDataTest {
 		ClubPOJO cPOJO3 = new ClubPOJO("Kapital", "Kapi","C/ Falsa 125", 15.98F, tags3);
 		
 		UserDAO uDAO = new UserDAOImp();
-		uDAO.addUser(uPOJO);
-		
 		uPOJO.setValueTags(valueTags);
+		uDAO.addUser(uPOJO);
 		
 		ClubDAO cDAO = new ClubDAOImp();
 		cDAO.addClub(cPOJO1);
@@ -119,12 +118,13 @@ public class CustomDataTest {
 		
 		CustomDataSA cd = new CustomDataSAImp(uDAO, cDAO);
 		cd.updateValues();
+		uPOJO = uDAO.getUser(uPOJO.getID());
 		
 		List <ClubPOJO> expPreferences = new ArrayList<ClubPOJO>();
 		expPreferences.add(cPOJO2);
 		expPreferences.add(cPOJO1);
 		expPreferences.add(cPOJO3);
-		
+
 		assertEquals(expPreferences, uPOJO.getPreferencesList());
 		
 		// Now we want to know what appends if there are two clubs with the same tags valoration
@@ -134,6 +134,8 @@ public class CustomDataTest {
 		
 		expPreferences.add(1, cPOJO4); // We want opposite entry order if has the same points
 		cd.updateValues();
+		uPOJO = uDAO.getUser(uPOJO.getID());
+		
 		assertEquals(expPreferences, uPOJO.getPreferencesList());
 		
 		
