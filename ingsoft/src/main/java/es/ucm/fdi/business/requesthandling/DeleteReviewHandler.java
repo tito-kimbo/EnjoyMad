@@ -1,15 +1,12 @@
 package es.ucm.fdi.business.requesthandling;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import es.ucm.fdi.business.FrontController;
 import es.ucm.fdi.business.data.AnswerPOJO;
 import es.ucm.fdi.business.data.RequestPOJO;
-import es.ucm.fdi.integration.UserDAOImp;
-import es.ucm.fdi.integration.data.UserPOJO;
 
 public class DeleteReviewHandler implements RequestHandler {
 

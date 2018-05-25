@@ -1,15 +1,12 @@
 package es.ucm.fdi.integration;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -36,7 +33,7 @@ public class SessionDAOMySqlImp implements SessionDAO {
 			ex.printStackTrace();
 		}
 	}
-	public List<SessionPOJO> getSessions() {
+	public synchronized List<SessionPOJO> getSessions() {
 		Connection con = createConnection();
 		List<SessionPOJO> listSessions = new ArrayList<SessionPOJO>();
 		
@@ -66,7 +63,7 @@ public class SessionDAOMySqlImp implements SessionDAO {
 		}
 		return listSessions;
 	}
-	public boolean exist(String id) {
+	public synchronized boolean exist(String id) {
 		Connection con = createConnection();
 
 		try {
@@ -129,7 +126,7 @@ public class SessionDAOMySqlImp implements SessionDAO {
 		}
 	}
 
-	public void removeSession(String id) {
+	public synchronized void removeSession(String id) {
 		Connection con = createConnection();
 
 		try {
@@ -146,7 +143,7 @@ public class SessionDAOMySqlImp implements SessionDAO {
 		}
 	}
 
-	public SessionPOJO getSession(String id) {
+	public synchronized SessionPOJO getSession(String id) {
 		Connection con = createConnection();
 		SessionPOJO session = null;
 

@@ -1,136 +1,152 @@
-// package es.ucm.fdi.business.profilemanagement;
+package es.ucm.fdi.business.profilemanagement;
 
-// import static org.junit.Assert.fail;
+import static org.junit.Assert.fail;
 
-// import java.util.Arrays;
-// import java.util.HashSet;
-// import java.util.List;
-// import java.util.NoSuchElementException;
-// import java.util.zip.DataFormatException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.NoSuchElementException;
 
-// import org.junit.Before;
-// import org.junit.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-// import es.ucm.fdi.business.data.TagPOJO;
-// import es.ucm.fdi.integration.ClubDAO;
-// import es.ucm.fdi.integration.ClubDAOImp;
-// import es.ucm.fdi.integration.UserDAO;
-// import es.ucm.fdi.integration.UserDAOImp;
-// import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.business.tagmanagement.TagManagerSA;
+import es.ucm.fdi.business.tagmanagement.TagManagerSAImp;
+import es.ucm.fdi.integration.ClubDAO;
+import es.ucm.fdi.integration.ClubDAOImp;
+import es.ucm.fdi.integration.UserDAO;
+import es.ucm.fdi.integration.UserDAOImp;
+import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 
-// /**
-//  * Tests the correct removal of {@code ClubPOJO}s from the app
-//  * corresponding {@code ClubDAO}.
-//  */
-// public class RemoveClubTest {
+/**
+ * Tests the correct removal of {@code ClubPOJO}s from the app
+ * corresponding {@code ClubDAO}.
+ */
+public class RemoveClubTest {
 
-//     ProfileManagerSA profileManager;
-//     ClubDAO clubDAO;
-//     UserDAO userDAO;
+    final TagPOJO[] tags = {
+            new TagPOJO("dance"), new TagPOJO("edm"), new TagPOJO("latino"),
+            new TagPOJO("reguetton"), new TagPOJO("indie"), new TagPOJO("after"),
+            new TagPOJO("barato"), new TagPOJO("salsa"), new TagPOJO("chill")
+        };
 
-//     @Before
-//     public void setUp() {
-//         clubDAO = new ClubDAOImp();
-//         userDAO = new UserDAOImp();
+    ProfileManagerSA profileManager;
+    ClubDAO clubDAO;
+    UserDAO userDAO;
 
-//         profileManager = new ProfileManagerSAImp(clubDAO, userDAO);
+    @Before
+    public void setUp() {
+        clubDAO = new ClubDAOImp();
+        userDAO = new UserDAOImp();
 
-//         // Initially existing clubs
-//         List<ClubPOJO> existingClubs = Arrays.asList(
-//             new ClubPOJO("club01", "Astra", "C/ Estrella, 55", 0f, new HashSet<TagPOJO>()),
-//             new ClubPOJO("club02", "Bowi", "C/ Galileo, 26", 12.50f, new HashSet<TagPOJO>()),
-//             new ClubPOJO("club03", "Copérnico", "C/ Fernández, 67", 13.00f, new HashSet<TagPOJO>()),
-//             new ClubPOJO("club04", "Kapital", "C/ Atocha, 125", 18.00f, new HashSet<TagPOJO>()),
-//             new ClubPOJO("club05", "Mitty", "C/ Julián, 4", 11.00f, new HashSet<TagPOJO>()),
-//             new ClubPOJO("club06", "Gabana", "C/ Velázquez, 6", 15.00f, new HashSet<TagPOJO>()),
-//             new ClubPOJO("club07", "Independance", "C/ Arlaban, 7", 5.00f, new HashSet<TagPOJO>()),
-//             new ClubPOJO("club08", "Barceló", "C/ Barceló, 11", 14.00f, new HashSet<TagPOJO>()),
-//             new ClubPOJO("club09", "Joy Eslava", "C/ Arenal, 11", 12.50f, new HashSet<TagPOJO>())
-//         );
+        TagManagerSA tagManager = new TagManagerSAImp(Arrays.asList(tags));
 
-//         try {
-//             for (ClubPOJO club : existingClubs) {
-//                profileManager.addNewClub(club);
-//             }
-//         } catch (IllegalArgumentException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (DataFormatException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         }
-//     }
+        profileManager = new ProfileManagerSAImp(clubDAO, userDAO, tagManager);
 
-//     /**
-//      * A series of existing {@code ClubPOJO}s are removed from the
-//      * {@code clubDAO} via ProfileManager. No exception must be caught.
-//      * Non-removed clubs must remain in DAO.
-//      */
-//     @Test
-//     public void validRemovalsTest() {
-//         List<String> remainID = Arrays.asList(
-//             "club01", "club04", "club05", "club06", "club09"
-//         );
+        // Initially existing clubs
+        List<ClubPOJO> existingClubs = Arrays.asList(
+            new ClubPOJO("club01", "Astra", "C/ Estrella, 55", 0f, 
+                    new HashSet<TagPOJO>(Arrays.asList(tags[0]))),
+            new ClubPOJO("club02", "Bowi", "C/ Galileo, 26", 12.50f,
+                    new HashSet<TagPOJO>(Arrays.asList(tags[1]))),
+            new ClubPOJO("club03", "Copérnico", "C/ Fernández, 67", 13.00f,
+                    new HashSet<TagPOJO>(Arrays.asList(tags[2]))),
+            new ClubPOJO("club04", "Kapital", "C/ Atocha, 125", 18.00f,
+                    new HashSet<TagPOJO>(Arrays.asList(tags[3]))),
+            new ClubPOJO("club05", "Mitty", "C/ Julián, 4", 11.00f,
+                    new HashSet<TagPOJO>(Arrays.asList(tags[4]))),
+            new ClubPOJO("club06", "Gabana", "C/ Velázquez, 6", 15.00f,
+                    new HashSet<TagPOJO>(Arrays.asList(tags[5]))),
+            new ClubPOJO("club07", "Independance", "C/ Arlaban, 7", 5.00f,
+                    new HashSet<TagPOJO>(Arrays.asList(tags[6]))),
+            new ClubPOJO("club08", "Barceló", "C/ Barceló, 11", 14.00f,
+                    new HashSet<TagPOJO>(Arrays.asList(tags[7], tags[8], tags[0]))),
+            new ClubPOJO("club09", "Joy Eslava", "C/ Arenal, 11", 12.50f,
+                    new HashSet<TagPOJO>())
+        );
 
-//         List<String> removedID = Arrays.asList(
-//             "club02", "club03", "club07", "club08"
-//         );
+        try {
+            for (ClubPOJO club : existingClubs) {
+               profileManager.addNewClub(club);
+            }
+        } catch (IllegalArgumentException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        }
+    }
 
-//         // Removal
-//         try {
-//             for (String clubID : removedID) {
-//                 profileManager.removeClub(clubID);
-//             }
-//         } catch (NoSuchElementException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         }
+    /**
+     * A series of existing {@code ClubPOJO}s are removed from the
+     * {@code clubDAO} via ProfileManager. No exception must be caught.
+     * Non-removed clubs must remain in DAO.
+     */
+    @Test
+    public void validRemovalsTest() {
+        List<String> remainID = Arrays.asList(
+            "club01", "club04", "club05", "club06", "club09"
+        );
 
-//         // Checks
-//         for (String id : remainID) {
-//             if (!clubDAO.exists(id)) { // unreacheable
-//                 fail("Expected existance of: " + id);
-//             }
-//         }
+        List<String> removedID = Arrays.asList(
+            "club02", "club03", "club07", "club08"
+        );
 
-//         for (String id : removedID) {
-//             if (clubDAO.exists(id)) { // unreachable
-//                 fail("Expected not to exist: " + id);
-//             }
-//         }
-//     }
+        // Removal
+        try {
+            for (String clubID : removedID) {
+                profileManager.removeClub(clubID);
+            }
+        } catch (NoSuchElementException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        }
 
-//     /**
-//      * Attemp to remove a series of non-existing {@code ClubPOJO}s
-//      * from the {@code clubDAO} via ProfileManager. A exception must 
-//      * be caught for each invalid removal. Non-removed clubs must 
-//      * remain in DAO.
-//      */
-//     @Test
-//     public void invalidRemovalsTest() {
-//         List<String> remainID = Arrays.asList(
-//             "club01", "club02", "club03", "club04", "club05", 
-//             "club06", "club07", "club08", "club09"
-//         );
+        // Checks
+        for (String id : remainID) {
+            if (!clubDAO.exists(id)) { // unreacheable
+                fail("Expected existance of: " + id);
+            }
+        }
 
-//         List<String> invalidID = Arrays.asList(
-//             "club00", "club13", "club_9", "id_CLUB475"
-//         );
+        for (String id : removedID) {
+            if (clubDAO.exists(id)) { // unreachable
+                fail("Expected not to exist: " + id);
+            }
+        }
+    }
 
-//         // Invalid removal
-//         for (String clubID : invalidID) {
-//             try {
-//                 profileManager.removeClub(clubID);
+    /**
+     * Attemp to remove a series of non-existing {@code ClubPOJO}s
+     * from the {@code clubDAO} via ProfileManager. A exception must 
+     * be caught for each invalid removal. Non-removed clubs must 
+     * remain in DAO.
+     */
+    @Test
+    public void invalidRemovalsTest() {
+        List<String> remainID = Arrays.asList(
+            "club01", "club02", "club03", "club04", "club05", 
+            "club06", "club07", "club08", "club09"
+        );
 
-//                 // unreachable
-//                 fail("Expected error did not take place: " + clubID);
-//             } catch (NoSuchElementException e) {
-//                 // must reach
-//             }
-//         }
+        List<String> invalidID = Arrays.asList(
+            "club00", "club13", "club_9", "id_CLUB475"
+        );
 
-//         // Check
-//         for (String id : remainID) {
-//             if (!clubDAO.exists(id)) { // unreacheable
-//                 fail("Expected existance of: " + id);
-//             }
-//         }
-//     }
-// }
+        // Invalid removal
+        for (String clubID : invalidID) {
+            try {
+                profileManager.removeClub(clubID);
+
+                // unreachable
+                fail("Expected error did not take place: " + clubID);
+            } catch (NoSuchElementException e) {
+                // must reach
+            }
+        }
+
+        // Check
+        for (String id : remainID) {
+            if (!clubDAO.exists(id)) { // unreacheable
+                fail("Expected existance of: " + id);
+            }
+        }
+    }
+}

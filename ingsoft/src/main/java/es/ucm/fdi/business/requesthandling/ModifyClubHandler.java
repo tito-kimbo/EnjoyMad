@@ -8,7 +8,6 @@ import es.ucm.fdi.business.FrontController;
 import es.ucm.fdi.business.data.AnswerPOJO;
 import es.ucm.fdi.business.data.RequestPOJO;
 import es.ucm.fdi.integration.data.ClubPOJO;
-import es.ucm.fdi.integration.data.Location;
 
 public class ModifyClubHandler implements RequestHandler {
 

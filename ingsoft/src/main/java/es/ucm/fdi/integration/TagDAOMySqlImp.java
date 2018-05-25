@@ -7,9 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import es.ucm.fdi.integration.data.TagPOJO;
 
@@ -45,7 +42,7 @@ public class TagDAOMySqlImp implements TagDAO {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void saveTags(List<TagPOJO> list) {
+	public synchronized void saveTags(List<TagPOJO> list) {
 		Connection con = createConnection();
 		try {
 			Statement statement = con.createStatement();
@@ -67,7 +64,7 @@ public class TagDAOMySqlImp implements TagDAO {
  	/**
 	 * {@inheritDoc}
 	 */
-	public List<TagPOJO> loadTags() {
+	public synchronized List<TagPOJO> loadTags() {
 		Connection con = createConnection();
 		List<TagPOJO> listTags = new ArrayList<TagPOJO>();
 		
@@ -112,7 +109,7 @@ public class TagDAOMySqlImp implements TagDAO {
 	    }
 	}
 
-	private boolean exists(String tag) {
+	private synchronized boolean exists(String tag) {
 		Connection con = createConnection();
 		boolean hasNext = true;
 		try {

@@ -6,7 +6,6 @@ import java.util.List;
 import es.ucm.fdi.business.FrontController;
 import es.ucm.fdi.business.data.AnswerPOJO;
 import es.ucm.fdi.business.data.RequestPOJO;
-import es.ucm.fdi.business.profilemanagement.ProfileManagerSA;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 public class RegisterUserHandler implements RequestHandler {

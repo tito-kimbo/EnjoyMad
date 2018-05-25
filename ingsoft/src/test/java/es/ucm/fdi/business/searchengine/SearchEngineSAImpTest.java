@@ -21,8 +21,6 @@ import es.ucm.fdi.integration.data.UserPOJO;
 import es.ucm.fdi.business.searchengine.SearchEngineSAImp;
 import es.ucm.fdi.business.util.ElementHelper;
 
-;
-
 public class SearchEngineSAImpTest {
 	private static ClubDAOImp cd;
 	private static SearchEngineSAImp searchMotor;
@@ -46,8 +44,7 @@ public class SearchEngineSAImpTest {
 		l1.add(edm);
 		l1.add(rgt);
 
-		ClubPOJO c1 = new ClubPOJO("Club1", "Teatro Kapital", "C/Falsa 1",
-				20.00F, l1);
+		ClubPOJO c1 = new ClubPOJO("Club1", "Teatro Kapital", "C/Falsa 1", 20.00F, l1);
 		c1.setRating(9.5F);
 		c1.setLatitude(40.40977609999999);
 		c1.setLongitude(-3.6931690999999773);

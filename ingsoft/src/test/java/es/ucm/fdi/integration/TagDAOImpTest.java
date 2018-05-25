@@ -3,7 +3,6 @@ package es.ucm.fdi.integration;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -11,11 +10,11 @@ import java.util.concurrent.CountDownLatch;
 import org.junit.Test;
 
 import es.ucm.fdi.integration.data.TagPOJO;
-import es.ucm.fdi.integration.data.ClubPOJO;
 
 public class TagDAOImpTest {
 
 	private static int CONCURRENT_TESTS = 100;
+	@SuppressWarnings("unused")
 	private static TagPOJO tag;
 	private static TagDAO tagDao;
 	private static List<TagPOJO> tagList;

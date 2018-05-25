@@ -21,6 +21,9 @@ public class ClubPOJO extends DataPOJO implements Serializable {
 	 * Generated serial UID.
 	 */
 	private static final long serialVersionUID = 3099911602624644548L;
+
+	public static float PRICE_NULL = -37.0f;
+
 	String commercialName;
 	String address;
 	float price;
@@ -45,7 +48,7 @@ public class ClubPOJO extends DataPOJO implements Serializable {
 	/**
 	 * Club class normal constructor
 	 * @param id identification
-         * @param name
+	 * @param name commercial name
 	 * @param address address string
 	 * @param price price
 	 * @param tags set of tags
@@ -67,25 +70,24 @@ public class ClubPOJO extends DataPOJO implements Serializable {
 	/**
 	 * Club class whole constructor (for testing)
 	 * @param id identification
-         * @param name
+	 * @param name
 	 * @param address address string
 	 * @param price price
-         * @param location
+	 * @param location
 	 * @param tags set of tags
 	 * @param rates map of user->rates
 	 * @param rating total rating
-         * @param opinions
+	 * @param opinions reviews
 	 */
 	public ClubPOJO(String id, String name, String address, float price,
-                Location location, Set<TagPOJO> tags, Map<String, Integer> rates,
-                float rating, Map<String, ReviewPOJO> opinions) {
+                Location location, Set<TagPOJO> tags, Map<String, ReviewPOJO> opinions) {
 		super(id);
 		this.commercialName = name;
 		this.address = address;
 		this.location = location;
 		this.price = price;
-		this.tags = new HashSet<TagPOJO>(tags); // Set constructor
-		this.rating = rating;	
+		this.tags = tags;
+		this.rating = 1.0f; // unused	
 		this.userReviews = opinions;	
 	}
 	
@@ -106,9 +108,7 @@ public class ClubPOJO extends DataPOJO implements Serializable {
 		location = new Location(otherClub.getLatitude(),otherClub.getLongitude());
 
 		rating = otherClub.getRating();
-		
-		//FALTA COPIAR USERREVIEWS. LUEGO VEO COMO HACERLO. ME TENGO QUE IR.
-		userReviews = new HashMap<String, ReviewPOJO>();
+		userReviews = new HashMap<String, ReviewPOJO>(otherClub.getReviews());
 	}
 
 	public ClubPOJO(String id, String commercialName, String address,  float price, Location location, float rating) {

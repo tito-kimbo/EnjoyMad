@@ -1,443 +1,383 @@
-// package es.ucm.fdi.business.profilemanagement;
+package es.ucm.fdi.business.profilemanagement;
 
-// import static org.junit.Assert.fail;
+import static org.junit.Assert.fail;
 
-// import java.util.Arrays;
-// import java.util.HashSet;
-// import java.util.List;
-// import java.util.NoSuchElementException;
-// import java.util.Set;
-// import java.util.zip.DataFormatException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
-// import org.junit.Before;
-// import org.junit.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-// import es.ucm.fdi.business.data.TagPOJO;
-// import es.ucm.fdi.business.profilemanagement.tools.ClubModifierHelper;
-// import es.ucm.fdi.integration.ClubDAO;
-// import es.ucm.fdi.integration.ClubDAOImp;
-// import es.ucm.fdi.integration.UserDAO;
-// import es.ucm.fdi.integration.UserDAOImp;
-// import es.ucm.fdi.integration.data.ClubPOJO;
-// import es.ucm.fdi.integration.data.Location;
+import es.ucm.fdi.business.tagmanagement.TagManagerSA;
+import es.ucm.fdi.business.tagmanagement.TagManagerSAImp;
+import es.ucm.fdi.integration.ClubDAO;
+import es.ucm.fdi.integration.ClubDAOImp;
+import es.ucm.fdi.integration.UserDAO;
+import es.ucm.fdi.integration.UserDAOImp;
+import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.Location;
+import es.ucm.fdi.integration.data.TagPOJO;
 
-// /**
-//  * Tests the correct modification of {@code ClubPOJO}s in the 
-//  * app corresponding {@code ClubDAO}.
-//  */
-// public class ModifyClubTest {
+/**
+ * Tests the correct modification of {@code ClubPOJO}s in the 
+ * app corresponding {@code ClubDAO}.
+ */
+public class ModifyClubTest {
 
-//     ProfileManagerSA profileManager;
-//     ClubDAO clubDAO;
-//     UserDAO userDAO;
+    final TagPOJO[] tags = {
+            new TagPOJO("dance"), new TagPOJO("edm"), new TagPOJO("latino"),
+            new TagPOJO("reguetton"), new TagPOJO("indie"), new TagPOJO("after"),
+            new TagPOJO("barato"), new TagPOJO("salsa"), new TagPOJO("chill")
+        };
 
-//     public class ModificationInfo {
-//         String clubID;
-//         ClubModifierHelper type;
-//         Object data;
+    ProfileManagerSA profileManager;
+    ClubDAO clubDAO;
+    UserDAO userDAO;
 
-//         ModificationInfo(String id, ClubModifierHelper t, Object d) {
-//             clubID = id;
-//             type = t;
-//             data = d;
-//         }
+    @Before
+    public void setUp() {
+        clubDAO = new ClubDAOImp();
+        userDAO = new UserDAOImp();
 
-//         @Override
-//         public String toString() {
-//             return  "Club: " + clubID + 
-//                     " Modification: " + type.toString() +
-//                     " Data: " + data.toString();
-//         }
-//     }
+        TagManagerSA tagManager = new TagManagerSAImp(Arrays.asList(tags));
 
-//     @Before
-//     public void setUp() {
-//         clubDAO = new ClubDAOImp();
-//         userDAO = new UserDAOImp();
+        profileManager = new ProfileManagerSAImp(clubDAO, userDAO, tagManager);
 
-//         profileManager = new ProfileManagerSAImp(clubDAO, userDAO);
+        // Initially existing clubs
+        List<ClubPOJO> existingClubs = Arrays.asList(
+            new ClubPOJO("club01", "Astra", "C/ Estrella, 55", 0f, 
+                new HashSet<TagPOJO>(Arrays.asList(tags[0], tags[1], tags[2]))),
+            new ClubPOJO("club02", "Bowi", "C/ Galileo, 26", 12.50f,
+                new HashSet<TagPOJO>(Arrays.asList(tags[3], tags[4], tags[5]))),
+            new ClubPOJO("club03", "Copérnico", "C/ Fernández, 67", 13.00f,
+                new HashSet<TagPOJO>(Arrays.asList(tags[6], tags[7], tags[8])))
+        );
 
-//         // Initially active tags
-//         TagPOJO[] tags = {
-//             new TagPOJO("dance"), new TagPOJO("edm"), new TagPOJO("latino"),
-//             new TagPOJO("reguetton"), new TagPOJO("indie"), new TagPOJO("after"),
-//             new TagPOJO("barato"), new TagPOJO("salsa"), new TagPOJO("chill")
-//         };
+        try {
+            for (ClubPOJO club : existingClubs) {
+               profileManager.addNewClub(club);
+            }
+        } catch (IllegalArgumentException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        }
+    }
 
-//         // Initially existing clubs
-//         List<ClubPOJO> existingClubs = Arrays.asList(
-//             new ClubPOJO("club01", "Astra", "C/ Estrella, 55", 0f, 
-//                 new HashSet<TagPOJO>(Arrays.asList(tags[0], tags[1], tags[2]))),
-//             new ClubPOJO("club02", "Bowi", "C/ Galileo, 26", 12.50f,
-//                 new HashSet<TagPOJO>(Arrays.asList(tags[3], tags[4], tags[5]))),
-//             new ClubPOJO("club03", "Copérnico", "C/ Fernández, 67", 13.00f,
-//                 new HashSet<TagPOJO>(Arrays.asList(tags[6], tags[7], tags[8])))
-//         );
+    @Test
+    public void validMultipleTest() {
+        List<ClubPOJO> modifications = Arrays.asList(
+            new ClubPOJO("club01", null, null, ClubPOJO.PRICE_NULL, null, null, null),
+            new ClubPOJO("club02", null, "C/ Nueva, 7", 5.00f, null, null, null),
+            new ClubPOJO("club03", "Puente Aéreo", "C/ Aeródromo, 185", 45.00f, new Location(23.2, 5.4),
+                    new HashSet<TagPOJO>(Arrays.asList(tags[6])), null)
+        );
 
-//         try {
-//             for (ClubPOJO club : existingClubs) {
-//                profileManager.addNewClub(club);
-//             }
-//         } catch (IllegalArgumentException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (DataFormatException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         }
-//     }
+        // Valid modification
+        try {
+            for (ClubPOJO clubChanges : modifications) {
+                profileManager.modifyClubData(clubChanges.getID(), clubChanges);
 
-//     @Test
-//     public void validCommercialNameTest() {
-//         List<ModificationInfo> modifications = Arrays.asList(
-//             new ModificationInfo("club01", ClubModifierHelper.COMMERCIAL_NAME, "Aspera"),
-//             new ModificationInfo("club02", ClubModifierHelper.COMMERCIAL_NAME, "Zetta"),
-//             new ModificationInfo("club03", ClubModifierHelper.COMMERCIAL_NAME, "Stars")
-//         );
+                // must reach
+            }
+        } catch (IllegalArgumentException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        } catch (NoSuchElementException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        }
 
-//         // Valid modification
-//         try {
-//             for (ModificationInfo mod : modifications) {
-//                 profileManager.modifyClubData(mod.clubID, mod.type, mod.data);
+        // Check integrity
+        for (ClubPOJO clubChanges : modifications) {
+            ClubPOJO unchanged = clubDAO.getClub(clubChanges.getID());
 
-//                 // must reach
-//             }
-//         } catch (IllegalArgumentException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (DataFormatException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (NoSuchElementException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         }
+            if (clubChanges.getCommercialName() != null) {
+                if (!unchanged.getCommercialName().equals(clubChanges.getCommercialName())) {
+                    fail("Expected equal");
+                }
+            }
 
-//         // Check
-//         for (ModificationInfo mod : modifications) {
-//             String clubCommercialName = clubDAO.getClub(mod.clubID).getCommercialName();
-//             String newCommercialName = (String) mod.data;
+            if (clubChanges.getAddress() != null) {
+                if (!unchanged.getAddress().equals(clubChanges.getAddress())) {
+                    fail("Expected equal");
+                }
+            }
 
-//             if (!clubCommercialName.equals(newCommercialName)) { // unreachable
-//                 fail("Expected equal: " + clubCommercialName + " <-> " + newCommercialName);
-//             }
-//         }
-//     }
+            if (clubChanges.getPrice() != ClubPOJO.PRICE_NULL) {
+                if (! (unchanged.getPrice() == clubChanges.getPrice())) {
+                    fail("Expected equal");
+                }
+            }
 
-//     @Test
-//     public void validAddressTest() {
-//         List<ModificationInfo> modifications = Arrays.asList(
-//             new ModificationInfo("club01", ClubModifierHelper.ADDRESS, "C/ Jerónimo, 76"),
-//             new ModificationInfo("club02", ClubModifierHelper.ADDRESS, "Avda. de las Rosas, 234"),
-//             new ModificationInfo("club03", ClubModifierHelper.ADDRESS, "C/ Tajo, 2")
-//         );
+            if (clubChanges.getLocation() != null) {
+                if (!unchanged.getLocation().equals(clubChanges.getLocation())) {
+                    fail("Expected equal");
+                }
+            }
 
-//         // Valid modification
-//         try {
-//             for (ModificationInfo mod : modifications) {
-//                 profileManager.modifyClubData(mod.clubID, mod.type, mod.data);
+            if (clubChanges.getTags() != null) {
+                if (!unchanged.getTags().equals(clubChanges.getTags())) {
+                    fail("Expected equal");
+                }
+            }
+        }
+    }
 
-//                 // must reach
-//             }
-//         } catch (IllegalArgumentException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (DataFormatException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (NoSuchElementException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         }
+    @Test
+    public void validCommercialNameTest() {
+        List<ClubPOJO> modifications = Arrays.asList(
+            new ClubPOJO("club01", "Aspera", null, ClubPOJO.PRICE_NULL, null, null, null),
+            new ClubPOJO("club02", "Zetta", null, ClubPOJO.PRICE_NULL, null, null, null),
+            new ClubPOJO("club03", "Stars", null, ClubPOJO.PRICE_NULL, null, null, null)            
+        );
 
-//         // Check
-//         for (ModificationInfo mod : modifications) {
-//             String clubAddress = clubDAO.getClub(mod.clubID).getAddress();
-//             String newAddress = (String) mod.data;
+        // Valid modification
+        try {
+            for (ClubPOJO clubChanges : modifications) {
+                profileManager.modifyClubData(clubChanges.getID(), clubChanges);
 
-//             if (!clubAddress.equals(newAddress)) { // unreachable
-//                 fail("Expected equal: " + clubAddress + " <-> " + newAddress);
-//             }
-//         }
-//     }
+                // must reach
+            }
+        } catch (IllegalArgumentException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        } catch (NoSuchElementException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        }
 
-//     @Test
-//     public void validPriceTest() {
-//         List<ModificationInfo> modifications = Arrays.asList(
-//             new ModificationInfo("club01", ClubModifierHelper.PRICE, 0.0f),
-//             new ModificationInfo("club02", ClubModifierHelper.PRICE, 18.50f),
-//             new ModificationInfo("club03", ClubModifierHelper.PRICE, 11.00f)
-//         );
+        // Check
+        for (ClubPOJO clubChanges : modifications) {
+            String clubCommercialName = clubDAO.getClub(clubChanges.getID()).getCommercialName();
+            String newCommercialName = clubChanges.getCommercialName();
 
-//         // Valid modification
-//         try {
-//             for (ModificationInfo mod : modifications) {
-//                 profileManager.modifyClubData(mod.clubID, mod.type, mod.data);
+            if (!clubCommercialName.equals(newCommercialName)) { // unreachable
+                fail("Expected equal: " + clubCommercialName + " <-> " + newCommercialName);
+            }
+        }
+    }
 
-//                 // must reach
-//             }
-//         } catch (IllegalArgumentException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (DataFormatException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (NoSuchElementException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         }
+    @Test
+    public void validAddressTest() {
+        List<ClubPOJO> modifications = Arrays.asList(
+            new ClubPOJO("club01", null, "C/ Jerónimo, 76", ClubPOJO.PRICE_NULL, null, null, null),
+            new ClubPOJO("club02", null, "C/ Tajo, 2", ClubPOJO.PRICE_NULL, null, null, null),
+            new ClubPOJO("club03", null, "Avda. de las Rosas, 234", ClubPOJO.PRICE_NULL, null, null, null)
+        );
 
-//         // Check
-//         for (ModificationInfo mod : modifications) {
-//             Float clubPrice = clubDAO.getClub(mod.clubID).getPrice();
-//             Float newPrice = (Float) mod.data;
+        // Valid modification
+        try {
+            for (ClubPOJO clubChanges : modifications) {
+                profileManager.modifyClubData(clubChanges.getID(), clubChanges);
 
-//             if (!clubPrice.equals(newPrice)) { // unreachable
-//                 fail("Expected equal: " + clubPrice + " <-> " + newPrice);
-//             }
-//         }
-//     }
+                // must reach
+            }
+        } catch (IllegalArgumentException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        } catch (NoSuchElementException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        }
 
-//     @Test
-//     public void validLocationTest() {
-//         List<ModificationInfo> modifications = Arrays.asList(
-//             new ModificationInfo("club01", ClubModifierHelper.PRICE, new Location(0.313, 12.456)),
-//             new ModificationInfo("club02", ClubModifierHelper.PRICE, new Location(-20.153, 32.876)),
-//             new ModificationInfo("club03", ClubModifierHelper.PRICE, new Location(31.293, -89.784))
-//         );
+        // Check
+        for (ClubPOJO clubChanges : modifications) {
+            String clubAddress = clubDAO.getClub(clubChanges.getID()).getAddress();
+            String newAddress = clubChanges.getAddress();
 
-//         // Valid modification
-//         try {
-//             for (ModificationInfo mod : modifications) {
-//                 profileManager.modifyClubData(mod.clubID, mod.type, mod.data);
+            if (!clubAddress.equals(newAddress)) { // unreachable
+                fail("Expected equal: " + clubAddress + " <-> " + newAddress);
+            }
+        }
+    }
 
-//                 // must reach
-//             }
-//         } catch (IllegalArgumentException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (DataFormatException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (NoSuchElementException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         }
+    @Test
+    public void validPriceTest() {
+        List<ClubPOJO> modifications = Arrays.asList(
+            new ClubPOJO("club01", null, null, 0.0f, null, null, null),
+            new ClubPOJO("club02", null, null, 18.50f, null, null, null),
+            new ClubPOJO("club03", null, null, 11.00f, null, null, null)
+        );
 
-//         // Check
-//         for (ModificationInfo mod : modifications) {
-//             Location clubLocation = clubDAO.getClub(mod.clubID).getLocation();
-//             Location newLocation = (Location) mod.data;
+        // Valid modification
+        try {
+            for (ClubPOJO clubChanges : modifications) {
+                profileManager.modifyClubData(clubChanges.getID(), clubChanges);
 
-//             if (!clubLocation.equals(newLocation)) { // unreachable
-//                 fail("Expected equal: " + clubLocation + " <-> " + newLocation);
-//             }
-//         }
-//     }
+                // must reach
+            }
+        } catch (IllegalArgumentException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        } catch (NoSuchElementException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        }
 
-//     @Test
-//     public void validTagAddingTest() {
-//         List<ModificationInfo> modifications = Arrays.asList(
-//             new ModificationInfo("club01", ClubModifierHelper.ADD_TAG, new TagPOJO("eurobeat")),
-//             new ModificationInfo("club02", ClubModifierHelper.ADD_TAG, new TagPOJO("cumbia")),
-//             new ModificationInfo("club03", ClubModifierHelper.ADD_TAG, new TagPOJO("alterative"))
-//         );
+        // Check
+        for (ClubPOJO clubChanges : modifications) {
+            Float clubPrice = clubDAO.getClub(clubChanges.getID()).getPrice();
+            Float newPrice = clubChanges.getPrice();
 
-//         // Valid modification
-//         try {
-//             for (ModificationInfo mod : modifications) {
-//                 profileManager.modifyClubData(mod.clubID, mod.type, mod.data);
+            if (!clubPrice.equals(newPrice)) { // unreachable
+                fail("Expected equal: " + clubPrice + " <-> " + newPrice);
+            }
+        }
+    }
 
-//                 // must reach
-//             }
-//         } catch (IllegalArgumentException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (DataFormatException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (NoSuchElementException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         }
+    @Test
+    public void validLocationTest() {
+        List<ClubPOJO> modifications = Arrays.asList(
+            new ClubPOJO("club01", null, null, ClubPOJO.PRICE_NULL, new Location(0.313, 12.456), null, null),
+            new ClubPOJO("club02", null, null, ClubPOJO.PRICE_NULL, new Location(-20.153, 32.876), null, null),
+            new ClubPOJO("club03", null, null, ClubPOJO.PRICE_NULL, new Location(31.293, -89.784), null, null)
+        );
 
-//         // Check
-//         for (ModificationInfo mod : modifications) {
-//             Set<TagPOJO> clubTags = clubDAO.getClub(mod.clubID).getTags();
-//             TagPOJO newTag = (TagPOJO) mod.data;
+        // Valid modification
+        try {
+            for (ClubPOJO clubChanges : modifications) {
+                profileManager.modifyClubData(clubChanges.getID(), clubChanges);
 
-//             if (!clubTags.contains(newTag)) { // unreachable
-//                 fail("Expected club to have tag: " + newTag.getTag());
-//             }
-//         }
-//     }
+                // must reach
+            }
+        } catch (IllegalArgumentException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        } catch (NoSuchElementException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        }
 
-//     @Test
-//     public void validTagRemovalTest() {
-//         List<ModificationInfo> modifications = Arrays.asList(
-//             new ModificationInfo("club01", ClubModifierHelper.REMOVE_TAG, new TagPOJO("latino")),
-//             new ModificationInfo("club02", ClubModifierHelper.REMOVE_TAG, new TagPOJO("indie")),
-//             new ModificationInfo("club03", ClubModifierHelper.REMOVE_TAG, new TagPOJO("barato"))
-//         );
+        // Check
+        for (ClubPOJO clubChanges : modifications) {
+            Location clubLocation = clubDAO.getClub(clubChanges.getID()).getLocation();
+            Location newLocation = clubChanges.getLocation();
 
-//         // Valid modification
-//         try {
-//             for (ModificationInfo mod : modifications) {
-//                 profileManager.modifyClubData(mod.clubID, mod.type, mod.data);
+            if (!clubLocation.equals(newLocation)) { // unreachable
+                fail("Expected equal: " + clubLocation + " <-> " + newLocation);
+            }
+        }
+    }
 
-//                 // must reach
-//             }
-//         } catch (IllegalArgumentException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (DataFormatException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (NoSuchElementException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         }
+    @Test
+    public void validTagsTest() {
+        Set<TagPOJO> tagsSet1 = new HashSet<TagPOJO>();
+        Set<TagPOJO> tagsSet2 = new HashSet<TagPOJO>(
+            Arrays.asList(tags[0], tags[4], tags[7]));
+        Set<TagPOJO> tagsSet3 = new HashSet<TagPOJO>(
+            Arrays.asList(tags[5], tags[2]));
 
-//         // Check
-//         for (ModificationInfo mod : modifications) {
-//             Set<TagPOJO> clubTags = clubDAO.getClub(mod.clubID).getTags();
-//             TagPOJO removedTag = (TagPOJO) mod.data;
+        List<ClubPOJO> modifications = Arrays.asList(
+            new ClubPOJO("club01", null, null, ClubPOJO.PRICE_NULL, null, tagsSet1, null),
+            new ClubPOJO("club02", null, null, ClubPOJO.PRICE_NULL, null, tagsSet2, null),
+            new ClubPOJO("club03", null, null, ClubPOJO.PRICE_NULL, null, tagsSet3, null)
+        );
 
-//             if (clubTags.contains(removedTag)) { // unreachable
-//                 fail("Expected club to have tag: " + removedTag.getTag());
-//             }
-//         }
-//     }
+        // Valid modification
+        try {
+            for (ClubPOJO clubChanges : modifications) {
+                profileManager.modifyClubData(clubChanges.getID(), clubChanges);
 
-//     @Test
-//     public void validTagClearTest() {
-//         List<ModificationInfo> modifications = Arrays.asList(
-//             new ModificationInfo("club01", ClubModifierHelper.CLEAR_TAGS, null),
-//             new ModificationInfo("club02", ClubModifierHelper.CLEAR_TAGS, null),
-//             new ModificationInfo("club03", ClubModifierHelper.CLEAR_TAGS, null)
-//         );
+                // must reach
+            }
+        } catch (IllegalArgumentException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        } catch (NoSuchElementException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        }
 
-//         // Valid modification
-//         try {
-//             for (ModificationInfo mod : modifications) {
-//                 profileManager.modifyClubData(mod.clubID, mod.type, mod.data);
+        // Check
+        for (ClubPOJO clubChanges : modifications) {
+            Set<TagPOJO> clubTags = clubDAO.getClub(clubChanges.getID()).getTags();
+            Set<TagPOJO> newTags = clubChanges.getTags();
 
-//                 // must reach
-//             }
-//         } catch (IllegalArgumentException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (DataFormatException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         } catch (NoSuchElementException e) { // unreachable
-//             fail("Not expected error: " + e.getMessage());
-//         }
+            if (!clubTags.equals(newTags)) { // unreachable
+                fail("Club does not contain the expected tags: ");
+            }
+        }
+    }
 
-//         // Check
-//         for (ModificationInfo mod : modifications) {
-//             Set<TagPOJO> clubTags = clubDAO.getClub(mod.clubID).getTags();
-
-//             if (!clubTags.isEmpty()) { // unreachable
-//                 fail("Expected club to have no tags.");
-//             }
-//         }
-//     }
-
-//     /**
-//      * TODO Comentar
-//      */
-//     @Test
-//     public void invalidClubTest() {
-//         List<ModificationInfo> modifications = Arrays.asList(
-//             new ModificationInfo("club_13",     ClubModifierHelper.COMMERCIAL_NAME, "Existance"),
-//             new ModificationInfo("club00",      ClubModifierHelper.ADDRESS, "C/ Piruleta, 12"),
-//             new ModificationInfo("id_CLUB76",   ClubModifierHelper.PRICE, 123.45f),
-//             new ModificationInfo("clmad87",     ClubModifierHelper.LOCATION, new Location(23.2, 5.4)),
-//             new ModificationInfo("madnor2",     ClubModifierHelper.ADD_TAG, new TagPOJO("doesnotreach")),
-//             new ModificationInfo("dance16",     ClubModifierHelper.REMOVE_TAG, new TagPOJO("doesnotreach")),
-//             new ModificationInfo("",            ClubModifierHelper.CLEAR_TAGS, null)
-//         );
+    /**
+     * TODO Comentar
+     */
+    @Test
+    public void invalidClubTest() {
+        List<ClubPOJO> modifications = Arrays.asList(
+            new ClubPOJO("club_13", "Existance", null, ClubPOJO.PRICE_NULL, null, null, null), // commercial name
+            new ClubPOJO("club00", null, "C/ Piruleta, 12", ClubPOJO.PRICE_NULL, null, null, null), // address
+            new ClubPOJO("id_CLUB76", null, null, 123.45f, null, null, null), // price
+            new ClubPOJO("clmad87", null, null, ClubPOJO.PRICE_NULL, new Location(23.2, 5.4), null, null), // location
+            new ClubPOJO("madnor2", null, null, ClubPOJO.PRICE_NULL, null, new HashSet<TagPOJO>(), null) // tags
+        );
         
-//         for (ModificationInfo mod : modifications) {
-//             try {
-//                 profileManager.modifyClubData(mod.clubID, mod.type, mod.data);
+        for (ClubPOJO clubChanges : modifications) {
+            try {
+                profileManager.modifyClubData(clubChanges.getID(), clubChanges);
 
-//                 // unreachable
-//                 fail("Expected error with modification. " + mod);
-//             } catch (IllegalArgumentException e) { // unreachable
-//                 fail("Not expected error: " + e.getMessage() + " -> with modification:" + mod);
-//             } catch (DataFormatException e) { // unreachable
-//                 fail("Not expected error: " + e.getMessage() + " -> with modification:" + mod);
-//             } catch (NoSuchElementException e) {
-//                 // must reach
-//             }
-//         }
-//     }
+                // unreachable
+                fail("Expected error with modification.");
+            } catch (IllegalArgumentException e) { // unreachable
+                fail("Not expected error: " + e.getMessage());
+            } catch (NoSuchElementException e) {
+                // must reach
+            }
+        }
+    }
 
-//     @Test
-//     public void invalidArgumentTest() {
-//         List<ModificationInfo> modifications = Arrays.asList(
-//             new ModificationInfo("club01", ClubModifierHelper.COMMERCIAL_NAME, null),
-//             new ModificationInfo("club02", ClubModifierHelper.COMMERCIAL_NAME, 4896),
-//             new ModificationInfo("club03", ClubModifierHelper.COMMERCIAL_NAME, new TagPOJO("comm")),
+    @Test
+    public void invalidDataTest() {
+        Set<TagPOJO> invalidTags1 = new HashSet<TagPOJO>( 
+            Arrays.asList(tags[5], new TagPOJO("escuela"), tags[3]));
+        Set<TagPOJO> invalidTags2 = new HashSet<TagPOJO>( 
+            Arrays.asList(tags[5], null, tags[3]));
 
-//             new ModificationInfo("club01", ClubModifierHelper.ADDRESS, null),
-//             new ModificationInfo("club02", ClubModifierHelper.ADDRESS, 7896),
-//             new ModificationInfo("club03", ClubModifierHelper.ADDRESS, new TagPOJO("addr")),
+        List<ClubPOJO> modifications = Arrays.asList(
+            // COMMERCIAL NAME -> All valid except for \n
+            new ClubPOJO("club01", "Exist\nance", null, ClubPOJO.PRICE_NULL, null, null, null),
+            new ClubPOJO("club01", "Extasis\n", null, ClubPOJO.PRICE_NULL, null, null, null),
+            new ClubPOJO("club01", "\nIndependance", "C/ Arlaban, 7", 5.00f, new Location(23.2, 5.4),
+                    new HashSet<TagPOJO>(Arrays.asList(tags[6])), null),
 
-//             new ModificationInfo("club01", ClubModifierHelper.PRICE, null),
-//             new ModificationInfo("club02", ClubModifierHelper.PRICE, "20 euros"),
-//             new ModificationInfo("club03", ClubModifierHelper.PRICE, new TagPOJO("pric")),
+            // ADDRESS -> All valid except for \n
+            new ClubPOJO("club02", null, "C/ Piru\nleta, 12", ClubPOJO.PRICE_NULL, null, null, null),
+            new ClubPOJO("club02", null, "C/ Ancha, 12\n", ClubPOJO.PRICE_NULL, null, null, null),
+            new ClubPOJO("club02", "Independance", "\nC/ Arlaban, 7", 5.00f, new Location(23.2, 5.4),
+                    new HashSet<TagPOJO>(Arrays.asList(tags[6])), null),
 
-//             new ModificationInfo("club01", ClubModifierHelper.LOCATION, null),
-//             new ModificationInfo("club02", ClubModifierHelper.LOCATION, "Madrid Norte"),
-//             new ModificationInfo("club03", ClubModifierHelper.LOCATION, new TagPOJO("loca")),
+            // PRICE -> Non-negative float. !Beware value of CLubPOJO.PRICE_NULL
+            new ClubPOJO("club03", null, null, -20.50f, null, null, null),
+            new ClubPOJO("club03", null, null, -0.01f, null, null, null),
+            new ClubPOJO("club03", "Independance", "C/ Arlaban, 7", -25.00f, new Location(23.2, 5.4),
+                    new HashSet<TagPOJO>(Arrays.asList(tags[6])), null),
 
-//             new ModificationInfo("club01", ClubModifierHelper.ADD_TAG, null),
-//             new ModificationInfo("club02", ClubModifierHelper.ADD_TAG, "dance"),
-//             new ModificationInfo("club03", ClubModifierHelper.ADD_TAG, 4869),
-            
-//             new ModificationInfo("club01", ClubModifierHelper.REMOVE_TAG, null),
-//             new ModificationInfo("club02", ClubModifierHelper.REMOVE_TAG, "latino"),
-//             new ModificationInfo("club03", ClubModifierHelper.REMOVE_TAG, 0013)
+            // LOCATION -> No conditions.
 
-//             // CLEAR_TAG can be called with any data, as it is not used.
-//         );
+            // TAGS -> Need to be active in tagManager.
+            new ClubPOJO("club01", null, null, ClubPOJO.PRICE_NULL, null, invalidTags1, null),
+            new ClubPOJO("club01", null, null, ClubPOJO.PRICE_NULL, null, invalidTags2, null),
+            new ClubPOJO("club03", "Independance", "C/ Arlaban, 7", 5.00f, new Location(23.2, 5.4),
+                    invalidTags1, null)
+        );
 
-//         for (ModificationInfo mod : modifications) {
-//             try {
-//                 profileManager.modifyClubData(mod.clubID, mod.type, mod.data);
+        // Invalid modification
+        try {
+            for (ClubPOJO clubChanges : modifications) {
+                profileManager.modifyClubData(clubChanges.getID(), clubChanges);
 
-//                 // unreachable
-//                 fail("Expected error with modification. " + mod);
-//             } catch (NoSuchElementException e) { // unreachable
-//                 fail("Not expected error: " + e.getMessage() + " -> with modification:" + mod);
-//             } catch (DataFormatException e) { // unreachable
-//                 fail("Not expected error: " + e.getMessage() + " -> with modification:" + mod);
-//             } catch (IllegalArgumentException e) {
-//                 // must reach
-//             }
-//         }
-//     }
+                // unreachable
+                fail("Expected error in the modification.");
+            }
+        } catch (NoSuchElementException e) { // unreachable
+            fail("Not expected error: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            // must reach
+        }
 
-//     @Test
-//     public void invalidDataTest() {
-//         List<ModificationInfo> modifications = Arrays.asList(
-//             // XXX ¿Añadir parseos o dejarlos sin condiciones?
-//             // COMMERCIAL_NAME -> No conditions on the String.
-//             // ADDRESS -> No conditions on the String.
+        // Check integrity
+        for (ClubPOJO clubChanges : modifications) {
+            ClubPOJO unchanged = clubDAO.getClub(clubChanges.getID());
 
-//             new ModificationInfo("club01", ClubModifierHelper.PRICE, -20.50f),
-//             new ModificationInfo("club02", ClubModifierHelper.PRICE, -5.30f),
-//             new ModificationInfo("club03", ClubModifierHelper.PRICE, -0.01f)
-
-//             // LOCATION -> No conditions on the Location.
-
-//             /*
-//             XXX A la espera de implementar el parseo con TagManagerSA
-//             new ModificationInfo("club01", ClubModifierHelper.ADD_TAG, new TagPOJO("pollo")),
-//             new ModificationInfo("club02", ClubModifierHelper.ADD_TAG, new TagPOJO("inactive")),
-//             new ModificationInfo("club03", ClubModifierHelper.ADD_TAG, new TagPOJO("()")),
-//             */
-            
-//             // REMOVE_TAG -> If not a club tag, nothing happens.
-//             // CLEAR_TAG can be called with any data, as it is not used.
-//         );
-
-//         for (ModificationInfo mod : modifications) {
-//             try {
-//                 profileManager.modifyClubData(mod.clubID, mod.type, mod.data);
-
-//                 // unreachable
-//                 fail("Expected error with modification. " + mod);
-//             } catch (NoSuchElementException e) { // unreachable
-//                 fail("Not expected error: " + e.getMessage() + " -> with modification:" + mod);
-//             } catch (IllegalArgumentException e) { // unreachable
-//                 fail("Not expected error: " + e.getMessage() + " -> with modification:" + mod);
-//             } catch (DataFormatException e) {
-//                 // must reach
-//             }
-//         }
-//     }
+            if (unchanged.getCommercialName().equals(clubChanges.getCommercialName())
+                    || unchanged.getAddress().equals(clubChanges.getAddress())
+                    || unchanged.getPrice() == clubChanges.getPrice()
+                    || unchanged.getLocation().equals(clubChanges.getLocation())
+                    || unchanged.getTags().equals(clubChanges.getTags())) {
+                        fail("Club integrity fail.");
+                    }
+        }
+    }
 
 
-// }
+}

@@ -89,7 +89,7 @@ public enum ClubModifierHelper {
 		public void parse(ClubPOJO clubToManage, TagManagerSA tagManager, 
 				ClubPOJO clubChanges) throws IllegalArgumentException {
 
-			if (new Float(clubChanges.getPrice()) != null) {
+			if (clubChanges.getPrice() != ClubPOJO.PRICE_NULL) {
 				// Valid?
 				float newPrice = clubChanges.getPrice();
 

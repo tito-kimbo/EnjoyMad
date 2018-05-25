@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Map;
 import java.sql.PreparedStatement;
@@ -47,7 +46,7 @@ public class UserDAOMySqlImp implements UserDAO {
 	 * Closes connection to the database.
 	 * 
 	 */
-	private void closeConnection(Connection con) {
+	private synchronized void closeConnection(Connection con) {
 		try {
 			con.close();
 		} catch (SQLException ex) {
@@ -58,7 +57,7 @@ public class UserDAOMySqlImp implements UserDAO {
 	/**
 	 * {@inheritDoc}
 	 */
-	public UserPOJO getUser(String id) {
+	public synchronized UserPOJO getUser(String id) {
 		Connection con = createConnection();
 		UserPOJO user = null;
 
@@ -110,7 +109,7 @@ public class UserDAOMySqlImp implements UserDAO {
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<UserPOJO> getUsers() {
+	public synchronized List<UserPOJO> getUsers() {
 		Connection con = createConnection();
 		List<UserPOJO> listUsers = new ArrayList<UserPOJO>();
 		UserPOJO user;
@@ -161,7 +160,7 @@ public class UserDAOMySqlImp implements UserDAO {
 	 * {@inheritDoc}
 	 */
 
-	public boolean exists(String id) {
+	public synchronized boolean exists(String id) {
 		Connection con = createConnection();
 
 		try {
@@ -184,6 +183,9 @@ public class UserDAOMySqlImp implements UserDAO {
 	 */
 
 	public synchronized void addUser(UserPOJO user) {
+		if(exists(user.getID()))
+			return;
+		
 		Connection con = createConnection();
 
 		// String id, String user, String pass, String email, String name,
@@ -256,7 +258,7 @@ public class UserDAOMySqlImp implements UserDAO {
 	 * {@inheritDoc}
 	 */
 
-	public void removeUser(String id) {
+	public synchronized void removeUser(String id) {
 		Connection con = createConnection();
 
 		try {
