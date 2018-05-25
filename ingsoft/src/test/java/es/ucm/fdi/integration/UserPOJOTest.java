@@ -20,7 +20,6 @@ public class UserPOJOTest {
 	 * Tests a normal case of user info.
 	 * @result account will be created without issues.
 	 */
-	//
 	@Test
 	public final void testCorrectAnswers() {
 		LocalDate date = LocalDate.of(1980, 1, 1);
@@ -39,7 +38,6 @@ public class UserPOJOTest {
 	 * Tests for younger users than we want.
 	 * @result incorrect year and thus account won't be created properly.
 	 */
-	
 	@Test
 	public final void testIncorrectYear() {
 		LocalDate date = LocalDate.of(2010, 1, 1);
