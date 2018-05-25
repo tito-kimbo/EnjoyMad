@@ -1,10 +1,7 @@
 package es.ucm.fdi.business.profilemanagement;
 
-import java.time.LocalDate;
-import java.util.Set;
 import java.util.NoSuchElementException;
 
-import org.mindrot.jbcrypt.BCrypt;
 
 import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.business.profilemanagement.tools.ClubModifierHelper;
@@ -67,63 +64,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @param clubID
-	 *            {@inheritDoc}
-	 * @param name
-	 *            {@inheritDoc}
-	 * @param address
-	 *            {@inheritDoc}
-	 * @param price
-	 *            {@inheritDoc}
-	 * @param tags
-	 *            {@inheritDoc}
-	 */
-	public void addNewClub(String clubID, String name, String address, float price,
-			Set<TagPOJO> tags) throws IllegalArgumentException {
-
-		// Is already registered?
-		if (clubDAO.exists(clubID)) {
-
-			throw new IllegalArgumentException(
-					"In CLUB creation:" + "clubID is already registered -> " + clubID);
-		}
-
-		// Arguments are checked
-		if (!ParsingToolHelper.parseID(clubID)) {
-			throw new IllegalArgumentException(
-					"In CLUB creation: " + "not a valid ID format -> " + clubID);
-		}
-
-		if (!ParsingToolHelper.parseCommercialName(name)) {
-			throw new IllegalArgumentException("In CLUB creation: "
-					+ "not a valid commercial name format -> " + name);
-		}
-
-		if (!ParsingToolHelper.parseAddress(address)) {
-			throw new IllegalArgumentException(
-					"In CLUB creation: " + "not a valid address format -> " + address);
-		}
-
-		if (!ParsingToolHelper.parsePrice(price)) {
-			throw new IllegalArgumentException(
-					"In CLUB creation: " + "not a valid price -> " + price);
-		}
-
-		for (TagPOJO tp : tags) {
-			if (!tagManager.hasTag(tp)) {
-				throw new IllegalArgumentException("In CLUB creation: "
-						+ "tag not found in valid tags list -> " + tp.getTag());
-			}
-		}
-
-		// Club creation and addition to database.
-		ClubPOJO newClub = new ClubPOJO(clubID, name, address, price, tags);
-		clubDAO.addClub(newClub);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
 	 * @param club
 	 *            {@inheritDoc}
 	 */
@@ -171,71 +111,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
 		// Addition to database.
 		clubDAO.addClub(club);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @param userID
-	 *            {@inheritDoc}
-	 * @param username
-	 *            {@inheritDoc}
-	 * @param password
-	 *            {@inheritDoc}
-	 * @param email
-	 *            {@inheritDoc}
-	 * @param name
-	 *            {@inheritDoc}
-	 * @param birthday
-	 *            {@inheritDoc}
-	 */
-	public void addNewUser(String userID, String username, String password, String email,
-			String name, LocalDate birthday) throws IllegalArgumentException {
-
-		// Is already registered?
-		if (userDAO.exists(userID)) {
-			throw new IllegalArgumentException(
-					"In USER creation: " + "userID is already registered -> " + userID);
-		}
-
-		// Arguments are checked
-		if (!ParsingToolHelper.parseID(userID)) {
-			throw new IllegalArgumentException(
-					"In USER creation: " + "not a valid ID format -> " + userID);
-		}
-
-		if (!ParsingToolHelper.parseUsername(username)) {
-			throw new IllegalArgumentException(
-					"In USER creation: " + "not a valid username format -> " + username);
-		}
-
-		if (!ParsingToolHelper.parsePassword(password)) {
-			throw new IllegalArgumentException(
-					"In USER creation: " + "not a valid password format -> " + password);
-		}
-
-		if (!ParsingToolHelper.parseEmail(email)) {
-			throw new IllegalArgumentException(
-					"In USER creation: " + "not a valid email format -> " + email);
-		}
-
-		if (!ParsingToolHelper.parseName(name)) {
-			throw new IllegalArgumentException(
-					"In USER creation: " + "not a valid name format -> " + name);
-		}
-
-		if (!ParsingToolHelper.parseBirthday(birthday)) {
-			throw new IllegalArgumentException(
-					"In USER creation: " + "not a valid birth date -> " + birthday);
-		}
-
-		// Password protection
-		String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-
-		// User creation and addition
-		UserPOJO newUser = new UserPOJO(userID, username, hashPassword, email, name,
-				birthday);
-		userDAO.addUser(newUser);
 	}
 
 	/**
@@ -321,6 +196,8 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 		for (ClubModifierHelper mod : clubModifications) {
 			mod.modify(club, clubChanges);
 		}
+
+		// Updates the DAO.
 		clubDAO.removeClub(club.getID());
 		clubDAO.addClub(club);
 	}
@@ -363,6 +240,8 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 		for (UserModifierHelper mod : userModifications) {
 			mod.modify(user, userChanges);
 		}
+
+		// Updates the DAO.
 		userDAO.removeUser(user.getID());
 		userDAO.addUser(user);
 	}
@@ -448,9 +327,11 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
 		reviewedClub.addUserReview(userID, review);
 		reviewingUser.addToReviewed(clubID);
+
+		// Updates the DAOs.
 		userDAO.removeUser(reviewingUser.getID());
-		userDAO.addUser(reviewingUser);
 		clubDAO.removeClub(reviewedClub.getID());
+		userDAO.addUser(reviewingUser);		
 		clubDAO.addClub(reviewedClub);
 	}
 

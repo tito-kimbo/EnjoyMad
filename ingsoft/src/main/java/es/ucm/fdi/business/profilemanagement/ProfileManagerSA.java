@@ -1,13 +1,6 @@
 package es.ucm.fdi.business.profilemanagement;
 
-import java.time.LocalDate;
 import java.util.NoSuchElementException;
-import java.util.Set;
-
-import es.ucm.fdi.integration.data.TagPOJO;
-import es.ucm.fdi.business.profilemanagement.tools.ClubModifierHelper;
-import es.ucm.fdi.business.profilemanagement.tools.UserModifierHelper;
-
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
@@ -21,37 +14,6 @@ import es.ucm.fdi.integration.data.UserPOJO;
 public interface ProfileManagerSA {
 
 	// ** PROFILE CREATION **//
-
-	/**
-	 * XXX ¿Borrar si no se usa al final?
-	 * <p>
-	 * * DO NOT USE IN MAIN APP * Method is kept just in case for testing or
-	 * future implementations.
-	 * </p>
-	 * <p>
-	 * Builds a new {@code ClubPOJO} from the given arguments and adds a new to
-	 * the app {@code ClubDAO} database.
-	 * </p>
-	 * 
-	 * @param clubID
-	 *            - {@code String} with the new club {@code ID}
-	 * @param name
-	 *            - {@code String} with the new club {@code CommercialName}
-	 * @param address
-	 *            - {@code String} with the new club {@code Address}
-	 * @param price
-	 *            - {@code String} with the new club {@code TicketPrice}
-	 * @param tags
-	 *            - {@code Set<String>} with list of the new club {@code Tags}
-	 * 
-	 * @throws IllegalArgumentException
-	 *             	if {@code clubID} already stored in {@code ClubDAO} 
-	 * 				database or...
-	 * @throws IllegalArgumentException
-	 *             	if parsing failed while checking the new club attributes
-	 */
-	public void addNewClub(String clubID, String name, String address,
-			float price, Set<TagPOJO> tags) throws IllegalArgumentException;
 
 	/**
 	 * Adds a given {@code ClubPOJO} to the app {@code ClubDAO} database,
@@ -69,40 +31,6 @@ public interface ProfileManagerSA {
 	 * 
 	 */
 	public void addNewClub(ClubPOJO club) throws IllegalArgumentException;
-
-	/**
-	 * XXX ¿Borrar si no se usa al final?
-	 * <p>
-	 * * DO NOT USE IN MAIN APP * Method is kept just in case for testing or
-	 * future implementations.
-	 * </p>
-	 * <p>
-	 * Builds a new {@code UserPOJO} from the given arguments and adds a new to
-	 * the app {@code UserDAO} database.
-	 * </p>
-	 * 
-	 * @param userID
-	 *            - {@code String} with the new user {@code ID}
-	 * @param username
-	 *            - {@code String} with the new user {@code Username}
-	 * @param password
-	 *            - {@code String} with the new user {@code Password}
-	 * @param email
-	 *            - {@code String} with the new user {@code Email}
-	 * @param name
-	 *            - {@code String} with the new user {@code TicketPrice}
-	 * @param birthday
-	 *            - {@code Set<String>} with list of the new user {@code Tags}
-	 * 
-	 * @throws IllegalArgumentException
-	 *             	if {@code userID} already stored in {@code UserDAO} 
-	 * 				database or...
-	 * @throws IllegalArgumentException
-	 *             	if parsing failed while checking the new club attributes
-	 */
-	public void addNewUser(String userID, String username, String password,
-			String email, String name, LocalDate birthday)
-			throws IllegalArgumentException;
 
 	/**
 	 * <p>

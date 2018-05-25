@@ -289,9 +289,6 @@ public class ModifyClubTest {
         }
     }
 
-    /**
-     * TODO Comentar
-     */
     @Test
     public void invalidClubTest() {
         List<ClubPOJO> modifications = Arrays.asList(

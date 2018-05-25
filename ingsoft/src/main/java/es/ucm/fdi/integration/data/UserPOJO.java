@@ -35,7 +35,6 @@ public class UserPOJO extends DataPOJO implements Serializable {
 
 	/**
 	 * List of favorite clubs.
-	 * XXX ¿Debería ser una List<String> con los IDs?
 	 */
 	private List<ClubPOJO> preferencesList = new ArrayList<ClubPOJO>();
 
@@ -206,31 +205,19 @@ public class UserPOJO extends DataPOJO implements Serializable {
 	public void removeFromReviewed(String clubID) {
 		reviewedClubs.remove(clubID);
 	}
-	
-	/**
-	 * TODO Comentar
-	 */
+
 	public List<ClubPOJO> getPreferencesList() {
 		return preferencesList;
 	}
 
-	/**
-	 * TODO Comentar
-	 */
 	public void setPreferencesList(List<ClubPOJO> preferencesList) {
 		this.preferencesList = preferencesList;
 	}
 
-	/**
-	 * TODO Comentar
-	 */
 	public Map<TagPOJO, Integer> getValueTags() {
 		return valueTags;
 	}
 
-	/**
-	 * TODO Comentar
-	 */
 	public void setValueTags(Map<TagPOJO, Integer> valueTags) {
 		this.valueTags = valueTags;
 	}
