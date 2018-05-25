@@ -98,14 +98,6 @@ public class ModifyProfile {
 
         // Initialize FrontController
         fc = ProductionConfig.getFrontController();
-    }
-
-    @After
-    public void tearDown() {
-        ProductionConfig.getFrontController()
-                .getProfileManagerSA().removeClub(existingClub.getID());
-        ProductionConfig.getFrontController()
-                .getProfileManagerSA().removeUser(existingUser.getID());
     }   
 
     // Uses customID
@@ -184,12 +176,14 @@ public class ModifyProfile {
                 modifiedUser.getBirthday(), userChanges.getBirthday()
             );
         }
+        ProductionConfig.getFrontController()
+        .getProfileManagerSA().removeUser(existingUser.getID());
     }
 
     @Test
     public void modifyClubProfileTest() {
         // Build Request
-        AnswerPOJO ans;        
+        AnswerPOJO ans = null;        
         RequestPOJO rp = buildOneClubRP(clubChanges);
         
         // Do request to sv
@@ -243,5 +237,7 @@ public class ModifyProfile {
                 modifiedClub.getTags(), clubChanges.getTags()
             );
         }
+        ProductionConfig.getFrontController()
+        .getProfileManagerSA().removeClub(existingClub.getID());
     }
 }

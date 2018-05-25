@@ -45,6 +45,6 @@ public class RegisterUserHandler implements RequestHandler {
 	}
 
 	public Object clone(RequestPOJO rp) {
-		return new RegisterClubHandler(fc, rp);
+		return new RegisterUserHandler(fc, rp);
 	}
 }

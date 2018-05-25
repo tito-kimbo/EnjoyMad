@@ -32,7 +32,7 @@ public class RegisterClubHandlerTest {
 	}
 
 	@Test
-	public void validUserTest() {
+	public void validClubTest() {
 		Initializer.initialize();
 		FrontController fc = ProductionConfig.getFrontController();
 		ClubPOJO club = new ClubPOJO("id", "Disco", "C/Falsa, 123", 10.0f,
@@ -48,7 +48,7 @@ public class RegisterClubHandlerTest {
 	}
 
 	@Test
-	public void invalidUserTest() {
+	public void invalidClubTest() {
 		Initializer.initialize();
 		FrontController fc = ProductionConfig.getFrontController();
 
