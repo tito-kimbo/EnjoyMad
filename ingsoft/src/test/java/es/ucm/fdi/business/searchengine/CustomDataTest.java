@@ -137,8 +137,5 @@ public class CustomDataTest {
 		uPOJO = uDAO.getUser(uPOJO.getID());
 		
 		assertEquals(expPreferences, uPOJO.getPreferencesList());
-		
-		
-		
 	}
 }

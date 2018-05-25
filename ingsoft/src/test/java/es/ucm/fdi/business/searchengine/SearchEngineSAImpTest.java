@@ -270,10 +270,8 @@ public class SearchEngineSAImpTest {
 	 * Checks which of the clubs that were initialized upper are nearer than 7km
 	 * from the Universidad Complutense's Mathematics faculty and plays pop and
 	 * reggeton music.
-	 * 
-	 * @Test commented to avoid abusive use of the api key.
 	 */
-	// @Test
+	@Test
 	public void twoFilterTest2() {
 		// Search filters (tag filter)
 		List<FilterPOJO> filters = new ArrayList<FilterPOJO>();
@@ -313,10 +311,8 @@ public class SearchEngineSAImpTest {
 
 	/**
 	 * TEST 5: All filter search.
-	 * 
-	 * @Test commented to avoid abusive use of the api key.
 	 */
-	// @Test
+	@Test
 	public void allFilterTest2() {
 		// Search filters (tag filter)
 		List<FilterPOJO> filters = new ArrayList<FilterPOJO>();
