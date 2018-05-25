@@ -20,6 +20,8 @@ import es.ucm.fdi.business.ticketmanagement.TicketManagerSA;
 /**
  * Controller to manage {@code RequestPOJO}s issued by the app clients and
  * control their states until completion.
+ * 
+ * @version 25.05.2018
  */
 public class FrontController {
 	private static AnswerPOJO NULL_ANSWER;

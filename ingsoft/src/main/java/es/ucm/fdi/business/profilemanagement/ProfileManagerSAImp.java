@@ -18,7 +18,7 @@ import es.ucm.fdi.integration.data.UserPOJO;
  * Class to be used as the Profile Manager of the application. It implements the
  * functionality of {@link ProfileManagerSA}.
  * 
- * @version 08.05.2018
+ * @version 25.05.2018
  */
 public class ProfileManagerSAImp implements ProfileManagerSA {
 

@@ -10,6 +10,11 @@ import es.ucm.fdi.integration.UserDAO;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 
+/**
+ * Implementation of the CustomDataSA interface
+ * 
+ * @version 25.05.2018
+ */
 public class CustomDataSAImp implements CustomDataSA {
 
 	private UserDAO user;

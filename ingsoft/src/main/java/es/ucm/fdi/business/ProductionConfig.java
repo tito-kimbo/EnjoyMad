@@ -12,6 +12,11 @@ import es.ucm.fdi.business.tagmanagement.*;
 import es.ucm.fdi.business.ticketmanagement.*;
 import es.ucm.fdi.integration.*;
 
+/**
+ * Class in charge of system initialization.
+ * 
+ * @version 25.05.2018
+ */
 public class ProductionConfig {
 	//Experimental optimal value
 	private static int THREAD_LIMIT = 15;

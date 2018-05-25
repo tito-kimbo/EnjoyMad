@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -83,8 +84,18 @@ public class Search {
 		user.setValueTags(vals);
 		ProductionConfig.getFrontController().getProfileManagerSA()
 				.addNewUser(user);
-		
-		ProductionConfig.getFrontController().getCustomDataSA().updateValues();	
+
+		ProductionConfig.getFrontController().getCustomDataSA().updateValues();
+	}
+
+	@After
+	public void tearDown() {
+		for (ClubPOJO c : clubs) {
+			ProductionConfig.getFrontController().getProfileManagerSA()
+					.removeClub(c.getID());
+		}
+		ProductionConfig.getFrontController().getProfileManagerSA()
+				.removeUser("id");
 	}
 
 	public RequestPOJO buildRP(String userID) {

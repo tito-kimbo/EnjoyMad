@@ -8,9 +8,13 @@ import es.ucm.fdi.integration.data.DataPOJO;
  * This class contains the information needed to build a certain
  * <code>Filter</code>
  * 
- * @version 22.04.2018
+ * @version 25.05.2018
  */
 public class FilterPOJO extends DataPOJO {
+	/**
+	 * Generated UID.
+	 */
+	private static final long serialVersionUID = 7280573179865244661L;
 	private List<String> params;
 
 	/**

@@ -11,11 +11,16 @@ import es.ucm.fdi.integration.data.DataPOJO;
  * the information needed to build a certain {@link RequestHandler} 
  * implementation that will handle the request.
  * 
- * @version 18.05.2018
+ * @version 25.05.2018
  */
 public class RequestPOJO extends DataPOJO {
 	
     /**
+	 * Generated UID.
+	 */
+	private static final long serialVersionUID = -7131586157697244806L;
+
+	/**
      * Type of request;
      */
     private RequestType type;
