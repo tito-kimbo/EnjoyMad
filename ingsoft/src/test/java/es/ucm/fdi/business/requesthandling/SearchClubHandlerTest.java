@@ -94,8 +94,10 @@ public class SearchClubHandlerTest {
 		vals.put(new TagPOJO("rock"), 2);
 		vals.put(new TagPOJO("hardstyle"), 1);
 
-		fc.getProfileManagerSA().getUser(users.get(0).getID())
-				.setValueTags(vals);
+		UserPOJO user = fc.getProfileManagerSA().getUser(users.get(0).getID());
+		user.setValueTags(vals);
+		fc.getProfileManagerSA().removeUser(user.getID());
+		fc.getProfileManagerSA().addNewUser(user);
 		fc.getCustomDataSA().updateValues();
 
 		// Send search request
@@ -134,28 +136,35 @@ public class SearchClubHandlerTest {
 	public void multiClubSearch() {
 		fullInitialization();
 		FrontController fc = Initializer.getFrontController();
-		addAll(clubs, users, fc.getProfileManagerSA());
-
+		addAll(clubs, users, fc.getProfileManagerSA());	
+		UserPOJO user;
+		
 		Map<TagPOJO, Integer> vals = new HashMap<TagPOJO, Integer>();
 		vals.put(new TagPOJO("pop"), 5);
 		vals.put(new TagPOJO("rock"), 2);
 		vals.put(new TagPOJO("hardstyle"), 1);
-		fc.getProfileManagerSA().getUser(users.get(0).getID())
-				.setValueTags(vals);
+		user = fc.getProfileManagerSA().getUser(users.get(0).getID());
+		user.setValueTags(vals);
+		fc.getProfileManagerSA().removeUser(user.getID());
+		fc.getProfileManagerSA().addNewUser(user);
 
 		vals = new HashMap<TagPOJO, Integer>();
 		vals.put(new TagPOJO("pop"), 1);
 		vals.put(new TagPOJO("rock"), 6);
 		vals.put(new TagPOJO("hardstyle"), 0);
-		fc.getProfileManagerSA().getUser(users.get(1).getID())
-				.setValueTags(vals);
+		user = fc.getProfileManagerSA().getUser(users.get(1).getID());
+		user.setValueTags(vals);
+		fc.getProfileManagerSA().removeUser(user.getID());
+		fc.getProfileManagerSA().addNewUser(user);
 
 		vals = new HashMap<TagPOJO, Integer>();
 		vals.put(new TagPOJO("pop"), 1);
 		vals.put(new TagPOJO("rock"), 6);
 		vals.put(new TagPOJO("hardstyle"), 0);
-		fc.getProfileManagerSA().getUser(users.get(2).getID())
-				.setValueTags(vals);
+		user = fc.getProfileManagerSA().getUser(users.get(2).getID());
+		user.setValueTags(vals);
+		fc.getProfileManagerSA().removeUser(user.getID());
+		fc.getProfileManagerSA().addNewUser(user);
 		// Assign custom values to users
 		fc.getCustomDataSA().updateValues();
 		

@@ -29,7 +29,7 @@ public class ModifyUserHandlerTest {
 		l.add(userId);
 		l.add(user);
 		
-		return new RequestPOJO(customID, new RequestPOJO(RequestType.MODIFY_USER, l));
+		return new RequestPOJO(customID, new RequestPOJO("", RequestType.MODIFY_USER, l));
 	}
 	
 	/**
@@ -50,17 +50,15 @@ public class ModifyUserHandlerTest {
 		
 		//Then we create the RequestPOJO to ask the system to modify the user
 		UserPOJO modifyUser = new UserPOJO("Id", "titoKimbo", null, null, null, null);
-		
 		RequestPOJO rp = buildModifyUserRP(modifyUser.getID(), modifyUser);
-		
 		ModifyUserHandler handler = new ModifyUserHandler(fc, rp);
 		
 		//We execute the request
 		handler.run();
 		
 		//We check that the system processed the request and did it successfully.
-		assertTrue("Modifying the user failed.", (Boolean) fc.poll(customID).getAnswer().get(0));
-		assertEquals("Modifying the user failed.", 
+		assertTrue("Valid modification failed.", (Boolean) fc.poll(customID).getAnswer().get(0));
+		assertEquals("User modification didn't yield expected results.", 
 				(String) fc.getProfileManagerSA().getUser("Id").getUsername(), "titoKimbo");
 	}
 		

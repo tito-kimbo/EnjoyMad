@@ -321,6 +321,8 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 		for (ClubModifierHelper mod : clubModifications) {
 			mod.modify(club, clubChanges);
 		}
+		clubDAO.removeClub(club.getID());
+		clubDAO.addClub(club);
 	}
 
 	/**
@@ -335,7 +337,6 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 			throws NoSuchElementException, IllegalArgumentException {
 
 		UserPOJO user = userDAO.getUser(userID);
-
 		// User exists
 		if (user == null) {
 			throw new NoSuchElementException("In USER modification: "
@@ -362,6 +363,8 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 		for (UserModifierHelper mod : userModifications) {
 			mod.modify(user, userChanges);
 		}
+		userDAO.removeUser(user.getID());
+		userDAO.addUser(user);
 	}
 
 	/**
@@ -445,6 +448,10 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
 		reviewedClub.addUserReview(userID, review);
 		reviewingUser.addToReviewed(clubID);
+		userDAO.removeUser(reviewingUser.getID());
+		userDAO.addUser(reviewingUser);
+		clubDAO.removeClub(reviewedClub.getID());
+		clubDAO.addClub(reviewedClub);
 	}
 
 	/**
@@ -471,6 +478,10 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 
 		unreviewedClub.removeUserReview(userID);
 		unreviewingUser.removeFromReviewed(clubID);
+		userDAO.removeUser(unreviewingUser.getID());
+		userDAO.addUser(unreviewingUser);
+		clubDAO.removeClub(unreviewedClub.getID());
+		clubDAO.addClub(unreviewedClub);
 	}
 
 	/**

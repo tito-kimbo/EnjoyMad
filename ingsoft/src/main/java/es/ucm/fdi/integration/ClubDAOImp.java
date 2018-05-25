@@ -38,7 +38,8 @@ public class ClubDAOImp implements ClubDAO {
 	 * {@inheritDoc}
 	 */
 	synchronized public ClubPOJO getClub(String id) {
-		return clubMap.get(id).deepClone();
+		if(!exists(id)) return null;
+		else return clubMap.get(id).deepClone();
 	}
 	
  	/**
@@ -47,7 +48,8 @@ public class ClubDAOImp implements ClubDAO {
 	synchronized public List<ClubPOJO> getClubs(){
 		List<ClubPOJO> aux = new ArrayList<ClubPOJO>();
 		for(ClubPOJO c : clubMap.values()){
-			aux.add(c.deepClone());
+			if(exists(c.getID())) aux.add(c.deepClone());
+			else return null;
 		}
 		
 		return aux;

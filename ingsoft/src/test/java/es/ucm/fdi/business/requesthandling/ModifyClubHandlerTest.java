@@ -25,7 +25,7 @@ public class ModifyClubHandlerTest {
 		l.add(clubId);
 		l.add(club);
 		
-		return new RequestPOJO(customID, new RequestPOJO(RequestType.MODIFY_CLUB, l));
+		return new RequestPOJO(customID, new RequestPOJO("", RequestType.MODIFY_CLUB, l));
 	}
 	
 	/**

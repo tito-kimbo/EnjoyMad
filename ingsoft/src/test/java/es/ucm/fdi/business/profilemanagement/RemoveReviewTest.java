@@ -230,7 +230,7 @@ public class RemoveReviewTest {
             Map<String, ReviewPOJO> reviews = clubDAO.getClub(remov.clubID).getReviews();
 
             if (reviewedClubs.contains(remov.clubID)) { // unreachable
-                fail("User (" + remov.userID + ") does knows removed review from club (" + remov.clubID + ").");
+                fail("User (" + remov.userID + ") knows removed review from club (" + remov.clubID + ").");
             }
 
             if (reviewers.contains(remov.userID)) { // unreachable
