@@ -3,14 +3,9 @@ package es.ucm.fdi.business.requesthandling;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import org.junit.Test;
 
 import es.ucm.fdi.business.FrontController;
 import es.ucm.fdi.business.ProductionConfig;
@@ -18,7 +13,6 @@ import es.ucm.fdi.business.data.RequestPOJO;
 import es.ucm.fdi.business.requesthandling.tools.RequestType;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.TagPOJO;
-import es.ucm.fdi.integration.data.UserPOJO;
 
 public class ModifyClubHandlerTest {
 	
@@ -60,8 +54,8 @@ public class ModifyClubHandlerTest {
 		
 		//We check that the system processed the request and did it successfully.
 		assertTrue("Modifying the user failed.", (Boolean) fc.poll(customID).getAnswer().get(0));
-		//assertEquals("Modifying the user failed.", 
-		//		(String) fc.getProfileManagerSA().getClub("Id"), "titoKimbo");
+		assertEquals("Modifying the user failed.", 
+				(String) fc.getProfileManagerSA().getClub("Id").getCommercialName(), "titoKimbo");
 	}
 
 }
