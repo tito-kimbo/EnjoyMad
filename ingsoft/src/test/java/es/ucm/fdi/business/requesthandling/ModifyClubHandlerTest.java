@@ -43,7 +43,8 @@ public class ModifyClubHandlerTest {
 		fc.getProfileManagerSA().addNewClub(club);
 		
 		//Then we create the RequestPOJO to ask the system to modify the user
-		ClubPOJO modifyClub = new ClubPOJO("Id", "titoKimboDisco", null, (Float) null, null);
+		@SuppressWarnings("null")
+		ClubPOJO modifyClub = new ClubPOJO("Id", "titoKimboDisco", null,  (Float) null, null);
 		
 		RequestPOJO rp = buildModifyClubRP(modifyClub.getID(), modifyClub);
 		

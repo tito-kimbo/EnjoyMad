@@ -3,9 +3,7 @@ package es.ucm.fdi.integration;
 import static org.junit.Assert.*;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.CountDownLatch;

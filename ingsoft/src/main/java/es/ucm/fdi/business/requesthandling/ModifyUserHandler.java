@@ -1,6 +1,5 @@
 package es.ucm.fdi.business.requesthandling;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;

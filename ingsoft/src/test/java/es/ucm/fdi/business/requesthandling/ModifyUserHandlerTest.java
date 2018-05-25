@@ -4,15 +4,12 @@ import org.junit.Test;
 
 import es.ucm.fdi.business.FrontController;
 import es.ucm.fdi.business.ProductionConfig;
-import es.ucm.fdi.business.data.AnswerPOJO;
 import es.ucm.fdi.business.data.RequestPOJO;
 import es.ucm.fdi.business.requesthandling.tools.RequestType;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -22,6 +19,7 @@ import java.util.List;
 public class ModifyUserHandlerTest {
 	
 	private static String customID = "idModify User240520189229";
+	@SuppressWarnings("unused")
 	private static int THREAD_LIMIT = 100;
 
 	// Uses customID

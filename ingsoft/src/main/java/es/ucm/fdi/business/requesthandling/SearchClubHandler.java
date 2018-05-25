@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.ucm.fdi.business.FrontController;
-import es.ucm.fdi.business.ProductionConfig;
 import es.ucm.fdi.business.data.AnswerPOJO;
 import es.ucm.fdi.business.data.FilterPOJO;
 import es.ucm.fdi.business.data.RequestPOJO;

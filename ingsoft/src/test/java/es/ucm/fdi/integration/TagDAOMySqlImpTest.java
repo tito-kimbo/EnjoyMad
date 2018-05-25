@@ -90,7 +90,9 @@ public class TagDAOMySqlImpTest {
 			newReadThread();
 		}
 		awaitForLatch();
-
+		
+		tagDao.saveTags(new ArrayList<TagPOJO>());
+		
 		if (assertionError != null) {
 			fail(assertionError.getMessage());
 		}
@@ -111,6 +113,8 @@ public class TagDAOMySqlImpTest {
 		assertEquals("Concurrent writing is not thread safe for TagDAOImp, "
 				+ "mismatched tag in DAO", new HashSet<TagPOJO>(tagList),
 				new HashSet<TagPOJO>(tagDao.loadTags()));
+		
+		tagDao.saveTags(new ArrayList<TagPOJO>());
 	}
 
 	@Test
@@ -145,7 +149,7 @@ public class TagDAOMySqlImpTest {
 			public void run() {
 				try {
 				tagDao.saveTags(tagList);
-				List list = tagDao.loadTags(); 
+				List<TagPOJO> list = tagDao.loadTags(); 
 				assertEquals(
 						"Concurrent reading is not thread safe for TagDAOImp, "
 								+ "mismatched tag in DAO.",
@@ -163,7 +167,7 @@ public class TagDAOMySqlImpTest {
 		new Thread() {
 			public void run() {
 				try {
-					List list = tagDao.loadTags(); 
+					List<TagPOJO> list = tagDao.loadTags(); 
 					assertEquals(
 							"Concurrent reading is not thread safe for TagDAOImp, "
 									+ "mismatched tag in DAO.",

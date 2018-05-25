@@ -146,7 +146,6 @@ public class ClubDAOMySqlImpTest {
 			public void run() {
 				try {
 					ClubPOJO c = clubDao.getClub("id");
-					boolean b = c.equals(club);
 					assertEquals(
 							"Concurrent reading is not thread safe for ClubDAOImp, "
 									+ "mismatched club in DAO.",
