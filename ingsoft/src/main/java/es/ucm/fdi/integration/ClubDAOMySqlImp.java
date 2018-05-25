@@ -50,7 +50,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	/**
 	 * {@inheritDoc}
 	 */
-	public ClubPOJO getClub(String id) {
+	public synchronized ClubPOJO getClub(String id) {
 		Connection con = createConnection();
 		ClubPOJO club = null;
 
@@ -94,7 +94,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
  	/**
 	 * {@inheritDoc}
 	 */
-	public List<ClubPOJO> getClubs(){
+	public synchronized List<ClubPOJO> getClubs(){
 		Connection con = createConnection();
 		List<ClubPOJO> listClubs = new ArrayList<ClubPOJO>();
 		
@@ -139,7 +139,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	 * {@inheritDoc}
 	 */
 	
-	public boolean exists(String id) {
+	public synchronized boolean exists(String id) {
 		Connection con = createConnection();
 		
 		try {
@@ -218,7 +218,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	 * {@inheritDoc}
 	 */
 	
-	public void removeClub(String id) {
+	public synchronized void removeClub(String id) {
 		Connection con = createConnection();
 		
 		try {

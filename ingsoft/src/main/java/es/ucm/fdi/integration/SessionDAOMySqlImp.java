@@ -36,7 +36,7 @@ public class SessionDAOMySqlImp implements SessionDAO {
 			ex.printStackTrace();
 		}
 	}
-	public List<SessionPOJO> getSessions() {
+	public synchronized List<SessionPOJO> getSessions() {
 		Connection con = createConnection();
 		List<SessionPOJO> listSessions = new ArrayList<SessionPOJO>();
 		
@@ -66,7 +66,7 @@ public class SessionDAOMySqlImp implements SessionDAO {
 		}
 		return listSessions;
 	}
-	public boolean exist(String id) {
+	public synchronized boolean exist(String id) {
 		Connection con = createConnection();
 
 		try {
@@ -129,7 +129,7 @@ public class SessionDAOMySqlImp implements SessionDAO {
 		}
 	}
 
-	public void removeSession(String id) {
+	public synchronized void removeSession(String id) {
 		Connection con = createConnection();
 
 		try {
@@ -146,7 +146,7 @@ public class SessionDAOMySqlImp implements SessionDAO {
 		}
 	}
 
-	public SessionPOJO getSession(String id) {
+	public synchronized SessionPOJO getSession(String id) {
 		Connection con = createConnection();
 		SessionPOJO session = null;
 

@@ -113,7 +113,7 @@ public class TagDAOMySqlImpTest {
 				new HashSet<TagPOJO>(tagDao.loadTags()));
 	}
 
-	//@Test
+	@Test
 	public void concurrentReadWriteTest() {
 		// This is a timer that will make the program wait for the threads to
 		// execute

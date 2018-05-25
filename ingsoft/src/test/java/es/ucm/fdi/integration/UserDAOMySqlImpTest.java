@@ -171,6 +171,8 @@ public class UserDAOMySqlImpTest {
 		assertEquals("Concurrent writing is not thread safe for UserDAOImp, "
 				+ "mismatched club in DAO", 
 				userDao.getUser("id"), user);
+		
+		userDao.removeUser("id");
 	}
 	@Test
 	public void concurrentReadWriteTest(){
