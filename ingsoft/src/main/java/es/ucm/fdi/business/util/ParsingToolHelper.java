@@ -116,7 +116,7 @@ public class ParsingToolHelper {
      * @see #parseEmail(String)
      */
     public static Pattern emailChecker = Pattern.compile(
-            "^([\\w-\\+]+)(\\.[\\w-]+)*@(([\\w-][^_])+)(\\.([A-z0-9])+)?(\\.[A-Za-z]{2,})$");
+            "^([\\w-\\+]+)(\\.[\\w-]+)*@([A-z0-9]+)(\\.([A-z0-9])+)*(\\.[A-Za-z]{2,})$");
 
     /**
      * <p>  A {@code Pattern} to match a valid name.            </p>
@@ -150,7 +150,7 @@ public class ParsingToolHelper {
      * 
      * @see #parseID(String)
      */
-    public static Pattern IDChecker = Pattern.compile("^([\\w][^_])+$");
+    public static Pattern IDChecker = Pattern.compile("^([A-z0-9])+$");
     
        
      

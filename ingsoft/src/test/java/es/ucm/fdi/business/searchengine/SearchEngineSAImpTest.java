@@ -21,8 +21,6 @@ import es.ucm.fdi.integration.data.UserPOJO;
 import es.ucm.fdi.business.searchengine.SearchEngineSAImp;
 import es.ucm.fdi.business.util.ElementHelper;
 
-;
-
 public class SearchEngineSAImpTest {
 	private static ClubDAOImp cd;
 	private static SearchEngineSAImp searchMotor;
