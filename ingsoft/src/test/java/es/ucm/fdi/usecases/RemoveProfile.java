@@ -18,6 +18,7 @@ import es.ucm.fdi.business.FrontController;
 import es.ucm.fdi.business.ProductionConfig;
 import es.ucm.fdi.business.data.AnswerPOJO;
 import es.ucm.fdi.business.data.RequestPOJO;
+import es.ucm.fdi.business.profilemanagement.ProfileManagerSA;
 import es.ucm.fdi.business.requesthandling.tools.RequestType;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.TagPOJO;
@@ -76,19 +77,19 @@ public class RemoveProfile {
         ProductionConfig.getFrontController()
             .getProfileManagerSA().addNewUser(existingUser);
 
-        // Update cdsa
-        ProductionConfig.getFrontController().getCustomDataSA().updateValues();
-
         // Initialize FrontController
         fc = ProductionConfig.getFrontController();
     }
 
     @After
     public void tearDown() {
-        ProductionConfig.getFrontController()
-                .getProfileManagerSA().removeClub(existingClub.getID());
-        ProductionConfig.getFrontController()
-                .getProfileManagerSA().removeUser(existingUser.getID());
+        ProfileManagerSA pmsa = ProductionConfig.getFrontController().getProfileManagerSA();
+        if(pmsa.hasClub(existingClub.getID())) {
+            pmsa.removeClub(existingClub.getID());
+        }
+        if (pmsa.hasUser(existingUser.getID())) {
+            pmsa.removeUser(existingUser.getID());
+        }
     }  
 
     // Uses customID

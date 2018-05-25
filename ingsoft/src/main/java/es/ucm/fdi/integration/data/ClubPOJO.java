@@ -61,7 +61,10 @@ public class ClubPOJO extends DataPOJO implements Serializable {
 		this.tags = new HashSet<TagPOJO>(tags);
 
 		// Location calculation
-		location = new Location(address);
+		location = (address != null) 
+				? new Location(address)
+				: null;
+		
 
 		rating = 0.0F;
 		userReviews = new HashMap<String, ReviewPOJO>();

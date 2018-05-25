@@ -1,6 +1,5 @@
 package es.ucm.fdi.usecases;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -18,6 +17,7 @@ import es.ucm.fdi.business.FrontController;
 import es.ucm.fdi.business.ProductionConfig;
 import es.ucm.fdi.business.data.AnswerPOJO;
 import es.ucm.fdi.business.data.RequestPOJO;
+import es.ucm.fdi.business.profilemanagement.ProfileManagerSA;
 import es.ucm.fdi.business.requesthandling.tools.RequestType;
 import es.ucm.fdi.integration.data.ClubPOJO;
 import es.ucm.fdi.integration.data.TagPOJO;
@@ -75,20 +75,20 @@ public class BuyTicket {
         ProductionConfig.getFrontController()
             .getProfileManagerSA().addNewUser(existingUser);
 
-        // Update cdsa
-        ProductionConfig.getFrontController().getCustomDataSA().updateValues();
-
         // Initialize FrontController
         fc = ProductionConfig.getFrontController();
     }
 
     @After
     public void tearDown() {
-        ProductionConfig.getFrontController()
-                .getProfileManagerSA().removeClub(existingClub.getID());
-        ProductionConfig.getFrontController()
-                .getProfileManagerSA().removeUser(existingUser.getID());
-    } 
+        ProfileManagerSA pmsa = ProductionConfig.getFrontController().getProfileManagerSA();
+        if (pmsa.hasClub(existingClub.getID())) {
+            pmsa.removeClub(existingClub.getID());
+        }
+        if (pmsa.hasUser(existingUser.getID())) {
+            pmsa.removeUser(existingUser.getID());
+        }
+    }
 
     // Uses customID
     private RequestPOJO buildBuyRP(String userID, String clubID) {
@@ -121,13 +121,6 @@ public class BuyTicket {
 		assertTrue(
             "ERROR -> Valid operation unsucessful.", 
             (Boolean) ans.getAnswer().get(0)
-        );
-
-        // Check integrity of changes
-        UserPOJO modifiedUser = fc.getProfileManagerSA().getUser(existingUser.getID());
-        assertNull(
-            "ERROR -> User found in DAO.", 
-            modifiedUser
         );
     }
 }

@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mindrot.jbcrypt.BCrypt;
@@ -117,7 +116,7 @@ public class CreateProfile {
 		.removeUser(newUser.getID());
 	}
 
-	//@Test
+	@Test
 	public void createClubProfileTest() {
 		// Build Request
 		AnswerPOJO ans;
@@ -143,9 +142,12 @@ public class CreateProfile {
 		// Check integrity
 		ClubPOJO registeredClub = fc.getProfileManagerSA().getClub(
 				newClub.getID());
+
 		assertNotNull("ERROR -> Club not found in DAO.", registeredClub);
+
 		assertEquals("ERROR -> Club attributes not conserved in registration.",
 				registeredClub, newClub);
+
 		ProductionConfig.getFrontController().getProfileManagerSA()
 		.removeClub(newClub.getID());
 	}

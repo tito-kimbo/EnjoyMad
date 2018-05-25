@@ -38,8 +38,9 @@ public class TicketManagerSAImp implements TicketManagerSA {
 			throw new NoSuchElementException();
 
 		float price = club.getPrice();
-		String email = user.getEmail();
-		String psw = user.getHashedPassword();
+		String userEmail = user.getEmail();
+		String email = "enjoymad@gmail.com";
+		String psw = "ourpassword";
 
 		/*
 		 *  Payment code
@@ -48,7 +49,7 @@ public class TicketManagerSAImp implements TicketManagerSA {
 		 */
 		boolean isSuccessful = performTransaction(price);
 		
-		EmailSenderHelper.send("enjoymad@gmail.com", email, psw, 
+		EmailSenderHelper.send(email, userEmail, psw, 
 				(isSuccessful ? "Se" : "No se") + " ha completado la compra de una entrada de " + clubID, "Tramite EnjoyMad");
 		
 		return isSuccessful;

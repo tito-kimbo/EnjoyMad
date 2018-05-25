@@ -13,7 +13,6 @@ import javax.mail.internet.MimeMessage;
 
 /**
  * This class is capable of sending an email.
- * @author Fco Borja
  *
  */
 public class EmailSenderHelper {
@@ -49,7 +48,8 @@ public class EmailSenderHelper {
             message.setSubject(subject);
             message.setText(text);
 
-            Transport.send(message);
+            // Transport.send(message);
+            
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);

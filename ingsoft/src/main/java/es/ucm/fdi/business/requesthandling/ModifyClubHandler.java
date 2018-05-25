@@ -30,7 +30,7 @@ public class ModifyClubHandler implements RequestHandler {
 		clubID = (String)rp.getParameters().get(0);
 		//Waiting for news info on requestPOJO; 
 		
-		ClubPOJO clubChanges = (ClubPOJO)rp.getParameters().get(0); 
+		ClubPOJO clubChanges = (ClubPOJO)rp.getParameters().get(1); 
 		//	Call relevant ProfileManagerSA methods
 		
 		try{
