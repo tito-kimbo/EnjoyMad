@@ -38,9 +38,6 @@ public class UserPOJO extends DataPOJO implements Serializable {
 	 */
 	private List<ClubPOJO> preferencesList = new ArrayList<ClubPOJO>();
 
-	/**
-	 * TODO Comentar
-	 */
 	private Map<TagPOJO, Integer> valueTags = new HashMap<TagPOJO, Integer>();
 
 	/**
