@@ -482,7 +482,10 @@ public class ProfileManagerSAImp implements ProfileManagerSA {
 		else
 			return null;
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public ClubPOJO getClub(String id) {
 		if (clubDAO.exists(id))
 			return clubDAO.getClub(id);
