@@ -27,17 +27,16 @@ public class ModifyUserHandler implements RequestHandler {
 	public void run(){
 		String userID;
 		List<Object> answerData;
-		
-		userID = (String)rp.getParameters().get(0);
-		
 		answerData = new ArrayList<Object>();
 		
 		//Waiting for news info on requestPOJO; 
 		/*
 		 * 	Data Format
-		 * 	1. UserPOJO
+		 *  1. User id
+		 * 	2. UserPOJO
 		 */
-		UserPOJO userChanges = (UserPOJO)rp.getParameters().get(0); 
+		userID = (String)rp.getParameters().get(0);
+		UserPOJO userChanges = (UserPOJO)rp.getParameters().get(1); 
 
 		//	Call relevant ProfileManagerSA methods
 		

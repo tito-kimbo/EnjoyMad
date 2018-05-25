@@ -241,6 +241,14 @@ public interface ProfileManagerSA {
 	public UserPOJO getUser(String id);
 	
 	/**
+	 * Gets the club with the indicated id if it exists or returns null
+	 * 
+	 * @param id	
+	 * @return user	with indicated id or null
+	 */
+	public ClubPOJO getClub(String id);
+	
+	/**
 	 * Returns whether the system has a user registered with the given id
 	 * 
 	 * @param id of the user
