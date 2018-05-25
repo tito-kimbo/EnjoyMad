@@ -27,7 +27,7 @@ public class RegisterUserHandlerTest {
 	private RequestPOJO buildOneUserRP(UserPOJO user) {
 		List<Object> l = new ArrayList<Object>();
 		l.add(user);
-		return new RequestPOJO(customID, new RequestPOJO(
+		return new RequestPOJO(customID, new RequestPOJO("",
 				RequestType.REGISTER_USER, l));
 	}
 

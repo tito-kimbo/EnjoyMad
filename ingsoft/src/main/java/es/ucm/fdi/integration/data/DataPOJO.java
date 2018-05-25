@@ -1,11 +1,17 @@
 package es.ucm.fdi.integration.data;
 
+import java.io.Serializable;
+
 /**
  * Basic data container.
  * 
  * @version 09.03.2018
  */
-public abstract class DataPOJO {
+public abstract class DataPOJO implements Serializable {
+	/**
+	 * Generated UID.
+	 */
+	private static final long serialVersionUID = 3565758327455785462L;
 	private String id;
 	
 	/**

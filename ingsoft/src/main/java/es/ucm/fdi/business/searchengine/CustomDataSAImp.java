@@ -41,9 +41,10 @@ public class CustomDataSAImp implements CustomDataSA {
 	}
 
 	public synchronized void updateValues() {
-		List<ObjectValue> clubsWithValue = new ArrayList<ObjectValue>();
+		List<ObjectValue> clubsWithValue;
 		int clubValue;
 		for (UserPOJO u : user.getUsers()) {
+			clubsWithValue = new ArrayList<ObjectValue>();
 			for (ClubPOJO c : club.getClubs()) {
 				clubValue = assignValue(u, c);
 				clubsWithValue.add(new ObjectValue(c, clubValue));
@@ -53,8 +54,9 @@ public class CustomDataSAImp implements CustomDataSA {
 			for (ObjectValue ob : clubsWithValue) {
 				orderedListOfClubs.add(ob.club);
 			}
-			u.setPreferencesList(orderedListOfClubs);
-			clubsWithValue.clear();
+			u.setPreferencesList(orderedListOfClubs);		
+			user.removeUser(u.getID());
+			user.addUser(u);	
 		}
 	}
 

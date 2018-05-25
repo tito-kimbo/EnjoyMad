@@ -38,7 +38,7 @@ public class UserDAOImp implements UserDAO {
 	 * {@inheritDoc}
 	 */
 	synchronized public UserPOJO getUser(String id) {
-		return userMap.get(id);
+		return userMap.get(id).deepClone();
 	}
 	
   	/**
@@ -67,7 +67,10 @@ public class UserDAOImp implements UserDAO {
 	 * {@inheritDoc}
 	 */
 	synchronized public List<UserPOJO> getUsers() {
-		List<UserPOJO> aux = new ArrayList<UserPOJO>(userMap.values());
+		List<UserPOJO> aux = new ArrayList<UserPOJO>();
+		for(UserPOJO user : userMap.values()){
+			aux.add(user.deepClone());
+		}
 		return aux;
 	}
 }

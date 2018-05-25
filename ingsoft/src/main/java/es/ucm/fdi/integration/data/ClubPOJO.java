@@ -1,6 +1,6 @@
 package es.ucm.fdi.integration.data;
 
-
+import org.apache.commons.lang3.SerializationUtils;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -349,5 +349,9 @@ public class ClubPOJO extends DataPOJO implements Serializable {
 			&& getID().equals(((ClubPOJO)club).getID())
 			&& tags.equals(((ClubPOJO)club).tags)
 			&& userReviews.equals(((ClubPOJO)club).userReviews);
+	}
+	
+	public ClubPOJO deepClone(){
+		return SerializationUtils.clone(this);
 	}
 }

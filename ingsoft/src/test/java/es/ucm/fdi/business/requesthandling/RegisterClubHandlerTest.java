@@ -27,7 +27,7 @@ public class RegisterClubHandlerTest {
 	private RequestPOJO buildOneClubRP(ClubPOJO club) {
 		List<Object> l = new ArrayList<Object>();
 		l.add(club);
-		return new RequestPOJO(customID, new RequestPOJO(
+		return new RequestPOJO(customID, new RequestPOJO("",
 				RequestType.REGISTER_CLUB, l));
 	}
 

@@ -3,6 +3,8 @@ package es.ucm.fdi.integration.data;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 /**
  * Class that represents a client session.
  * 
@@ -10,7 +12,11 @@ import java.time.LocalDateTime;
  */
 public class SessionPOJO extends DataPOJO implements Serializable {
     
-    private LocalDateTime creationTime;
+    /**
+	 * Generated UID.
+	 */
+	private static final long serialVersionUID = -7500614428392874792L;
+	private LocalDateTime creationTime;
     private LocalDateTime lastAccessedTime;
 
     public SessionPOJO(String id, LocalDateTime creationTime) {
@@ -48,5 +54,9 @@ public class SessionPOJO extends DataPOJO implements Serializable {
     	return getID().equals(s.getID())
     			&& isCr
     			&& isLast;
+    }
+    
+    public SessionPOJO deepClone(){
+    	return SerializationUtils.clone(this);
     }
 }

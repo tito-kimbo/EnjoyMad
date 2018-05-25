@@ -56,7 +56,7 @@ public class SearchClubHandlerTest {
 		data.add(words);
 		data.add(filters);
 
-		return new RequestPOJO(pollID, new RequestPOJO(RequestType.SEARCH_CLUB,
+		return new RequestPOJO(pollID, new RequestPOJO("", RequestType.SEARCH_CLUB,
 				data));
 	}
 

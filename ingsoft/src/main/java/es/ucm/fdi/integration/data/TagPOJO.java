@@ -2,6 +2,8 @@ package es.ucm.fdi.integration.data;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 /**
  * Container class for tags.
  * 
@@ -55,4 +57,7 @@ public class TagPOJO implements Serializable{
 		return tag.hashCode();
 	}
 	
+	public TagPOJO deepClone(){
+		return SerializationUtils.clone(this);
+	}
 }

@@ -38,14 +38,18 @@ public class ClubDAOImp implements ClubDAO {
 	 * {@inheritDoc}
 	 */
 	synchronized public ClubPOJO getClub(String id) {
-		return clubMap.get(id);
+		return clubMap.get(id).deepClone();
 	}
 	
  	/**
 	 * {@inheritDoc}
 	 */
 	synchronized public List<ClubPOJO> getClubs(){
-		List<ClubPOJO> aux = new ArrayList<ClubPOJO>(clubMap.values());
+		List<ClubPOJO> aux = new ArrayList<ClubPOJO>();
+		for(ClubPOJO c : clubMap.values()){
+			aux.add(c.deepClone());
+		}
+		
 		return aux;
 	}
 

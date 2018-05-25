@@ -29,14 +29,14 @@ public class RequestPOJO extends DataPOJO {
     /**
      * Builds a new unprocessed request.
      */
-    public RequestPOJO(RequestType t, List<Object> params) {
-    	super("");
+    public RequestPOJO(String userID, RequestType t, List<Object> params) {
+    	super(userID);
     	type = t;
         parameters = params;
     }
     
-    public RequestPOJO(String id, RequestPOJO rp){
-    	super(id);
+    public RequestPOJO(String pollID, RequestPOJO rp){
+    	super(pollID);
     	type = rp.type;
     	parameters = rp.parameters;
     }

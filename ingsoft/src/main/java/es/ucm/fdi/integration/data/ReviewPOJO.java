@@ -1,11 +1,17 @@
 package es.ucm.fdi.integration.data;
 
+import java.io.Serializable;
+
 /**
  * Class that represents an opinion left by a certain <code>User</code>.
  * 
  * @version 22.04.2018
  */
-public class ReviewPOJO {
+public class ReviewPOJO implements Serializable {
+	/**
+	 * Generated UID.
+	 */
+	private static final long serialVersionUID = 9017298055375753121L;
 	private String opinion; // written opinion
 	private double rate; // numeric rate
 	

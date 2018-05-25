@@ -2,34 +2,15 @@ package es.ucm.fdi.business;
 
 import java.util.TimeZone;
 
-import es.ucm.fdi.business.profilemanagement.ProfileManagerSA;
-import es.ucm.fdi.business.profilemanagement.ProfileManagerSAImp;
-import es.ucm.fdi.business.searchengine.CustomDataSA;
-import es.ucm.fdi.business.searchengine.CustomDataSAImp;
-import es.ucm.fdi.business.searchengine.FilterMapper;
-import es.ucm.fdi.business.searchengine.SearchEngineSA;
-import es.ucm.fdi.business.searchengine.SearchEngineSAImp;
-import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy;
-import es.ucm.fdi.business.searchengine.filters.PriceFilterStrategy;
-import es.ucm.fdi.business.searchengine.filters.RatingFilterStrategy;
-import es.ucm.fdi.business.searchengine.filters.TagFilterStrategy;
-import es.ucm.fdi.business.sessionmanagement.SessionManagerSA;
-import es.ucm.fdi.business.sessionmanagement.SessionManagerSAImp;
-import es.ucm.fdi.business.tagmanagement.TagManagerSA;
-import es.ucm.fdi.business.tagmanagement.TagManagerSAImp;
-import es.ucm.fdi.business.ticketmanagement.TicketManagerSA;
-import es.ucm.fdi.business.ticketmanagement.TicketManagerSAImp;
-import es.ucm.fdi.integration.ClubDAO;
-import es.ucm.fdi.integration.ClubDAOImp;
-import es.ucm.fdi.integration.ClubDAOMySqlImp;
-import es.ucm.fdi.integration.SessionDAO;
-import es.ucm.fdi.integration.SessionDAOImp;
-import es.ucm.fdi.integration.TagDAO;
-import es.ucm.fdi.integration.TagDAOImp;
-import es.ucm.fdi.integration.TagDAOMySqlImp;
-import es.ucm.fdi.integration.UserDAO;
-import es.ucm.fdi.integration.UserDAOImp;
-import es.ucm.fdi.integration.UserDAOMySqlImp;
+import es.ucm.fdi.business.profilemanagement.*;
+import es.ucm.fdi.business.requesthandling.*;
+import es.ucm.fdi.business.requesthandling.tools.RequestType;
+import es.ucm.fdi.business.searchengine.*;
+import es.ucm.fdi.business.searchengine.filters.*;
+import es.ucm.fdi.business.sessionmanagement.*;
+import es.ucm.fdi.business.tagmanagement.*;
+import es.ucm.fdi.business.ticketmanagement.*;
+import es.ucm.fdi.integration.*;
 
 public class ProductionConfig {
 	//Experimental optimal value
@@ -72,6 +53,18 @@ public class ProductionConfig {
 		FilterMapper.addFilter(LOCATION_FILTER, new LocationFilterStrategy());
 	}
 	
+	private static void addHandlers(){
+		HandlerMapper.addHandler(RequestType.ADD_REVIEW, new AddReviewHandler(fc));
+		HandlerMapper.addHandler(RequestType.BUY_TICKET, new BuyTicketHandler(fc));
+		HandlerMapper.addHandler(RequestType.DELETE_ACCOUNT, new DeleteAccountHandler(fc));
+		HandlerMapper.addHandler(RequestType.DELETE_REVIEW, new DeleteReviewHandler(fc));
+		HandlerMapper.addHandler(RequestType.MODIFY_CLUB, new ModifyClubHandler(fc));
+		HandlerMapper.addHandler(RequestType.MODIFY_USER, new ModifyUserHandler(fc));
+		HandlerMapper.addHandler(RequestType.REGISTER_CLUB, new RegisterClubHandler(fc));
+		HandlerMapper.addHandler(RequestType.REGISTER_USER, new RegisterUserHandler(fc));
+		HandlerMapper.addHandler(RequestType.SEARCH_CLUB, new SearchClubHandler(fc));
+	}
+	
 	public static void init(){
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
 		if(useSQL){
@@ -89,6 +82,7 @@ public class ProductionConfig {
 		
 		//Create frontController
 		fc = new FrontController(sesa, pmsa, ticketmsa,smsa, tagmsa, cdsa, THREAD_LIMIT);
+		addHandlers();
 	}
 	
 	public static void init(boolean sql){

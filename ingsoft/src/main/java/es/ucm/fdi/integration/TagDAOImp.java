@@ -36,7 +36,11 @@ public class TagDAOImp implements TagDAO{
 	 * {@inheritDoc}
 	 */
 	synchronized public List<TagPOJO> loadTags(){
-		return new ArrayList<TagPOJO>(tags);
+		List<TagPOJO> l = new ArrayList<TagPOJO>();
+		for(TagPOJO t : tags){
+			l.add(t.deepClone());
+		}
+		return l;
 	}
 
 	/**

@@ -1,5 +1,8 @@
 package es.ucm.fdi.business;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -20,6 +23,7 @@ import es.ucm.fdi.business.ticketmanagement.TicketManagerSA;
  * control their states until completion.
  */
 public class FrontController {
+	private static AnswerPOJO NULL_ANSWER;
 	private static Map<String, AnswerPOJO> data;
 	private static ExecutorService executor;
 
@@ -30,6 +34,13 @@ public class FrontController {
 	private TagManagerSA tagmsa;
 	private CustomDataSA cdsa;
 
+	//THIS IS A ROUGH INITIALIZATION SINCE ConcurrentHashmap DOES NOT ACCEPT nulls
+	static{
+		List<Object> l = new ArrayList<Object>();
+		l.add("/%NULL%/");
+		NULL_ANSWER = new AnswerPOJO(l);
+	}
+	
 	public FrontController(SearchEngineSA searchEngine,
 			ProfileManagerSA profileManager, TicketManagerSA ticketManager,
 			SessionManagerSA sessionManager, TagManagerSA tagManager,
@@ -56,7 +67,7 @@ public class FrontController {
 		sb.append(System.nanoTime());
 
 		id = sb.toString();
-		data.put(id, null);
+		data.put(id, NULL_ANSWER);
 		// Provisional
 		executor.execute(HandlerMapper.mapRequest(rp.getType(),
 				new RequestPOJO(id, rp)));
@@ -65,8 +76,12 @@ public class FrontController {
 
 	public AnswerPOJO poll(String id) {
 		AnswerPOJO answer = data.get(id);
-		data.remove(id);
-		return answer;
+		if(!answer.equals(NULL_ANSWER)){
+			data.remove(id);
+			return answer;
+		}else{
+			return null;
+		}
 	}
 
 	public synchronized void addAnswer(String id, AnswerPOJO answer) {

@@ -1,11 +1,13 @@
 package es.ucm.fdi.integration.data;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URLEncoder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 
 import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy.JsonReader;
@@ -15,8 +17,12 @@ import es.ucm.fdi.business.searchengine.filters.LocationFilterStrategy.JsonReade
  * 
  * @version 22.04.2018
  */
-public class Location {
+public class Location implements Serializable{
 	
+	/**
+	 * Generated UID.
+	 */
+	private static final long serialVersionUID = -3430958758065762121L;
 	private final static String API_KEY = "AIzaSyC8G4EpP1xEPSWWf-A_7yUUyrni3oYj7X0";
 	private double lat, lng;
 	

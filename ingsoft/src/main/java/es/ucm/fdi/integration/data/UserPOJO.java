@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 import es.ucm.fdi.business.profilemanagement.ProfileManagerSA;
 
 /**
@@ -252,5 +254,9 @@ public class UserPOJO extends DataPOJO implements Serializable {
 				&& equalTags
 				&& equalPreferences
 				&& equalReviews;
+	}
+	
+	public UserPOJO deepClone(){
+		return SerializationUtils.clone(this);
 	}
 }
