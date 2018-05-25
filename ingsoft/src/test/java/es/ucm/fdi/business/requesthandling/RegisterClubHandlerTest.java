@@ -86,7 +86,7 @@ public class RegisterClubHandlerTest {
 		Initializer.initialize();
 		FrontController fc = ProductionConfig.getFrontController();
 		ClubPOJO club;
-		int estimatedDelay = 100; // Estimated time it will take for the op in
+		int estimatedDelay = 200; // Estimated time it will take for the op in
 									// ms
 
 		// News are used to avoid problems with references

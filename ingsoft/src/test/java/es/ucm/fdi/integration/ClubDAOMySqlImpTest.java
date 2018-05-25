@@ -61,6 +61,7 @@ public class ClubDAOMySqlImpTest {
 	public void testGetClub() {
 		createTestClubDAOMySqlImp();
 		clubDao.addClub(club);
+		System.out.println(clubDao.exists("id"));
 		ClubPOJO otherClub = clubDao.getClub("id");
 		assertEquals(club, otherClub);
 		clubDao.removeClub("id");

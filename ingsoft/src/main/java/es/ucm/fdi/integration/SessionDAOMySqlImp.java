@@ -82,48 +82,48 @@ public class SessionDAOMySqlImp implements SessionDAO {
 	}
 
 	public synchronized void addSession(SessionPOJO session) {
-		if(exist(session.getID()))
-			return;
-		
-		Connection con = createConnection();
-		
-		try {
-			java.sql.Timestamp creation = java.sql.Timestamp.valueOf(session.getCreationTime());
+		if(!exist(session.getID())){
+			Connection con = createConnection();
 			
-			java.sql.Timestamp last = null;
-			if(session.getLastAccessedTime() != null)
-				last = java.sql.Timestamp.valueOf(session.getLastAccessedTime());
-			
-			// the mysql insert statement
-			if(last == null) {
-		      String query = " insert into Sessions (id, creation_time, last_accessed_time)"
-		        + " values (?, ?, ?)";
+			try {
+				java.sql.Timestamp creation = java.sql.Timestamp.valueOf(session.getCreationTime());
+				
+				java.sql.Timestamp last = null;
+				if(session.getLastAccessedTime() != null)
+					last = java.sql.Timestamp.valueOf(session.getLastAccessedTime());
+				
+				// the mysql insert statement
+				if(last == null) {
+			      String query = " insert into Sessions (id, creation_time, last_accessed_time)"
+			        + " values (?, ?, ?)";
 
-		      // create the mysql insert preparedstatement
-		      PreparedStatement preparedStmt = con.prepareStatement(query);
-		      preparedStmt.setString (1, session.getID());
-		      preparedStmt.setTimestamp(2, creation);
-		      preparedStmt.setTimestamp(3, last);
-		      
-		      preparedStmt.executeUpdate();
-			}else {
-				String query = " insert into Sessions (id, creation_time)"
-				        + " values (?, ?)";
+			      // create the mysql insert preparedstatement
+			      PreparedStatement preparedStmt = con.prepareStatement(query);
+			      preparedStmt.setString (1, session.getID());
+			      preparedStmt.setTimestamp(2, creation);
+			      preparedStmt.setTimestamp(3, last);
+			      
+			      preparedStmt.executeUpdate();
+				}else {
+					String query = " insert into Sessions (id, creation_time)"
+					        + " values (?, ?)";
 
-		      // create the mysql insert preparedstatement
-		      PreparedStatement preparedStmt = con.prepareStatement(query);
-		      preparedStmt.setString (1, session.getID());
-		      preparedStmt.setTimestamp (2, creation);
-		      
-		      preparedStmt.executeUpdate();
+			      // create the mysql insert preparedstatement
+			      PreparedStatement preparedStmt = con.prepareStatement(query);
+			      preparedStmt.setString (1, session.getID());
+			      preparedStmt.setTimestamp (2, creation);
+			      
+			      preparedStmt.executeUpdate();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
-		finally {
-			closeConnection(con);
+			finally {
+				closeConnection(con);
+			}
 		}
+		
 	}
 
 	public synchronized void removeSession(String id) {

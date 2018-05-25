@@ -57,10 +57,8 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	    try {
 	        Statement st = con.createStatement();
 	        
-	        ResultSet rs = st.executeQuery("SELECT * FROM Clubs where id=\'"+id+"\'");
-	        
+	        ResultSet rs = st.executeQuery("SELECT * FROM Clubs WHERE id=\'"+id+"\'");
 	        if(rs.next()) {
-	        	
 	        	club = new ClubPOJO(rs.getString("id"), //ID
 	        			 rs.getString("commercial_name"), //
 	        			 rs.getString("address"), 
@@ -68,7 +66,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		        		 new Location(rs.getDouble("latitude"), rs.getDouble("longitude")), 
 		        		 rs.getFloat("average_rating"));
 	        
-		        rs = st.executeQuery("SELECT * FROM ClubTags where club_id ="+'\'' + id + '\'');
+		        rs = st.executeQuery("SELECT * FROM ClubTags WHERE club_id ="+'\'' + id + '\'');
 		      
 		        while(rs.next()) {
 		        	club.addTag(new TagPOJO(rs.getString("tag")));
@@ -145,11 +143,12 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		try {
 	        Statement statement = con.createStatement();
 	        ResultSet rs = statement.executeQuery("SELECT count(*) FROM Clubs where id=\'"+id+"\'");
-	       
-	        if(rs.next())
-	        	return true;
-	        else 
+	        
+	        if(rs.next()){
+		        return rs.getInt(1) > 0;	
+	        }else{
 	        	return false;
+	        }
 	    }
 	    catch (SQLException ex) {
 	    	ex.printStackTrace();
@@ -164,44 +163,41 @@ public class ClubDAOMySqlImp implements ClubDAO {
  	/**
 	 * {@inheritDoc}
 	 */
-	
+    @SuppressWarnings("rawtypes")
 	public synchronized void addClub(ClubPOJO club) {
-		if(exists(club.getID()))
-			return;
-		
-		Connection con = createConnection();
-		
-		try { // Unchecked queries
-	        Statement st = con.createStatement();
-	        String str = "INSERT INTO Clubs VALUES"
-	        		+ " (\'"+club.getID()+"\',\'"
-	        		+club.getCommercialName()+"\',\'"
-	        		+club.getAddress()+"\',"
-	        		+club.getPrice()+","
-	        		+club.getLatitude()+","
-	        		+club.getLongitude()+","
-	        		+club.getRating()+")";
-	        st.executeUpdate(str);
-	        
-	        for(TagPOJO tp : club.getTags()) {
-	        	st.executeUpdate("insert into ClubTags values (\'" + club.getID() + "\',\'" + tp.getTag() + "\')");
-	        }
-	        @SuppressWarnings("rawtypes")
-			Iterator it = club.getReviews().entrySet().iterator();
-	        while (it.hasNext()) {
-	            @SuppressWarnings("rawtypes")
-				Map.Entry pair = (Map.Entry)it.next();
-	            st.executeUpdate("insert into Opinions values (\'"+ pair.getKey() +"\',\'"+ club.getID() +"\'," +((ReviewPOJO) pair).getRating() +",\'"+ ((ReviewPOJO) pair.getValue()).getOpinion() + "\')");
-	            it.remove(); // avoids a ConcurrentModificationException
-	        }
-	    }
-	    catch (SQLException ex) {
-	    	ex.printStackTrace();
-	    }
-		   
-	    finally{
-	    	closeConnection(con);
-	    }
+		if(!exists(club.getID())){
+			Connection con = createConnection();
+			
+			try { // Unchecked queries
+		        Statement st = con.createStatement();
+		        String str = "INSERT INTO Clubs VALUES"
+		        		+ " (\'"+club.getID()+"\',\'"
+		        		+club.getCommercialName()+"\',\'"
+		        		+club.getAddress()+"\',"
+		        		+club.getPrice()+","
+		        		+club.getLatitude()+","
+		        		+club.getLongitude()+","
+		        		+club.getRating()+")";
+		        st.executeUpdate(str);
+		        
+		        for(TagPOJO tp : club.getTags()) {
+		        	st.executeUpdate("insert into ClubTags values (\'" + club.getID() + "\',\'" + tp.getTag() + "\')");
+		        }
+				Iterator it = club.getReviews().entrySet().iterator();
+		        while (it.hasNext()) {
+					Map.Entry pair = (Map.Entry)it.next();
+		            st.executeUpdate("insert into Opinions values (\'"+ pair.getKey() +"\',\'"+ club.getID() +"\'," +((ReviewPOJO) pair).getRating() +",\'"+ ((ReviewPOJO) pair.getValue()).getOpinion() + "\')");
+		            it.remove(); // avoids a ConcurrentModificationException
+		        }
+		    }
+		    catch (SQLException ex) {
+		    	ex.printStackTrace();
+		    }
+			   
+		    finally{
+		    	closeConnection(con);
+		    }			
+		}
 	}
 
   	/**
