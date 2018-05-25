@@ -71,7 +71,6 @@ public class SessionManagerSAImp implements SessionManagerSA {
 					+ "session not found in database. ID -> " + sessionID);
 		}
 
-		// XXX Esto debería ser más complejo quizá.
 		sessionToAccess.setLastAccessedTime(time);
 	}
 
@@ -83,7 +82,6 @@ public class SessionManagerSAImp implements SessionManagerSA {
 					+ "session not found in database. ID -> " + sessionID);
 		}
 
-		// XXX Esto debería ser más complejo quizá.
 		sessionDAO.removeSession(sessionID);
 	}
 }

@@ -108,8 +108,9 @@ public class Search {
 		return new RequestPOJO(userID, RequestType.SEARCH_CLUB, params);
 	}
 
-	@SuppressWarnings("unchecked")
+	
 	@Test
+	@SuppressWarnings("unchecked")
 	public void testSearch() {
 		// Init
 		FrontController fc = ProductionConfig.getFrontController();
