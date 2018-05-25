@@ -47,7 +47,7 @@ public class SessionDAOMySqlImpTest {
 		sessionsSet.add(sPOJO4);
 		
 		
-		for(SessionPOJO s : sessionsSet)
+		for(SessionPOJO s : sessionDao.getSessions())
 			sessionDao.removeSession(s.getID());
 		
 		for (SessionPOJO sp : sessionsSet) 

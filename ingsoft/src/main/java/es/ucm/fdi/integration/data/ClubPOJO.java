@@ -342,12 +342,21 @@ public class ClubPOJO extends DataPOJO implements Serializable {
 		if(!(club instanceof ClubPOJO))
 			return false;
 		
+		int i = 0;
+		for(TagPOJO tag1 : tags)
+			for(TagPOJO tag2 : ((ClubPOJO) club).getTags())
+				if(tag1.equals(tag2)) {
+					i++;
+					break;
+				}
+		
+		
 		return location.equals(((ClubPOJO)club).location)
 			&& address.equals(((ClubPOJO)club).address)
 			&& commercialName.equals(((ClubPOJO)club).commercialName)
 			&& price == ((ClubPOJO)club).price
 			&& getID().equals(((ClubPOJO)club).getID())
-			&& tags.equals(((ClubPOJO)club).tags)
+			&& i == tags.size() && i == ((ClubPOJO) club).getTags().size()
 			&& userReviews.equals(((ClubPOJO)club).userReviews);
 	}
 	

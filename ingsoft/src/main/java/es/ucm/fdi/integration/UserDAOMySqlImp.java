@@ -136,12 +136,12 @@ public class UserDAOMySqlImp implements UserDAO {
 				
 				aux = con.createStatement().executeQuery("SELECT * FROM TagPreferences where user_id=" + '\'' + id + '\'');
 				while(aux.next()) {
-					user.getValueTags().put(new TagPOJO(rs.getString("tag")), rs.getInt("value"));
+					user.getValueTags().put(new TagPOJO(aux.getString("tag")), aux.getInt("value"));
 				}
 				
 				aux = con.createStatement().executeQuery("SELECT * FROM Opinion where user_id=" + '\'' + id + '\'');
 				while(aux.next()){
-					user.getReviewedClubs().add(rs.getString("club_id"));
+					user.getReviewedClubs().add(aux.getString("club_id"));
 				}
 				listUsers.add(user);
 			} 

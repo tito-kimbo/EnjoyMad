@@ -41,7 +41,10 @@ public class ClubDAOMySqlImpTest {
 		
 		
 		clubDao = new ClubDAOMySqlImp();
-		clubDao.removeClub("id");
+		
+		List<ClubPOJO> clubs = clubDao.getClubs();
+		for(ClubPOJO c : clubs)
+			clubDao.removeClub(c.getID());
 		
 		list = new ArrayList<ClubPOJO>(Arrays.asList(club));
 	}
@@ -66,9 +69,11 @@ public class ClubDAOMySqlImpTest {
 	@Test
 	public void testGetClubs() {
 		createTestClubDAOMySqlImp();
+		
 		clubDao.addClub(club);
 		
 		List<ClubPOJO> otherlist = clubDao.getClubs();
+		
 		assertEquals(list, otherlist);
 		
 		for(ClubPOJO club : list)

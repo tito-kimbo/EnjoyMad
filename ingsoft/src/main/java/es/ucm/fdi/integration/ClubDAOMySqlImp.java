@@ -57,7 +57,7 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	    try {
 	        Statement st = con.createStatement();
 	        
-	        ResultSet rs = st.executeQuery("SELECT * FROM Clubs where id="+id);
+	        ResultSet rs = st.executeQuery("SELECT * FROM Clubs where id=\'"+id+"\'");
 	        
 	        if(rs.next()) {
 	        	
@@ -144,7 +144,8 @@ public class ClubDAOMySqlImp implements ClubDAO {
 		
 		try {
 	        Statement statement = con.createStatement();
-	        ResultSet rs = statement.executeQuery("select id from Clubs where id="+id+";");
+	        ResultSet rs = statement.executeQuery("SELECT count(*) FROM Clubs where id=\'"+id+"\'");
+	       
 	        if(rs.next())
 	        	return true;
 	        else 
@@ -194,17 +195,6 @@ public class ClubDAOMySqlImp implements ClubDAO {
 	            it.remove(); // avoids a ConcurrentModificationException
 	        }
 	    }
-		catch(java.sql.SQLNonTransientConnectionException ex) {
-			final ClubPOJO Fclub = club;
-			ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-		    executorService.scheduleAtFixedRate(
-		    		new Runnable() {
-			    		public void run() {
-			    			addClub(Fclub);
-			    		}
-		    		}, 0, 1, TimeUnit.SECONDS);
-			addClub(club); // Retry
-		}
 	    catch (SQLException ex) {
 	    	ex.printStackTrace();
 	    }

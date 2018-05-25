@@ -41,6 +41,10 @@ public class UserDAOMySqlImpTest {
 		userDao = new UserDAOMySqlImp();
 		userDao.removeUser("IDNumber1");
 		list = new ArrayList<UserPOJO>(Arrays.asList(user));
+		
+		for(UserPOJO user : userDao.getUsers())
+			userDao.removeUser(user.getID());
+		
 		userDao.addUser(user);
 	}
 
