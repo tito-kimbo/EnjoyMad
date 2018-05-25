@@ -26,15 +26,14 @@ import es.ucm.fdi.integration.data.UserPOJO;
 /*
  * The use case executes as follows
  * 
- * 1.   request() method from FrontController is called with respective
- *      requests of Club and User removal.
+ * 1.   request() method from FrontController is called with request
  * 		    * FrontController handles request internally on separate thread.
  * 2.   While there is no answer, polling (calls poll()) at fixed time intervals.
  * 3.   Valid answer is given at some point.
  */
-public class RemoveProfile {
+public class BuyTicket {
     public static final int POLLING_DELAY = 100;
-    private static String customRemoveID = "idRemove 2477530189229";
+    private static String customBuyID = "idBuy User2477530189229";
     
     public static TagPOJO[] tags = {
             new TagPOJO("pop"), new TagPOJO("edm"), new TagPOJO("latino"),
@@ -89,20 +88,21 @@ public class RemoveProfile {
                 .getProfileManagerSA().removeClub(existingClub.getID());
         ProductionConfig.getFrontController()
                 .getProfileManagerSA().removeUser(existingUser.getID());
-    }  
+    } 
 
     // Uses customID
-    private RequestPOJO buildDeleteRP(String id) {
+    private RequestPOJO buildBuyRP(String userID, String clubID) {
         List<Object> l = new ArrayList<Object>();
-        l.add(id);
-        return new RequestPOJO(customRemoveID, new RequestPOJO("", RequestType.DELETE_ACCOUNT, l));
+        l.add(userID);
+        l.add(clubID);
+        return new RequestPOJO(customBuyID, new RequestPOJO("", RequestType.BUY_TICKET, l));
     }
 
     @Test
-    public void removeUserProfileTest() {
+    public void buyTicketTest() {
         // Build Request
         AnswerPOJO ans;        
-        RequestPOJO rp = buildDeleteRP(existingUser.getID());
+        RequestPOJO rp = buildBuyRP(existingUser.getID(), existingClub.getID());
         
         // Do request to sv
         String id = fc.request(rp);
@@ -128,39 +128,6 @@ public class RemoveProfile {
         assertNull(
             "ERROR -> User found in DAO.", 
             modifiedUser
-        );
-    }
-
-    @Test
-    public void removeClubProfileTest() {
-        // Build Request
-        AnswerPOJO ans;        
-        RequestPOJO rp = buildDeleteRP(existingClub.getID());
-        
-        // Do request to sv
-        String id = fc.request(rp);
-        ans = null;
-		try {
-			// Until answer is valid (not null)
-			while (ans == null) {
-				Thread.sleep(POLLING_DELAY);
-				ans = fc.poll(id);
-			}
-		} catch (InterruptedException ie) {
-			fail("Unknown interruption to main thread: " + ie.getMessage());
-		}
-
-		// Check operation
-		assertTrue(
-            "ERROR -> Valid operation unsucessful.", 
-            (Boolean) ans.getAnswer().get(0)
-        );
-
-        // Check integrity of changes
-        ClubPOJO modifiedClub = fc.getProfileManagerSA().getClub(existingClub.getID());
-        assertNull(
-            "ERROR -> Club found in DAO.", 
-            modifiedClub
         );
     }
 }

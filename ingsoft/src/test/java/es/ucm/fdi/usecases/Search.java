@@ -115,8 +115,10 @@ public class Search {
 		// Init
 		FrontController fc = ProductionConfig.getFrontController();
 		AnswerPOJO ans;
+
 		// Build Request
 		RequestPOJO rp = buildRP("id");
+
 		// Do request to sv
 		String id = fc.request(rp);
 		ans = null;
@@ -129,26 +131,45 @@ public class Search {
 		} catch (InterruptedException ie) {
 			fail("Unknown interruption to main thread: " + ie.getMessage());
 		}
+
 		// Now test
-		assertTrue("Valid operation unsucessful", (Boolean) ans.getAnswer()
-				.get(0));
+		assertTrue(
+			"Valid operation unsucessful", 
+			(Boolean) ans.getAnswer().get(0)
+		);
 
-		List<ElementHelper<ClubPOJO>> results = (List<ElementHelper<ClubPOJO>>) ans
-				.getAnswer().get(1);
-		assertEquals("Unexpected answer size", 3, results.size());
-		assertFalse("Wrong filtering on search at first element", results
-				.get(0).isVisible());
-		assertEquals("Unexpected ordering in answer, first element misplaced",
-				results.get(0).getElement(), clubs.get(2));
+		List<ElementHelper<ClubPOJO>> results = 
+				(List<ElementHelper<ClubPOJO>>) ans.getAnswer().get(1);
 
-		assertFalse("Wrong filtering on search at second element",
-				results.get(1).isVisible());
-		assertEquals("Unexpected ordering in answer, second element misplaced",
-				results.get(1).getElement(), clubs.get(0));
+		assertEquals(
+			"Unexpected answer size", 
+			3, results.size()
+		);
+		assertFalse(
+			"Wrong filtering on search at first element", 
+			results.get(0).isVisible()
+		);
+		assertEquals(
+			"Unexpected ordering in answer, first element misplaced",
+			results.get(0).getElement(), clubs.get(2)
+		);
 
-		assertFalse("Wrong filtering on search at third element", results
-				.get(2).isVisible());
-		assertEquals("Unexpected ordering in answer, third element misplaced",
-				results.get(2).getElement(), clubs.get(1));
+		assertFalse(
+			"Wrong filtering on search at second element",
+			results.get(1).isVisible()
+		);
+		assertEquals(
+			"Unexpected ordering in answer, second element misplaced",
+			results.get(1).getElement(), clubs.get(0)
+		);
+
+		assertFalse(
+			"Wrong filtering on search at third element", 
+			results.get(2).isVisible()
+		);
+		assertEquals(
+			"Unexpected ordering in answer, third element misplaced",
+			results.get(2).getElement(), clubs.get(1)	
+		);
 	}
 }

@@ -102,9 +102,11 @@ public class ModifyProfile {
 
     @After
     public void tearDown() {
-        // remove?
-        // ProductionConfig.getFrontController().getProfileManagerSA().removeUser("id");
-    }    
+        ProductionConfig.getFrontController()
+                .getProfileManagerSA().removeClub(existingClub.getID());
+        ProductionConfig.getFrontController()
+                .getProfileManagerSA().removeUser(existingUser.getID());
+    }   
 
     // Uses customID
     private RequestPOJO buildOneClubRP(ClubPOJO club) {
