@@ -108,9 +108,7 @@ public class ClubPOJO extends DataPOJO implements Serializable {
 		location = new Location(otherClub.getLatitude(),otherClub.getLongitude());
 
 		rating = otherClub.getRating();
-		
-		//FALTA COPIAR USERREVIEWS. LUEGO VEO COMO HACERLO. ME TENGO QUE IR.
-		userReviews = new HashMap<String, ReviewPOJO>();
+		userReviews = new HashMap<String, ReviewPOJO>(otherClub.getReviews());
 	}
 
 	public ClubPOJO(String id, String commercialName, String address,  float price, Location location, float rating) {
