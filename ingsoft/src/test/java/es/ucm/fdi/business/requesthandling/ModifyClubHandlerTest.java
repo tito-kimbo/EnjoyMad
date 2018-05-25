@@ -6,7 +6,9 @@ import static org.junit.Assert.assertTrue;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -14,6 +16,8 @@ import es.ucm.fdi.business.FrontController;
 import es.ucm.fdi.business.ProductionConfig;
 import es.ucm.fdi.business.data.RequestPOJO;
 import es.ucm.fdi.business.requesthandling.tools.RequestType;
+import es.ucm.fdi.integration.data.ClubPOJO;
+import es.ucm.fdi.integration.data.TagPOJO;
 import es.ucm.fdi.integration.data.UserPOJO;
 
 public class ModifyClubHandlerTest {
@@ -21,13 +25,13 @@ public class ModifyClubHandlerTest {
 	private static String customID = "idModify User240520189229";
 
 	// Uses customID
-	private RequestPOJO buildModifyUserRP(String userId, UserPOJO user)
+	private RequestPOJO buildModifyClubRP(String clubId, ClubPOJO club)
 	{
 		List<Object> l = new ArrayList<Object>();
-		l.add(userId);
-		l.add(user);
+		l.add(clubId);
+		l.add(club);
 		
-		return new RequestPOJO(customID, new RequestPOJO(RequestType.MODIFY_USER, l));
+		return new RequestPOJO(customID, new RequestPOJO(RequestType.MODIFY_CLUB, l));
 	}
 	
 	/**
@@ -39,16 +43,15 @@ public class ModifyClubHandlerTest {
 		Initializer.initialize();
 		FrontController fc = ProductionConfig.getFrontController();
 		
-		//The system should have at least one user to modify it, we add the user
-		UserPOJO user = new UserPOJO("Id", "user", "password", "email@mail.com", 
-				"Francis Blázquez", LocalDate.of(1998, Month.JANUARY, 1));
+		//The system should have at least one club to modify it, we add the club.
+		ClubPOJO club = new ClubPOJO("Id", "Disco1", "Adress street", 10.0F, new HashSet<TagPOJO>());
 		
-		fc.getProfileManagerSA().addNewUser(user);
+		fc.getProfileManagerSA().addNewClub(club);
 		
 		//Then we create the RequestPOJO to ask the system to modify the user
-		UserPOJO modifyUser = new UserPOJO("Id", "titoKimbo", null, null, null, null);
+		ClubPOJO modifyClub = new ClubPOJO("Id", "titoKimboDisco", null, (Float) null, null);
 		
-		RequestPOJO rp = buildModifyUserRP(modifyUser.getID(), modifyUser);
+		RequestPOJO rp = buildModifyClubRP(modifyClub.getID(), modifyClub);
 		
 		ModifyUserHandler handler = new ModifyUserHandler(fc, rp);
 		
