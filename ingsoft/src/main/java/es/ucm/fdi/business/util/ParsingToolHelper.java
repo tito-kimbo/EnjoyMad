@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.regex.Pattern;
 
 import es.ucm.fdi.integration.data.TagPOJO;
+import es.ucm.fdi.integration.data.Location;
 import es.ucm.fdi.integration.data.ReviewPOJO;
 
 
@@ -365,5 +366,17 @@ public class ParsingToolHelper {
         }
 
         return valid;
+    }
+
+    /**
+     * Parses a {@code Location}.
+     * 
+     * @param location
+     *          - {@code Location} to be parsed
+     * @return
+     *          if location is valid
+     */
+    public static boolean parseLocation(Location location) {
+        return true;
     }
 }
